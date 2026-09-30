@@ -35,7 +35,7 @@ export function seasonOf(date = new Date()) {
 }
 export const SEASON_META = {
   spring: { emoji: '🌸', vi: 'Mùa xuân', en: 'Spring', grad: ['#7ec8e3', '#86d99b'] },
-  summer: { emoji: '☀️', vi: 'Mùa hè', en: 'Summer', grad: ['#f9b234', '#f36f21'] },
+  summer: { emoji: '☀️', vi: 'Mùa hè', en: 'Summer', grad: ['#f9b234', '#2F6BFF'] },
   autumn: { emoji: '🍂', vi: 'Mùa thu', en: 'Autumn', grad: ['#e8a13c', '#c2592f'] },
   winter: { emoji: '🎄', vi: 'Mùa đông', en: 'Winter', grad: ['#5ec5e8', '#3d7bd9'] },
 };

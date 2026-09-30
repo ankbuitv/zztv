@@ -84,7 +84,7 @@ export default function TeamDetailModal({ team: teamRef, name, onClose, onOpenMa
     <button
       type="button"
       onClick={() => onOpenMatch && onOpenMatch(ev)}
-      className="w-full text-left rounded-xl bg-white/[0.04] border border-white/10 px-3 py-2 hover:border-[#f36f21]/40 active:scale-[0.99] transition-all"
+      className="w-full text-left rounded-xl bg-white/[0.04] border border-white/10 px-3 py-2 hover:border-[#2F6BFF]/40 active:scale-[0.99] transition-all"
     >
       <p className="text-[10px] text-stone-500 font-bold truncate">{score ? fmtDate(ev) : fmtDateTime(ev)}{ev.strLeague ? ` · ${ev.strLeague}` : ''}</p>
       <p className="text-[12px] font-bold text-white">
@@ -115,7 +115,7 @@ export default function TeamDetailModal({ team: teamRef, name, onClose, onOpenMa
           {team?.banner ? (
             <div className="absolute inset-0 opacity-25" style={{ backgroundImage: `url(${team.banner})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
           ) : null}
-          <div className="relative px-4 py-3 border-b border-white/10 flex items-start gap-3 bg-gradient-to-br from-[#f36f21]/10 via-transparent to-sky-500/10">
+          <div className="relative px-4 py-3 border-b border-white/10 flex items-start gap-3 bg-gradient-to-br from-[#2F6BFF]/10 via-transparent to-sky-500/10">
             <Badge src={team?.badge} name={team?.name || refName} />
             <div className="min-w-0 flex-1">
               <p className="text-[16px] font-black text-white leading-tight break-words">{team?.name || refName}</p>
@@ -212,7 +212,7 @@ export default function TeamDetailModal({ team: teamRef, name, onClose, onOpenMa
                     .filter(([, v]) => v)
                     .map(([label, v]) => (
                       <a key={label} href={`https://${String(v).replace(/^https?:\/\//, '')}`} target="_blank" rel="noreferrer"
-                        className="inline-flex items-center gap-1 text-[11px] font-bold text-[#ff9a3d] hover:underline">
+                        className="inline-flex items-center gap-1 text-[11px] font-bold text-[#6E9BFF] hover:underline">
                         <Globe className="w-3 h-3" />{label === 'web' ? t('team.web') : label} <ExternalLink className="w-3 h-3" />
                       </a>
                     ))}

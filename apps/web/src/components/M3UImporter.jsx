@@ -98,7 +98,7 @@ export default function M3UImporter({ onImport, onClose }) {
           <button
             onClick={addSource}
             disabled={!newUrl.trim()}
-            className="px-3 py-1.5 bg-[#f36f21] text-white text-xs font-semibold rounded-lg hover:bg-[#f36f21] disabled:opacity-40 transition-all flex items-center gap-1"
+            className="px-3 py-1.5 bg-[#2F6BFF] text-white text-xs font-semibold rounded-lg hover:bg-[#2F6BFF] disabled:opacity-40 transition-all flex items-center gap-1"
           >
             <Plus className="w-3.5 h-3.5" /> Thêm
           </button>
@@ -121,8 +121,8 @@ export default function M3UImporter({ onImport, onClose }) {
               >
                 <Upload className="w-3 h-3" /> Import
               </button>
-              <button onClick={() => removeSource(src.id)} className="p-1 hover:bg-[#f36f21]/20 rounded">
-                <Trash2 className="w-3 h-3 text-slate-500 hover:text-[#ff9a3d]" />
+              <button onClick={() => removeSource(src.id)} className="p-1 hover:bg-[#2F6BFF]/20 rounded">
+                <Trash2 className="w-3 h-3 text-slate-500 hover:text-[#6E9BFF]" />
               </button>
             </div>
           ))}
@@ -131,7 +131,7 @@ export default function M3UImporter({ onImport, onClose }) {
 
       {result && (
         <div className={`text-[11px] px-3 py-2 rounded-lg flex items-center gap-1.5 ${
-          result.success ? 'bg-emerald-600/15 text-emerald-400' : 'bg-[#f36f21]/15 text-[#ff9a3d]'
+          result.success ? 'bg-emerald-600/15 text-emerald-400' : 'bg-[#2F6BFF]/15 text-[#6E9BFF]'
         }`}>
           {result.success
             ? <><Check className="w-3.5 h-3.5" /> {result.name}: {result.count} kênh đã import</>

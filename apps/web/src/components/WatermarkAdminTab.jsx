@@ -4,8 +4,8 @@ import WatermarkStudio from './WatermarkStudio';
 import { WM_DEFAULTS, WM_PAGE_LABEL, reloadWatermark } from '../services/watermark';
 import { imageToSvg, fileToDataUrl, looksLikeSvg, fmtBytes } from '../utils/png2svg';
 
-const inp = 'w-full bg-slate-900/60 border border-slate-700/50 rounded-lg px-3 py-2 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[#f36f21]/50';
-const btnP = 'px-3 py-2 bg-[#f36f21] hover:bg-[#e05f0f] text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 disabled:opacity-40 disabled:pointer-events-none';
+const inp = 'w-full bg-slate-900/60 border border-slate-700/50 rounded-lg px-3 py-2 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[#2F6BFF]/50';
+const btnP = 'px-3 py-2 bg-[#2F6BFF] hover:bg-[#e05f0f] text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 disabled:opacity-40 disabled:pointer-events-none';
 const btnG = 'px-3 py-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 disabled:opacity-40';
 const card = 'rounded-2xl border border-white/[0.07] bg-black/25 p-3.5';
 
@@ -17,7 +17,7 @@ async function api(BASE, headers, path, opts = {}) {
 function Switch({ checked, onChange, label, hint }) {
   return (
     <button type="button" onClick={() => onChange(checked ? 0 : 1)} className="flex items-start gap-2.5 text-left group">
-      <span className={`mt-0.5 w-9 h-5 rounded-full p-0.5 transition-colors shrink-0 ${checked ? 'bg-[#f36f21]' : 'bg-white/15'}`}>
+      <span className={`mt-0.5 w-9 h-5 rounded-full p-0.5 transition-colors shrink-0 ${checked ? 'bg-[#2F6BFF]' : 'bg-white/15'}`}>
         <span className={`block w-4 h-4 rounded-full bg-white transition-transform ${checked ? 'translate-x-4' : ''}`} />
       </span>
       <span className="min-w-0">
@@ -215,7 +215,7 @@ export default function WatermarkAdminTab({ BASE, headers, addToast }) {
       <div className="flex flex-wrap items-start gap-3">
         <div className="min-w-[260px] flex-1">
           <h3 className="text-[13px] font-black text-white flex items-center gap-1.5">
-            <ImageIcon className="w-4 h-4 text-[#ff9a3d]" /> Logo của web khi đang phát (watermark)
+            <ImageIcon className="w-4 h-4 text-[#6E9BFF]" /> Logo của web khi đang phát (watermark)
           </h3>
           <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">
             Logo được đắp lên <b className="text-slate-200">khung hình video</b> ở trang TV, cửa sổ player và lúc xem m3u8 —
@@ -251,7 +251,7 @@ export default function WatermarkAdminTab({ BASE, headers, addToast }) {
           {/* ===== logo ===== */}
           <div className={card}>
             <p className="text-[11px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-1.5 mb-2">
-              <Sparkles className="w-3.5 h-3.5 text-[#ff9a3d]" /> File logo
+              <Sparkles className="w-3.5 h-3.5 text-[#6E9BFF]" /> File logo
             </p>
             <div className="flex items-center gap-3">
               <div className="w-20 h-20 rounded-xl bg-black/50 border border-white/10 flex items-center justify-center overflow-hidden shrink-0">
@@ -296,7 +296,7 @@ export default function WatermarkAdminTab({ BASE, headers, addToast }) {
           {/* ===== phạm vi hiện ===== */}
           <div className={card}>
             <p className="text-[11px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-1.5 mb-2">
-              <Layers className="w-3.5 h-3.5 text-[#ff9a3d]" /> Hiện ở đâu
+              <Layers className="w-3.5 h-3.5 text-[#6E9BFF]" /> Hiện ở đâu
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               {Object.keys(WM_PAGE_LABEL).map((k) => (
@@ -320,7 +320,7 @@ export default function WatermarkAdminTab({ BASE, headers, addToast }) {
       <div className={card}>
         <div className="flex flex-wrap items-center gap-2 mb-2">
           <p className="text-[11px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-1.5">
-            {ovByChannel.size > 0 ? <Eye className="w-3.5 h-3.5 text-[#ff9a3d]" /> : <EyeOff className="w-3.5 h-3.5 text-slate-500" />} Tuỳ chỉnh theo từng kênh
+            {ovByChannel.size > 0 ? <Eye className="w-3.5 h-3.5 text-[#6E9BFF]" /> : <EyeOff className="w-3.5 h-3.5 text-slate-500" />} Tuỳ chỉnh theo từng kênh
           </p>
           <span className="text-[10px] text-slate-500">
             {ovByChannel.size}/{total || all.length} kênh có cấu hình riêng
@@ -337,7 +337,7 @@ export default function WatermarkAdminTab({ BASE, headers, addToast }) {
         )}
 
         {sel && (
-          <div className="rounded-xl border border-[#f36f21]/30 bg-[#f36f21]/[0.05] p-3 mb-2.5">
+          <div className="rounded-xl border border-[#2F6BFF]/30 bg-[#2F6BFF]/[0.05] p-3 mb-2.5">
             <div className="flex flex-wrap items-center gap-2 mb-2">
               <p className="text-[12px] font-black text-white">{all.find((c) => c.channel_id === sel)?.name || sel}</p>
               <span className="text-[10px] text-slate-400">{all.find((c) => c.channel_id === sel)?.group_title}</span>
@@ -367,7 +367,7 @@ export default function WatermarkAdminTab({ BASE, headers, addToast }) {
             const ov = ovByChannel.get(c.channel_id);
             const badge = !ov ? null : ov.mode === 'off' ? { t: 'Tắt riêng', c: 'text-red-300 bg-red-500/10 border-red-500/25' } : { t: 'Tuỳ chỉnh', c: 'text-emerald-300 bg-emerald-500/10 border-emerald-500/25' };
             return (
-              <div key={c.channel_id} className={`flex items-center gap-2 rounded-lg border px-2.5 py-1.5 transition-colors ${sel === c.channel_id ? 'border-[#f36f21]/50 bg-[#f36f21]/[0.07]' : 'border-white/[0.06] bg-black/25 hover:border-white/15'}`}>
+              <div key={c.channel_id} className={`flex items-center gap-2 rounded-lg border px-2.5 py-1.5 transition-colors ${sel === c.channel_id ? 'border-[#2F6BFF]/50 bg-[#2F6BFF]/[0.07]' : 'border-white/[0.06] bg-black/25 hover:border-white/15'}`}>
                 {c.logo ? <img src={c.logo} alt="" className="w-5 h-5 rounded object-contain bg-black/40 shrink-0" onError={(e) => (e.currentTarget.style.opacity = 0.15)} /> : <span className="w-5 h-5 rounded bg-white/[0.06] shrink-0" />}
                 <span className="text-[11px] text-slate-200 truncate flex-1 min-w-0">{c.name}</span>
                 <span className="text-[9px] text-slate-600 truncate max-w-[90px] hidden sm:block">{c.group_title}</span>

@@ -191,7 +191,7 @@ export default function MatchDetailModal({ ev, leagueName = '', onClose, onTeam 
     <div className="fixed inset-0 z-[200] bg-black/85 backdrop-blur-sm flex items-end sm:items-center justify-center sm:p-4" onClick={onClose}>
       <div className="w-full max-w-2xl modal-panel overflow-hidden max-h-[92vh] flex flex-col rounded-t-3xl sm:rounded-3xl" onClick={e => e.stopPropagation()}>
         {/* Header tỉ số */}
-        <div className="px-4 py-4 border-b border-white/10 bg-gradient-to-br from-[#f36f21]/15 via-transparent to-sky-500/10">
+        <div className="px-4 py-4 border-b border-white/10 bg-gradient-to-br from-[#2F6BFF]/15 via-transparent to-sky-500/10">
           <div className="flex items-start justify-between gap-2">
             <p className="text-[10px] font-black uppercase tracking-widest text-stone-500">{leagueName}{detail.intRound ? ` · ${t('sports.round', { n: detail.intRound })}` : ''}</p>
             <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10 -mt-1 -mr-1"><X className="w-4 h-4 text-slate-400" /></button>
@@ -226,7 +226,7 @@ export default function MatchDetailModal({ ev, leagueName = '', onClose, onTeam 
             <button onClick={toggleRemind} className={`flex-1 py-2 rounded-xl text-[11px] font-bold flex items-center justify-center gap-1.5 transition-all ${reminded ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40' : 'bg-white/[0.06] text-stone-300 border border-white/10 hover:bg-white/[0.12]'}`}>
               {reminded ? <BellRing className="w-3.5 h-3.5" /> : <Bell className="w-3.5 h-3.5" />}{reminded ? t('match.reminded') : t('match.remind')}
             </button>
-            <button onClick={() => setRadio(r => !r)} className={`flex-1 py-2 rounded-xl text-[11px] font-bold flex items-center justify-center gap-1.5 transition-all ${radio ? 'bg-[#f36f21] text-white shadow-lg shadow-[#f36f21]/30' : 'bg-white/[0.06] text-stone-300 border border-white/10 hover:bg-white/[0.12]'}`}>
+            <button onClick={() => setRadio(r => !r)} className={`flex-1 py-2 rounded-xl text-[11px] font-bold flex items-center justify-center gap-1.5 transition-all ${radio ? 'bg-[#2F6BFF] text-white shadow-lg shadow-[#2F6BFF]/30' : 'bg-white/[0.06] text-stone-300 border border-white/10 hover:bg-white/[0.12]'}`}>
               {radio ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}<Radio className="w-3.5 h-3.5" />{t('match.radio')}
             </button>
           </div>
@@ -281,10 +281,10 @@ export default function MatchDetailModal({ ev, leagueName = '', onClose, onTeam 
                   <p className="text-[13px] font-extrabold text-white text-center py-1">{t('match.your_predict')}: <span className="text-[#ffb37a] tabular-nums">{mine.ph} - {mine.pa}</span>{mine.points != null && <span className="ml-2 text-emerald-400">+{mine.points}đ</span>}</p>
                 ) : (
                   <div className="flex items-center justify-center gap-2">
-                    <input value={pred.ph} onChange={e => setPred({ ...pred, ph: e.target.value.replace(/\D/g, '').slice(0, 2) })} inputMode="numeric" placeholder="0" className="w-12 h-11 rounded-xl bg-black/50 border border-white/15 text-center text-lg font-black text-white outline-none focus:border-[#f36f21]" />
+                    <input value={pred.ph} onChange={e => setPred({ ...pred, ph: e.target.value.replace(/\D/g, '').slice(0, 2) })} inputMode="numeric" placeholder="0" className="w-12 h-11 rounded-xl bg-black/50 border border-white/15 text-center text-lg font-black text-white outline-none focus:border-[#2F6BFF]" />
                     <span className="text-stone-500 font-black">-</span>
-                    <input value={pred.pa} onChange={e => setPred({ ...pred, pa: e.target.value.replace(/\D/g, '').slice(0, 2) })} inputMode="numeric" placeholder="0" className="w-12 h-11 rounded-xl bg-black/50 border border-white/15 text-center text-lg font-black text-white outline-none focus:border-[#f36f21]" />
-                    <button onClick={sendPredict} className="ml-1 px-4 h-11 rounded-xl grad-brand text-white text-[12px] font-bold shadow-lg shadow-[#f36f21]/25 active:scale-95">{t('match.send')}</button>
+                    <input value={pred.pa} onChange={e => setPred({ ...pred, pa: e.target.value.replace(/\D/g, '').slice(0, 2) })} inputMode="numeric" placeholder="0" className="w-12 h-11 rounded-xl bg-black/50 border border-white/15 text-center text-lg font-black text-white outline-none focus:border-[#2F6BFF]" />
+                    <button onClick={sendPredict} className="ml-1 px-4 h-11 rounded-xl grad-brand text-white text-[12px] font-bold shadow-lg shadow-[#2F6BFF]/25 active:scale-95">{t('match.send')}</button>
                   </div>
                 )}
                 <p className="text-[10px] text-stone-600 text-center mt-2">{t('match.predict_rule')}</p>
@@ -464,14 +464,14 @@ function MatchChat({ room, myName, token, isAuthed, matchTitle }) {
         <div className="space-y-2">
           {polls.map(p => (
             <div key={p.id} className="rounded-2xl border border-white/10 bg-white/[0.03] p-2.5">
-              <p className="text-[12px] font-black text-white flex items-center gap-1.5"><BarChart3 className="w-3.5 h-3.5 text-[#ff9a3d]" />{p.question}{p.ended && <span className="text-[9px] text-stone-500 font-bold"> · đã đóng</span>}</p>
+              <p className="text-[12px] font-black text-white flex items-center gap-1.5"><BarChart3 className="w-3.5 h-3.5 text-[#6E9BFF]" />{p.question}{p.ended && <span className="text-[9px] text-stone-500 font-bold"> · đã đóng</span>}</p>
               <div className="mt-2 space-y-1">
                 {p.options.map((opt, i) => {
                   const v = p.votes[i] || { pct: 0, count: 0 };
                   return (
                     <button key={i} disabled={p.ended} onClick={() => vote(p.id, i)}
                       className="w-full relative overflow-hidden rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-left disabled:opacity-70 active:scale-[0.99]">
-                      <span className="absolute inset-y-0 left-0 bg-[#f36f21]/20" style={{ width: `${v.pct}%` }} />
+                      <span className="absolute inset-y-0 left-0 bg-[#2F6BFF]/20" style={{ width: `${v.pct}%` }} />
                       <span className="relative flex items-center justify-between text-[11px] font-bold text-stone-200">
                         <span className="truncate pr-2">{opt}</span><span className="shrink-0 text-[#ffb37a] tabular-nums">{v.count} ({v.pct}%)</span>
                       </span>
@@ -500,15 +500,15 @@ function MatchChat({ room, myName, token, isAuthed, matchTitle }) {
         <div className="flex items-center gap-1.5">
           {['🔥', '⚽', '😱', '👏'].map(em => <button key={em} onClick={() => react(em)} className="w-8 h-8 rounded-lg bg-white/[0.06] hover:bg-white/15 text-sm active:scale-95">{em}</button>)}
           <input value={text} onChange={e => setText(e.target.value.slice(0, 300))} onKeyDown={e => { if (e.key === 'Enter') say(); }}
-            placeholder="Nhắn trong phòng…" className="flex-1 min-w-0 px-3 py-2 bg-black/40 border border-white/10 rounded-xl text-[12px] text-white focus:outline-none focus:border-[#f36f21]" />
-          <button onClick={() => setPollOpen(true)} title="Tạo poll hỏi nhanh" className="px-2.5 h-9 rounded-xl bg-white/[0.06] border border-white/10 text-stone-300 hover:text-[#ffb37a] hover:border-[#f36f21]/50 shrink-0"><BarChart3 className="w-4 h-4" /></button>
+            placeholder="Nhắn trong phòng…" className="flex-1 min-w-0 px-3 py-2 bg-black/40 border border-white/10 rounded-xl text-[12px] text-white focus:outline-none focus:border-[#2F6BFF]" />
+          <button onClick={() => setPollOpen(true)} title="Tạo poll hỏi nhanh" className="px-2.5 h-9 rounded-xl bg-white/[0.06] border border-white/10 text-stone-300 hover:text-[#ffb37a] hover:border-[#2F6BFF]/50 shrink-0"><BarChart3 className="w-4 h-4" /></button>
           <button onClick={() => say()} disabled={!text.trim()} className="px-3 py-2 rounded-xl grad-brand text-white disabled:opacity-35 active:scale-95 shrink-0"><Send className="w-4 h-4" /></button>
         </div>
       ) : (
-        <div className="rounded-xl border border-[#f36f21]/30 bg-[#f36f21]/[0.06] p-2.5 space-y-1.5">
+        <div className="rounded-xl border border-[#2F6BFF]/30 bg-[#2F6BFF]/[0.06] p-2.5 space-y-1.5">
           <p className="text-[10px] font-black uppercase tracking-widest text-[#ffb37a]">Tạo poll</p>
-          <input value={pq} onChange={e => setPq(e.target.value.slice(0, 140))} placeholder="Câu hỏi? (vd: Ai vô địch?)" className="w-full px-3 py-2 bg-black/40 border border-white/10 rounded-lg text-[12px] text-white focus:outline-none focus:border-[#ff9a3d]" />
-          <input value={po} onChange={e => setPo(e.target.value.slice(0, 200))} placeholder="Lựa chọn, cách nhau | (tối đa 4)" className="w-full px-3 py-2 bg-black/40 border border-white/10 rounded-lg text-[12px] text-white focus:outline-none focus:border-[#ff9a3d]" />
+          <input value={pq} onChange={e => setPq(e.target.value.slice(0, 140))} placeholder="Câu hỏi? (vd: Ai vô địch?)" className="w-full px-3 py-2 bg-black/40 border border-white/10 rounded-lg text-[12px] text-white focus:outline-none focus:border-[#6E9BFF]" />
+          <input value={po} onChange={e => setPo(e.target.value.slice(0, 200))} placeholder="Lựa chọn, cách nhau | (tối đa 4)" className="w-full px-3 py-2 bg-black/40 border border-white/10 rounded-lg text-[12px] text-white focus:outline-none focus:border-[#6E9BFF]" />
           <div className="flex gap-1.5">
             <button onClick={() => setPollOpen(false)} className="px-3 py-1.5 rounded-lg bg-white/[0.06] text-stone-300 text-[11px] font-bold">Hủy</button>
             <button onClick={createPoll} disabled={!isAuthed} className="flex-1 py-1.5 rounded-lg grad-brand text-white text-[11px] font-black disabled:opacity-40">Tạo poll {!isAuthed && '(cần đăng nhập)'}</button>

@@ -140,8 +140,8 @@ export default function QrScanner({ onClose }) {
                     <canvas ref={canvasRef} className="hidden" />
                     {/* khung ngắm */}
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <div className="w-52 h-52 rounded-2xl border-2 border-[#f36f21]/80 shadow-[0_0_0_9999px_rgba(0,0,0,.55)]">
-                        <div className="w-full h-0.5 bg-[#f36f21] anim-scan"></div>
+                      <div className="w-52 h-52 rounded-2xl border-2 border-[#2F6BFF]/80 shadow-[0_0_0_9999px_rgba(0,0,0,.55)]">
+                        <div className="w-full h-0.5 bg-[#2F6BFF] anim-scan"></div>
                       </div>
                     </div>
                     <p className="absolute bottom-3 inset-x-0 text-center text-[11px] text-white/80">{t('qr.aim')}</p>
@@ -155,7 +155,7 @@ export default function QrScanner({ onClose }) {
                   value={manual}
                   onChange={e => setManual(e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6))}
                   placeholder="XXXXXX"
-                  className="w-full px-3 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-xl font-mono font-black tracking-[0.4em] text-center text-white placeholder:text-stone-600 focus:outline-none focus:border-[#f36f21]"
+                  className="w-full px-3 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-xl font-mono font-black tracking-[0.4em] text-center text-white placeholder:text-stone-600 focus:outline-none focus:border-[#2F6BFF]"
                 />
                 <button
                   onClick={() => approve(manual)}

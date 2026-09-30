@@ -17,13 +17,13 @@ export default function LanguagePicker({ onClose }) {
     <div className="fixed inset-0 z-[200] bg-gradient-to-br from-black via-[#0f1014] to-black flex items-center justify-center p-4 overflow-auto modal-backdrop">
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-20 -left-20 w-72 h-72 bg-[#f36f21]/10 rounded-full blur-3xl" />
+        <div className="absolute -top-20 -left-20 w-72 h-72 bg-[#2F6BFF]/10 rounded-full blur-3xl" />
         <div className="absolute -bottom-20 -right-20 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl" />
       </div>
 
       <div className="relative w-full max-w-2xl bg-[#17181d] border border-white/10 rounded-3xl shadow-2xl shadow-cyan-500/10 overflow-hidden modal-panel">
         {/* Header */}
-        <div className="bg-gradient-to-r from-[#f36f21] to-[#8a3a10] p-8 text-center">
+        <div className="bg-gradient-to-r from-[#2F6BFF] to-[#8a3a10] p-8 text-center">
           <Globe className="w-12 h-12 mx-auto text-white mb-3" />
           <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight">
             {t('langpicker.title')}
@@ -52,7 +52,7 @@ export default function LanguagePicker({ onClose }) {
                   onClick={() => setSelected(l.code)}
                   className={`relative flex flex-col items-center justify-center p-4 rounded-2xl border-2 transition-all ${
                     isSelected
-                      ? 'border-[#f36f21] bg-[#f36f21]/10 shadow-lg shadow-[#f36f21]/20 scale-105'
+                      ? 'border-[#2F6BFF] bg-[#2F6BFF]/10 shadow-lg shadow-[#2F6BFF]/20 scale-105'
                       : 'border-white/10 bg-white/5 hover:border-white/30 hover:bg-white/10'
                   }`}
                 >
@@ -62,7 +62,7 @@ export default function LanguagePicker({ onClose }) {
 
                   {/* Selected check */}
                   {isSelected && (
-                    <div className="absolute top-2 right-2 w-5 h-5 bg-[#f36f21] rounded-full flex items-center justify-center">
+                    <div className="absolute top-2 right-2 w-5 h-5 bg-[#2F6BFF] rounded-full flex items-center justify-center">
                       <Check className="w-3 h-3 text-white" />
                     </div>
                   )}
@@ -83,7 +83,7 @@ export default function LanguagePicker({ onClose }) {
         <div className="px-6 pb-6">
           <button
             onClick={confirm}
-            className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#f36f21] to-[#c2570f] hover:from-[#f36f21] hover:to-[#f36f21] text-white font-black text-base shadow-lg shadow-[#f36f21]/30 transition-all active:scale-95"
+            className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#2F6BFF] to-[#c2570f] hover:from-[#2F6BFF] hover:to-[#2F6BFF] text-white font-black text-base shadow-lg shadow-[#2F6BFF]/30 transition-all active:scale-95"
           >
             {t('common.continue')} →
           </button>

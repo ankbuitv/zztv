@@ -32,8 +32,8 @@ export default function ReportChannelModal({ channel, defaultCode = 'no_play', o
         className="w-full sm:max-w-md bg-[#14151c] border border-white/10 rounded-t-3xl sm:rounded-3xl p-5 space-y-4"
       >
         <div className="flex items-center gap-2.5">
-          <span className="w-9 h-9 rounded-xl bg-[#f36f21]/15 border border-[#f36f21]/25 flex items-center justify-center">
-            <AlertTriangle className="w-4 h-4 text-[#ff9a3d]" />
+          <span className="w-9 h-9 rounded-xl bg-[#2F6BFF]/15 border border-[#2F6BFF]/25 flex items-center justify-center">
+            <AlertTriangle className="w-4 h-4 text-[#6E9BFF]" />
           </span>
           <div className="min-w-0 flex-1">
             <h3 className="text-[15px] font-black text-white leading-tight">Báo kênh lỗi</h3>
@@ -50,7 +50,7 @@ export default function ReportChannelModal({ channel, defaultCode = 'no_play', o
               onClick={() => setCode(c.code)}
               className={`px-3 py-2.5 rounded-xl text-[12px] font-bold text-left transition-all border ${
                 code === c.code
-                  ? 'bg-[#f36f21]/20 border-[#f36f21]/60 text-white'
+                  ? 'bg-[#2F6BFF]/20 border-[#2F6BFF]/60 text-white'
                   : 'bg-black/30 border-white/[0.07] text-stone-400 hover:border-white/20'
               }`}
             >
@@ -64,13 +64,13 @@ export default function ReportChannelModal({ channel, defaultCode = 'no_play', o
           onChange={(e) => setNote(e.target.value.slice(0, 300))}
           rows={2}
           placeholder="Mô tả thêm (không bắt buộc) — VD: lỗi từ 20h, kênh khác vẫn xem được"
-          className="w-full bg-black/40 border border-white/[0.08] rounded-xl px-3 py-2.5 text-[12px] text-white placeholder-stone-600 focus:outline-none focus:border-[#f36f21]/50 resize-none"
+          className="w-full bg-black/40 border border-white/[0.08] rounded-xl px-3 py-2.5 text-[12px] text-white placeholder-stone-600 focus:outline-none focus:border-[#2F6BFF]/50 resize-none"
         />
 
         <button
           type="submit"
           disabled={sending || done}
-          className="w-full py-3 rounded-xl bg-[#f36f21] hover:bg-[#e05f0f] disabled:opacity-60 text-white text-[13px] font-black flex items-center justify-center gap-2"
+          className="w-full py-3 rounded-xl bg-[#2F6BFF] hover:bg-[#e05f0f] disabled:opacity-60 text-white text-[13px] font-black flex items-center justify-center gap-2"
         >
           {done ? <><Check className="w-4 h-4" /> Đã gửi</> : sending ? 'Đang gửi…' : 'Gửi báo lỗi'}
         </button>

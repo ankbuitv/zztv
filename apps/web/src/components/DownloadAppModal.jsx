@@ -49,7 +49,7 @@ export default function DownloadAppModal() {
           href={APK_URL}
           className="w-full px-4 py-2.5 text-[11px] font-bold text-left border-t border-white/5 hover:bg-white/5 flex items-center gap-2 text-white"
         >
-          <Download className="w-3.5 h-3.5 text-[#ff9a3d]" />
+          <Download className="w-3.5 h-3.5 text-[#6E9BFF]" />
           {t('apk.download')}
         </a>
       ) : (

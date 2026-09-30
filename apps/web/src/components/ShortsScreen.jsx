@@ -36,7 +36,7 @@ function CreatorAvatar({ creator, author, size = 24, onClick }) {
     <button
       onClick={onClick}
       disabled={!clickable}
-      className={`${clickable ? 'cursor-pointer hover:brightness-110 active:scale-95' : 'cursor-default'} rounded-full overflow-hidden bg-gradient-to-br from-[#f36f21] to-[#e94057] flex items-center justify-center text-white font-black shrink-0`}
+      className={`${clickable ? 'cursor-pointer hover:brightness-110 active:scale-95' : 'cursor-default'} rounded-full overflow-hidden bg-gradient-to-br from-[#2F6BFF] to-[#e94057] flex items-center justify-center text-white font-black shrink-0`}
       style={{ width: size, height: size, fontSize: Math.round(size * 0.42) }}
     >
       {src ? <img src={src} alt={creator?.handle} className="w-full h-full object-cover" /> : letter}
@@ -224,7 +224,7 @@ function ShortPlayer({ short, active, muted, onToggleMute, onSetMuted, onAuthorC
 
   const doShare = async () => {
     const url = `${window.location.origin}${window.location.pathname}#short-${short.id}`;
-    const text = short.title || 'CHRTV PLAY Shorts';
+    const text = short.title || 'playZ Shorts';
     try {
       if (navigator.share) await navigator.share({ title: text, url });
       else { await navigator.clipboard.writeText(url); addToast(t('shorts.copied'), 'success'); }
@@ -305,10 +305,10 @@ function ShortPlayer({ short, active, muted, onToggleMute, onSetMuted, onAuthorC
         {/* Lỗi phát (link chết / nguồn chặn): báo rõ ràng + thử lại thay vì màn hình đen */}
         {playErr && (
           <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black/85 p-6 text-center">
-            <AlertTriangle className="w-10 h-10 text-[#ff9a3d] mb-3" />
+            <AlertTriangle className="w-10 h-10 text-[#6E9BFF] mb-3" />
             <p className="text-white font-black text-[14px]">Không phát được video</p>
             <p className="text-white/50 text-[11px] mt-1 mb-4 line-clamp-2">{short.title || short.caption || `Short #${short.id}`}</p>
-            <button onClick={retryPlay} className="px-4 py-2 rounded-full bg-[#f36f21] text-white text-xs font-bold flex items-center gap-1.5 hover:brightness-110">
+            <button onClick={retryPlay} className="px-4 py-2 rounded-full bg-[#2F6BFF] text-white text-xs font-bold flex items-center gap-1.5 hover:brightness-110">
               <RefreshCw className="w-3.5 h-3.5" /> Thử lại
             </button>
           </div>
@@ -432,7 +432,7 @@ function ShortCommentsSheet({ short, onClose, onCount }) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center gap-2 px-4 py-3 border-b border-white/10 shrink-0">
-          <span className="w-1 h-4 rounded-full bg-[#f36f21]" />
+          <span className="w-1 h-4 rounded-full bg-[#2F6BFF]" />
           <MessageCircle className="w-4 h-4 text-slate-400 shrink-0" />
           <p className="text-[13px] font-black text-white truncate flex-1">
             {t('cmt.title')}{who ? <span className="text-stone-500 font-bold"> · {who}</span> : null}
@@ -499,7 +499,7 @@ function CreatorProfileModal({ identifier, onClose, onSelectShort, myProfile, to
     <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4">
       <div className="w-full sm:max-w-[520px] max-h-[92vh] sm:max-h-[88vh] bg-[#151515] sm:rounded-3xl rounded-t-[28px] border border-white/10 overflow-hidden flex flex-col shadow-2xl">
         <div className="relative shrink-0">
-          <div className="h-28 bg-gradient-to-br from-[#f36f21] via-[#e94057] to-[#8b5cf6]"></div>
+          <div className="h-28 bg-gradient-to-br from-[#2F6BFF] via-[#e94057] to-[#8b5cf6]"></div>
           <button onClick={onClose} className="absolute top-3 right-3 p-2 rounded-full bg-black/60 text-white hover:bg-black/80"><X className="w-4 h-4" /></button>
           <div className="absolute -bottom-12 left-5 flex items-end gap-4">
             <div className="w-20 h-20 rounded-3xl overflow-hidden border-[3px] border-[#151515] bg-[#222] flex items-center justify-center text-xl font-black text-white">
@@ -538,7 +538,7 @@ function CreatorProfileModal({ identifier, onClose, onSelectShort, myProfile, to
                   </button>
                 )}
                 {isOwn && (
-                  <span className="shrink-0 px-3 py-1.5 rounded-full bg-[#f36f21]/20 text-[#f36f21] text-[11px] font-black border border-[#f36f21]/30">Kênh của bạn</span>
+                  <span className="shrink-0 px-3 py-1.5 rounded-full bg-[#2F6BFF]/20 text-[#2F6BFF] text-[11px] font-black border border-[#2F6BFF]/30">Kênh của bạn</span>
                 )}
               </div>
               {data.creator.bio && (
@@ -548,7 +548,7 @@ function CreatorProfileModal({ identifier, onClose, onSelectShort, myProfile, to
               )}
 
               <div className="mt-6">
-                <h4 className="text-[13px] font-black text-white mb-3 flex items-center gap-2"><Video className="w-4 h-4 text-[#f36f21]" /> Video của {data.creator.display_name}</h4>
+                <h4 className="text-[13px] font-black text-white mb-3 flex items-center gap-2"><Video className="w-4 h-4 text-[#2F6BFF]" /> Video của {data.creator.display_name}</h4>
                 {(!data.shorts || data.shorts.length === 0) ? (
                   <p className="text-[12px] text-white/40 py-6 text-center">Chưa có video nào</p>
                 ) : (
@@ -630,7 +630,7 @@ function CreateProfileModal({ onClose, onCreated, token }) {
         <div className="space-y-3">
           <div>
             <label className="text-[11px] font-bold text-white/60 uppercase tracking-wider">Handle (@tên không dấu)</label>
-            <input value={form.handle} onChange={e => setForm({ ...form, handle: e.target.value.toLowerCase().replace(/[^a-z0-9_.]/g, '') })} placeholder="vd: chillguy" className="mt-1 w-full px-4 py-3 rounded-xl bg-white/10 border border-white/15 text-white placeholder:text-white/30 text-[13px] focus:outline-none focus:border-[#f36f21]" />
+            <input value={form.handle} onChange={e => setForm({ ...form, handle: e.target.value.toLowerCase().replace(/[^a-z0-9_.]/g, '') })} placeholder="vd: chillguy" className="mt-1 w-full px-4 py-3 rounded-xl bg-white/10 border border-white/15 text-white placeholder:text-white/30 text-[13px] focus:outline-none focus:border-[#2F6BFF]" />
           </div>
           <div>
             <label className="text-[11px] font-bold text-white/60 uppercase tracking-wider">Tên hiển thị</label>
@@ -695,7 +695,7 @@ function UploadShortModal({ onClose, onUploaded, token }) {
         </div>
         <div className="flex gap-2 mt-5">
           <button onClick={onClose} className="flex-1 py-3 rounded-full bg-white/10 text-white text-[13px] font-bold">Hủy</button>
-          <button onClick={submit} disabled={busy} className="flex-1 py-3 rounded-full bg-[#f36f21] text-white text-[13px] font-black hover:bg-[#f36f21]/90 disabled:opacity-50">{busy ? 'Đang đăng...' : 'Đăng video'}</button>
+          <button onClick={submit} disabled={busy} className="flex-1 py-3 rounded-full bg-[#2F6BFF] text-white text-[13px] font-black hover:bg-[#2F6BFF]/90 disabled:opacity-50">{busy ? 'Đang đăng...' : 'Đăng video'}</button>
         </div>
       </div>
     </div>
@@ -853,7 +853,7 @@ export default function ShortsScreen({ startId = null, onStartHandled = null } =
     return (
       <div className="flex items-center justify-center py-24">
         <div className="text-center">
-          <div className="w-10 h-10 mx-auto border-[3px] border-[#f36f21] border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-10 h-10 mx-auto border-[3px] border-[#2F6BFF] border-t-transparent rounded-full animate-spin"></div>
           <p className="text-xs text-stone-500 mt-3">{t('app.loading')}</p>
         </div>
       </div>
@@ -879,9 +879,9 @@ export default function ShortsScreen({ startId = null, onStartHandled = null } =
       {challenges.length > 0 && (
         <div className="px-5 md:px-8 mb-3">
           <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1">
-            <span className="shrink-0 text-[10px] font-black uppercase tracking-widest text-stone-500 flex items-center gap-1"><Flame className="w-3.5 h-3.5 text-[#f36f21]" />{t('p48.challenge')}</span>
+            <span className="shrink-0 text-[10px] font-black uppercase tracking-widest text-stone-500 flex items-center gap-1"><Flame className="w-3.5 h-3.5 text-[#2F6BFF]" />{t('p48.challenge')}</span>
             {challenges.slice(0, 6).map(c => (
-              <button key={c.id} onClick={() => { setChalFocus(c.id); setShowChal(true); }} className="shrink-0 px-3 py-1.5 rounded-full bg-gradient-to-r from-[#f36f21]/15 to-[#e94057]/10 border border-[#f36f21]/30 text-[11px] font-black text-[#ffb37a] hover:bg-[#f36f21]/25 transition active:scale-95">
+              <button key={c.id} onClick={() => { setChalFocus(c.id); setShowChal(true); }} className="shrink-0 px-3 py-1.5 rounded-full bg-gradient-to-r from-[#2F6BFF]/15 to-[#e94057]/10 border border-[#2F6BFF]/30 text-[11px] font-black text-[#ffb37a] hover:bg-[#2F6BFF]/25 transition active:scale-95">
                 #{c.hashtag} {String(c.ends_at || '').slice(0, 10) >= new Date().toISOString().slice(0, 10) || !c.ends_at ? '🔥' : ''}
               </button>
             ))}
@@ -905,7 +905,7 @@ export default function ShortsScreen({ startId = null, onStartHandled = null } =
           {isAuthenticated && (
             myProfile ? (
               <button onClick={() => setSelectedCreator({ id: myProfile.id, handle: myProfile.handle })} className="flex flex-col items-center gap-1.5 shrink-0">
-                <div className="w-[52px] h-[52px] rounded-full p-[2px] bg-gradient-to-br from-[#f36f21] to-[#e94057]">
+                <div className="w-[52px] h-[52px] rounded-full p-[2px] bg-gradient-to-br from-[#2F6BFF] to-[#e94057]">
                   <div className="w-full h-full rounded-full overflow-hidden bg-[#222] flex items-center justify-center">
                     {myProfile.avatar_url ? <img src={myProfile.avatar_url} alt="me" className="w-full h-full object-cover" /> : (myProfile.display_name[0] || 'M').toUpperCase()}
                   </div>
@@ -921,7 +921,7 @@ export default function ShortsScreen({ startId = null, onStartHandled = null } =
           )}
           {creators.map(c => (
             <button key={c.id} onClick={() => setSelectedCreator({ id: c.id, handle: c.handle })} className="flex flex-col items-center gap-1.5 shrink-0 group">
-              <div className="w-[52px] h-[52px] rounded-full p-[2px] bg-white/10 group-hover:bg-gradient-to-br group-hover:from-[#f36f21] group-hover:to-[#e94057] transition-all">
+              <div className="w-[52px] h-[52px] rounded-full p-[2px] bg-white/10 group-hover:bg-gradient-to-br group-hover:from-[#2F6BFF] group-hover:to-[#e94057] transition-all">
                 <div className="w-full h-full rounded-full overflow-hidden bg-[#222] flex items-center justify-center text-[12px] font-black text-white">
                   {c.avatar_url ? <img src={c.avatar_url} alt={c.handle} className="w-full h-full object-cover" /> : (c.display_name || c.handle)[0]?.toUpperCase()}
                 </div>
@@ -990,7 +990,7 @@ function ChallengesModal({ challenges, focusId = null, onClose, onPick }) {
     <div className="fixed inset-0 z-[240] bg-black/85 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}>
       <div className="w-full max-w-2xl modal-panel overflow-hidden max-h-[88vh] flex flex-col" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
-          <p className="text-[13px] font-black text-white flex items-center gap-2"><Flame className="w-4 h-4 text-[#f36f21]" />{t('p48.challenge_week')}</p>
+          <p className="text-[13px] font-black text-white flex items-center gap-2"><Flame className="w-4 h-4 text-[#2F6BFF]" />{t('p48.challenge_week')}</p>
           <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-slate-400" /></button>
         </div>
         <div className="flex gap-1.5 px-4 pt-3 overflow-x-auto scrollbar-none">
@@ -1009,7 +1009,7 @@ function ChallengesModal({ challenges, focusId = null, onClose, onPick }) {
               </div>
               <div className="grid grid-cols-3 sm:grid-cols-4 gap-2.5 mt-4">
                 {(active.shorts || []).map(sh => (
-                  <button key={sh.id} onClick={() => onPick(sh)} className="group relative aspect-[9/16] rounded-xl overflow-hidden bg-stone-900 border border-white/10 hover:border-[#f36f21]/60 active:scale-[0.98] transition">
+                  <button key={sh.id} onClick={() => onPick(sh)} className="group relative aspect-[9/16] rounded-xl overflow-hidden bg-stone-900 border border-white/10 hover:border-[#2F6BFF]/60 active:scale-[0.98] transition">
                     {sh.thumb_url ? <img src={sh.thumb_url} alt="" className="w-full h-full object-cover" onError={e => e.target.style.display = 'none'} /> : <div className="w-full h-full flex items-center justify-center text-2xl">🎬</div>}
                     <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent p-1.5 pt-6">
                       <p className="text-[10px] font-bold text-white truncate">{(sh.title || sh.caption || '').slice(0, 50)}</p>

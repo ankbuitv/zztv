@@ -18,7 +18,7 @@ function LogoMark({ className = '' }) {
   return (
     <img
       src={src}
-      alt="CHRTV PLAY"
+      alt="playZ"
       className={`${className} object-contain`}
       loading="eager"
       decoding="async"
@@ -67,7 +67,7 @@ export default function Logo({ size = 'md', showSubtext = true, className = '' }
     <div className={`flex items-center ${sizes.wrap} ${className}`}>
       <img
         src={logoSrc}
-        alt="CHRTV PLAY"
+        alt="playZ"
         className={`${sizes.icon} shrink-0 object-contain transition-transform duration-200 hover:scale-105`}
         style={{ filter: 'drop-shadow(0 4px 14px rgba(243,111,33,.4))' }}
         loading="eager"
@@ -83,7 +83,7 @@ export default function Logo({ size = 'md', showSubtext = true, className = '' }
       <div className="flex flex-col leading-none min-w-0">
         <span className="flex items-center gap-1 sm:gap-1.5">
           <span className={`${sizes.main} font-black tracking-tight text-white`}>CHRTV</span>
-          <span className={`${sizes.play} font-black tracking-[0.18em] text-white rounded-md grad-brand shadow-lg shadow-[#f36f21]/30`}>PL▷Y</span>
+          <span className={`${sizes.play} font-black tracking-[0.18em] text-white rounded-md grad-brand shadow-lg shadow-[#2F6BFF]/30`}>PL▷Y</span>
         </span>
         {showSubtext && (
           <span className={`${sizes.sub} hidden md:block font-semibold tracking-[0.14em] text-stone-500 mt-1 uppercase truncate`}>

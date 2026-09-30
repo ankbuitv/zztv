@@ -1,4 +1,4 @@
-// Bản dịch cho app CHRTV PLAY — 15 ngôn ngữ (5 đầy đủ + 10 mở rộng trong extra.js).
+// Bản dịch cho app playZ — 15 ngôn ngữ (5 đầy đủ + 10 mở rộng trong extra.js).
 // Dùng t('key') trong component. Key thiếu ở 1 ngôn ngữ sẽ fallback en → vi → key.
 import { EXTRA_LANGUAGES, applyExtra } from './extra.js';
 
@@ -15,7 +15,7 @@ export const LANGUAGES = [
 // Dùng cú pháp: { vi: '...', en: '...', zh: '...', fil: '...', fr: '...' }
 const T = {
   // ============== APP CHUNG ==============
-  'app.brand': { vi: 'CHRTV PL▷Y', en: 'CHRTV PL▷Y', zh: 'CHRTV PL▷Y', fil: 'CHRTV PL▷Y', fr: 'CHRTV PL▷Y' },
+  'app.brand': { vi: 'playZ', en: 'playZ', zh: 'playZ', fil: 'playZ', fr: 'playZ' },
   'app.tagline': { vi: 'Entertainment in your hands', en: 'Entertainment in your hands', zh: 'Entertainment in your hands', fil: 'Entertainment in your hands', fr: 'Entertainment in your hands' },
   'app.search.placeholder': { vi: 'Tìm kênh, phim...', en: 'Search channels, movies...', zh: '搜索频道、电影...', fil: 'Maghanap ng channel, pelikula...', fr: 'Rechercher chaînes, films...' },
   'app.live_now': { vi: 'TRỰC TIẾP', en: 'LIVE NOW', zh: '直播中', fil: 'LIVE NGAYON', fr: 'EN DIRECT' },
@@ -51,7 +51,7 @@ const T = {
   'shorts.share': { vi: 'Chia sẻ', en: 'Share', zh: '分享', fil: 'I-share', fr: 'Partager' },
 
   // ============== WELCOME ==============
-  'welcome.title': { vi: 'Chào mừng đến CHRTV PL▷Y', en: 'Welcome to CHRTV PL▷Y', zh: '欢迎使用 CHRTV PL▷Y', fil: 'Maligayang pagdating sa CHRTV PL▷Y', fr: 'Bienvenue sur CHRTV PL▷Y' },
+  'welcome.title': { vi: 'Chào mừng đến playZ', en: 'Welcome to playZ', zh: '欢迎使用 playZ', fil: 'Maligayang pagdating sa playZ', fr: 'Bienvenue sur playZ' },
   'welcome.sub': { vi: 'Truyền hình • Phim • Thể thao — xem miễn phí ngay', en: 'Live TV • Movies • Sports — watch free now', zh: '电视 • 电影 • 体育 — 立即免费观看', fil: 'Live TV • Pelikula • Sports — libre pang panoorin', fr: 'TV • Films • Sport — regardez gratuitement' },
   'welcome.f1': { vi: 'Hàng trăm kênh truyền hình trong nước & quốc tế', en: 'Hundreds of local & international channels', zh: '数百个国内与国际电视频道', fil: 'Daang-daang channel sa Pilipinas at global', fr: 'Des centaines de chaînes locales et internationales' },
   'welcome.f2': { vi: 'Phim & series mới — cập nhật liên tục', en: 'New movies & series — updated daily', zh: '最新电影与剧集 — 每日更新', fil: 'Mga bagong pelikula at series — araw-araw', fr: 'Nouveaux films et séries — chaque jour' },
@@ -160,7 +160,7 @@ const T = {
   'movies.status.premiere':        { vi: 'Khởi chiếu {{date}}',     en: 'Premieres {{date}}',      zh: '{{date}} 上映',             fil: 'Mag-uobra {{date}}',               fr: 'Sortie le {{date}}' },
   'movies.status.no_source':       { vi: 'Chưa có nguồn trong app', en: 'No source available yet', zh: '暂无片源',                  fil: 'Wala pang source',                 fr: 'Aucune source disponible' },
   'movies.trailer.banner':         { vi: 'TRAILER — đây không phải bản phim', en: 'TRAILER — this is not the movie', zh: '预告片 — 非正片', fil: 'TRAILER — hindi ito ang pelikula', fr: 'BANDE-ANNONCE — ce n’est pas le film' },
-  'movies.trailer.note':           { vi: 'CHRTV PLAY chỉ phát phim từ nguồn có bản quyền đã được duyệt. Hiện mục Phim chưa có nguồn cho tựa này nên app mở trailer thay vì để bạn bấm hụt.', en: 'CHRTV PLAY only streams movies from approved licensed sources. This title has no source yet, so the app shows the trailer instead of a dead end.', zh: 'CHRTV PLAY 仅播放已审核的授权片源。该片暂无片源，因此显示预告片。', fil: 'Ang CHRTV PLAY ay nagpa-play lang ng pelikula mula sa aprubadong may-licenseng source. Wala pang source ang title na ito kaya trailer ang ipinapakita.', fr: 'CHRTV PLAY ne diffuse que des sources sous licence approuvées. Ce titre n’a pas encore de source, la bande-annonce est affichée.' },
+  'movies.trailer.note':           { vi: 'playZ chỉ phát phim từ nguồn có bản quyền đã được duyệt. Hiện mục Phim chưa có nguồn cho tựa này nên app mở trailer thay vì để bạn bấm hụt.', en: 'playZ only streams movies from approved licensed sources. This title has no source yet, so the app shows the trailer instead of a dead end.', zh: 'playZ 仅播放已审核的授权片源。该片暂无片源，因此显示预告片。', fil: 'Ang playZ ay nagpa-play lang ng pelikula mula sa aprubadong may-licenseng source. Wala pang source ang title na ito kaya trailer ang ipinapakita.', fr: 'playZ ne diffuse que des sources sous licence approuvées. Ce titre n’a pas encore de source, la bande-annonce est affichée.' },
   'movies.toast.no_source':        { vi: 'Chưa có nguồn cho phim này — đang mở trailer', en: 'No source for this title yet — opening the trailer', zh: '该片暂无片源 — 打开预告片', fil: 'Wala pang source — binubuksan ang trailer', fr: 'Pas de source — ouverture de la bande-annonce' },
   'movies.toast.upcoming':         { vi: 'Phim chưa khởi chiếu ({{date}}) — đang mở trailer', en: 'Not released yet ({{date}}) — opening the trailer', zh: '尚未上映（{{date}}）— 打开预告片', fil: 'Hindi pa ilalabas ({{date}}) — trailer ang mabubuksan', fr: 'Pas encore sorti ({{date}}) — bande-annonce' },
   'movies.hero.featured':          { vi: 'NỔI BẬT',                 en: 'FEATURED',                zh: '精选',                       fil: 'ITINATAMPOK',                     fr: 'À LA UNE' },
@@ -513,7 +513,7 @@ const T = {
   'epg.search_none': { vi: 'Không tìm thấy chương trình', en: 'No shows found' },
 
   // ============== PLANS ==============
-  'plans.title':   { vi: 'MUA GÓI CHRTV PLAY', en: 'CHRTV PLAY PLANS' },
+  'plans.title':   { vi: 'MUA GÓI playZ', en: 'playZ PLANS' },
   'plans.sub': { vi: 'Chọn gói phù hợp để mở khoá kênh và tính năng', en: 'Pick a plan to unlock channels and features' },
   'plans.hot': { vi: 'HOT', en: 'HOT' },
   'plans.promo':   { vi: 'Giá theo bảng kê admin — hỗ trợ qua email {{email}}', en: 'Pricing set by admin — support via {{email}}' },
@@ -547,7 +547,7 @@ const T = {
   'plans.sec2': { vi: 'Hỗ trợ qua email khi cần', en: 'Email support when you need it' },
   'nav.download_app': { vi: 'Tải app', en: 'Get the app' },
   'apk.kicker': { vi: 'Android APK', en: 'Android APK' },
-  'apk.title': { vi: 'Tải CHRTV PL▷Y', en: 'Get CHRTV PL▷Y' },
+  'apk.title': { vi: 'Tải playZ', en: 'Get playZ' },
   'apk.sub': { vi: 'Xem TV, phim và thể thao trên điện thoại — file APK chính thức.', en: 'Watch TV, movies and sports on your phone — official APK.' },
   'apk.preparing': { vi: 'Đang chuẩn bị file…', en: 'Preparing the file…' },
   'apk.ready': { vi: 'Sẵn sàng tải về', en: 'Ready to download' },
@@ -740,7 +740,7 @@ const T = {
   'share.share': { vi: 'Chia sẻ', en: 'Share' },
   'share.copy': { vi: 'Chép link', en: 'Copy link' },
   'share.copied': { vi: 'Đã chép link!', en: 'Link copied!' },
-  'share.default_text': { vi: 'Xem trên CHRTV PLAY', en: 'Watch on CHRTV PLAY' },
+  'share.default_text': { vi: 'Xem trên playZ', en: 'Watch on playZ' },
   'share_movie.title': { vi: 'Chia sẻ phim', en: 'Share movie' },
   'share_movie.scan': { vi: 'Quét mã để mở phim trên điện thoại', en: 'Scan to open this movie on your phone' },
   'cmt.title': { vi: 'Bình luận', en: 'Comments' },
@@ -794,11 +794,11 @@ const T = {
   'kids.parent_pin': { vi: 'PIN của bố/mẹ', en: 'Parent PIN' },
   'kids.exit_pin': { vi: 'PIN thoát chế độ bé', en: 'PIN to exit kids mode' },
   'pin.title': { vi: 'Nhập PIN', en: 'Enter PIN' },
-  'pin.app_title': { vi: 'Mở khoá CHRTV PLAY', en: 'Unlock CHRTV PLAY' },
+  'pin.app_title': { vi: 'Mở khoá playZ', en: 'Unlock playZ' },
   'pin.wrong': { vi: 'PIN chưa đúng — thử lại', en: 'Wrong PIN — try again' },
   'settings.family': { vi: 'Gia đình & bé', en: 'Family & kids' },
   'settings.app_pin': { vi: 'PIN mở app', en: 'App PIN lock' },
-  'settings.ach_share': { vi: 'Tôi đã đạt {{g}} huy hiệu, {{h}} xem trên CHRTV PLAY!', en: 'I earned {{g}} badges and watched {{h}} on CHRTV PLAY!' },
+  'settings.ach_share': { vi: 'Tôi đã đạt {{g}} huy hiệu, {{h}} xem trên playZ!', en: 'I earned {{g}} badges and watched {{h}} on playZ!' },
   'settings.no_kids': { vi: 'Chưa có hồ sơ trẻ em. Tạo hồ sơ bé ở màn hình chọn hồ sơ (đánh dấu Trẻ em).', en: 'No child profiles yet. Create one on the profile screen (mark as Child).' },
   'settings.limit_day': { vi: 'Giới hạn/ngày', en: 'Daily limit' },
   'settings.week_total': { vi: 'Tổng tuần', en: 'Week total' },
@@ -849,7 +849,7 @@ const T = {
   'gift.copy_code': { vi: 'Sao chép mã', en: 'Copy code' },
   'gift.copied': { vi: 'Đã sao chép!', en: 'Copied!' },
   'gift.share': { vi: 'Chia sẻ', en: 'Share' },
-  'gift.share_text': { vi: '🎁 Tặng bạn gói {{plan}} CHRTV PL▷Y trong {{days}} ngày! Mã: {{code}} — nhận tại: {{link}}', en: '🎁 A {{plan}} plan on CHRTV PL▷Y for {{days}} days, just for you! Code: {{code}} — redeem at: {{link}}' },
+  'gift.share_text': { vi: '🎁 Tặng bạn gói {{plan}} playZ trong {{days}} ngày! Mã: {{code}} — nhận tại: {{link}}', en: '🎁 A {{plan}} plan on playZ for {{days}} days, just for you! Code: {{code}} — redeem at: {{link}}' },
   'gift.make_another': { vi: 'Tặng thêm quà khác', en: 'Gift another plan' },
   'gift.my_sent': { vi: 'Quà tôi đã tặng', en: 'Gifts I sent' },
   'gift.my_received': { vi: 'Quà dành cho tôi', en: 'Gifts for me' },

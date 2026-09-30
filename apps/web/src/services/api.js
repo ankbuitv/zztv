@@ -78,7 +78,7 @@ export async function fetchChannels() {
   return [
     {
       channel_id: "FALLBACK_LIVE",
-      name: "CHRTV PLAY Dự Phòng",
+      name: "playZ Dự Phòng",
       logo: CHRTV_LOGO_URL,
       group_title: "Dự Phòng",
       stream_url: DEFAULT_FALLBACK_STREAM,

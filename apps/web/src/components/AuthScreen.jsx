@@ -7,7 +7,7 @@ import { useI18n } from '../contexts/I18nContext';
 import { API_BASE } from '../services/config';
 import Logo from './Logo';
 
-const inputCls = 'w-full pl-10 pr-3 py-3 bg-white/5 border border-white/10 rounded-2xl text-sm text-white placeholder:text-stone-500 focus:outline-none focus:border-[#f36f21] focus:ring-2 focus:ring-[#f36f21]/25 focus:bg-white/[0.07] transition-all';
+const inputCls = 'w-full pl-10 pr-3 py-3 bg-white/5 border border-white/10 rounded-2xl text-sm text-white placeholder:text-stone-500 focus:outline-none focus:border-[#2F6BFF] focus:ring-2 focus:ring-[#2F6BFF]/25 focus:bg-white/[0.07] transition-all';
 
 export default function AuthScreen() {
   const { t } = useI18n();
@@ -184,7 +184,7 @@ export default function AuthScreen() {
         <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=1920)' }}></div>
         <div className="absolute inset-0 bg-black/55"></div>
         <div className="absolute inset-0" style={{ background: 'linear-gradient(115deg, rgba(10,8,6,.92) 0%, rgba(10,8,6,.55) 45%, rgba(20,10,4,.75) 100%)' }}></div>
-        <div className="absolute -top-32 -right-32 w-[480px] h-[480px] rounded-full blur-3xl opacity-25" style={{ background: 'radial-gradient(circle,#f36f21,transparent 70%)' }}></div>
+        <div className="absolute -top-32 -right-32 w-[480px] h-[480px] rounded-full blur-3xl opacity-25" style={{ background: 'radial-gradient(circle,#2F6BFF,transparent 70%)' }}></div>
         <div className="absolute -bottom-40 -left-24 w-[420px] h-[420px] rounded-full blur-3xl opacity-20" style={{ background: 'radial-gradient(circle,#7c2d12,transparent 70%)' }}></div>
       </div>
 
@@ -197,7 +197,7 @@ export default function AuthScreen() {
             <div className="relative">
               <Logo size="md" showSubtext={false} />
               <div className="mt-8">
-                <span className="inline-flex items-center gap-1.5 text-[10px] font-black tracking-widest text-white grad-brand px-3 py-1.5 rounded-full shadow-lg shadow-[#f36f21]/40">
+                <span className="inline-flex items-center gap-1.5 text-[10px] font-black tracking-widest text-white grad-brand px-3 py-1.5 rounded-full shadow-lg shadow-[#2F6BFF]/40">
                   <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
                   {t('app.live_now')}
                 </span>
@@ -212,7 +212,7 @@ export default function AuthScreen() {
                 { icon: Trophy, text: t('auth.hero.f3') },
               ].map((f, i) => (
                 <div key={i} className="flex items-center gap-3 bg-white/[0.05] border border-white/10 rounded-2xl px-4 py-3">
-                  <span className="w-9 h-9 rounded-xl grad-brand flex items-center justify-center shrink-0 shadow-lg shadow-[#f36f21]/30">
+                  <span className="w-9 h-9 rounded-xl grad-brand flex items-center justify-center shrink-0 shadow-lg shadow-[#2F6BFF]/30">
                     <f.icon className="w-4 h-4 text-white" />
                   </span>
                   <span className="text-[12px] font-semibold text-stone-200">{f.text}</span>
@@ -238,7 +238,7 @@ export default function AuthScreen() {
                 <button
                   key={tb.v}
                   onClick={() => gotoView(tb.v)}
-                  className={`flex-1 py-2.5 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 ${mainTab === tb.v ? 'grad-brand text-white shadow-lg shadow-[#f36f21]/30' : 'text-stone-400 hover:text-white'}`}
+                  className={`flex-1 py-2.5 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 ${mainTab === tb.v ? 'grad-brand text-white shadow-lg shadow-[#2F6BFF]/30' : 'text-stone-400 hover:text-white'}`}
                 >
                   {tb.icon && <QrIcon className="w-3.5 h-3.5" />}{tb.label}
                 </button>
@@ -258,7 +258,7 @@ export default function AuthScreen() {
               <p className="text-xs text-stone-400 mb-5">{t('auth.verify.help')}{email && <> — <span className="text-white font-bold">{email}</span></>}</p>
             )}
 
-            {error && <div className="mb-3 px-3.5 py-2.5 bg-[#f36f21]/12 border border-[#f36f21]/30 rounded-2xl text-xs text-[#ff9a3d] leading-relaxed">{error}</div>}
+            {error && <div className="mb-3 px-3.5 py-2.5 bg-[#2F6BFF]/12 border border-[#2F6BFF]/30 rounded-2xl text-xs text-[#6E9BFF] leading-relaxed">{error}</div>}
             {success && <div className="mb-3 px-3.5 py-2.5 bg-emerald-600/12 border border-emerald-600/30 rounded-2xl text-xs text-emerald-400 leading-relaxed">{success}</div>}
 
             {/* Login form */}
@@ -279,9 +279,9 @@ export default function AuthScreen() {
                   <input type="text" value={totpCode} onChange={e => setTotpCode(e.target.value.replace(/\D/g, '').slice(0, 6))} placeholder={t('auth.totp_hint')} inputMode="numeric" required className="w-full px-3 py-3 bg-amber-500/5 border border-amber-500/30 rounded-2xl text-sm font-mono tracking-[0.3em] text-center text-amber-200 placeholder:text-amber-700 focus:outline-none focus:border-amber-500" />
                 )}
                 <div className="flex items-center justify-end text-[11px]">
-                  <button type="button" onClick={() => gotoView('forgot')} className="text-[#ff9a3d] hover:text-[#ffb37a] font-semibold">{t('auth.link.forgot')}</button>
+                  <button type="button" onClick={() => gotoView('forgot')} className="text-[#6E9BFF] hover:text-[#ffb37a] font-semibold">{t('auth.link.forgot')}</button>
                 </div>
-                <button type="submit" disabled={loading} className="w-full py-3.5 btn-orange text-white font-bold text-sm rounded-2xl shadow-xl shadow-[#f36f21]/25 transition-all flex items-center justify-center gap-2 disabled:opacity-60">
+                <button type="submit" disabled={loading} className="w-full py-3.5 btn-orange text-white font-bold text-sm rounded-2xl shadow-xl shadow-[#2F6BFF]/25 transition-all flex items-center justify-center gap-2 disabled:opacity-60">
                   {loading ? t('app.loading') : <>{t('auth.btn.login')} <ArrowRight className="w-4 h-4" /></>}
                 </button>
               </form>
@@ -305,7 +305,7 @@ export default function AuthScreen() {
                     {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
-                <button type="submit" disabled={loading} className="w-full py-3.5 btn-orange text-white font-bold text-sm rounded-2xl shadow-xl shadow-[#f36f21]/25 transition-all flex items-center justify-center gap-2 disabled:opacity-60">
+                <button type="submit" disabled={loading} className="w-full py-3.5 btn-orange text-white font-bold text-sm rounded-2xl shadow-xl shadow-[#2F6BFF]/25 transition-all flex items-center justify-center gap-2 disabled:opacity-60">
                   {loading ? t('app.loading') : <>{t('auth.btn.register')} <ArrowRight className="w-4 h-4" /></>}
                 </button>
                 <p className="text-[10px] text-stone-500 leading-relaxed text-center pt-1">
@@ -320,20 +320,20 @@ export default function AuthScreen() {
                 <p className="text-xs text-stone-400 mb-4 leading-relaxed">{t('auth.qr.help')}</p>
                 {qrBusy && !qrCode ? (
                   <div className="py-10">
-                    <div className="w-10 h-10 mx-auto border-[3px] border-[#f36f21] border-t-transparent rounded-full animate-spin"></div>
+                    <div className="w-10 h-10 mx-auto border-[3px] border-[#2F6BFF] border-t-transparent rounded-full animate-spin"></div>
                     <p className="text-xs text-stone-500 mt-3">{t('app.loading')}</p>
                   </div>
                 ) : qrCode && qrLeft > 0 ? (
                   <>
-                    <div className="inline-block bg-white p-4 rounded-3xl shadow-2xl shadow-[#f36f21]/20 relative">
+                    <div className="inline-block bg-white p-4 rounded-3xl shadow-2xl shadow-[#2F6BFF]/20 relative">
                       <QRCodeSVG value={`CHRTV-QR:${qrCode}`} size={180} level="M" />
                       <span className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full grad-brand text-white text-[11px] font-mono font-black tracking-[0.25em] shadow-lg whitespace-nowrap">{qrCode}</span>
                     </div>
                     <p className="text-[11px] text-stone-400 mt-6">
-                      {t('auth.qr.waiting')} · <span className={`font-mono font-bold ${qrLeft <= 20 ? 'text-[#ff9a3d]' : 'text-stone-200'}`}>{Math.floor(qrLeft / 60)}:{String(qrLeft % 60).padStart(2, '0')}</span>
+                      {t('auth.qr.waiting')} · <span className={`font-mono font-bold ${qrLeft <= 20 ? 'text-[#6E9BFF]' : 'text-stone-200'}`}>{Math.floor(qrLeft / 60)}:{String(qrLeft % 60).padStart(2, '0')}</span>
                     </p>
                     <div className="mt-2 h-1 rounded-full bg-white/10 overflow-hidden max-w-[220px] mx-auto">
-                      <div className="h-full bg-gradient-to-r from-[#f36f21] to-[#ff9a3d] transition-all" style={{ width: `${(qrLeft / 120) * 100}%` }}></div>
+                      <div className="h-full bg-gradient-to-r from-[#2F6BFF] to-[#6E9BFF] transition-all" style={{ width: `${(qrLeft / 120) * 100}%` }}></div>
                     </div>
                   </>
                 ) : (
@@ -365,7 +365,7 @@ export default function AuthScreen() {
             {/* Reset */}
             {view === 'reset' && (
               <form onSubmit={handleReset} className="space-y-3">
-                <input type="text" value={verifyCode} onChange={e => setVerifyCode(e.target.value)} placeholder={t('auth.reset_code')} required className="w-full px-3 py-3 bg-white/5 border border-white/10 rounded-2xl text-sm text-white text-center font-mono placeholder:text-stone-500 focus:outline-none focus:border-[#f36f21]" />
+                <input type="text" value={verifyCode} onChange={e => setVerifyCode(e.target.value)} placeholder={t('auth.reset_code')} required className="w-full px-3 py-3 bg-white/5 border border-white/10 rounded-2xl text-sm text-white text-center font-mono placeholder:text-stone-500 focus:outline-none focus:border-[#2F6BFF]" />
                 <div className="relative">
                   <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-500" />
                   <input type={showPass ? 'text' : 'password'} value={newPassword} onChange={e => setNewPassword(e.target.value)} placeholder={t('auth.new_password_hint')} required minLength={6} className={`${inputCls} pr-10`} />
@@ -387,12 +387,12 @@ export default function AuthScreen() {
                   </div>
                 )}
                 {(!error && !success && !email) && (
-                  <input type="email" placeholder={t('auth.email')} onChange={e => setEmail(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-2xl px-3 py-3 text-sm text-white placeholder:text-stone-500 focus:outline-none focus:border-[#f36f21]" />
+                  <input type="email" placeholder={t('auth.email')} onChange={e => setEmail(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-2xl px-3 py-3 text-sm text-white placeholder:text-stone-500 focus:outline-none focus:border-[#2F6BFF]" />
                 )}
-                <input type="text" value={verifyCode} onChange={e => setVerifyCode(e.target.value)} placeholder="000000" maxLength={6} className="w-full bg-white/5 border border-white/10 rounded-2xl px-3 py-3 text-2xl tracking-[0.5em] font-mono text-center text-white focus:outline-none focus:border-[#f36f21]" />
+                <input type="text" value={verifyCode} onChange={e => setVerifyCode(e.target.value)} placeholder="000000" maxLength={6} className="w-full bg-white/5 border border-white/10 rounded-2xl px-3 py-3 text-2xl tracking-[0.5em] font-mono text-center text-white focus:outline-none focus:border-[#2F6BFF]" />
                 <button type="submit" className="w-full py-3.5 btn-orange text-white font-bold text-sm rounded-2xl">{t('auth.btn.verify')}</button>
                 <div className="flex items-center justify-between gap-2">
-                  <button type="button" onClick={handleResend} disabled={resendIn > 0 || !email} className="text-xs text-[#ff9a3d] hover:text-[#ffb37a] disabled:opacity-40 disabled:cursor-not-allowed font-semibold">
+                  <button type="button" onClick={handleResend} disabled={resendIn > 0 || !email} className="text-xs text-[#6E9BFF] hover:text-[#ffb37a] disabled:opacity-40 disabled:cursor-not-allowed font-semibold">
                     {resendIn > 0 ? t('auth.verify.resend_in', { s: resendIn }) : `↻ ${t('auth.btn.resend')}`}
                   </button>
                   <button type="button" onClick={() => gotoView('login')} className="text-xs text-stone-500 hover:text-white">{t('common.back')} {t('auth.title.login')}</button>

@@ -22,7 +22,7 @@ export default function Footer({ onGoTab }) {
         <div>
           <Logo size="sm" showSubtext={false} />
           <p className="text-[13px] font-black text-white mt-3 tracking-wide">
-            CHRTV PL<span className="text-[#f36f21]">▷</span>Y <span className="text-stone-500 font-semibold">- A Product of ANKB CO.</span>
+            CHRTV PL<span className="text-[#2F6BFF]">▷</span>Y <span className="text-stone-500 font-semibold">- A Product of ANKB CO.</span>
           </p>
           <p className="text-[11px] text-stone-500 mt-2 leading-relaxed max-w-sm">{t('footer.desc')}</p>
           <p className="text-[11px] text-stone-600 mt-3 font-semibold">© 2026 ANKB CO. · {t('footer.rights')}</p>
@@ -65,7 +65,7 @@ export default function Footer({ onGoTab }) {
                 onClick={() => setLegal(l.id)}
                 className="flex items-center gap-2 text-[13px] font-semibold text-stone-400 hover:text-white transition-colors"
               >
-                <l.Icon className="w-3.5 h-3.5 text-[#f36f21]" /> {l.label}
+                <l.Icon className="w-3.5 h-3.5 text-[#2F6BFF]" /> {l.label}
               </button>
             ))}
           </div>
@@ -73,7 +73,7 @@ export default function Footer({ onGoTab }) {
       </div>
       <div className="border-t border-white/[0.05]">
         <div className="max-w-[1400px] mx-auto px-5 md:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <p className="text-[10px] text-stone-600 font-semibold tracking-wide">CHRTV PL▷Y - A Product of ANKB CO. © 2025</p>
+          <p className="text-[10px] text-stone-600 font-semibold tracking-wide">playZ - A Product of ANKB CO. © 2025</p>
           <p className="text-[10px] text-stone-700">{t('footer.note')}</p>
         </div>
       </div>

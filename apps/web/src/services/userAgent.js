@@ -1,5 +1,5 @@
 /**
- * User-Agent upstream cho luồng phát (CHRTV PLAY)
+ * User-Agent upstream cho luồng phát (playZ)
  * Nhiều nguồn (TV360, FPT, VThanh...) kiểm tra UA — sai UA là 403 / không tải được manifest.
  * Worker ưu tiên: override từ client (header X-CHRTV-Upstream-UA) > UA của kênh (M3U #EXTVLCOPT) > VLC mặc định.
  */

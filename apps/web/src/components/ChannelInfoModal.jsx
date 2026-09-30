@@ -92,7 +92,7 @@ export default function ChannelInfoModal({ channel, epgNow, epgNext, isFavorite,
 
           <h2 className="text-lg font-extrabold text-white mb-1">{channel.name}</h2>
           <div className="flex items-center justify-center gap-2 mb-3">
-            <span className="px-2.5 py-1 text-[10px] font-bold rounded-full grad-brand text-white shadow-md shadow-[#f36f21]/30">{channel.group_title || t('chinfo.general')}</span>
+            <span className="px-2.5 py-1 text-[10px] font-bold rounded-full grad-brand text-white shadow-md shadow-[#2F6BFF]/30">{channel.group_title || t('chinfo.general')}</span>
             {epgNow && (
               <span className="px-2 py-0.5 text-[10px] font-bold rounded bg-emerald-600/80 text-white flex items-center gap-0.5">
                 <Radio className="w-2.5 h-2.5 animate-pulse" /> LIVE
@@ -104,7 +104,7 @@ export default function ChannelInfoModal({ channel, epgNow, epgNext, isFavorite,
         <div className="px-5 pb-3 space-y-2.5">
           {epgNow && (
             <div className="bg-slate-900/60 rounded-lg p-2.5 border border-slate-800/30">
-              <div className="text-[10px] text-[#ff9a3d] font-semibold uppercase mb-0.5 flex items-center gap-1">
+              <div className="text-[10px] text-[#6E9BFF] font-semibold uppercase mb-0.5 flex items-center gap-1">
                 <Clock className="w-3 h-3" /> {t('chinfo.now')}
               </div>
               <p className="text-xs font-bold text-white truncate">{epgNow.title}</p>
@@ -144,15 +144,15 @@ export default function ChannelInfoModal({ channel, epgNow, epgNext, isFavorite,
           <button
             onClick={() => { onToggleFavorite(channel.channel_id); }}
             className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold transition-all ${
-              isFavorite ? 'bg-[#f36f21]/20 text-[#ff9a3d] border border-[#f36f21]/40' : 'bg-slate-800 text-slate-400 border border-slate-700'
+              isFavorite ? 'bg-[#2F6BFF]/20 text-[#6E9BFF] border border-[#2F6BFF]/40' : 'bg-slate-800 text-slate-400 border border-slate-700'
             }`}
           >
-            <Heart className={`w-3.5 h-3.5 ${isFavorite ? 'fill-[#f36f21]' : ''}`} />
+            <Heart className={`w-3.5 h-3.5 ${isFavorite ? 'fill-[#2F6BFF]' : ''}`} />
             {isFavorite ? t('chinfo.unlike') : t('chinfo.like')}
           </button>
           <button
             onClick={() => { onPlay(channel); onClose(); }}
-            className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold bg-[#f36f21] text-white hover:bg-[#f36f21] transition-all"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold bg-[#2F6BFF] text-white hover:bg-[#2F6BFF] transition-all"
           >
             <Play className="w-3.5 h-3.5 fill-current" /> Xem ngay
           </button>

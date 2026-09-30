@@ -39,7 +39,7 @@ function showBlock(on) {
       overlayEl = document.createElement('div');
       overlayEl.setAttribute('data-chrtv-guard', '1');
       overlayEl.style.cssText = 'position:fixed;inset:0;z-index:2147483646;background:#07080c;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;font-family:Inter,system-ui,sans-serif;';
-      overlayEl.innerHTML = '<p style="color:#fff;font-weight:900;font-size:18px;letter-spacing:.04em">CHRTV PL▷Y</p><p style="color:#a8a29a;font-size:13px">Không hỗ trợ công cụ nhà phát triển.</p>';
+      overlayEl.innerHTML = '<p style="color:#fff;font-weight:900;font-size:18px;letter-spacing:.04em">playZ</p><p style="color:#a8a29a;font-size:13px">Không hỗ trợ công cụ nhà phát triển.</p>';
       document.documentElement.appendChild(overlayEl);
     }
   } else if (overlayEl) {

@@ -18,7 +18,7 @@ export default function ShareMovieModal({ movie, onClose }) {
     <div className="fixed inset-0 z-[220] bg-black/85 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}>
       <div className="w-full max-w-sm modal-panel overflow-hidden" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between gap-3 px-4 py-3 border-b border-white/10">
-          <p className="text-[13px] font-black text-white flex items-center gap-2"><QrCode className="w-4 h-4 text-[#ff9a3d]" />{t('share_movie.title')}</p>
+          <p className="text-[13px] font-black text-white flex items-center gap-2"><QrCode className="w-4 h-4 text-[#6E9BFF]" />{t('share_movie.title')}</p>
           <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-slate-400" /></button>
         </div>
         <div className="p-4 space-y-3">

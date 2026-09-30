@@ -160,7 +160,7 @@ export default function HomePage({
     <button
       key={ch.channel_id}
       onClick={() => onSelectChannel && onSelectChannel(ch)}
-      className="group relative shrink-0 w-[190px] md:w-[220px] snap-start rounded-2xl overflow-hidden border border-white/[0.08] hover:border-[#f36f21]/60 bg-[#15161b] text-left transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-[#f36f21]/10"
+      className="group relative shrink-0 w-[190px] md:w-[220px] snap-start rounded-2xl overflow-hidden border border-white/[0.08] hover:border-[#2F6BFF]/60 bg-[#15161b] text-left transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-[#2F6BFF]/10"
     >
       <span className="block relative h-[104px] md:h-[120px] flex items-center justify-center bg-[#0c0d11] overflow-hidden">
         <span className="absolute inset-0 opacity-40" style={{ background: 'radial-gradient(circle at 20% 120%, rgba(243,111,33,.3), transparent 65%)' }}></span>
@@ -173,7 +173,7 @@ export default function HomePage({
           <span className="font-black italic text-white/25 text-2xl relative z-10">{(ch.name || '?').slice(0, 8)}</span>
         )}
         <span className="absolute inset-0 z-10 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
-          <span className="w-10 h-10 rounded-full bg-[#f36f21] flex items-center justify-center shadow-lg"><Play className="w-4 h-4 text-white fill-current ml-0.5" /></span>
+          <span className="w-10 h-10 rounded-full bg-[#2F6BFF] flex items-center justify-center shadow-lg"><Play className="w-4 h-4 text-white fill-current ml-0.5" /></span>
         </span>
         {opts.live && epg?.now && (
           <span className="absolute top-2 right-2 z-20 px-1.5 py-0.5 rounded-md bg-red-600 text-white text-[9px] font-black tracking-widest">LIVE</span>
@@ -202,7 +202,7 @@ export default function HomePage({
           <div className="absolute inset-0" style={{
             background: 'linear-gradient(90deg, rgba(0,0,0,.93) 0%, rgba(0,0,0,.66) 38%, rgba(0,0,0,.2) 62%, rgba(0,0,0,.08) 100%), linear-gradient(0deg, rgba(11,11,13,.88) 0%, transparent 32%)',
           }}></div>
-          <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full blur-3xl opacity-25 pointer-events-none" style={{ background: 'radial-gradient(circle,#f36f21,transparent 70%)' }}></div>
+          <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full blur-3xl opacity-25 pointer-events-none" style={{ background: 'radial-gradient(circle,#2F6BFF,transparent 70%)' }}></div>
 
           <div className="absolute inset-y-0 left-0 z-10 flex flex-col justify-center px-6 md:px-12" style={{ width: 'min(620px, 85%)' }}>
             <div className="flex items-center gap-2 mb-3">
@@ -211,7 +211,7 @@ export default function HomePage({
                   <Sparkles className="w-3 h-3" /> {t('home.banner_event')}
                 </span>
               ) : (
-                <span className="flex items-center gap-1.5 text-[11px] font-black tracking-widest text-white grad-brand px-2.5 py-1 rounded-full shadow-lg shadow-[#f36f21]/40">
+                <span className="flex items-center gap-1.5 text-[11px] font-black tracking-widest text-white grad-brand px-2.5 py-1 rounded-full shadow-lg shadow-[#2F6BFF]/40">
                   <Flame className="w-3 h-3" /> {t('home.banner_trending')}
                 </span>
               )}
@@ -234,7 +234,7 @@ export default function HomePage({
             <div className="flex items-center gap-3 flex-wrap">
               <button
                 onClick={onHeroClick}
-                className="btn-orange flex items-center gap-2 text-white font-extrabold text-[15px] px-7 py-3 rounded-2xl shadow-xl shadow-[#f36f21]/30 hover:brightness-110 active:scale-95 transition-all"
+                className="btn-orange flex items-center gap-2 text-white font-extrabold text-[15px] px-7 py-3 rounded-2xl shadow-xl shadow-[#2F6BFF]/30 hover:brightness-110 active:scale-95 transition-all"
               >
                 {hero.kind === 'movie' ? <Clapperboard className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current" />}
                 {hero.kind === 'movie' ? t('home.banner_detail') : t('home.banner_open')}
@@ -258,7 +258,7 @@ export default function HomePage({
                     onClick={() => setHeroIdx(i)}
                     aria-label={`slide ${i + 1}`}
                     className="h-[7px] rounded-full transition-all duration-300"
-                    style={{ width: i === safeIdx ? 24 : 7, background: i === safeIdx ? '#f36f21' : 'rgba(255,255,255,.35)' }}
+                    style={{ width: i === safeIdx ? 24 : 7, background: i === safeIdx ? '#2F6BFF' : 'rgba(255,255,255,.35)' }}
                   />
                 ))}
               </div>
@@ -278,7 +278,7 @@ export default function HomePage({
         )}
         {favCh.length > 0 && (
           <section className="anim-fade-up">
-            <SectionHead icon={<Heart className="w-4 h-4 text-[#ff9a3d]" />} wrap="bg-[#f36f21]/15 border-[#f36f21]/25" title={t('fav.title')} sub={t('app.favorites')} />
+            <SectionHead icon={<Heart className="w-4 h-4 text-[#6E9BFF]" />} wrap="bg-[#2F6BFF]/15 border-[#2F6BFF]/25" title={t('fav.title')} sub={t('app.favorites')} />
             <ScrollRow>
               {favCh.map((item) => renderChCard(item, null, { live: true }))}
             </ScrollRow>
@@ -288,7 +288,7 @@ export default function HomePage({
         {/* ===== 2. KÊNH TRENDING ===== */}
         {trendingCh.length > 0 && (
           <section className="anim-fade-up">
-            <SectionHead icon={<Flame className="w-4 h-4 text-[#ff9a3d]" />} wrap="bg-[#f36f21]/15 border-[#f36f21]/25" title={t('home.trending_ch')} sub={t('home.trending_ch_sub')} action={onGoTab ? { label: t('home.view_all'), onClick: () => onGoTab('tv') } : null} />
+            <SectionHead icon={<Flame className="w-4 h-4 text-[#6E9BFF]" />} wrap="bg-[#2F6BFF]/15 border-[#2F6BFF]/25" title={t('home.trending_ch')} sub={t('home.trending_ch_sub')} action={onGoTab ? { label: t('home.view_all'), onClick: () => onGoTab('tv') } : null} />
             <ScrollRow>
               {trendingCh.map((item, i) => renderChCard(item, i, { live: true }))}
             </ScrollRow>
@@ -306,7 +306,7 @@ export default function HomePage({
                   onClick={() => onSelectMovie && onSelectMovie(m)}
                   className="group relative shrink-0 w-[130px] md:w-[160px] snap-start text-left active:scale-[0.98] transition-transform"
                 >
-                  <span className="block aspect-[2/3] rounded-2xl overflow-hidden bg-stone-900 border border-white/10 shadow-xl shadow-black/50 group-hover:border-[#f36f21]/60 transition-all">
+                  <span className="block aspect-[2/3] rounded-2xl overflow-hidden bg-stone-900 border border-white/10 shadow-xl shadow-black/50 group-hover:border-[#2F6BFF]/60 transition-all">
                     {m.poster_path ? (
                       <img src={imgPath(m.poster_path, 'w342')} alt={m.title || m.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onError={e => { e.target.style.display = 'none'; }} />
                     ) : (
@@ -374,7 +374,7 @@ export default function HomePage({
                 <h2 className="text-[17px] font-extrabold tracking-tight">{t('home.scores')}</h2>
               </div>
               {onGoTab && (
-                <button onClick={() => onGoTab('sports')} className="flex items-center gap-0.5 text-[11px] font-bold text-[#ff9a3d] hover:text-white transition-colors">
+                <button onClick={() => onGoTab('sports')} className="flex items-center gap-0.5 text-[11px] font-bold text-[#6E9BFF] hover:text-white transition-colors">
                   {t('home.view_all')} <ArrowIcon className="w-3.5 h-3.5" />
                 </button>
               )}
@@ -384,7 +384,7 @@ export default function HomePage({
                 <p className="text-[12px] text-stone-600 italic text-center py-6">{t('sports.no_data')}</p>
               )}
               {scores.map(s => (
-                <div key={`${s.league?.id}-${s.ev?.idEvent}`} className={`flex items-center gap-2 rounded-2xl px-3 py-2.5 border ${s.live ? 'bg-[#f36f21]/10 border-[#f36f21]/40' : 'bg-black/30 border-white/[0.05]'}`}>
+                <div key={`${s.league?.id}-${s.ev?.idEvent}`} className={`flex items-center gap-2 rounded-2xl px-3 py-2.5 border ${s.live ? 'bg-[#2F6BFF]/10 border-[#2F6BFF]/40' : 'bg-black/30 border-white/[0.05]'}`}>
                   <span className="w-11 shrink-0 flex flex-col items-start gap-0.5" title={s.league?.name}>
                     {s.live ? (
                       <span className="text-[8px] font-black text-white rounded-full grad-brand px-1.5 py-0.5 flex items-center gap-1">
@@ -399,7 +399,7 @@ export default function HomePage({
                     <span className="text-[12px] font-bold text-slate-200 truncate text-right">{s.ev?.strHomeTeam}</span>
                     {s.ev?.strHomeTeamBadge && <img src={s.ev.strHomeTeamBadge} alt="" loading="lazy" className="w-6 h-6 object-contain shrink-0" onError={e => { e.target.style.display = 'none'; }} />}
                   </span>
-                  <span className={`px-2.5 py-1 rounded-lg text-[13px] font-black tabular-nums shrink-0 ${s.live ? 'bg-[#f36f21]/25 text-[#ffb37a]' : 'bg-white/[0.07] text-white'}`}>
+                  <span className={`px-2.5 py-1 rounded-lg text-[13px] font-black tabular-nums shrink-0 ${s.live ? 'bg-[#2F6BFF]/25 text-[#ffb37a]' : 'bg-white/[0.07] text-white'}`}>
                     {s.ev?.intHomeScore ?? '-'} - {s.ev?.intAwayScore ?? '-'}
                   </span>
                   <span className="flex-1 min-w-0 flex items-center gap-1.5">

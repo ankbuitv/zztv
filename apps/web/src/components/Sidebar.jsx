@@ -81,7 +81,7 @@ export default function Sidebar({ activeTab, setActiveTab, onShowSettings, onSho
           </button>
         )}
         {currentProfile && (
-          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-500 to-[#f36f21] flex items-center justify-center font-bold text-white text-xs mt-1 cursor-pointer">
+          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-500 to-[#2F6BFF] flex items-center justify-center font-bold text-white text-xs mt-1 cursor-pointer">
             {currentProfile.name[0].toUpperCase()}
           </div>
         )}
@@ -137,7 +137,7 @@ export default function Sidebar({ activeTab, setActiveTab, onShowSettings, onSho
 
             {currentProfile && (
               <div className="flex items-center gap-3 mt-4 pt-4 border-t border-white/5">
-                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-500 to-[#f36f21] flex items-center justify-center font-bold text-white text-xs">
+                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-500 to-[#2F6BFF] flex items-center justify-center font-bold text-white text-xs">
                   {currentProfile.name[0].toUpperCase()}
                 </div>
                 <div className="min-w-0">

@@ -554,7 +554,7 @@ export default function VideoPlayer({
       {mini && onExpand && (
         <div className="absolute top-0 left-0 right-0 z-50 flex items-center gap-2 px-3 py-2 bg-slate-900/95 border-b border-white/10">
           <span className="text-xs">📌 {channelName}</span>
-          <button onClick={onExpand} className="ml-auto px-2.5 py-1 bg-[#f36f21] text-white text-[11px] font-bold rounded-lg">Mở lại</button>
+          <button onClick={onExpand} className="ml-auto px-2.5 py-1 bg-[#2F6BFF] text-white text-[11px] font-bold rounded-lg">Mở lại</button>
         </div>
       )}
 
@@ -571,7 +571,7 @@ export default function VideoPlayer({
 
       {buffering && !error && (
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/60">
-          <div className="w-10 h-10 border-[3px] border-[#f36f21] border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-10 h-10 border-[3px] border-[#2F6BFF] border-t-transparent rounded-full animate-spin"></div>
           <span className="mt-2 text-[11px] text-white/60 font-bold tracking-widest\">ĐANG TẢI</span>
         </div>
       )}
@@ -579,13 +579,13 @@ export default function VideoPlayer({
       {error && (
         <div className="absolute inset-0 z-30 flex items-center justify-center bg-black/85 p-6 text-center">
           <div className="max-w-sm w-full">
-            <div className="w-14 h-14 mx-auto rounded-full bg-[#f36f21]/15 border border-[#f36f21]/30 flex items-center justify-center mb-3\">
-              <AlertTriangle className="w-7 h-7 text-[#ff9a3d]" />
+            <div className="w-14 h-14 mx-auto rounded-full bg-[#2F6BFF]/15 border border-[#2F6BFF]/30 flex items-center justify-center mb-3\">
+              <AlertTriangle className="w-7 h-7 text-[#6E9BFF]" />
             </div>
             <h3 className="text-white font-black text-[15px] mb-1\">{channelName}</h3>
             <p className="text-stone-400 text-xs mb-4 line-clamp-3\">{String(error).slice(0, 180)}</p>
             <div className="flex gap-2 justify-center">
-              <button onClick={() => { setError(null); setLoadKey(k => k + 1); }} className="px-4 py-2 rounded-full bg-[#f36f21] text-white text-xs font-bold flex items-center gap-1.5\">
+              <button onClick={() => { setError(null); setLoadKey(k => k + 1); }} className="px-4 py-2 rounded-full bg-[#2F6BFF] text-white text-xs font-bold flex items-center gap-1.5\">
                 <RefreshCw className="w-3.5 h-3.5" /> Thử lại
               </button>
               <button onClick={() => setShowReport(true)} className="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-bold flex items-center gap-1.5\">
@@ -624,8 +624,8 @@ export default function VideoPlayer({
               </span>
             )}
             <button onClick={() => { setShowReport(true); resetOverlay(); }} title="Báo kênh lỗi" className="p-2 rounded-full bg-black/50 text-white/70 hover:text-white hover:bg-white/15\"><Flag className="w-4 h-4" /></button>
-            <button onClick={() => { setShowSettings(v => !v); setSettingsTab('quality'); resetOverlay(); }} className={`p-2 rounded-full ${showSettings ? 'bg-[#f36f21] text-white' : 'bg-black/50 text-white/70 hover:text-white'}`}><Settings className="w-4 h-4" /></button>
-            <button onClick={() => { setShowList(v => !v); resetOverlay(); }} className={`p-2 rounded-full ${showList ? 'bg-[#f36f21] text-white' : 'bg-black/50 text-white/70 hover:text-white'}`}><List className="w-4 h-4" /></button>
+            <button onClick={() => { setShowSettings(v => !v); setSettingsTab('quality'); resetOverlay(); }} className={`p-2 rounded-full ${showSettings ? 'bg-[#2F6BFF] text-white' : 'bg-black/50 text-white/70 hover:text-white'}`}><Settings className="w-4 h-4" /></button>
+            <button onClick={() => { setShowList(v => !v); resetOverlay(); }} className={`p-2 rounded-full ${showList ? 'bg-[#2F6BFF] text-white' : 'bg-black/50 text-white/70 hover:text-white'}`}><List className="w-4 h-4" /></button>
             {onMinimize && !mini && <button onClick={onMinimize} className="p-2 rounded-full bg-black/50 text-white/70 hover:text-white text-[10px] font-bold\">Thu nhỏ</button>}
           </div>
         </div>
@@ -639,13 +639,13 @@ export default function VideoPlayer({
             </div>
             <div className="flex-1 overflow-y-auto">
               {allChannels.slice(0, 120).map(ch => (
-                <button key={ch.channel_id} onClick={() => { window.__chrtv_select_channel && window.__chrtv_select_channel(ch); setShowList(false); }} className={`w-full flex items-center gap-2.5 px-3 py-2.5 hover:bg-white/5 text-left ${channel?.channel_id === ch.channel_id ? 'bg-[#f36f21]/15' : ''}`}>
+                <button key={ch.channel_id} onClick={() => { window.__chrtv_select_channel && window.__chrtv_select_channel(ch); setShowList(false); }} className={`w-full flex items-center gap-2.5 px-3 py-2.5 hover:bg-white/5 text-left ${channel?.channel_id === ch.channel_id ? 'bg-[#2F6BFF]/15' : ''}`}>
                   <img src={ch.logo || ''} alt="" className="w-8 h-8 rounded-lg object-contain bg-black/40 p-0.5" onError={e => e.target.style.display='none'} />
                   <div className="min-w-0 flex-1">
                     <p className="text-[12px] font-bold text-white truncate\">{ch.name}</p>
                     <p className="text-[10px] text-white/40 truncate\">{ch.group_title}</p>
                   </div>
-                  {channel?.channel_id === ch.channel_id && <Radio className="w-3 h-3 text-[#f36f21] animate-pulse" />}
+                  {channel?.channel_id === ch.channel_id && <Radio className="w-3 h-3 text-[#2F6BFF] animate-pulse" />}
                 </button>
               ))}
             </div>
@@ -656,7 +656,7 @@ export default function VideoPlayer({
         {showSettings && (
           <div className="absolute top-14 right-3 w-[320px] max-w-[90vw] bg-[#0f0f12]/95 backdrop-blur-md rounded-2xl border border-white/10 overflow-hidden pointer-events-auto shadow-2xl">
             <div className="flex items-center justify-between px-3 py-2.5 border-b border-white/10\">
-              <span className="text-[12px] font-black text-white flex items-center gap-1.5\"><Settings className="w-3.5 h-3.5 text-[#ff9a3d]" /> Cài đặt phát</span>
+              <span className="text-[12px] font-black text-white flex items-center gap-1.5\"><Settings className="w-3.5 h-3.5 text-[#6E9BFF]" /> Cài đặt phát</span>
               <button onClick={() => setShowSettings(false)} className="p-1 rounded-full hover:bg-white/10\"><X className="w-4 h-4 text-white/60" /></button>
             </div>
             <div className="flex gap-1 px-2 py-2 bg-black/30\">
@@ -669,7 +669,7 @@ export default function VideoPlayer({
                 <button
                   key={tab.id}
                   onClick={() => setSettingsTab(tab.id)}
-                  className={`flex-1 flex flex-col items-center gap-1 px-2 py-2 rounded-xl text-[10px] font-bold transition ${settingsTab === tab.id ? 'bg-[#f36f21] text-white' : 'bg-white/5 text-white/60 hover:bg-white/10 hover:text-white'}`}
+                  className={`flex-1 flex flex-col items-center gap-1 px-2 py-2 rounded-xl text-[10px] font-bold transition ${settingsTab === tab.id ? 'bg-[#2F6BFF] text-white' : 'bg-white/5 text-white/60 hover:bg-white/10 hover:text-white'}`}
                 >
                   <tab.icon className="w-4 h-4" />
                   {tab.label}
@@ -681,20 +681,20 @@ export default function VideoPlayer({
                 <div className="space-y-1">
                   <p className="text-[10px] font-bold text-white/40 px-2 py-1 uppercase tracking-widest\">Độ phân giải</p>
                   {/* Auto */}
-                  <button onClick={() => selectQuality(-1)} className={`w-full text-left px-3 py-2.5 rounded-xl text-xs flex items-center justify-between ${ (hlsLevel === -1 && selectedTrack === -1) ? 'bg-[#f36f21] text-white font-bold' : 'text-white/70 hover:bg-white/10'}`}>
+                  <button onClick={() => selectQuality(-1)} className={`w-full text-left px-3 py-2.5 rounded-xl text-xs flex items-center justify-between ${ (hlsLevel === -1 && selectedTrack === -1) ? 'bg-[#2F6BFF] text-white font-bold' : 'text-white/70 hover:bg-white/10'}`}>
                     <span className="flex items-center gap-2\"><Hd className="w-3.5 h-3.5" /> Tự động (ABR)</span>
                     {(hlsLevel === -1 && selectedTrack === -1) && <span className="w-1.5 h-1.5 rounded-full bg-white"></span>}
                   </button>
                   {/* HLS levels */}
                   {hlsLevels.map(lv => (
-                    <button key={`hls-${lv.id}`} onClick={() => selectQuality(lv.id)} className={`w-full text-left px-3 py-2.5 rounded-xl text-xs flex items-center justify-between ${hlsLevel === lv.id ? 'bg-[#f36f21] text-white font-bold' : 'text-white/70 hover:bg-white/10'}`}>
+                    <button key={`hls-${lv.id}`} onClick={() => selectQuality(lv.id)} className={`w-full text-left px-3 py-2.5 rounded-xl text-xs flex items-center justify-between ${hlsLevel === lv.id ? 'bg-[#2F6BFF] text-white font-bold' : 'text-white/70 hover:bg-white/10'}`}>
                       <span>{lv.label} {lv.width ? `• ${lv.width}x${lv.height}` : ''}</span>
                       <span className="text-[10px] opacity-60\">{lv.bitrate ? `${Math.round(lv.bitrate/1000)}k` : ''}</span>
                     </button>
                   ))}
                   {/* Shaka tracks (fallback when no hls) */}
                   {hlsLevels.length === 0 && tracks.map(tr => (
-                    <button key={tr.id} onClick={() => selectQuality(tr.id)} className={`w-full text-left px-3 py-2.5 rounded-xl text-xs flex items-center justify-between ${selectedTrack === tr.id ? 'bg-[#f36f21] text-white font-bold' : 'text-white/70 hover:bg-white/10'}`}>
+                    <button key={tr.id} onClick={() => selectQuality(tr.id)} className={`w-full text-left px-3 py-2.5 rounded-xl text-xs flex items-center justify-between ${selectedTrack === tr.id ? 'bg-[#2F6BFF] text-white font-bold' : 'text-white/70 hover:bg-white/10'}`}>
                       <span>{tr.height ? `${tr.height}p` : `Track ${tr.id}`} {tr.width ? `• ${tr.width}x${tr.height}` : ''}</span>
                       <span className="text-[10px] opacity-60\">{Math.round((tr.bandwidth||0)/1000)}k</span>
                     </button>
@@ -707,7 +707,7 @@ export default function VideoPlayer({
                   <p className="text-[10px] font-bold text-white/40 px-2 py-1 uppercase tracking-widest\">Ngôn ngữ / Audio</p>
                   {audioTracks.length === 0 && <p className="text-[11px] text-stone-500 px-3 py-4 text-center\">Không có lựa chọn audio khác</p>}
                   {audioTracks.map((at, idx) => (
-                    <button key={`audio-${at.id}-${idx}`} onClick={() => selectAudioTrack(at.id)} className={`w-full text-left px-3 py-2.5 rounded-xl text-xs flex items-center justify-between ${ (selectedAudio === at.id || at.active) ? 'bg-[#f36f21] text-white font-bold' : 'text-white/70 hover:bg-white/10'}`}>
+                    <button key={`audio-${at.id}-${idx}`} onClick={() => selectAudioTrack(at.id)} className={`w-full text-left px-3 py-2.5 rounded-xl text-xs flex items-center justify-between ${ (selectedAudio === at.id || at.active) ? 'bg-[#2F6BFF] text-white font-bold' : 'text-white/70 hover:bg-white/10'}`}>
                       <span className="flex items-center gap-2\"><Languages className="w-3.5 h-3.5" /> {at.label} {at.name ? `— ${at.name}` : ''}</span>
                       <span className="text-[10px] opacity-60\">{at.lang}</span>
                     </button>
@@ -717,11 +717,11 @@ export default function VideoPlayer({
               {settingsTab === 'subtitle' && (
                 <div className="space-y-1">
                   <p className="text-[10px] font-bold text-white/40 px-2 py-1 uppercase tracking-widest\">Phụ đề</p>
-                  <button onClick={() => selectSubtitle(-1)} className={`w-full text-left px-3 py-2.5 rounded-xl text-xs flex items-center gap-2 ${selectedText === -1 ? 'bg-[#f36f21] text-white font-bold' : 'text-white/70 hover:bg-white/10'}`}>
+                  <button onClick={() => selectSubtitle(-1)} className={`w-full text-left px-3 py-2.5 rounded-xl text-xs flex items-center gap-2 ${selectedText === -1 ? 'bg-[#2F6BFF] text-white font-bold' : 'text-white/70 hover:bg-white/10'}`}>
                     <X className="w-3.5 h-3.5" /> Tắt phụ đề
                   </button>
                   {textTracks.map((st, idx) => (
-                    <button key={`sub-${st.id}-${idx}`} onClick={() => selectSubtitle(st.id)} className={`w-full text-left px-3 py-2.5 rounded-xl text-xs flex items-center justify-between ${ (selectedText === st.id || st.active) ? 'bg-[#f36f21] text-white font-bold' : 'text-white/70 hover:bg-white/10'}`}>
+                    <button key={`sub-${st.id}-${idx}`} onClick={() => selectSubtitle(st.id)} className={`w-full text-left px-3 py-2.5 rounded-xl text-xs flex items-center justify-between ${ (selectedText === st.id || st.active) ? 'bg-[#2F6BFF] text-white font-bold' : 'text-white/70 hover:bg-white/10'}`}>
                       <span className="flex items-center gap-2\"><Captions className="w-3.5 h-3.5" /> {st.label}</span>
                       <span className="text-[10px] opacity-60\">{st.lang}</span>
                     </button>
@@ -733,7 +733,7 @@ export default function VideoPlayer({
                 <div className="space-y-1">
                   <p className="text-[10px] font-bold text-white/40 px-2 py-1 uppercase tracking-widest\">Kích thước khung hình</p>
                   {zoom.modes.map(m => (
-                    <button key={m.id} onClick={() => selectZoom(m.id)} className={`w-full text-left px-3 py-2.5 rounded-xl text-xs flex items-center justify-between ${zoom.mode === m.id ? 'bg-[#f36f21] text-white font-bold' : 'text-white/70 hover:bg-white/10'}`}>
+                    <button key={m.id} onClick={() => selectZoom(m.id)} className={`w-full text-left px-3 py-2.5 rounded-xl text-xs flex items-center justify-between ${zoom.mode === m.id ? 'bg-[#2F6BFF] text-white font-bold' : 'text-white/70 hover:bg-white/10'}`}>
                       <span className="flex items-center gap-2\"><ZoomIn className="w-3.5 h-3.5" /> {m.label}</span>
                       <span className="text-[10px] opacity-60\">{m.id === 'fit' ? 'Giữ tỉ lệ' : m.id === 'fill' ? 'Lấp khung, cắt mép' : 'Kéo giãn'}</span>
                     </button>
@@ -752,10 +752,10 @@ export default function VideoPlayer({
           <div className="mb-3 bg-black/60 backdrop-blur-sm rounded-xl p-3 border border-white/10\">
             <div className="flex gap-4">
               <div className="flex-1 min-w-0">
-                <p className="text-[10px] font-black tracking-widest text-[#ff9a3d] flex items-center gap-1\"><Clock className="w-3 h-3" /> {isCatchupMode ? 'XEM LẠI' : 'ĐANG PHÁT'}</p>
+                <p className="text-[10px] font-black tracking-widest text-[#6E9BFF] flex items-center gap-1\"><Clock className="w-3 h-3" /> {isCatchupMode ? 'XEM LẠI' : 'ĐANG PHÁT'}</p>
                 <p className="text-[13px] font-bold text-white truncate mt-1\">{isCatchupMode && catchupProgram ? maskScores(catchupProgram.title) : (epgNow ? maskScores(epgNow.title) : channelName)}</p>
                 <p className="text-[11px] text-white/50 truncate\">{epgNow ? `${formatTimeHHMM(epgNow.start)} - ${formatTimeHHMM(epgNow.stop)}` : ''}</p>
-                {progress > 0 && <div className="mt-2 h-1 bg-white/10 rounded-full overflow-hidden\"><div className="h-full bg-[#f36f21]" style={{ width: `${progress}%` }}></div></div>}
+                {progress > 0 && <div className="mt-2 h-1 bg-white/10 rounded-full overflow-hidden\"><div className="h-full bg-[#2F6BFF]" style={{ width: `${progress}%` }}></div></div>}
               </div>
               {epgNext && !isCatchupMode && (
                 <div className="w-[160px] border-l border-white/10 pl-3\">
@@ -768,13 +768,13 @@ export default function VideoPlayer({
           </div>
 
           <div className="flex items-center gap-2\">
-            <button onClick={togglePlay} className="p-2.5 rounded-full bg-[#f36f21] text-white hover:brightness-110\">
+            <button onClick={togglePlay} className="p-2.5 rounded-full bg-[#2F6BFF] text-white hover:brightness-110\">
               {playing ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 fill-current" />}
             </button>
             <button onClick={toggleMute} className="p-2.5 rounded-full bg-white/10 hover:bg-white/15 text-white\">
               {muted || vol === 0 ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
             </button>
-            <input type="range" min={0} max={100} value={muted ? 0 : vol} onChange={onVolChange} className="w-24 accent-[#f36f21]" />
+            <input type="range" min={0} max={100} value={muted ? 0 : vol} onChange={onVolChange} className="w-24 accent-[#2F6BFF]" />
             <div className="flex items-center gap-1 ml-2\">
               {onPrevChannel && <button onClick={onPrevChannel} className="p-2 rounded-full bg-white/10 hover:bg-white/15 text-white\"><ChevronUp className="w-4 h-4" /></button>}
               {onNextChannel && <button onClick={onNextChannel} className="p-2 rounded-full bg-white/10 hover:bg-white/15 text-white\"><ChevronDown className="w-4 h-4" /></button>}

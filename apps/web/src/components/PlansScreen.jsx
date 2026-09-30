@@ -21,7 +21,7 @@ function planArt(p) {
   const fb = PLANS.find((f) => f.code === p.code) || {};
   return {
     art: p.art || fb.art || '📦',
-    grad: p.grad || fb.grad || `linear-gradient(135deg, ${p.color || '#f36f21'}, #1a1b22)`,
+    grad: p.grad || fb.grad || `linear-gradient(135deg, ${p.color || '#2F6BFF'}, #1a1b22)`,
     tagline_en: p.tagline_en || fb.tagline_en || p.tagline || '',
     not: Array.isArray(p.not) && p.not.length ? p.not : (fb.not || []),
     not_en: Array.isArray(p.not_en) && p.not_en.length ? p.not_en : (fb.not_en || []),
@@ -103,14 +103,14 @@ export default function PlansScreen({ initialCode = '' }) {
       <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(700px 260px at 50% 0%, rgba(243,111,33,.12), transparent 70%)' }}></div>
       <div className="max-w-[1200px] mx-auto px-4 md:px-6 relative">
         <div className="flex items-center justify-end gap-2 text-[11px] sm:text-[12px] pt-4 text-stone-500 flex-wrap min-w-0">
-          <Mail className="w-3.5 h-3.5 text-[#f36f21] shrink-0" />
+          <Mail className="w-3.5 h-3.5 text-[#2F6BFF] shrink-0" />
           <span className="shrink-0">{t('plans.support')}:</span>
-          <a href={`mailto:${SUPPORT_EMAIL}`} className="font-bold text-[#ff9a3d] hover:underline break-all">{SUPPORT_EMAIL}</a>
+          <a href={`mailto:${SUPPORT_EMAIL}`} className="font-bold text-[#6E9BFF] hover:underline break-all">{SUPPORT_EMAIL}</a>
         </div>
 
         {/* ===== HERO minh hoạ ===== */}
         <div className="relative overflow-hidden rounded-3xl border border-white/10 mt-3 mb-6" style={{ background: 'linear-gradient(120deg,#1a0f08 0%,#2b1410 40%,#101828 100%)' }}>
-          <div className="absolute -right-10 -top-10 w-64 h-64 rounded-full opacity-30 blur-2xl" style={{ background: 'radial-gradient(circle,#f36f21,transparent 70%)' }} />
+          <div className="absolute -right-10 -top-10 w-64 h-64 rounded-full opacity-30 blur-2xl" style={{ background: 'radial-gradient(circle,#2F6BFF,transparent 70%)' }} />
           <div className="absolute -left-14 -bottom-14 w-72 h-72 rounded-full opacity-20 blur-2xl" style={{ background: 'radial-gradient(circle,#42a5f5,transparent 70%)' }} />
           <div className="relative flex flex-col md:flex-row items-center gap-5 p-6 md:p-8">
             {/* Minh hoạ gói */}
@@ -130,8 +130,8 @@ export default function PlansScreen({ initialCode = '' }) {
             </div>
             {/* Tiêu đề */}
             <div className="text-center md:text-left flex-1">
-              <div className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-[#ff9a3d] bg-[#f36f21]/10 border border-[#f36f21]/30 rounded-full px-3 py-1 mb-2">
-                <Sparkles className="w-3 h-3" /> CHRTV PL▷Y
+              <div className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-[#6E9BFF] bg-[#2F6BFF]/10 border border-[#2F6BFF]/30 rounded-full px-3 py-1 mb-2">
+                <Sparkles className="w-3 h-3" /> playZ
               </div>
               <h1 className="text-[22px] sm:text-[26px] md:text-[32px] font-black tracking-tight text-white leading-tight break-words">{t('plans.title')}</h1>
               <p className="text-[13px] text-stone-400 mt-1.5 flex items-center justify-center md:justify-start gap-1.5 px-1">
@@ -143,7 +143,7 @@ export default function PlansScreen({ initialCode = '' }) {
             {currentRank > 0 && (
               <div className="shrink-0 rounded-2xl border border-emerald-500/30 bg-emerald-500/[0.07] px-4 py-3 text-center">
                 <div className="flex items-center justify-center gap-1.5 text-[11px] text-stone-400 font-bold"><ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />{t('plans.current')}</div>
-                <div className="text-lg font-black" style={{ color: cur?.color || '#ff9a3d' }}>{cur?.name || current.toUpperCase()}</div>
+                <div className="text-lg font-black" style={{ color: cur?.color || '#6E9BFF' }}>{cur?.name || current.toUpperCase()}</div>
                 {currentRank < maxRank && <div className="text-[11px] text-stone-500">{t('plans.upgrade_anytime')}</div>}
               </div>
             )}
@@ -177,7 +177,7 @@ export default function PlansScreen({ initialCode = '' }) {
                   <th className="px-4 py-3 text-[11px] font-black text-stone-500 uppercase tracking-wider w-[180px]">{t('plans.feature')}</th>
                   {plans.map((p) => (
                     <th key={p.code} className="px-3 py-3 text-center">
-                      <div className="text-[13px] font-black italic" style={{ color: p.color || '#f36f21' }}>{p.name}</div>
+                      <div className="text-[13px] font-black italic" style={{ color: p.color || '#2F6BFF' }}>{p.name}</div>
                       <div className="text-[11px] text-stone-400 font-bold mt-0.5">{fmtPrice(p, lang) || t('plans.free_price')}</div>
                     </th>
                   ))}
@@ -230,7 +230,7 @@ export default function PlansScreen({ initialCode = '' }) {
             const priceStr = fmtPrice(p, lang);
             const a = planArt(p);
             return (
-              <div key={p.code} className={`rounded-3xl overflow-hidden flex flex-col h-full border transition-all hover:-translate-y-1 ${isCurrent ? 'border-[#f36f21] shadow-[0_10px_40px_rgba(243,111,33,.25)]' : isTop ? 'border-amber-400/40 shadow-[0_10px_40px_rgba(251,191,36,.12)]' : 'border-white/10 shadow-xl shadow-black/30'} bg-[#14151c]`}>
+              <div key={p.code} className={`rounded-3xl overflow-hidden flex flex-col h-full border transition-all hover:-translate-y-1 ${isCurrent ? 'border-[#2F6BFF] shadow-[0_10px_40px_rgba(243,111,33,.25)]' : isTop ? 'border-amber-400/40 shadow-[0_10px_40px_rgba(251,191,36,.12)]' : 'border-white/10 shadow-xl shadow-black/30'} bg-[#14151c]`}>
                 <div className="relative h-[118px] flex items-center justify-center overflow-hidden shrink-0" style={{ background: a.grad }}>
                   <div className="absolute -left-6 -top-8 w-28 h-28 rounded-full bg-white/15" />
                   <div className="absolute -right-4 -bottom-10 w-32 h-32 rounded-full bg-black/20" />
@@ -240,7 +240,7 @@ export default function PlansScreen({ initialCode = '' }) {
                   )}
                 </div>
                 <div className="px-5 pt-4 pb-1">
-                  <div className="text-[19px] font-black italic tracking-tight" style={{ color: p.color || '#f36f21' }}>{p.name}</div>
+                  <div className="text-[19px] font-black italic tracking-tight" style={{ color: p.color || '#2F6BFF' }}>{p.name}</div>
                   <div className="text-[12px] text-stone-400 mt-0.5 min-h-[18px]">{lang === 'vi' ? p.tagline : (a.tagline_en || p.tagline)}</div>
                 </div>
                 <div className="px-5 pt-1.5 h-10 flex items-baseline">
@@ -273,7 +273,7 @@ export default function PlansScreen({ initialCode = '' }) {
                   onClick={() => startBuy(p)}
                   disabled={busy === p.code || isCurrent}
                   className={`mx-5 mb-5 mt-auto h-11 rounded-2xl font-extrabold text-[13px] transition active:scale-[0.98] shrink-0 ${isCurrent ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/40 cursor-default' : 'text-white hover:brightness-110 disabled:opacity-60 shadow-lg'}`}
-                  style={!isCurrent ? { background: `linear-gradient(135deg, ${p.color || '#f36f21'}, ${p.color || '#f36f21'}bb)`, boxShadow: `0 8px 24px ${p.color || '#f36f21'}44` } : {}}
+                  style={!isCurrent ? { background: `linear-gradient(135deg, ${p.color || '#2F6BFF'}, ${p.color || '#2F6BFF'}bb)`, boxShadow: `0 8px 24px ${p.color || '#2F6BFF'}44` } : {}}
                 >
                   {isCurrent ? t('plans.is_current') : busy === p.code ? t('plans.activating') : t('plans.buy_now')}
                 </button>
@@ -306,7 +306,7 @@ export default function PlansScreen({ initialCode = '' }) {
 
         <p className="max-w-[820px] mx-auto text-center text-[12px] text-stone-500 leading-relaxed mt-8">
           {t('plans.note1')} {t('plans.note2')}<br />
-          {t('plans.note3')} <a className="text-[#ff9a3d] font-bold" href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> {t('plans.note4')}
+          {t('plans.note3')} <a className="text-[#6E9BFF] font-bold" href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> {t('plans.note4')}
         </p>
         <div className="flex items-center justify-center gap-4 mt-4 text-[11px] text-stone-600">
           <span className="flex items-center gap-1"><Lock className="w-3 h-3" /> {t('plans.sec1')}</span>

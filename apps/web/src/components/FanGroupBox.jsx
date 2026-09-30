@@ -61,7 +61,7 @@ export default function FanGroupBox({ target, name }) {
       <div className="flex items-center gap-1.5 mt-2 flex-wrap">
         <span className="text-[10px] text-stone-500 font-bold">{members.length} {t('fan.members')}</span>
         {members.slice(0, 8).map((m, i) => (
-          <span key={i} className="w-6 h-6 rounded-full bg-gradient-to-br from-fuchsia-600 to-[#f36f21] flex items-center justify-center text-[9px] font-black text-white" title={m.name}>
+          <span key={i} className="w-6 h-6 rounded-full bg-gradient-to-br from-fuchsia-600 to-[#2F6BFF] flex items-center justify-center text-[9px] font-black text-white" title={m.name}>
             {(m.name || '?').slice(0, 1).toUpperCase()}
           </span>
         ))}

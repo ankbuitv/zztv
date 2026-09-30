@@ -75,7 +75,7 @@ function canvasSig() {
     const c = document.createElement('canvas');
     c.width = 200; c.height = 40;
     const x = c.getContext('2d');
-    x.fillStyle = '#f36f21';
+    x.fillStyle = '#2F6BFF';
     x.font = '16px Arial';
     x.fillText('CHRTV 🎬⚽📺', 8, 26);
     x.strokeStyle = '#42a5f5';

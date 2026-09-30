@@ -42,7 +42,7 @@ export default function CommunityScreen({ onRequireLogin }) {
     <div className="text-white pb-12">
       <div className="px-5 md:px-8 pt-5 pb-3">
         <div className="flex items-center gap-2.5">
-          <span className="w-10 h-10 rounded-2xl grad-brand flex items-center justify-center shadow-lg shadow-[#f36f21]/30">
+          <span className="w-10 h-10 rounded-2xl grad-brand flex items-center justify-center shadow-lg shadow-[#2F6BFF]/30">
             <Users className="w-5 h-5 text-white" />
           </span>
           <div>
@@ -65,15 +65,15 @@ export default function CommunityScreen({ onRequireLogin }) {
               <div className="space-y-2.5">
                 <div>
                   <label className="text-[10px] font-black uppercase tracking-widest text-stone-500">@{t('community.handle')}</label>
-                  <input value={prof.handle} onChange={e => setProf({ ...prof, handle: e.target.value.toLowerCase().replace(/[^a-z0-9_.]/g, '').slice(0, 20) })} placeholder="vd: fan_vtv3" className="mt-1 w-full px-3 py-2.5 bg-black/40 border border-white/10 rounded-xl text-[13px] text-white placeholder:text-stone-600 outline-none focus:border-[#f36f21]" />
+                  <input value={prof.handle} onChange={e => setProf({ ...prof, handle: e.target.value.toLowerCase().replace(/[^a-z0-9_.]/g, '').slice(0, 20) })} placeholder="vd: fan_vtv3" className="mt-1 w-full px-3 py-2.5 bg-black/40 border border-white/10 rounded-xl text-[13px] text-white placeholder:text-stone-600 outline-none focus:border-[#2F6BFF]" />
                 </div>
                 <div>
                   <label className="text-[10px] font-black uppercase tracking-widest text-stone-500">{t('community.bio')}</label>
-                  <input value={prof.bio} onChange={e => setProf({ ...prof, bio: e.target.value.slice(0, 200) })} placeholder={t('community.bio_ph')} className="mt-1 w-full px-3 py-2.5 bg-black/40 border border-white/10 rounded-xl text-[13px] text-white placeholder:text-stone-600 outline-none focus:border-[#f36f21]" />
+                  <input value={prof.bio} onChange={e => setProf({ ...prof, bio: e.target.value.slice(0, 200) })} placeholder={t('community.bio_ph')} className="mt-1 w-full px-3 py-2.5 bg-black/40 border border-white/10 rounded-xl text-[13px] text-white placeholder:text-stone-600 outline-none focus:border-[#2F6BFF]" />
                 </div>
                 <div>
                   <label className="text-[10px] font-black uppercase tracking-widest text-stone-500">{t('community.avatar')}</label>
-                  <input value={prof.avatar_url} onChange={e => setProf({ ...prof, avatar_url: e.target.value.slice(0, 300) })} placeholder="https://..." className="mt-1 w-full px-3 py-2.5 bg-black/40 border border-white/10 rounded-xl text-[13px] text-white placeholder:text-stone-600 outline-none focus:border-[#f36f21]" />
+                  <input value={prof.avatar_url} onChange={e => setProf({ ...prof, avatar_url: e.target.value.slice(0, 300) })} placeholder="https://..." className="mt-1 w-full px-3 py-2.5 bg-black/40 border border-white/10 rounded-xl text-[13px] text-white placeholder:text-stone-600 outline-none focus:border-[#2F6BFF]" />
                 </div>
                 <label className="flex items-center gap-2 text-[12px] font-bold text-stone-300 cursor-pointer">
                   <button onClick={() => setProf({ ...prof, is_public: prof.is_public ? 0 : 1 })} className={`w-10 h-6 rounded-full transition-all relative ${prof.is_public ? 'bg-emerald-500' : 'bg-white/10'}`}>
@@ -88,7 +88,7 @@ export default function CommunityScreen({ onRequireLogin }) {
                 {prof.handle && prof.is_public ? (
                   <div className="rounded-2xl bg-black/30 border border-white/[0.06] p-3">
                     <p className="text-[10px] text-stone-500 font-bold mb-1.5 truncate">{pubLink}</p>
-                    <ShareButtons url={pubLink} title={`@${prof.handle} — CHRTV PLAY`} compact />
+                    <ShareButtons url={pubLink} title={`@${prof.handle} — playZ`} compact />
                   </div>
                 ) : null}
               </div>
@@ -100,7 +100,7 @@ export default function CommunityScreen({ onRequireLogin }) {
             <h2 className="text-[16px] font-extrabold mb-1 flex items-center gap-2">🏆 {t('community.topfans')}</h2>
             <p className="text-[11px] text-stone-500 mb-3">{t('community.topfans_sub')}</p>
             {myFan && (
-              <div className="flex items-center gap-2 rounded-2xl bg-[#f36f21]/10 border border-[#f36f21]/40 px-3 py-2 mb-2">
+              <div className="flex items-center gap-2 rounded-2xl bg-[#2F6BFF]/10 border border-[#2F6BFF]/40 px-3 py-2 mb-2">
                 <span className="text-[11px] font-black text-[#ffb37a]">#{myRank}</span>
                 <span className="flex-1 text-[12px] font-bold text-white truncate">{myFan.name || user?.username}</span>
                 <span className="text-[12px] font-black text-amber-300 flex items-center gap-1"><Zap className="w-3.5 h-3.5" />{myFan.xp}</span>
@@ -112,7 +112,7 @@ export default function CommunityScreen({ onRequireLogin }) {
                 <div key={f.user_id} className="flex items-center gap-2.5 rounded-2xl bg-black/30 border border-white/[0.05] px-3 py-2">
                   <span className={`w-7 h-7 rounded-lg text-[12px] font-black flex items-center justify-center shrink-0 ${i === 0 ? 'bg-amber-500/20 text-amber-300' : i < 3 ? 'bg-white/10 text-white' : 'text-stone-500'}`}>{i + 1}</span>
                   {f.avatar_url ? <img src={f.avatar_url} alt="" className="w-7 h-7 rounded-full object-cover shrink-0" /> : (
-                    <span className="w-7 h-7 rounded-full bg-gradient-to-br from-[#f36f21] to-fuchsia-600 flex items-center justify-center text-[11px] font-black text-white shrink-0">{(f.name || '?').slice(0, 1).toUpperCase()}</span>
+                    <span className="w-7 h-7 rounded-full bg-gradient-to-br from-[#2F6BFF] to-fuchsia-600 flex items-center justify-center text-[11px] font-black text-white shrink-0">{(f.name || '?').slice(0, 1).toUpperCase()}</span>
                   )}
                   <span className="flex-1 text-[12px] font-bold text-slate-200 truncate">{f.name || `Fan #${f.user_id}`}</span>
                   <span className="text-[12px] font-black text-amber-300 flex items-center gap-1 tabular-nums"><Zap className="w-3.5 h-3.5" />{f.xp}</span>

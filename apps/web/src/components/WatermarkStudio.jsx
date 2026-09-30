@@ -19,7 +19,7 @@ const TEXT_OPTS = [['none', 'Không hiện'], ['right', 'Bên phải'], ['bottom
 const clamp = (v, a = 0, b = 100) => Math.min(b, Math.max(a, v));
 const r1 = (v) => Math.round(v * 10) / 10;
 
-const inp = 'w-full bg-slate-900/60 border border-slate-700/50 rounded-lg px-3 py-2 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[#f36f21]/50';
+const inp = 'w-full bg-slate-900/60 border border-slate-700/50 rounded-lg px-3 py-2 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[#2F6BFF]/50';
 
 function Slider({ label, value, min, max, step = 1, unit = '', onChange, hint }) {
   return (
@@ -31,7 +31,7 @@ function Slider({ label, value, min, max, step = 1, unit = '', onChange, hint })
       <input
         type="range" min={min} max={max} step={step} value={value}
         onChange={(e) => onChange(parseFloat(e.target.value))}
-        className="w-full accent-[#f36f21] mt-1"
+        className="w-full accent-[#2F6BFF] mt-1"
       />
       {hint && <span className="block text-[10px] text-slate-600 -mt-0.5">{hint}</span>}
     </label>
@@ -167,7 +167,7 @@ export default function WatermarkStudio({
         onKeyDown={onKey}
         role="group"
         aria-label="Khung kéo đặt vị trí logo"
-        className="relative w-full aspect-video rounded-xl overflow-hidden border border-white/10 focus:outline-none focus:border-[#f36f21]/60"
+        className="relative w-full aspect-video rounded-xl overflow-hidden border border-white/10 focus:outline-none focus:border-[#2F6BFF]/60"
         style={{
           cursor: readOnly ? 'default' : dragging ? 'grabbing' : 'crosshair',
           background: 'linear-gradient(115deg, #101319 0%, #1c2430 38%, #0d1015 62%, #191014 100%)',
@@ -222,7 +222,7 @@ export default function WatermarkStudio({
               key={p} type="button" disabled={readOnly}
               onClick={() => onChange({ pos: p })}
               title={WM_POS_LABEL[p]}
-              className={`w-8 h-8 rounded-lg text-[10px] font-black transition-all ${merged.pos === p ? 'bg-[#f36f21] text-white shadow-[0_0_0_1px_rgba(255,154,61,.6)]' : 'bg-white/[0.05] text-slate-500 hover:text-white hover:bg-white/[0.12]'}`}
+              className={`w-8 h-8 rounded-lg text-[10px] font-black transition-all ${merged.pos === p ? 'bg-[#2F6BFF] text-white shadow-[0_0_0_1px_rgba(255,154,61,.6)]' : 'bg-white/[0.05] text-slate-500 hover:text-white hover:bg-white/[0.12]'}`}
             >
               {p === 'custom' ? '✦' : POS_GLYPH[p]}
             </button>
@@ -252,7 +252,7 @@ export default function WatermarkStudio({
         <input
           className={inp + ' mt-1'} maxLength={48} value={merged.text} disabled={readOnly}
           onChange={(e) => onChange({ text: e.target.value })}
-          placeholder="VD: CHRTV PLAY · exclusive"
+          placeholder="VD: playZ · exclusive"
         />
         <span className="block text-[10px] text-slate-600 mt-0.5">Để trống = chỉ hiện logo. Tối đa 48 ký tự.</span>
       </label>

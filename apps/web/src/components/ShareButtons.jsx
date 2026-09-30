@@ -38,7 +38,7 @@ export default function ShareButtons({ url, title = '', compact = false }) {
   const size = compact ? 'px-2.5 py-1.5 text-[11px]' : 'px-3.5 py-2 text-[12px]';
   return (
     <div className="flex items-center gap-1.5 flex-wrap">
-      <button onClick={native} className={btn + size + 'bg-[#f36f21] text-white shadow-lg shadow-[#f36f21]/25 hover:brightness-110'}>
+      <button onClick={native} className={btn + size + 'bg-[#2F6BFF] text-white shadow-lg shadow-[#2F6BFF]/25 hover:brightness-110'}>
         <Share2 className="w-3.5 h-3.5" />{!compact && t('share.share')}
       </button>
       <button onClick={fb} title="Facebook" className={btn + size + 'bg-[#1877F2]/15 text-[#7fb3ff] border border-[#1877F2]/40 hover:bg-[#1877F2]/25'}>

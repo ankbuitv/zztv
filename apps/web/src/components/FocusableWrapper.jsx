@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
 const DEFAULT_ACTIVE_CLASS =
-  'tv-focused border-2 border-[#f36f21] bg-[#f36f21]/30 shadow-lg shadow-[#f36f21]/50 scale-105';
+  'tv-focused border-2 border-[#2F6BFF] bg-[#2F6BFF]/30 shadow-lg shadow-[#2F6BFF]/50 scale-105';
 
 /**
  * FocusableElement - Component nội bộ nhận các props do withFocusable HOC inject vào

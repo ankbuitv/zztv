@@ -3,6 +3,11 @@ import { addWatch, badgeName, badgeDesc } from './services/achievements';
 import { initNavigation } from '@noriginmedia/react-spatial-navigation';
 
 import Sidebar from './components/Sidebar';
+import PlayzSidebar from './playz/Sidebar';
+import PlayzHeader from './playz/Header';
+import PlayzHome from './playz/Home';
+import InfoModal from './playz/InfoModal';
+import { getWatchlistLocal, toggleWatchlistLocal } from './services/movieList';
 import PlansScreen from './components/PlansScreen';
 import AuthModal from './components/AuthModal';
 
@@ -65,7 +70,7 @@ function AppContent() {
   const { addToast } = useToast();
   const { user, isAuthenticated, token, effectivePlan } = useAuth();
   const { currentProfile, logoutProfile, profiles, fetchProfiles, selectProfile } = useProfile();
-  const { hasPicked, resetPicker, t, lang } = useI18n();
+  const { hasPicked, resetPicker, t, lang, setLang } = useI18n();
   const guestMode = !isAuthenticated || !user;
   const effUser = guestMode ? GUEST_USER : user;
   const effPlan = guestMode ? 'standard' : (effectivePlan || user?.plan || 'standard');
@@ -169,6 +174,40 @@ function AppContent() {
   }, []);
   const [showKeyboardShortcuts, setShowKeyboardShortcuts] = useState(false);
   const [showAdmin, setShowAdmin] = useState(false);
+
+  // ── playZ shell state ────────────────────────────────────────────────────
+  // The sidebar is a real two-state control (80px rail ⇄ 248px panel) rather
+  // than a hover popout, and it becomes a drawer below the tablet breakpoint.
+  const [sidebarExpanded, setSidebarExpanded] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 900);
+  const [scrolled, setScrolled] = useState(false);
+  const [infoModal, setInfoModal] = useState(null); // 'about' | 'contact' | null
+  const [watchlistVersion, setWatchlistVersion] = useState(0);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 900);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  // Enter/Space on the header search must not toggle the rail while typing.
+  useEffect(() => {
+    if (isMobile) setSidebarExpanded(false);
+  }, [isMobile]);
+
+  const playzWatchlist = useMemo(() => {
+    try { return getWatchlistLocal() || []; } catch { return []; }
+  }, [watchlistVersion]);
+
+  const playzInWatchlist = useCallback(
+    (m) => !!m && playzWatchlist.some((x) => String(x.id) === String(m.id)),
+    [playzWatchlist]
+  );
+
+  const playzToggleWatchlist = useCallback((m) => {
+    if (!m) return;
+    try { toggleWatchlistLocal(m); setWatchlistVersion((v) => v + 1); } catch { /* quota */ }
+  }, []);
   const [channelInfoModal, setChannelInfoModal] = useState(null);
 
   useEffect(() => { localStorage.setItem('chrtv_tab', activeTab); }, [activeTab]);
@@ -606,27 +645,52 @@ function AppContent() {
           </div>
         </div>
       )}
-      <TopNav
-        channels={channels}
+      <PlayzHeader
+        scrolled={scrolled}
+        isMobile={isMobile}
+        sidebarExpanded={sidebarExpanded}
+        onToggleSidebar={() => setSidebarExpanded((v) => !v)}
         searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        user={effUser}
-        currentProfile={currentProfile}
-        setActiveTab={goTab}
-        activeTab={activeTab}
-        onShowAuth={() => setShowAuth(true)}
-        onShowSettings={() => setShowSettings(true)}
-        profiles={profiles}
-        onSelectProfile={selectProfile}
-        onManageProfiles={() => logoutProfile()}
-        onSelectChannel={handleSelectChannel}
-        onSelectMovie={(m) => { setMovieToOpen(m); setActiveTab('movies'); }}
+        onSearchChange={setSearchQuery}
+        onSearchSubmit={(q) => {
+          if (q === '') { goTab('channels'); }
+          else { setSearchQuery(q); goTab('movies'); }
+        }}
+        user={effUser && !effUser.guest ? effUser : null}
+        plan={effPlan}
+        language={lang || 'vi'}
+        onLanguageChange={(code) => setLang(code)}
+        onLogin={() => setShowAuth(true)}
+        onOpenPlans={() => goTab('plans')}
+        onOpenSettings={() => setShowSettings(true)}
+        onOpenProfile={(what) => { if (what === 'logout') logoutProfile(); }}
+        onOpenAdmin={() => setShowAdmin(true)}
+        onDownloadApp={() => { setInfoModal('app'); }}
       />
 
       <div className="flex flex-1 overflow-hidden">
-        <Sidebar activeTab={activeTab} setActiveTab={goTab} onShowSettings={() => setShowSettings(true)} onShowAdmin={() => setShowAdmin(true)} />
+        <PlayzSidebar
+          activeTab={activeTab}
+          onNavigate={goTab}
+          expanded={sidebarExpanded}
+          onToggleExpanded={() => setSidebarExpanded((v) => !v)}
+          onCloseMobile={() => setSidebarExpanded(false)}
+          isMobile={isMobile}
+          user={effUser}
+          onShowAdmin={() => setShowAdmin(true)}
+          onOpenInfo={(what) => {
+            if (what === 'settings') setShowSettings(true);
+            else setInfoModal(what === 'about' ? 'about' : what === 'contact' ? 'contact' : 'app');
+          }}
+        />
 
-        <main className="flex-1 flex flex-col h-full overflow-y-auto overflow-x-hidden min-w-0 pb-16 md:pb-0">
+        <main
+          className="flex-1 flex flex-col h-full overflow-y-auto overflow-x-hidden min-w-0 pb-16 md:pb-0"
+          onScroll={(e) => {
+            const y = e.currentTarget.scrollTop;
+            setScrolled((prev) => (prev ? y > 12 : y > 44));
+          }}
+        >
           {activeTab !== 'movies' && (
             <div className="px-5 md:px-8 pt-3 max-w-[1400px] mx-auto w-full">
               <BroadcastBanner />
@@ -675,26 +739,49 @@ function AppContent() {
             <PlansScreen initialCode={deepGiftCode} />
           ) : (
             <>
-              {/* Home (mặc định) — đã bỏ tab Yêu thích/Lịch sử */}
-                <HomePage
-                  channels={channels}
-                  epgData={epgData}
-                  favorites={favorites}
-                  watchHistory={watchHistory}
-                  onSelectChannel={handleSelectChannel}
-                  onPlayCatchup={handlePlayCatchup}
-                  onShowInfo={handleShowInfo}
-                  onToggleFavorite={handleToggleFavorite}
-                  selectedCategory={selectedCategory}
-                  setSelectedCategory={setSelectedCategory}
-                  categories={categories}
-                  searchQuery={searchQuery}
-                  setSearchQuery={setSearchQuery}
-                  isLoading={isLoading}
-                  onSelectMovie={(m) => { setMovieToOpen(m); goTab('movies'); }}
-                  onOpenShort={(id) => { setShortToOpen(id); goTab('shorts'); }}
-                  onGoTab={goTab}
-                />
+              {/* playZ home — cinematic hero + configurable rails.
+                  The legacy HomePage is kept below as an instant rollback:
+                  set localStorage playz_home_legacy = "1" to restore it. */}
+              {(() => {
+                let legacy = false;
+                try { legacy = localStorage.getItem('playz_home_legacy') === '1'; } catch { /* ignore */ }
+                if (legacy) {
+                  return (
+                    <HomePage
+                      channels={channels}
+                      epgData={epgData}
+                      favorites={favorites}
+                      watchHistory={watchHistory}
+                      onSelectChannel={handleSelectChannel}
+                      onPlayCatchup={handlePlayCatchup}
+                      onShowInfo={handleShowInfo}
+                      onToggleFavorite={handleToggleFavorite}
+                      selectedCategory={selectedCategory}
+                      setSelectedCategory={setSelectedCategory}
+                      categories={categories}
+                      searchQuery={searchQuery}
+                      setSearchQuery={setSearchQuery}
+                      isLoading={isLoading}
+                      onSelectMovie={(m) => { setMovieToOpen(m); goTab('movies'); }}
+                      onOpenShort={(id) => { setShortToOpen(id); goTab('shorts'); }}
+                      onGoTab={goTab}
+                    />
+                  );
+                }
+                return (
+                  <PlayzHome
+                    channels={channels}
+                    user={effUser && !effUser.guest ? effUser : null}
+                    watchlistVersion={watchlistVersion}
+                    onToggleWatchlist={playzToggleWatchlist}
+                    isInWatchlist={playzInWatchlist}
+                    onNavigate={goTab}
+                    onOpenChannel={handleSelectChannel}
+                    onOpenMovie={(m) => { setMovieToOpen(m); goTab('movies'); }}
+                    onRequireLogin={() => promptLogin(t('app.need_login_movie'))}
+                  />
+                );
+              })()}
             </>
           )}
         </main>
@@ -727,6 +814,8 @@ function AppContent() {
         </div>
       )}
 
+      <InfoModal open={!!infoModal} kind={infoModal} onClose={() => setInfoModal(null)} />
+
       {channelInfoModal && (
         <ChannelInfoModal channel={channelInfoModal.channel} epgNow={channelInfoModal.epgNow} epgNext={channelInfoModal.epgNext} isFavorite={favorites.includes(channelInfoModal.channel.channel_id)} onPlay={handleSelectChannel} onToggleFavorite={handleToggleFavorite} onClose={() => setChannelInfoModal(null)} onRequireLogin={promptLogin} />
       )}
@@ -746,10 +835,10 @@ function AppContent() {
 
       {/* Đồng hồ 5 phút xem thử của gói Standard */}
       {preview.enabled && preview.remaining < preview.total && (isPlayerOpen || tvChannel) && (
-        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[60] px-4 py-2 rounded-full bg-black/80 border border-[#f36f21]/40 backdrop-blur flex items-center gap-2 pointer-events-auto">
-          <span className="text-[11px] font-black tracking-wider text-[#ff9a3d]">XEM THỬ</span>
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[60] px-4 py-2 rounded-full bg-black/80 border border-[#2F6BFF]/40 backdrop-blur flex items-center gap-2 pointer-events-auto">
+          <span className="text-[11px] font-black tracking-wider text-[#6E9BFF]">XEM THỬ</span>
           <span className="text-[12px] font-bold text-white">còn {fmtPreview(preview.remaining)}</span>
-          <button onClick={() => setActiveTab('plans')} className="ml-1 px-2.5 py-1 rounded-full bg-[#f36f21] text-white text-[11px] font-black">Nâng gói</button>
+          <button onClick={() => setActiveTab('plans')} className="ml-1 px-2.5 py-1 rounded-full bg-[#2F6BFF] text-white text-[11px] font-black">Nâng gói</button>
         </div>
       )}
       <AuthModal open={showAuth} onClose={() => setShowAuth(false)} />

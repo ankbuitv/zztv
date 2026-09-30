@@ -18,13 +18,13 @@ export default function PinPad({ title, error = '', onSubmit, onCancel }) {
   return (
     <div className="fixed inset-0 z-[300] bg-black/90 backdrop-blur flex items-center justify-center p-4">
       <div className="w-full max-w-[300px] text-center">
-        <span className="w-14 h-14 rounded-2xl grad-brand inline-flex items-center justify-center shadow-lg shadow-[#f36f21]/30 mb-3">
+        <span className="w-14 h-14 rounded-2xl grad-brand inline-flex items-center justify-center shadow-lg shadow-[#2F6BFF]/30 mb-3">
           <Lock className="w-6 h-6 text-white" />
         </span>
         <h2 className="text-lg font-black text-white mb-1">{title || t('pin.title')}</h2>
         <div className="flex justify-center gap-2 my-4">
           {[0, 1, 2, 3].map(i => (
-            <span key={i} className={`w-3.5 h-3.5 rounded-full border ${pin.length > i ? 'bg-[#f36f21] border-[#f36f21]' : 'border-white/25'}`} />
+            <span key={i} className={`w-3.5 h-3.5 rounded-full border ${pin.length > i ? 'bg-[#2F6BFF] border-[#2F6BFF]' : 'border-white/25'}`} />
           ))}
         </div>
         {error && <p className="text-[11px] text-red-400 font-bold mb-2">{error}</p>}

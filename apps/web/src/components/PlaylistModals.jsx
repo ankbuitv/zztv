@@ -85,13 +85,13 @@ export function SharePlaylistModal({ list, onClose }) {
     <div className="fixed inset-0 z-[240] bg-black/85 backdrop-blur-sm flex items-center justify-center p-4" onClick={close}>
       <div className="w-full max-w-lg modal-panel overflow-hidden max-h-[90vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 shrink-0">
-          <p className="text-[13px] font-black text-white flex items-center gap-2"><ListVideo className="w-4 h-4 text-[#ff9a3d]" />Chia sẻ playlist từ My List</p>
+          <p className="text-[13px] font-black text-white flex items-center gap-2"><ListVideo className="w-4 h-4 text-[#6E9BFF]" />Chia sẻ playlist từ My List</p>
           <button onClick={close} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-slate-400" /></button>
         </div>
 
         {!made ? (
           <div className="p-4 space-y-3 overflow-y-auto">
-            <input value={name} onChange={(e) => setName(e.target.value.slice(0, 80))} placeholder="Tên playlist…" className="w-full px-3 py-2.5 bg-black/40 border border-white/10 rounded-xl text-[13px] font-bold text-white focus:outline-none focus:border-[#f36f21]" />
+            <input value={name} onChange={(e) => setName(e.target.value.slice(0, 80))} placeholder="Tên playlist…" className="w-full px-3 py-2.5 bg-black/40 border border-white/10 rounded-xl text-[13px] font-bold text-white focus:outline-none focus:border-[#2F6BFF]" />
             <p className="text-[11px] text-stone-500">Tích chọn phim muốn đưa vào playlist — bạn bè nhập mã là xem được ngay.</p>
             {list.length === 0 && <p className="text-[12px] text-stone-500 italic text-center py-8">My List đang trống — thêm phim bằng nút “My List” trong chi tiết phim nhé.</p>}
             <div className="space-y-1 max-h-64 overflow-y-auto pr-1">
@@ -99,8 +99,8 @@ export function SharePlaylistModal({ list, onClose }) {
                 const k = `${m.media_type === 'tv' ? 'tv' : 'movie'}-${m.id}`;
                 const on = sel.has(k);
                 return (
-                  <button key={k} onClick={() => toggle(k)} className={`w-full flex items-center gap-2.5 px-2 py-1.5 rounded-xl border text-left transition ${on ? 'border-[#f36f21]/45 bg-[#f36f21]/[0.07]' : 'border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.05]'}`}>
-                    <span className={`w-[18px] h-[18px] shrink-0 rounded-md border flex items-center justify-center ${on ? 'bg-[#f36f21] border-[#f36f21]' : 'border-white/25'}`}>{on && <Check className="w-3 h-3 text-white" />}</span>
+                  <button key={k} onClick={() => toggle(k)} className={`w-full flex items-center gap-2.5 px-2 py-1.5 rounded-xl border text-left transition ${on ? 'border-[#2F6BFF]/45 bg-[#2F6BFF]/[0.07]' : 'border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.05]'}`}>
+                    <span className={`w-[18px] h-[18px] shrink-0 rounded-md border flex items-center justify-center ${on ? 'bg-[#2F6BFF] border-[#2F6BFF]' : 'border-white/25'}`}>{on && <Check className="w-3 h-3 text-white" />}</span>
                     <Poster item={m} className="w-9 h-[54px] rounded-md shrink-0" />
                     <span className="min-w-0 flex-1">
                       <span className="block text-[12px] font-bold text-white truncate">{m.title}</span>
@@ -113,7 +113,7 @@ export function SharePlaylistModal({ list, onClose }) {
           </div>
         ) : (
           <div className="p-4 space-y-3">
-            <div className="rounded-2xl bg-gradient-to-br from-[#f36f21]/15 to-[#7c2d12]/10 border border-[#f36f21]/30 p-4 text-center">
+            <div className="rounded-2xl bg-gradient-to-br from-[#2F6BFF]/15 to-[#7c2d12]/10 border border-[#2F6BFF]/30 p-4 text-center">
               <p className="text-[10px] font-black uppercase tracking-widest text-[#ffb37a]">Mã playlist “{made.name}” ({made.items.length} phim)</p>
               <p className="my-2 font-mono font-black text-white text-3xl tracking-[0.3em]">{made.code}</p>
               <p className="text-[10px] text-stone-500">Có hạn 24 giờ — bạn bè vào <b className="text-stone-300">Phim → Nhập mã 🎟️</b></p>
@@ -142,7 +142,7 @@ export function PlaylistViewModal({ payload, onClose, onOpen, onAddAll }) {
     <div className="fixed inset-0 z-[240] bg-black/85 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}>
       <div className="w-full max-w-2xl modal-panel overflow-hidden max-h-[90vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 shrink-0">
-          <p className="text-[13px] font-black text-white flex items-center gap-2 truncate"><ListVideo className="w-4 h-4 text-[#ff9a3d] shrink-0" />{payload?.title || 'Playlist chia sẻ'}{fromName && <span className="text-[10px] text-stone-500 font-bold">· từ {fromName}</span>}</p>
+          <p className="text-[13px] font-black text-white flex items-center gap-2 truncate"><ListVideo className="w-4 h-4 text-[#6E9BFF] shrink-0" />{payload?.title || 'Playlist chia sẻ'}{fromName && <span className="text-[10px] text-stone-500 font-bold">· từ {fromName}</span>}</p>
           <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10 shrink-0"><X className="w-4 h-4 text-slate-400" /></button>
         </div>
         <div className="p-4 overflow-y-auto">
@@ -150,7 +150,7 @@ export function PlaylistViewModal({ payload, onClose, onOpen, onAddAll }) {
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5">
               {items.map((m) => (
                 <button key={`${m.media_type}-${m.id}`} onClick={() => onOpen && onOpen(m)} className="group text-left active:scale-[0.98] transition">
-                  <Poster item={m} className="w-full aspect-[2/3] rounded-xl border border-white/10 group-hover:border-[#f36f21]/60 group-hover:scale-[1.02] transition shadow" />
+                  <Poster item={m} className="w-full aspect-[2/3] rounded-xl border border-white/10 group-hover:border-[#2F6BFF]/60 group-hover:scale-[1.02] transition shadow" />
                   <p className="text-[10px] font-bold mt-1.5 truncate text-stone-200 group-hover:text-white">{m.title}</p>
                 </button>
               ))}

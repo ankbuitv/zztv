@@ -28,8 +28,8 @@ export default function TopChannelsStrip({ channels = [], onSelectChannel }) {
   return (
     <section className="anim-fade-up">
       <div className="flex items-center gap-2.5 mb-4">
-        <span className="w-9 h-9 rounded-xl border flex items-center justify-center bg-[#f36f21]/15 border-[#f36f21]/25">
-          <Flame className="w-4 h-4 text-[#ff9a3d]" />
+        <span className="w-9 h-9 rounded-xl border flex items-center justify-center bg-[#2F6BFF]/15 border-[#2F6BFF]/25">
+          <Flame className="w-4 h-4 text-[#6E9BFF]" />
         </span>
         <div>
           <h2 className="text-[20px] font-extrabold tracking-tight leading-tight flex items-center gap-2">
@@ -48,14 +48,14 @@ export default function TopChannelsStrip({ channels = [], onSelectChannel }) {
             <button
               key={r.channel_id}
               onClick={() => ch && onSelectChannel && onSelectChannel(ch)}
-              className="group relative shrink-0 w-[150px] snap-start rounded-2xl overflow-hidden border border-white/[0.08] hover:border-[#f36f21]/60 bg-[#15161b] text-left transition-all hover:-translate-y-1"
+              className="group relative shrink-0 w-[150px] snap-start rounded-2xl overflow-hidden border border-white/[0.08] hover:border-[#2F6BFF]/60 bg-[#15161b] text-left transition-all hover:-translate-y-1"
             >
               <span className="block relative h-[86px] flex items-center justify-center bg-[#0c0d11] overflow-hidden">
                 <span className="absolute left-1 bottom-0 font-black leading-none" style={{ fontSize: 52, color: 'transparent', WebkitTextStroke: i < 3 ? '2px rgba(251,191,36,.7)' : '2px rgba(255,255,255,.22)' }}>{i + 1}</span>
                 {logo ? <img src={logo} alt="" loading="lazy" className="h-12 object-contain relative z-10 group-hover:scale-110 transition-transform" onError={e => { e.target.style.display = 'none'; }} />
                   : <span className="font-black italic text-white/25 text-xl relative z-10">{name.slice(0, 3)}</span>}
                 <span className="absolute inset-0 z-10 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span className="w-9 h-9 rounded-full bg-[#f36f21] flex items-center justify-center"><Play className="w-3.5 h-3.5 text-white fill-current ml-0.5" /></span>
+                  <span className="w-9 h-9 rounded-full bg-[#2F6BFF] flex items-center justify-center"><Play className="w-3.5 h-3.5 text-white fill-current ml-0.5" /></span>
                 </span>
               </span>
               <span className="block px-2.5 py-2">

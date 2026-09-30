@@ -3,8 +3,8 @@ import { Film, Eye, Gift, CreditCard, Megaphone, Clock, MessageCircle, Target, F
 import { THEME_PRESETS } from '../services/siteTheme.js';
 
 // Các tab admin mới: trực tiếp, gift, thanh toán, QC, lịch đăng, bình luận, dự đoán, báo cáo.
-const inp = 'w-full bg-slate-900/60 border border-slate-700/50 rounded-lg px-3 py-2 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[#f36f21]/50';
-const btnP = 'px-3 py-2 bg-[#f36f21] hover:bg-[#e05f0f] text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1.5';
+const inp = 'w-full bg-slate-900/60 border border-slate-700/50 rounded-lg px-3 py-2 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[#2F6BFF]/50';
+const btnP = 'px-3 py-2 bg-[#2F6BFF] hover:bg-[#e05f0f] text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1.5';
 const btnG = 'px-3 py-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1.5';
 
 async function api(BASE, headers, path, opts = {}) {
@@ -261,7 +261,7 @@ export function CommentsTab({ BASE, headers, addToast }) {
       </div>
       {list.map(c => (
         <label key={c.id} className={`flex items-start gap-2 rounded-xl border px-3 py-2 cursor-pointer ${c.status === 'hidden' ? 'bg-red-950/20 border-red-900/40' : 'bg-black/30 border-white/[0.06]'}`}>
-          <input type="checkbox" checked={sel.has(c.id)} onChange={() => toggle(c.id)} className="mt-1 accent-[#f36f21]" />
+          <input type="checkbox" checked={sel.has(c.id)} onChange={() => toggle(c.id)} className="mt-1 accent-[#2F6BFF]" />
           <span className="flex-1 min-w-0">
             <span className="block text-[11px] font-bold text-[#ffb37a]">{c.name} <span className="text-slate-600 font-mono">· {c.target} · {c.created_at}</span></span>
             <span className="block text-[12px] text-slate-200 break-words">{c.body}</span>
@@ -288,7 +288,7 @@ export function PredictTab({ BASE, headers, addToast }) {
   return (
     <div className="p-4 space-y-2">
       {events.map(ev => (
-        <button key={ev.event_key} onClick={() => setForm({ ...form, event_key: ev.event_key })} className="w-full flex items-center gap-2 rounded-xl bg-black/30 border border-white/[0.06] hover:border-[#f36f21]/40 px-3 py-2 text-left">
+        <button key={ev.event_key} onClick={() => setForm({ ...form, event_key: ev.event_key })} className="w-full flex items-center gap-2 rounded-xl bg-black/30 border border-white/[0.06] hover:border-[#2F6BFF]/40 px-3 py-2 text-left">
           <Target className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
           <span className="flex-1 min-w-0"><span className="block text-[12px] font-bold text-white truncate">{ev.home} vs {ev.away}</span><span className="block text-[10px] text-slate-500 font-mono">{ev.event_key} · {ev.league}</span></span>
           <span className="text-[10px] text-slate-400 shrink-0">{ev.settled}/{ev.n} đã chấm</span>
@@ -420,7 +420,7 @@ export function HealthTab({ BASE, headers, addToast }) {
 
       {reports.grouped.length > 0 && (
         <div>
-          <p className="text-[11px] text-slate-400 font-bold flex items-center gap-1.5 mb-2"><Flag className="w-3.5 h-3.5 text-[#ff9a3d]" /> Người xem đang báo lỗi</p>
+          <p className="text-[11px] text-slate-400 font-bold flex items-center gap-1.5 mb-2"><Flag className="w-3.5 h-3.5 text-[#6E9BFF]" /> Người xem đang báo lỗi</p>
           <div className="space-y-1.5">
             {reports.grouped.map(g => (
               <div key={g.channel_id} className="flex items-center gap-2 rounded-xl bg-black/30 border border-white/[0.06] px-3 py-2">
@@ -566,7 +566,7 @@ export function ThemesTab({ BASE, headers, addToast }) {
     setEditing(null);
   };
   const applyPreset = (p) => {
-    setForm(f => ({ ...f, key: p.key, name: p.name, emoji: p.emoji || '🏆', description: p.description || '', primary_color: p.primary_color || '#f36f21', secondary_color: p.secondary_color || '#1a1c24', accent_color: p.accent_color || '#ffb37a', confetti: p.confetti || 'none' }));
+    setForm(f => ({ ...f, key: p.key, name: p.name, emoji: p.emoji || '🏆', description: p.description || '', primary_color: p.primary_color || '#2F6BFF', secondary_color: p.secondary_color || '#1a1c24', accent_color: p.accent_color || '#ffb37a', confetti: p.confetti || 'none' }));
   };
   const submit = async (e) => {
     e.preventDefault();
@@ -581,7 +581,7 @@ export function ThemesTab({ BASE, headers, addToast }) {
     setEditing(t.id);
     setForm({
       key: t.key, name: t.name, emoji: t.emoji || '', description: t.description || '',
-      primary_color: t.primary_color || '#f36f21', secondary_color: t.secondary_color || '#1a1c24', accent_color: t.accent_color || '#ffb37a',
+      primary_color: t.primary_color || '#2F6BFF', secondary_color: t.secondary_color || '#1a1c24', accent_color: t.accent_color || '#ffb37a',
       background_url: t.background_url || '', banner_url: t.banner_url || '', logo_url: t.logo_url || '',
       confetti: t.confetti || 'none', css: t.css || '', is_active: t.is_active ?? 1,
       starts_at: t.starts_at || '', ends_at: t.ends_at || '', sort_order: t.sort_order || 0,
@@ -758,7 +758,7 @@ export function RealtimeTab({ BASE, headers }) {
           <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest mb-2">🔥 Kênh hot 15 phút</p>
           {data.hot.map((h, i) => (
             <div key={i} className="flex items-center gap-2 text-[11px] py-0.5">
-              <b className="w-4 text-[#ff9a3d]">{i + 1}</b><span className="text-slate-200 truncate">{h.name}</span>
+              <b className="w-4 text-[#6E9BFF]">{i + 1}</b><span className="text-slate-200 truncate">{h.name}</span>
               <span className="text-slate-600 shrink-0">{h.views || 0} lượt · {Math.round((h.seconds || 0) / 60)}′</span>
             </div>
           ))}
@@ -978,7 +978,7 @@ export function ChallengesTab({ BASE, headers, addToast }) {
       {list.map((c) => (
         <div key={c.id} className="flex items-center gap-2 rounded-xl bg-black/25 border border-white/[0.06] px-3 py-2 text-[11px]">
           <span className="text-base">{c.is_active ? '🏆' : '⏸️'}</span>
-          <div className="flex-1 min-w-0"><b className="text-slate-200">{c.title}</b> <span className="text-[#ff9a3d] font-mono">#{c.hashtag}</span><p className="text-slate-500 truncate">{c.description || ''}</p></div>
+          <div className="flex-1 min-w-0"><b className="text-slate-200">{c.title}</b> <span className="text-[#6E9BFF] font-mono">#{c.hashtag}</span><p className="text-slate-500 truncate">{c.description || ''}</p></div>
           <span className="text-slate-500 shrink-0">{c.starts_at?.slice(5, 10) || '…'} → {c.ends_at?.slice(5, 10) || '∞'}</span>
           <button onClick={async () => { await api(BASE, headers, '/admin/challenges', { method: 'PUT', body: JSON.stringify({ id: c.id, is_active: c.is_active ? 0 : 1 }) }); load(); }} className="text-slate-400 hover:text-white px-1.5">{c.is_active ? 'Tắt' : 'Bật'}</button>
           <button onClick={async () => { if (!confirm('Xoá challenge?')) return; await api(BASE, headers, '/admin/challenges', { method: 'DELETE', body: JSON.stringify({ id: c.id }) }); load(); }} className="text-slate-600 hover:text-red-400"><Trash2 className="w-3.5 h-3.5" /></button>

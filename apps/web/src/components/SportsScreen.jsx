@@ -52,7 +52,7 @@ function MatchCard({ ev, showScore, onClick, onTeam }) {
   const live = isLive(ev);
   const pp = isPostponed(ev);
   return (
-    <div onClick={onClick} className={`rounded-2xl border p-3 transition-all cursor-pointer hover:border-[#f36f21]/50 hover:-translate-y-0.5 ${live ? 'bg-[#f36f21]/10 border-[#f36f21]/50 shadow-lg shadow-[#f36f21]/10' : 'bg-white/[0.03] border-white/[0.07]'}`}>
+    <div onClick={onClick} className={`rounded-2xl border p-3 transition-all cursor-pointer hover:border-[#2F6BFF]/50 hover:-translate-y-0.5 ${live ? 'bg-[#2F6BFF]/10 border-[#2F6BFF]/50 shadow-lg shadow-[#2F6BFF]/10' : 'bg-white/[0.03] border-white/[0.07]'}`}>
       <div className="flex items-center justify-between mb-2.5">
         <span className="text-[10px] font-bold text-stone-500">
           {ev.intRound ? `${t('sports.round', { n: ev.intRound })} · ` : ''}{fmtDT(ev.strTimestamp, ev.dateEvent, ev.strTime)}
@@ -192,7 +192,7 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
       <div className="px-5 md:px-8 pt-5 pb-3 relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(600px 180px at 15% 0%, rgba(34,211,238,.12), transparent 70%), radial-gradient(500px 160px at 90% 0%, rgba(243,111,33,.14), transparent 70%)' }}></div>
         <div className="relative flex items-center gap-2.5">
-          <span className="w-10 h-10 rounded-2xl grad-brand flex items-center justify-center shadow-lg shadow-[#f36f21]/30">
+          <span className="w-10 h-10 rounded-2xl grad-brand flex items-center justify-center shadow-lg shadow-[#2F6BFF]/30">
             <Trophy className="w-5 h-5 text-white" />
           </span>
           <div>
@@ -226,7 +226,7 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
               key={tb.id}
               onClick={() => setSportTab(tb.id)}
               className={`px-4 py-2 rounded-full text-[12px] font-black transition-all active:scale-95 ${
-                sportTab === tb.id ? 'grad-brand text-white shadow-lg shadow-[#f36f21]/30' : 'bg-white/[0.06] text-stone-300 hover:bg-white/[0.12]'
+                sportTab === tb.id ? 'grad-brand text-white shadow-lg shadow-[#2F6BFF]/30' : 'bg-white/[0.06] text-stone-300 hover:bg-white/[0.12]'
               }`}
             >
               {tb.label}
@@ -242,7 +242,7 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
               onClick={() => setLeagueId(custom.id)}
               className={`shrink-0 pl-2 pr-1.5 py-1.5 rounded-full text-[12px] font-bold transition-all active:scale-95 flex items-center gap-1.5 ${
                 leagueId === custom.id
-                  ? 'grad-brand text-white shadow-lg shadow-[#f36f21]/30'
+                  ? 'grad-brand text-white shadow-lg shadow-[#2F6BFF]/30'
                   : 'bg-white/[0.06] text-stone-300 hover:bg-white/[0.12] hover:text-white'
               }`}
             >
@@ -264,7 +264,7 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
               onClick={() => setLeagueId(l.id)}
               className={`shrink-0 pl-2 pr-3.5 py-1.5 rounded-full text-[12px] font-bold transition-all active:scale-95 flex items-center gap-2 ${
                 leagueId === l.id
-                  ? 'grad-brand text-white shadow-lg shadow-[#f36f21]/30'
+                  ? 'grad-brand text-white shadow-lg shadow-[#2F6BFF]/30'
                   : 'bg-white/[0.06] text-stone-300 hover:bg-white/[0.12] hover:text-white'
               }`}
             >
@@ -279,7 +279,7 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
           <button
             onClick={() => setShowExplorer(v => !v)}
             className={`shrink-0 px-3.5 py-2 rounded-full text-[12px] font-black transition-all active:scale-95 flex items-center gap-1.5 border border-dashed ${
-              showExplorer ? 'border-[#f36f21] text-[#ff9a3d] bg-[#f36f21]/10' : 'border-white/20 text-stone-300 hover:border-white/40 hover:text-white'
+              showExplorer ? 'border-[#2F6BFF] text-[#6E9BFF] bg-[#2F6BFF]/10' : 'border-white/20 text-stone-300 hover:border-white/40 hover:text-white'
             }`}
           >
             🌍 {t('sports.more')}
@@ -292,7 +292,7 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
             <p className="text-[11px] text-stone-400 mb-2.5">🌍 <b className="text-stone-200">{t('sports.more_title')}</b> · {t('sports.more_hint')}</p>
             {!sportsIdx ? (
               <div className="flex items-center gap-2 text-[12px] text-stone-500 py-3">
-                <span className="w-4 h-4 border-2 border-[#f36f21] border-t-transparent rounded-full animate-spin" /> {t('app.loading')}
+                <span className="w-4 h-4 border-2 border-[#2F6BFF] border-t-transparent rounded-full animate-spin" /> {t('app.loading')}
               </div>
             ) : (
               <>
@@ -315,7 +315,7 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
                       key={l.tsdb}
                       onClick={() => pickExplorerLeague(l)}
                       className={`flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-left text-[12px] font-bold transition-all active:scale-[0.98] ${
-                        custom?.tsdb === l.tsdb ? 'bg-[#f36f21]/15 border border-[#f36f21]/40 text-white' : 'bg-white/[0.04] border border-transparent text-stone-300 hover:bg-white/[0.09] hover:text-white'
+                        custom?.tsdb === l.tsdb ? 'bg-[#2F6BFF]/15 border border-[#2F6BFF]/40 text-white' : 'bg-white/[0.04] border border-transparent text-stone-300 hover:bg-white/[0.09] hover:text-white'
                       }`}
                     >
                       {l.badge ? (
@@ -359,7 +359,7 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
                 <button
                   key={`${s.league?.id}-${s.ev?.idEvent}`}
                   onClick={() => setSelMatch(s.ev)}
-                  className={`group shrink-0 w-[210px] snap-start rounded-2xl border p-2.5 text-left transition-all hover:-translate-y-0.5 ${s.live ? 'bg-[#f36f21]/10 border-[#f36f21]/50' : 'bg-white/[0.03] border-white/[0.07] hover:border-[#f36f21]/50'}`}
+                  className={`group shrink-0 w-[210px] snap-start rounded-2xl border p-2.5 text-left transition-all hover:-translate-y-0.5 ${s.live ? 'bg-[#2F6BFF]/10 border-[#2F6BFF]/50' : 'bg-white/[0.03] border-white/[0.07] hover:border-[#2F6BFF]/50'}`}
                 >
                   <div className="flex items-center justify-between mb-1.5">
                     <span className="text-[9px] font-black text-stone-400 flex items-center gap-1">
@@ -394,8 +394,8 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
         {sportChannels.length > 0 && (
           <section>
             <div className="flex items-center gap-2.5 mb-3.5">
-              <span className="w-9 h-9 rounded-xl bg-[#f36f21]/15 border border-[#f36f21]/25 flex items-center justify-center">
-                <Radio className="w-4 h-4 text-[#ff9a3d]" />
+              <span className="w-9 h-9 rounded-xl bg-[#2F6BFF]/15 border border-[#2F6BFF]/25 flex items-center justify-center">
+                <Radio className="w-4 h-4 text-[#6E9BFF]" />
               </span>
               <h2 className="text-[19px] font-extrabold tracking-tight">{t('sports.channels')}</h2>
               <span className="text-[11px] text-stone-500 font-bold">{sportChannels.length}</span>
@@ -405,7 +405,7 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
                 <button
                   key={ch.channel_id}
                   onClick={() => onSelectChannel && onSelectChannel(ch)}
-                  className="group shrink-0 w-[150px] snap-start rounded-2xl overflow-hidden border border-white/[0.08] hover:border-[#f36f21]/60 bg-[#15161b] text-left transition-all hover:-translate-y-0.5"
+                  className="group shrink-0 w-[150px] snap-start rounded-2xl overflow-hidden border border-white/[0.08] hover:border-[#2F6BFF]/60 bg-[#15161b] text-left transition-all hover:-translate-y-0.5"
                 >
                   <span className="block h-[86px] flex items-center justify-center bg-[#0c0d11] relative overflow-hidden">
                     {ch.logo ? (
@@ -414,7 +414,7 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
                       <span className="font-black italic text-white/25 text-xl">{(ch.name || '?').slice(0, 3)}</span>
                     )}
                     <span className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <span className="w-9 h-9 rounded-full bg-[#f36f21] flex items-center justify-center"><Play className="w-3.5 h-3.5 text-white fill-current ml-0.5" /></span>
+                      <span className="w-9 h-9 rounded-full bg-[#2F6BFF] flex items-center justify-center"><Play className="w-3.5 h-3.5 text-white fill-current ml-0.5" /></span>
                     </span>
                   </span>
                   <span className="block px-2.5 py-2">
@@ -562,7 +562,7 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
                       <span className="w-full h-full flex items-center justify-center text-3xl">⚽</span>
                     )}
                     <span className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/10 transition-colors">
-                      <span className="w-11 h-11 rounded-full bg-black/70 border border-white/25 flex items-center justify-center group-hover:bg-[#f36f21] group-hover:border-transparent transition-all">
+                      <span className="w-11 h-11 rounded-full bg-black/70 border border-white/25 flex items-center justify-center group-hover:bg-[#2F6BFF] group-hover:border-transparent transition-all">
                         <Play className="w-4 h-4 text-white fill-current ml-0.5" />
                       </span>
                     </span>

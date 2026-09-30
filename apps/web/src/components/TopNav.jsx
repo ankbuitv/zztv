@@ -189,11 +189,11 @@ function TopNav({ channels, searchQuery, setSearchQuery, user, currentProfile, s
           <Logo size="sm" />
         </button>
         <div className={`relative ${mobileSearch ? 'block absolute inset-x-3 top-2 z-50 md:static md:inset-auto' : 'hidden md:block'}`} ref={boxRef}>
-          <div className={`flex items-center gap-2 bg-white/5 hover:bg-white/10 border ${searchFocused ? 'border-[#f36f21]' : 'border-white/10 hover:border-white/20'} px-3.5 py-2 rounded-xl w-full md:w-80 transition-all ${mobileSearch ? 'bg-[#14151a] border-[#f36f21]/50' : ''}`}>
+          <div className={`flex items-center gap-2 bg-white/5 hover:bg-white/10 border ${searchFocused ? 'border-[#2F6BFF]' : 'border-white/10 hover:border-white/20'} px-3.5 py-2 rounded-xl w-full md:w-80 transition-all ${mobileSearch ? 'bg-[#14151a] border-[#2F6BFF]/50' : ''}`}>
             <Search className="w-4 h-4 text-stone-400 shrink-0" />
             <input ref={searchInputRef} data-chrtv-search className="bg-transparent text-sm text-white placeholder:text-stone-500 focus:outline-none flex-1 min-w-0" placeholder={t('app.search.placeholder')} value={searchQuery} onChange={e => setSearchQuery(e.target.value)} onFocus={() => setSearchFocused(true)} onKeyDown={e => { if (e.key === 'Escape') { setSearchFocused(false); setMobileSearch(false); } }} />
             <button onClick={startVoice} title={t('voice.title')} className={`shrink-0 p-1.5 rounded-full transition-all ${listening ? 'bg-red-600 text-white animate-pulse' : 'text-stone-400 hover:text-white hover:bg-white/10'}`}><Mic className="w-3.5 h-3.5" /></button>
-            {searchingMovies ? <span className="w-3.5 h-3.5 border-2 border-[#f36f21] border-t-transparent rounded-full animate-spin shrink-0"></span> : <kbd className="hidden lg:inline px-1.5 py-0.5 text-[10px] text-stone-500 bg-white/5 rounded border border-white/10 font-mono">⌘K</kbd>}
+            {searchingMovies ? <span className="w-3.5 h-3.5 border-2 border-[#2F6BFF] border-t-transparent rounded-full animate-spin shrink-0"></span> : <kbd className="hidden lg:inline px-1.5 py-0.5 text-[10px] text-stone-500 bg-white/5 rounded border border-white/10 font-mono">⌘K</kbd>}
             {mobileSearch && (
               <button onClick={() => { setMobileSearch(false); setSearchFocused(false); setSearchQuery(''); }} className="md:hidden p-1 rounded-full text-stone-400 hover:text-white" aria-label={t('common.close')}>
                 <X className="w-4 h-4" />
@@ -210,7 +210,7 @@ function TopNav({ channels, searchQuery, setSearchQuery, user, currentProfile, s
                     <button key={ch.channel_id} onClick={() => pickChannel(ch)} className="w-full flex items-center gap-2.5 px-2 py-2 rounded-lg hover:bg-white/5 transition text-left">
                       <span className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center shrink-0">{ch.logo ? <img src={ch.logo} alt="" className="w-5 h-5 object-contain" onError={e => e.target.style.display = 'none'} /> : <span className="text-[10px] font-bold text-stone-400">TV</span>}</span>
                       <span className="min-w-0 flex-1"><span className="block text-xs font-bold text-white truncate">{ch.name}</span><span className="block text-[10px] text-stone-500">{ch.group_title}</span></span>
-                      <span className="px-1.5 py-0.5 text-[8px] font-bold rounded bg-[#f36f21] text-white shrink-0">{t('player.live')}</span>
+                      <span className="px-1.5 py-0.5 text-[8px] font-bold rounded bg-[#2F6BFF] text-white shrink-0">{t('player.live')}</span>
                     </button>
                   ))}
                 </div>
@@ -222,7 +222,7 @@ function TopNav({ channels, searchQuery, setSearchQuery, user, currentProfile, s
                     <button key={`${m.media_type}-${m.id}`} onClick={() => pickMovie(m)} className="w-full flex items-center gap-2.5 px-2 py-2 rounded-lg hover:bg-white/5 transition text-left">
                       <span className="w-8 h-11 rounded-md bg-stone-800 overflow-hidden shrink-0"><img src={imgPath(m.poster_path, 'w92')} alt="" className="w-full h-full object-cover" /></span>
                       <span className="min-w-0 flex-1"><span className="block text-xs font-bold text-white truncate">{m.title || m.name}</span><span className="block text-[10px] text-stone-500">{m.media_type === 'tv' ? 'TV' : 'Phim'}{m.vote_average > 0 ? ` · ★ ${m.vote_average.toFixed(1)}` : ''}{m.release_date ? ` · ${m.release_date.substring(0, 4)}` : ''}</span></span>
-                      <span className="text-[10px] text-[#ff9a3d] font-bold shrink-0">{t('app.watch')} →</span>
+                      <span className="text-[10px] text-[#6E9BFF] font-bold shrink-0">{t('app.watch')} →</span>
                     </button>
                   ))}
                 </div>
@@ -247,10 +247,10 @@ function TopNav({ channels, searchQuery, setSearchQuery, user, currentProfile, s
               <div className="px-4 py-2.5 border-b border-white/5 text-xs font-bold">{t('settings.choose_lang')}</div>
               <div className="max-h-80 overflow-y-auto p-1.5">
                 {(languages || []).map((l) => (
-                  <button key={l.code} onClick={() => { setLang(l.code); setLangOpen(false); }} className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-left transition ${l.code === lang ? 'bg-[#f36f21]/15 text-white' : 'hover:bg-white/5 text-stone-300'}`}>
+                  <button key={l.code} onClick={() => { setLang(l.code); setLangOpen(false); }} className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-left transition ${l.code === lang ? 'bg-[#2F6BFF]/15 text-white' : 'hover:bg-white/5 text-stone-300'}`}>
                     <span className="text-lg leading-none">{l.flag}</span>
                     <span className="flex-1 min-w-0"><span className="block text-xs font-bold truncate">{l.label}</span><span className="block text-[10px] text-stone-500 truncate">{l.country}</span></span>
-                    {l.code === lang && <Check className="w-4 h-4 text-[#ff9a3d] shrink-0" />}
+                    {l.code === lang && <Check className="w-4 h-4 text-[#6E9BFF] shrink-0" />}
                   </button>
                 ))}
               </div>
@@ -260,7 +260,7 @@ function TopNav({ channels, searchQuery, setSearchQuery, user, currentProfile, s
         <div className="relative" ref={notifRef}>
           <button onClick={() => { setNotifOpen((o) => !o); setApkOpen(false); setLangOpen(false); setUserOpen(false); if (!notifOpen) setTimeout(markAllRead, 1500); }} className="relative p-2 hover:bg-white/10 rounded-xl transition" title={t('nav.notifications')}>
             {unreadCount > 0 ? <BellRing className="w-5 h-5 text-amber-400" /> : <Bell className="w-5 h-5" />}
-            {unreadCount > 0 && <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 rounded-full bg-[#f36f21] text-white text-[9px] font-bold flex items-center justify-center">{unreadCount > 9 ? '9+' : unreadCount}</span>}
+            {unreadCount > 0 && <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 rounded-full bg-[#2F6BFF] text-white text-[9px] font-bold flex items-center justify-center">{unreadCount > 9 ? '9+' : unreadCount}</span>}
           </button>
           {notifOpen && (
             <div className="absolute right-0 top-full mt-2 w-80 max-w-[92vw] bg-[#141419] border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-50 anim-pop-fast">
@@ -272,13 +272,13 @@ function TopNav({ channels, searchQuery, setSearchQuery, user, currentProfile, s
                   return (
                     <div key={n.id} className="px-4 py-2.5 border-b border-white/5 hover:bg-white/5">
                       <div className="flex items-start gap-2">
-                        <span className={`mt-1 w-2 h-2 rounded-full shrink-0 ${n.type === 'warning' ? 'bg-amber-400' : n.type === 'error' ? 'bg-[#f36f21]' : 'bg-sky-400'}`}></span>
+                        <span className={`mt-1 w-2 h-2 rounded-full shrink-0 ${n.type === 'warning' ? 'bg-amber-400' : n.type === 'error' ? 'bg-[#2F6BFF]' : 'bg-sky-400'}`}></span>
                         <div className="min-w-0 flex-1">
                           <p className="text-[11px] font-bold truncate">{n.title}</p>
                           <p className={`text-[10px] text-stone-400 whitespace-pre-wrap break-words ${isExp ? '' : 'line-clamp-2'}`}>{n.body}</p>
                           <div className="flex items-center gap-2 mt-1">
                             <p className="text-[9px] text-stone-600">{n.created_at}</p>
-                            {isLong && <button onClick={() => setExpandedNotifs(prev => { const ns = new Set(prev); if (ns.has(n.id)) ns.delete(n.id); else ns.add(n.id); return ns; })} className="text-[9px] font-bold text-[#ff9a3d] hover:text-white transition px-1.5 py-0.5 rounded bg-white/5 border border-white/10">{isExp ? 'Thu gọn' : 'Mở rộng'}</button>}
+                            {isLong && <button onClick={() => setExpandedNotifs(prev => { const ns = new Set(prev); if (ns.has(n.id)) ns.delete(n.id); else ns.add(n.id); return ns; })} className="text-[9px] font-bold text-[#6E9BFF] hover:text-white transition px-1.5 py-0.5 rounded bg-white/5 border border-white/10">{isExp ? 'Thu gọn' : 'Mở rộng'}</button>}
                           </div>
                         </div>
                       </div>
@@ -297,14 +297,14 @@ function TopNav({ channels, searchQuery, setSearchQuery, user, currentProfile, s
             className="flex items-center gap-1.5 px-2 sm:px-2.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-[11px] font-bold text-stone-200 transition"
             title={t('nav.download_app')}
           >
-            <Smartphone className="w-4 h-4 text-[#ff9a3d]" />
+            <Smartphone className="w-4 h-4 text-[#6E9BFF]" />
             <span className="hidden lg:inline">{t('nav.download_app')}</span>
           </button>
           {apkOpen && <DownloadAppModal />}
         </div>
         <button
           onClick={() => setActiveTab && setActiveTab('plans')}
-          className={`hidden md:flex items-center gap-1.5 px-3 py-2 rounded-xl text-[11px] font-black transition ${hasPaidPlan ? 'bg-white/5 hover:bg-white/10 text-amber-200 border border-amber-400/30' : 'grad-brand text-white shadow-lg shadow-[#f36f21]/25'}`}
+          className={`hidden md:flex items-center gap-1.5 px-3 py-2 rounded-xl text-[11px] font-black transition ${hasPaidPlan ? 'bg-white/5 hover:bg-white/10 text-amber-200 border border-amber-400/30' : 'grad-brand text-white shadow-lg shadow-[#2F6BFF]/25'}`}
         >
           {hasPaidPlan ? <Crown className="w-3.5 h-3.5" /> : <Download className="w-3.5 h-3.5" />}
           {hasPaidPlan ? (planMeta?.name || String(effectivePlan).toUpperCase()) : t('nav.subscribe')}
@@ -312,7 +312,7 @@ function TopNav({ channels, searchQuery, setSearchQuery, user, currentProfile, s
         {isAuthenticated && currentProfile ? (
           <div className="relative" ref={userRef}>
             <button onClick={() => { setUserOpen((o) => !o); setApkOpen(false); setNotifOpen(false); setLangOpen(false); }} className="flex items-center gap-2 pl-1 pr-1.5 py-1 rounded-xl hover:bg-white/10 transition" title={currentProfile.name}>
-              <div className={`relative w-9 h-9 rounded-full bg-gradient-to-br from-amber-500 to-[#f36f21] flex items-center justify-center font-bold text-white text-sm ${effectivePlan === 'signature' ? 'ring-2 ring-amber-300' : 'ring-1 ring-white/20'}`}>
+              <div className={`relative w-9 h-9 rounded-full bg-gradient-to-br from-amber-500 to-[#2F6BFF] flex items-center justify-center font-bold text-white text-sm ${effectivePlan === 'signature' ? 'ring-2 ring-amber-300' : 'ring-1 ring-white/20'}`}>
                 {currentProfile.name[0].toUpperCase()}
               </div>
               <span className="text-xs text-stone-300 hidden md:inline max-w-[90px] truncate">{currentProfile.name}</span>
@@ -321,7 +321,7 @@ function TopNav({ channels, searchQuery, setSearchQuery, user, currentProfile, s
             {userOpen && (
               <div className="absolute right-0 top-full mt-2 w-[280px] max-w-[92vw] bg-[#141419] border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-50 anim-pop-fast">
                 <div className="px-4 py-3 border-b border-white/8 flex items-center gap-3">
-                  <div className="w-11 h-11 rounded-full bg-gradient-to-br from-amber-500 to-[#f36f21] flex items-center justify-center font-black text-white">{currentProfile.name[0].toUpperCase()}</div>
+                  <div className="w-11 h-11 rounded-full bg-gradient-to-br from-amber-500 to-[#2F6BFF] flex items-center justify-center font-black text-white">{currentProfile.name[0].toUpperCase()}</div>
                   <div className="min-w-0">
                     <p className="text-[13px] font-black text-white truncate">{currentProfile.name}</p>
                     <p className="text-[10px] text-stone-500">{currentProfile.is_child ? t('nav.kids') : t('nav.adult')} · {(planMeta?.name || effectivePlan || 'STANDARD').toString().toUpperCase()}</p>
@@ -334,14 +334,14 @@ function TopNav({ channels, searchQuery, setSearchQuery, user, currentProfile, s
                       <button
                         key={p.id}
                         onClick={() => { setUserOpen(false); onSelectProfile && onSelectProfile(p); }}
-                        className={`w-full flex items-center gap-2.5 px-2 py-2 rounded-xl text-left ${p.id === currentProfile.id ? 'bg-[#f36f21]/15' : 'hover:bg-white/5'}`}
+                        className={`w-full flex items-center gap-2.5 px-2 py-2 rounded-xl text-left ${p.id === currentProfile.id ? 'bg-[#2F6BFF]/15' : 'hover:bg-white/5'}`}
                       >
                         <span className="w-8 h-8 rounded-full bg-gradient-to-br from-stone-600 to-stone-800 flex items-center justify-center text-[11px] font-black text-white">{(p.name || '?')[0].toUpperCase()}</span>
                         <span className="flex-1 min-w-0">
                           <span className="block text-[12px] font-bold text-white truncate">{p.name}</span>
                           <span className="block text-[10px] text-stone-500">{p.is_child ? t('nav.kids') : t('nav.adult')}</span>
                         </span>
-                        {p.id === currentProfile.id && <Check className="w-4 h-4 text-[#ff9a3d]" />}
+                        {p.id === currentProfile.id && <Check className="w-4 h-4 text-[#6E9BFF]" />}
                       </button>
                     ))}
                   </div>
@@ -356,7 +356,7 @@ function TopNav({ channels, searchQuery, setSearchQuery, user, currentProfile, s
                   <button onClick={() => { setUserOpen(false); onShowAuth && onShowAuth(); }} className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-white/5 text-[12px] font-bold text-stone-200">
                     <UserPlus className="w-4 h-4 text-stone-400" /> {t('nav.add_account')}
                   </button>
-                  <button onClick={() => { setUserOpen(false); logout(); }} className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-white/5 text-[12px] font-bold text-[#ff9a3d]">
+                  <button onClick={() => { setUserOpen(false); logout(); }} className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-white/5 text-[12px] font-bold text-[#6E9BFF]">
                     <LogOut className="w-4 h-4" /> {t('nav.logout')}
                   </button>
                 </div>

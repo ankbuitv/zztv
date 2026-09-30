@@ -207,7 +207,7 @@ export default function EpgGridTimeline({
         <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(600px 180px at 15% 0%, rgba(243,111,33,.14), transparent 70%), radial-gradient(500px 160px at 90% 0%, rgba(124,45,18,.16), transparent 70%)' }}></div>
         <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div>
-            <div className="flex items-center gap-1.5 text-[#ff9a3d] font-black uppercase tracking-[0.2em] text-[10px] mb-1">
+            <div className="flex items-center gap-1.5 text-[#6E9BFF] font-black uppercase tracking-[0.2em] text-[10px] mb-1">
               <Calendar className="w-3.5 h-3.5" /> {t('epg.kicker')}
             </div>
             <h1 className="text-[26px] font-black text-white tracking-tight leading-none">{t('epg.title')}</h1>
@@ -220,7 +220,7 @@ export default function EpgGridTimeline({
                 placeholder={t('epg.search_ch')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-3 py-2 bg-white/[0.06] border border-white/10 rounded-full text-[13px] text-slate-200 placeholder:text-stone-500 focus:outline-none focus:border-[#f36f21]/70 focus:ring-2 focus:ring-[#f36f21]/20 transition-all"
+                className="w-full pl-9 pr-3 py-2 bg-white/[0.06] border border-white/10 rounded-full text-[13px] text-slate-200 placeholder:text-stone-500 focus:outline-none focus:border-[#2F6BFF]/70 focus:ring-2 focus:ring-[#2F6BFF]/20 transition-all"
               />
             </div>
             <button
@@ -257,8 +257,8 @@ export default function EpgGridTimeline({
                           <p className="text-[11px] font-bold truncate">{r.program_title}</p>
                           <p className="text-[10px] text-slate-500">{r.channel_id} · {String(r.remind_at || '').slice(0, 16)}</p>
                         </div>
-                        <button onClick={() => handleDeleteReminder(r.id)} className="p-1.5 hover:bg-[#f36f21]/20 rounded-lg" title={t('epg.rem_del')}>
-                          <Trash2 className="w-3.5 h-3.5 text-slate-500 hover:text-[#ff9a3d]" />
+                        <button onClick={() => handleDeleteReminder(r.id)} className="p-1.5 hover:bg-[#2F6BFF]/20 rounded-lg" title={t('epg.rem_del')}>
+                          <Trash2 className="w-3.5 h-3.5 text-slate-500 hover:text-[#6E9BFF]" />
                         </button>
                       </div>
                     ))}
@@ -284,7 +284,7 @@ export default function EpgGridTimeline({
             onClick={() => setSelectedDayOffset(tab.offset)}
             className={`px-4 py-2 rounded-full font-bold text-xs whitespace-nowrap flex items-center gap-1.5 transition-all active:scale-95 ${
               selectedDayOffset === tab.offset
-                ? (tab.future ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/30' : 'grad-brand text-white shadow-lg shadow-[#f36f21]/30')
+                ? (tab.future ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/30' : 'grad-brand text-white shadow-lg shadow-[#2F6BFF]/30')
                 : tab.future
                 ? 'bg-white/[0.04] border border-sky-500/25 text-sky-300/70 hover:text-sky-200 hover:border-sky-500/50'
                 : 'bg-white/[0.04] border border-white/10 text-slate-400 hover:text-white hover:border-white/25'
@@ -304,7 +304,7 @@ export default function EpgGridTimeline({
             onClick={() => setSelectedCategory(cat)}
             className={`px-3 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap transition-all active:scale-95 ${
               selectedCategory === cat
-                ? 'bg-[#f36f21]/20 text-[#ff9a3d] border border-[#f36f21]/50'
+                ? 'bg-[#2F6BFF]/20 text-[#6E9BFF] border border-[#2F6BFF]/50'
                 : 'bg-transparent text-stone-500 border border-transparent hover:text-stone-200 hover:bg-white/[0.06]'
             }`}
           >
@@ -332,7 +332,7 @@ export default function EpgGridTimeline({
                   onClick={() => setActiveId(ch.channel_id)}
                   className={`w-full flex items-center gap-2.5 p-2 rounded-xl border text-left transition-all active:scale-[0.98] ${
                     active
-                      ? 'bg-[#f36f21]/15 border-[#f36f21]/50 shadow-lg shadow-[#f36f21]/10'
+                      ? 'bg-[#2F6BFF]/15 border-[#2F6BFF]/50 shadow-lg shadow-[#2F6BFF]/10'
                       : 'bg-transparent border-transparent hover:bg-white/[0.05]'
                   }`}
                 >
@@ -378,7 +378,7 @@ export default function EpgGridTimeline({
                 </div>
                 <button
                   onClick={() => onSelectChannel && onSelectChannel(activeChannel)}
-                  className="px-4 py-2 grad-brand text-white text-xs font-black rounded-full flex items-center gap-1.5 shadow-lg shadow-[#f36f21]/30 active:scale-95 transition-all shrink-0"
+                  className="px-4 py-2 grad-brand text-white text-xs font-black rounded-full flex items-center gap-1.5 shadow-lg shadow-[#2F6BFF]/30 active:scale-95 transition-all shrink-0"
                 >
                   <Play className="w-3.5 h-3.5 fill-current" /> {t('epg.watch_live')}
                 </button>
@@ -402,7 +402,7 @@ export default function EpgGridTimeline({
                       onClick={() => handleProgClick(prog)}
                       className={`w-full text-left p-3 rounded-2xl border transition-all active:scale-[0.99] flex gap-3 ${
                         isLiveNow
-                          ? 'bg-gradient-to-r from-[#f36f21]/20 to-[#7a2f0e]/15 border-[#f36f21]/60 shadow-lg shadow-[#f36f21]/10'
+                          ? 'bg-gradient-to-r from-[#2F6BFF]/20 to-[#7a2f0e]/15 border-[#2F6BFF]/60 shadow-lg shadow-[#2F6BFF]/10'
                           : isPast
                           ? 'bg-white/[0.03] border-white/[0.07] hover:border-purple-500/40'
                           : 'bg-black/30 border-white/[0.05] hover:border-white/20'
@@ -440,7 +440,7 @@ export default function EpgGridTimeline({
                         </span>
                         {isLiveNow ? (
                           <span className="block mt-1.5 h-1 rounded-full bg-black/40 overflow-hidden">
-                            <span className="block h-full rounded-full bg-gradient-to-r from-[#f36f21] to-[#ff9a3d]" style={{ width: `${livePct}%` }}></span>
+                            <span className="block h-full rounded-full bg-gradient-to-r from-[#2F6BFF] to-[#6E9BFF]" style={{ width: `${livePct}%` }}></span>
                           </span>
                         ) : prog.desc ? (
                           <span className="block text-[11px] text-stone-600 line-clamp-1 mt-0.5">{prog.desc}</span>

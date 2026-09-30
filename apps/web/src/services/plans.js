@@ -1,6 +1,6 @@
 import { API_BASE } from "./config";
 
-// ===== GÓI CƯỚC CHRTV PLAY — tạm thời FREE toàn bộ =====
+// ===== GÓI CƯỚC playZ — tạm thời FREE toàn bộ =====
 // standard     : các kênh VTV/TH + XEM THỬ mọi kênh khác 5 phút mỗi giờ
 //                (hết 5 phút thì chỉ còn kênh TH — server chốt, xem worker previewState)
 // QUẢNG CÁO pre-roll: standard 30s · recreational 10s · ultimate 5s · elite/signature không có
@@ -52,8 +52,8 @@ export const PLANS = [
   },
   {
     code: "signature", name: "SIGNATURE", rank: 5,
-    tagline: "Tất cả mọi kênh", tagline_en: "Every single channel", color: "#f36f21",
-    art: "👑", grad: "linear-gradient(135deg,#7c2d12,#f36f21 55%,#fbbf24)",
+    tagline: "Tất cả mọi kênh", tagline_en: "Every single channel", color: "#2F6BFF",
+    art: "👑", grad: "linear-gradient(135deg,#7c2d12,#2F6BFF 55%,#fbbf24)",
     allows: ["Kênh VTV / Truyền hình Việt", "Kênh BOX - Giải trí", "Kênh Thể thao", "Kênh Phim", "Mọi kênh hiện tại & tương lai", "Shorts", "Bỏ qua quảng cáo", "Hỗ trợ ưu tiên 24/7"],
     allows_en: ["VTV / Vietnam TV channels", "BOX entertainment channels", "Sports channels", "Movie channels", "All current & future channels", "Shorts", "Skip ads", "Priority 24/7 support"],
     not: [],

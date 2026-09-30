@@ -42,7 +42,7 @@ export default function OnboardingTour({ forceShow = false, onLogin = false }) {
     { icon: Tv, text: t('welcome.f1'), color: 'bg-sky-500/15 text-sky-400' },
     { icon: Film, text: t('welcome.f2'), color: 'bg-purple-500/15 text-purple-400' },
     { icon: Trophy, text: t('welcome.f3'), color: 'bg-emerald-500/15 text-emerald-400' },
-    { icon: Crown, text: t('welcome.f4'), color: 'bg-[#f36f21]/15 text-[#ff9a3d]' },
+    { icon: Crown, text: t('welcome.f4'), color: 'bg-[#2F6BFF]/15 text-[#6E9BFF]' },
   ];
 
   return (

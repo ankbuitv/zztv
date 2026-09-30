@@ -71,7 +71,7 @@ export function CodesModal({ open, onClose, onOpenMovie, onPartyCode, onOpenPlay
     <div className="fixed inset-0 z-[240] bg-black/85 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}>
       <div className="w-full max-w-md modal-panel overflow-hidden" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
-          <p className="text-[13px] font-black text-white flex items-center gap-2"><Ticket className="w-4 h-4 text-[#ff9a3d]" />Mã &amp; chia sẻ</p>
+          <p className="text-[13px] font-black text-white flex items-center gap-2"><Ticket className="w-4 h-4 text-[#6E9BFF]" />Mã &amp; chia sẻ</p>
           <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-slate-400" /></button>
         </div>
         <div className="flex gap-1 px-4 pt-3">
@@ -85,7 +85,7 @@ export function CodesModal({ open, onClose, onOpenMovie, onPartyCode, onOpenPlay
               <div className="flex gap-2">
                 <input value={code} onChange={(e) => setCode(e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 32))}
                   onKeyDown={(e) => e.key === 'Enter' && redeem()}
-                  placeholder="Nhập mã…" className="flex-1 px-3 py-3 bg-black/40 border border-white/10 rounded-xl text-[14px] font-mono tracking-[0.2em] text-white placeholder:tracking-normal placeholder:text-stone-600 focus:outline-none focus:border-[#f36f21]" />
+                  placeholder="Nhập mã…" className="flex-1 px-3 py-3 bg-black/40 border border-white/10 rounded-xl text-[14px] font-mono tracking-[0.2em] text-white placeholder:tracking-normal placeholder:text-stone-600 focus:outline-none focus:border-[#2F6BFF]" />
                 <button onClick={redeem} disabled={busy || !code} className="px-4 rounded-xl grad-brand text-white text-[12px] font-black disabled:opacity-40 active:scale-95">{busy ? '…' : t('p48.use')}</button>
               </div>
               <p className="text-[11px] text-stone-500 leading-relaxed">
@@ -97,7 +97,7 @@ export function CodesModal({ open, onClose, onOpenMovie, onPartyCode, onOpenPlay
           {tab === 'my' && (
             <>
               {myCode && (
-                <div className="rounded-2xl bg-gradient-to-br from-[#f36f21]/15 to-[#7c2d12]/10 border border-[#f36f21]/30 p-3">
+                <div className="rounded-2xl bg-gradient-to-br from-[#2F6BFF]/15 to-[#7c2d12]/10 border border-[#2F6BFF]/30 p-3">
                   <p className="text-[10px] font-black uppercase tracking-widest text-[#ffb37a] flex items-center gap-1"><Gift className="w-3 h-3" />Mã mời của bạn — cả 2 nhận +200 XP &amp; +3 ngày gói</p>
                   <div className="mt-2 flex items-center gap-2">
                     <span className="flex-1 font-mono font-black text-white text-lg tracking-[0.25em]">{myCode}</span>
@@ -111,7 +111,7 @@ export function CodesModal({ open, onClose, onOpenMovie, onPartyCode, onOpenPlay
               <div className="space-y-1.5 max-h-44 overflow-y-auto">
                 {mine.filter((m) => m.kind === 'movie').slice(0, 10).map((m) => (
                   <div key={m.code} className="flex items-center gap-2 px-3 py-2 rounded-lg bg-black/25 border border-white/[0.06] text-[11px]">
-                    <span className="font-mono font-black text-[#ff9a3d]">{m.code}</span>
+                    <span className="font-mono font-black text-[#6E9BFF]">{m.code}</span>
                     <span className="flex-1 truncate text-slate-300">{m.media_type === 'tv' ? `TV · S${m.season}E${m.episode}` : 'Phim'} · TMDB {m.tmdb_id}</span>
                     <button onClick={() => copyText(m.code, () => addToast(t('p48.code_copied'), 'success'))} className="text-slate-500 hover:text-white"><Copy className="w-3.5 h-3.5" /></button>
                   </div>
@@ -316,7 +316,7 @@ export function ResumeModal({ open, onClose, onResumeMovie }) {
     <div className="fixed inset-0 z-[240] bg-black/85 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}>
       <div className="w-full max-w-sm modal-panel overflow-hidden" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
-          <p className="text-[13px] font-black text-white flex items-center gap-2"><Tv className="w-4 h-4 text-[#ff9a3d]" />{t('p48.resume_code_title')}</p>
+          <p className="text-[13px] font-black text-white flex items-center gap-2"><Tv className="w-4 h-4 text-[#6E9BFF]" />{t('p48.resume_code_title')}</p>
           <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-slate-400" /></button>
         </div>
         <div className="p-4 space-y-3">
@@ -329,8 +329,8 @@ export function ResumeModal({ open, onClose, onResumeMovie }) {
             <>
               <p className="text-[11px] text-stone-500 leading-relaxed">{t('p48.resume_code_hint')}</p>
               {code ? (
-                <div className="text-center py-4 bg-black/30 border border-dashed border-[#f36f21]/50 rounded-2xl">
-                  <p className="font-mono text-4xl font-black tracking-[0.4em] text-[#ff9a3d]">{code}</p>
+                <div className="text-center py-4 bg-black/30 border border-dashed border-[#2F6BFF]/50 rounded-2xl">
+                  <p className="font-mono text-4xl font-black tracking-[0.4em] text-[#6E9BFF]">{code}</p>
                   <p className="text-[10px] text-stone-500 mt-2">Hết hạn sau {ttl}s · TV nhập xong là tự xoá</p>
                   <button onClick={gen} className="mt-2 px-3 py-1.5 rounded-lg bg-white/10 text-[11px] font-bold text-stone-300 hover:bg-white/15">Tạo mã mới</button>
                 </div>
@@ -338,7 +338,7 @@ export function ResumeModal({ open, onClose, onResumeMovie }) {
             </>
           ) : (
             <>
-              <input value={code} onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))} onKeyDown={(e) => e.key === 'Enter' && take()} inputMode="numeric" placeholder="• • • • • •" className="w-full text-center font-mono text-3xl font-black tracking-[0.5em] py-3 bg-black/40 border border-white/10 rounded-xl text-white focus:outline-none focus:border-[#f36f21]" />
+              <input value={code} onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))} onKeyDown={(e) => e.key === 'Enter' && take()} inputMode="numeric" placeholder="• • • • • •" className="w-full text-center font-mono text-3xl font-black tracking-[0.5em] py-3 bg-black/40 border border-white/10 rounded-xl text-white focus:outline-none focus:border-[#2F6BFF]" />
               <button onClick={take} disabled={busy || code.length !== 6} className="w-full py-2.5 rounded-xl grad-brand text-white text-[12px] font-black disabled:opacity-40">{busy ? '…' : 'Đồng bộ & xem tiếp'}</button>
             </>
           )}

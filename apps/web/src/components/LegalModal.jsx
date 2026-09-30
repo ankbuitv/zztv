@@ -7,7 +7,7 @@ const CONTENT = {
     terms: {
       title: 'Điều khoản sử dụng',
       body: [
-        ['1. Chấp nhận điều khoản', 'Khi tạo tài khoản hoặc sử dụng CHRTV PLAY (sản phẩm của ANKB CO.), bạn đồng ý tuân thủ toàn bộ điều khoản này. Nếu không đồng ý, vui lòng ngừng sử dụng dịch vụ.'],
+        ['1. Chấp nhận điều khoản', 'Khi tạo tài khoản hoặc sử dụng playZ (sản phẩm của ANKB CO.), bạn đồng ý tuân thủ toàn bộ điều khoản này. Nếu không đồng ý, vui lòng ngừng sử dụng dịch vụ.'],
         ['2. Tài khoản', 'Bạn phải từ đủ tuổi theo luật địa phương (hoặc có giám hộ đồng ý), cung cấp email chính xác và tự bảo mật mật khẩu. Mỗi người chỉ dùng tài khoản của mình; chia sẻ tài khoản có thể bị khoá.'],
         ['3. Gói cước & thanh toán', 'Một số kênh/nội dung yêu cầu gói cước. Trong thời gian khuyến mãi, việc kích hoạt có thể miễn phí. Khi áp dụng thu phí, chúng tôi sẽ thông báo trước qua email và trong ứng dụng.'],
         ['4. Sử dụng hợp lệ', 'Bạn không được: sao chép/phát lại luồng (re-stream), vượt qua biện pháp kỹ thuật, dùng bot cào dữ liệu, tải lên nội dung vi phạm pháp luật, quấy rối người khác trong chat/xem chung.'],
@@ -31,7 +31,7 @@ const CONTENT = {
     dmca: {
       title: 'Bản quyền (DMCA)',
       body: [
-        ['1. Tôn trọng bản quyền', 'CHRTV PLAY tôn trọng quyền sở hữu trí tuệ. Kênh/phim do đối tác cấp phép hoặc nguồn công khai; video cộng đồng do người dùng đăng.'],
+        ['1. Tôn trọng bản quyền', 'playZ tôn trọng quyền sở hữu trí tuệ. Kênh/phim do đối tác cấp phép hoặc nguồn công khai; video cộng đồng do người dùng đăng.'],
         ['2. Khiếu nại', 'Chủ sở hữu quyền gửi khiếu nại gồm: thông tin liên hệ, mô tả nội dung vi phạm (tên kênh/video + link trong app), cam kết sở hữu hợp pháp. Chúng tôi xử lý trong tối đa 7 ngày làm việc.'],
         ['3. Tái phạm', 'Tài khoản/kênh tái vi phạm nhiều lần sẽ bị gỡ và khoá vĩnh viễn.'],
       ],
@@ -40,7 +40,7 @@ const CONTENT = {
       title: 'Liên hệ',
       body: [
         ['Hỗ trợ', 'Gửi email hỗ trợ hiển thị trong ứng dụng (Cài đặt → Giới thiệu → email hỗ trợ). Vui lòng mô tả lỗi kèm tên kênh/thời điểm để được xử lý nhanh.'],
-        ['Đối tác nội dung', 'Muốn đưa kênh của bạn lên CHRTV PLAY? Liên hệ qua email đối tác trong mục Mua Gói.'],
+        ['Đối tác nội dung', 'Muốn đưa kênh của bạn lên playZ? Liên hệ qua email đối tác trong mục Mua Gói.'],
         ['Giờ làm việc', 'Hỗ trợ qua email, phản hồi trong 1–2 ngày làm việc. Hiện chưa hỗ trợ qua điện thoại.'],
       ],
     },
@@ -49,7 +49,7 @@ const CONTENT = {
     terms: {
       title: 'Terms of Service',
       body: [
-        ['1. Acceptance', 'By creating an account or using CHRTV PLAY (a product of ANKB CO.), you agree to these terms. If you disagree, please stop using the service.'],
+        ['1. Acceptance', 'By creating an account or using playZ (a product of ANKB CO.), you agree to these terms. If you disagree, please stop using the service.'],
         ['2. Accounts', 'You must be of legal age (or have guardian consent), provide an accurate email and keep your password safe. Sharing accounts may lead to suspension.'],
         ['3. Plans & billing', 'Some channels/content require a plan. During promotions, activation may be free. Before paid billing starts, we will notify you via email and in-app.'],
         ['4. Acceptable use', 'You must not: re-stream our feeds, bypass technical measures, scrape with bots, upload unlawful content, or harass others in chat/party.'],
@@ -73,7 +73,7 @@ const CONTENT = {
     dmca: {
       title: 'Copyright (DMCA)',
       body: [
-        ['1. Respect', 'CHRTV PLAY respects IP rights. Channels/movies are licensed from partners or public sources; community videos are user-uploaded.'],
+        ['1. Respect', 'playZ respects IP rights. Channels/movies are licensed from partners or public sources; community videos are user-uploaded.'],
         ['2. Complaints', 'Rights holders should send: contact info, description of infringing content (channel/video name + in-app link), ownership statement. We act within 7 business days.'],
         ['3. Repeat offenders', 'Repeat infringers will be removed and permanently banned.'],
       ],
@@ -82,7 +82,7 @@ const CONTENT = {
       title: 'Contact',
       body: [
         ['Support', 'Email the support address shown in the app (Settings → About). Include channel name + time for faster help.'],
-        ['Content partners', 'Want your channel on CHRTV PLAY? Contact us via the partner email in Plans.'],
+        ['Content partners', 'Want your channel on playZ? Contact us via the partner email in Plans.'],
         ['Hours', 'Email support, replies within 1–2 business days. No phone support yet.'],
       ],
     },
@@ -128,7 +128,7 @@ export default function LegalModal({ tab = 'terms', onClose, onTab }) {
               <p className="text-[12px] text-stone-300 leading-relaxed">{p}</p>
             </div>
           ))}
-          <p className="text-[10px] text-stone-600 pt-2 border-t border-white/5">CHRTV PL▷Y - A Product of ANKB CO. © 2025 · {t('footer.updated')}</p>
+          <p className="text-[10px] text-stone-600 pt-2 border-t border-white/5">playZ - A Product of ANKB CO. © 2025 · {t('footer.updated')}</p>
         </div>
       </div>
     </div>

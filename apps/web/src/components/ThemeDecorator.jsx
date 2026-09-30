@@ -162,7 +162,7 @@ function TopNavDecor({ theme, setTheme }) {
           background-position: center;
         }
         /* Logo glow theo theme */
-        html[data-site-theme] .topbar-mytv img[alt="CHRTV PLAY"] {
+        html[data-site-theme] .topbar-mytv img[alt="playZ"] {
           filter: drop-shadow(0 0 10px var(--theme-accent)) drop-shadow(0 4px 14px color-mix(in srgb, var(--theme-primary) 60%, transparent)) !important;
         }
         /* Badge nhỏ góc logo */
@@ -350,7 +350,7 @@ export default function ThemeDecorator() {
       try { window.dispatchEvent(new CustomEvent("chrtv-theme-change", { detail: null })); } catch {}
       return;
     }
-    root.style.setProperty("--theme-primary", theme.primary_color || "#f36f21");
+    root.style.setProperty("--theme-primary", theme.primary_color || "#2F6BFF");
     root.style.setProperty("--theme-secondary", theme.secondary_color || "#1a1c24");
     root.style.setProperty("--theme-accent", theme.accent_color || "#ffb37a");
     root.dataset.siteTheme = theme.key || "";
@@ -393,7 +393,7 @@ export default function ThemeDecorator() {
           }}
         >
           <span>
-            {theme.emoji} {theme.name} — {theme.description} &nbsp; • &nbsp; {theme.emoji} {theme.name} — {theme.description} &nbsp; • &nbsp; 🏆 ASEAN CUP 2026 • 🇻🇳 VIỆT NAM VÔ ĐỊCH • ⚽ LIVE TRÊN CHRTV PLAY •
+            {theme.emoji} {theme.name} — {theme.description} &nbsp; • &nbsp; {theme.emoji} {theme.name} — {theme.description} &nbsp; • &nbsp; 🏆 ASEAN CUP 2026 • 🇻🇳 VIỆT NAM VÔ ĐỊCH • ⚽ LIVE TRÊN playZ •
           </span>
           <button className="theme-close-btn" onClick={() => setTheme(null)} title="Tắt trang trí">×</button>
         </div>

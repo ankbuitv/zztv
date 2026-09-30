@@ -24,7 +24,7 @@ function Toggle({ on, onClick, label }) {
   return (
     <button
       onClick={onClick}
-      className={`w-11 h-6 rounded-full transition-all shrink-0 ${on ? 'bg-[#f36f21]' : 'bg-slate-700'}`}
+      className={`w-11 h-6 rounded-full transition-all shrink-0 ${on ? 'bg-[#2F6BFF]' : 'bg-slate-700'}`}
       aria-label={label}
     >
       <div className={`w-4.5 h-4.5 w-[18px] h-[18px] rounded-full bg-white shadow transition-transform ${on ? 'translate-x-[22px]' : 'translate-x-0.5'}`} />
@@ -253,7 +253,7 @@ export default function SettingsPage({ onClose }) {
       {/* Header */}
       <div className="flex items-center justify-between gap-3 rounded-2xl border border-white/[0.07] bg-gradient-to-r from-[#1a120c] to-[#14151c] px-4 py-3.5">
         <div>
-          <div className="flex items-center gap-1.5 text-[#f36f21] font-bold uppercase tracking-wider text-[10px] mb-0.5">
+          <div className="flex items-center gap-1.5 text-[#2F6BFF] font-bold uppercase tracking-wider text-[10px] mb-0.5">
             <Settings className="w-3.5 h-3.5" /> {t('nav.account_settings')}
           </div>
           <h1 className="text-2xl font-extrabold text-white">{t('settings.title')}</h1>
@@ -281,7 +281,7 @@ export default function SettingsPage({ onClose }) {
               onClick={() => { setActive(id); try { document.querySelector('main')?.scrollTo({ top: 0 }); } catch {} }}
               className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-[12px] font-bold whitespace-nowrap transition-all active:scale-[0.98] flex-1 md:flex-none ${
                 active === id
-                  ? 'grad-brand text-white shadow-lg shadow-[#f36f21]/25'
+                  ? 'grad-brand text-white shadow-lg shadow-[#2F6BFF]/25'
                   : 'text-stone-400 hover:text-white hover:bg-white/[0.06]'
               }`}
             >
@@ -295,7 +295,7 @@ export default function SettingsPage({ onClose }) {
         {/* ===== NGÔN NGỮ ===== */}
         {active === 'lang' && (
         <div className="bg-[#14151c] border border-white/[0.07] rounded-2xl p-5 shadow-xl shadow-black/30 space-y-4 md:col-span-2">
-          <h3 className="text-sm font-bold text-white flex items-center gap-2"><Languages className="w-4 h-4 text-[#ff9a3d]" /> {t('settings.language')}</h3>
+          <h3 className="text-sm font-bold text-white flex items-center gap-2"><Languages className="w-4 h-4 text-[#6E9BFF]" /> {t('settings.language')}</h3>
           <div className="flex flex-wrap gap-2.5">
             {languages.map(l => {
               const active = lang === l.code;
@@ -306,7 +306,7 @@ export default function SettingsPage({ onClose }) {
                   onClick={() => setLang(l.code)}
                   className={`relative flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold transition-all border ${
                     active
-                      ? 'bg-[#f36f21] border-[#f36f21] text-white shadow-lg shadow-[#f36f21]/20'
+                      ? 'bg-[#2F6BFF] border-[#2F6BFF] text-white shadow-lg shadow-[#2F6BFF]/20'
                       : 'bg-slate-800/60 border-slate-700/50 text-slate-300 hover:bg-slate-700/60 hover:text-white'
                   }`}
                 >
@@ -342,7 +342,7 @@ export default function SettingsPage({ onClose }) {
                   key={t_opt}
                   onClick={() => updateSetting('theme', t_opt)}
                   className={`px-4 py-2 text-xs rounded-lg font-medium transition-all flex items-center gap-1.5 ${
-                    settings.theme === t_opt ? 'bg-[#f36f21] text-white' : 'bg-slate-800 text-slate-400 hover:text-white'
+                    settings.theme === t_opt ? 'bg-[#2F6BFF] text-white' : 'bg-slate-800 text-slate-400 hover:text-white'
                   }`}
                 >
                   {t_opt === 'dark' ? <Moon className="w-3 h-3" /> : <Sun className="w-3 h-3" />}
@@ -355,11 +355,11 @@ export default function SettingsPage({ onClose }) {
             <span className="text-xs text-slate-400 flex items-center gap-1.5"><Palette className="w-3.5 h-3.5 text-pink-400" /> {t('settings.color_theme')}</span>
             <div className="flex gap-1.5">
               {[
-                { v: 'sunset', label: t('settings.theme_sunset'), grad: 'linear-gradient(135deg,#f36f21,#ff9a3d)' },
+                { v: 'sunset', label: t('settings.theme_sunset'), grad: 'linear-gradient(135deg,#2F6BFF,#6E9BFF)' },
                 { v: 'ocean', label: t('settings.theme_ocean'), grad: 'linear-gradient(135deg,#0ea5e9,#6366f1)' },
                 { v: 'fire', label: t('settings.theme_fire'), grad: 'linear-gradient(135deg,#ef4444,#f59e0b)' },
               ].map(o => (
-                <button key={o.v} onClick={() => updateSetting('colorTheme', o.v)} className={`flex items-center gap-1.5 px-3 py-2 text-xs rounded-lg font-medium transition-all ${settings.colorTheme === o.v ? 'bg-slate-700 text-white ring-1 ring-[#f36f21]' : 'bg-slate-800 text-slate-400 hover:text-white'}`}>
+                <button key={o.v} onClick={() => updateSetting('colorTheme', o.v)} className={`flex items-center gap-1.5 px-3 py-2 text-xs rounded-lg font-medium transition-all ${settings.colorTheme === o.v ? 'bg-slate-700 text-white ring-1 ring-[#2F6BFF]' : 'bg-slate-800 text-slate-400 hover:text-white'}`}>
                   <span className="w-3.5 h-3.5 rounded-full" style={{ background: o.grad }}></span>{o.label}
                 </button>
               ))}
@@ -379,7 +379,7 @@ export default function SettingsPage({ onClose }) {
         {/* (#61) Cá nhân hoá bằng quiz + (#83) Chủ đề theo mùa */}
         {active === 'appearance' && (
         <div className="bg-[#14151c] border border-white/[0.07] rounded-2xl p-5 shadow-xl shadow-black/30 space-y-4">
-          <h3 className="text-sm font-bold text-white flex items-center gap-2"><Sparkles className="w-4 h-4 text-[#ff9a3d]" /> {t('p48.quiz_title')} & {lang === 'vi' ? 'chủ đề mùa' : 'seasonal theme'}</h3>
+          <h3 className="text-sm font-bold text-white flex items-center gap-2"><Sparkles className="w-4 h-4 text-[#6E9BFF]" /> {t('p48.quiz_title')} & {lang === 'vi' ? 'chủ đề mùa' : 'seasonal theme'}</h3>
           <div className="space-y-3">
             <div>
               <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-1.5">{t('p48.quiz_q1')}</p>
@@ -402,7 +402,7 @@ export default function SettingsPage({ onClose }) {
                       const cur = quizPrefs.favGroups || [];
                       const next = { ...quizPrefs, favGroups: on ? cur.filter(x => x !== g) : [...cur, g] };
                       setQuizPrefs(next); saveHomePrefs(next);
-                    }} className={`px-3 py-1.5 rounded-full text-[11px] font-bold border transition ${on ? 'bg-[#f36f21]/20 text-[#ffb37a] border-[#f36f21]/40' : 'bg-white/[0.05] border-white/10 text-stone-400 hover:text-white'}`}>{g}</button>
+                    }} className={`px-3 py-1.5 rounded-full text-[11px] font-bold border transition ${on ? 'bg-[#2F6BFF]/20 text-[#ffb37a] border-[#2F6BFF]/40' : 'bg-white/[0.05] border-white/10 text-stone-400 hover:text-white'}`}>{g}</button>
                   );
                 })}
               </div>
@@ -684,7 +684,7 @@ export default function SettingsPage({ onClose }) {
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-bold text-white flex items-center gap-2"><Smartphone className="w-4 h-4 text-cyan-400" /> {t('settings.sessions')}</h3>
             {token && (
-              <button onClick={() => setShowQr(true)} className="flex items-center gap-1.5 px-3 py-1.5 grad-brand text-white text-[11px] font-bold rounded-xl shadow-md shadow-[#f36f21]/25">
+              <button onClick={() => setShowQr(true)} className="flex items-center gap-1.5 px-3 py-1.5 grad-brand text-white text-[11px] font-bold rounded-xl shadow-md shadow-[#2F6BFF]/25">
                 <QrCode className="w-3.5 h-3.5" /> {t('settings.scan_qr')}
               </button>
             )}
@@ -793,7 +793,7 @@ export default function SettingsPage({ onClose }) {
                     <input
                       type="number" min="0" max="1440" defaultValue={lim} key={`${p.id}-${lim}`}
                       onBlur={e => setKidLimit(p.id, e.target.value)}
-                      className="w-16 px-2 py-1 bg-slate-800 border border-slate-700 rounded-lg text-[12px] font-bold text-white text-center outline-none focus:border-[#f36f21]"
+                      className="w-16 px-2 py-1 bg-slate-800 border border-slate-700 rounded-lg text-[12px] font-bold text-white text-center outline-none focus:border-[#2F6BFF]"
                     />
                     <span className="text-[10px] text-slate-500">′</span>
                   </div>
@@ -801,7 +801,7 @@ export default function SettingsPage({ onClose }) {
                 <div className="flex items-end gap-1 h-16">
                   {rep.days.map(d => (
                     <div key={d.date} className="flex-1 flex flex-col items-center gap-0.5" title={`${d.date}: ${fmtDur(d.sec)}`}>
-                      <div className="w-full rounded-t-md bg-gradient-to-t from-[#f36f21] to-amber-400 min-h-[3px]" style={{ height: `${Math.max(4, Math.round((d.sec / max) * 52))}px` }} />
+                      <div className="w-full rounded-t-md bg-gradient-to-t from-[#2F6BFF] to-amber-400 min-h-[3px]" style={{ height: `${Math.max(4, Math.round((d.sec / max) * 52))}px` }} />
                       <span className="text-[8px] text-slate-600 font-bold">{d.date.slice(8)}</span>
                     </div>
                   ))}
@@ -835,7 +835,7 @@ export default function SettingsPage({ onClose }) {
         {/* ===== ĐỔI MẬT KHẨU ===== */}
         {active === 'password' && (
         <div className="bg-[#14151c] border border-white/[0.07] rounded-2xl p-5 shadow-xl shadow-black/30 space-y-4">
-          <h3 className="text-sm font-bold text-white flex items-center gap-2"><Lock className="w-4 h-4 text-[#ff9a3d]" /> {t('settings.pw_title')}</h3>
+          <h3 className="text-sm font-bold text-white flex items-center gap-2"><Lock className="w-4 h-4 text-[#6E9BFF]" /> {t('settings.pw_title')}</h3>
           {!token ? (
             <p className="text-xs text-slate-500">{t('settings.pw_need_login')}</p>
           ) : (
@@ -852,7 +852,7 @@ export default function SettingsPage({ onClose }) {
                   value={pwOld}
                   onChange={(e) => setPwOld(e.target.value)}
                   autoComplete="current-password"
-                  className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-sm text-white focus:outline-none focus:border-[#f36f21]"
+                  className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-sm text-white focus:outline-none focus:border-[#2F6BFF]"
                 />
               </label>
 
@@ -863,7 +863,7 @@ export default function SettingsPage({ onClose }) {
                   value={pwNew}
                   onChange={(e) => setPwNew(e.target.value)}
                   autoComplete="new-password"
-                  className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-sm text-white focus:outline-none focus:border-[#f36f21]"
+                  className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-sm text-white focus:outline-none focus:border-[#2F6BFF]"
                 />
               </label>
 
@@ -884,7 +884,7 @@ export default function SettingsPage({ onClose }) {
                   onChange={(e) => setPwNew2(e.target.value)}
                   autoComplete="new-password"
                   className={`w-full px-3.5 py-2.5 bg-slate-800 border rounded-xl text-sm text-white focus:outline-none ${
-                    pwNew2 && pwNew2 !== pwNew ? 'border-red-500/70' : 'border-slate-700 focus:border-[#f36f21]'
+                    pwNew2 && pwNew2 !== pwNew ? 'border-red-500/70' : 'border-slate-700 focus:border-[#2F6BFF]'
                   }`}
                 />
               </label>
@@ -899,7 +899,7 @@ export default function SettingsPage({ onClose }) {
                   {pwShow ? t('settings.pw_hide') : t('settings.pw_show')}
                 </button>
                 <label className="flex items-center gap-2 text-[11px] text-slate-400 cursor-pointer select-none">
-                  <input type="checkbox" checked={pwLogoutOthers} onChange={(e) => setPwLogoutOthers(e.target.checked)} className="accent-[#f36f21]" />
+                  <input type="checkbox" checked={pwLogoutOthers} onChange={(e) => setPwLogoutOthers(e.target.checked)} className="accent-[#2F6BFF]" />
                   {t('settings.pw_logout_others')}
                 </label>
               </div>
@@ -962,8 +962,8 @@ export default function SettingsPage({ onClose }) {
             <div className="space-y-2.5">
               <p className="text-[11px] text-emerald-400 flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4" /> 2FA đang BẬT — tài khoản của bạn được bảo vệ 2 lớp.</p>
               <div className="flex gap-2">
-                <input value={twoFaCode} onChange={(e) => setTwoFaCode(e.target.value.replace(/\D/g, '').slice(0, 6))} placeholder="Mã 2FA để tắt" inputMode="numeric" className="w-40 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-sm font-mono tracking-widest text-white text-center focus:outline-none focus:border-[#f36f21]" />
-                <button onClick={disable2Fa} disabled={twoFaCode.length !== 6} className="px-4 py-2 bg-[#f36f21]/90 hover:bg-[#f36f21] disabled:opacity-40 text-white text-xs font-bold rounded-xl flex items-center gap-1.5"><ShieldOff className="w-3.5 h-3.5" /> Tắt 2FA</button>
+                <input value={twoFaCode} onChange={(e) => setTwoFaCode(e.target.value.replace(/\D/g, '').slice(0, 6))} placeholder="Mã 2FA để tắt" inputMode="numeric" className="w-40 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-sm font-mono tracking-widest text-white text-center focus:outline-none focus:border-[#2F6BFF]" />
+                <button onClick={disable2Fa} disabled={twoFaCode.length !== 6} className="px-4 py-2 bg-[#2F6BFF]/90 hover:bg-[#2F6BFF] disabled:opacity-40 text-white text-xs font-bold rounded-xl flex items-center gap-1.5"><ShieldOff className="w-3.5 h-3.5" /> Tắt 2FA</button>
               </div>
             </div>
           )}
@@ -977,7 +977,7 @@ export default function SettingsPage({ onClose }) {
           <h3 className="text-sm font-bold text-white flex items-center gap-2"><Info className="w-4 h-4 text-slate-400" /> {t('settings.about')}</h3>
           <div className="flex items-center justify-between text-xs">
             <span className="text-slate-400">{t('settings.version')}</span>
-            <span className="text-slate-200 font-bold">CHRTV PL▷Y 1.0.0 beta</span>
+            <span className="text-slate-200 font-bold">playZ 1.0.0 beta</span>
           </div>
           {/* ===== Thiết bị đang dùng ===== */}
           <div className="rounded-xl border border-white/[0.06] bg-black/30 divide-y divide-white/[0.05] overflow-hidden">
@@ -992,9 +992,9 @@ export default function SettingsPage({ onClose }) {
             <AboutRow Icon={Server} label={t('about.server')} value={API_BASE.replace(/^https?:\/\//, '').slice(0, 40)} mono />
           </div>
           {/* Fingerprint */}
-          <div className="rounded-xl border border-[#f36f21]/25 bg-[#f36f21]/[0.05] p-3">
+          <div className="rounded-xl border border-[#2F6BFF]/25 bg-[#2F6BFF]/[0.05] p-3">
             <div className="flex items-center justify-between mb-1.5">
-              <span className="flex items-center gap-1.5 text-[11px] font-bold text-stone-300"><Fingerprint className="w-3.5 h-3.5 text-[#ff9a3d]" /> {t('about.fp')}</span>
+              <span className="flex items-center gap-1.5 text-[11px] font-bold text-stone-300"><Fingerprint className="w-3.5 h-3.5 text-[#6E9BFF]" /> {t('about.fp')}</span>
               <button onClick={copyFp} className="flex items-center gap-1 text-[11px] font-bold text-stone-400 hover:text-white transition-colors">
                 {fpCopied ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                 {fpCopied ? t('about.copied') : t('about.copy')}
@@ -1014,7 +1014,7 @@ export default function SettingsPage({ onClose }) {
             <button
               onClick={handleReset}
               className={`w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${
-                showConfirm ? 'bg-[#f36f21] text-white' : 'bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700'
+                showConfirm ? 'bg-[#2F6BFF] text-white' : 'bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700'
               }`}
             >
               {showConfirm ? <><Trash2 className="w-4 h-4" /> {t('settings.confirm_reset')}</> : <><RotateCcw className="w-4 h-4" /> {t('settings.reset_default')}</>}

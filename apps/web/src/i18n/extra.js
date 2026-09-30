@@ -1,4 +1,4 @@
-// Bản dịch mở rộng cho CHRTV PLAY — 10 ngôn ngữ bổ sung (ja/ko/th/id/ms/hi/de/es/pt/ru).
+// Bản dịch mở rộng cho playZ — 10 ngôn ngữ bổ sung (ja/ko/th/id/ms/hi/de/es/pt/ru).
 // Key nào chưa có sẽ tự fallback về tiếng Anh (xem translate() trong translations.js).
 
 export const EXTRA_LANGUAGES = [
@@ -30,7 +30,7 @@ export const EXTRA = {
   'nav.read_all': { ja: 'すべて既読', ko: '모두 읽음', th: 'อ่านทั้งหมด', id: 'Tandai dibaca', ms: 'Tandakan dibaca', hi: 'सभी पढ़ा हुआ', de: 'Alle lesen', es: 'Marcar leídas', pt: 'Marcar lidas', ru: 'Прочитать все' },
   'nav.no_notifs': { ja: '通知はありません', ko: '알림이 없습니다', th: 'ยังไม่มีการแจ้งเตือน', id: 'Belum ada notifikasi', ms: 'Tiada pemberitahuan', hi: 'कोई सूचना नहीं', de: 'Keine Mitteilungen', es: 'Sin notificaciones', pt: 'Sem notificações', ru: 'Нет уведомлений' },
   // ============== APP ==============
-  'app.brand': { ja: 'CHRTV PL▷Y', ko: 'CHRTV PL▷Y', th: 'CHRTV PL▷Y', id: 'CHRTV PL▷Y', ms: 'CHRTV PL▷Y', hi: 'CHRTV PL▷Y', de: 'CHRTV PL▷Y', es: 'CHRTV PL▷Y', pt: 'CHRTV PL▷Y', ru: 'CHRTV PL▷Y' },
+  'app.brand': { ja: 'playZ', ko: 'playZ', th: 'playZ', id: 'playZ', ms: 'playZ', hi: 'playZ', de: 'playZ', es: 'playZ', pt: 'playZ', ru: 'playZ' },
   'app.tagline': { ja: 'Entertainment in your hands', ko: 'Entertainment in your hands', th: 'Entertainment in your hands', id: 'Entertainment in your hands', ms: 'Entertainment in your hands', hi: 'Entertainment in your hands', de: 'Entertainment in your hands', es: 'Entertainment in your hands', pt: 'Entertainment in your hands', ru: 'Entertainment in your hands' },
   'app.search.placeholder': { ja: 'チャンネル、映画を検索...', ko: '채널, 영화 검색...', th: 'ค้นหาช่อง, หนัง...', id: 'Cari kanal, film...', ms: 'Cari saluran, filem...', hi: 'चैनल, फिल्म खोजें...', de: 'Sender, Filme suchen...', es: 'Buscar canales, películas...', pt: 'Buscar canais, filmes...', ru: 'Поиск каналов, фильмов...' },
   'app.live_now': { ja: 'ライブ', ko: '생방송', th: 'สด', id: 'LIVE', ms: 'LANGSUNG', hi: 'लाइव', de: 'LIVE', es: 'EN VIVO', pt: 'AO VIVO', ru: 'ЭФИР' },
@@ -98,7 +98,7 @@ export const EXTRA = {
   'home.picked_for_you': { ja: 'おすすめ', ko: '추천', th: 'แนะนำสำหรับคุณ', id: 'Pilihan untukmu', ms: 'Pilihan untuk anda', hi: 'आपके लिए', de: 'Für dich', es: 'Para ti', pt: 'Para você', ru: 'Для вас' },
   'home.channels': { ja: 'チャンネル', ko: '채널', th: 'ช่อง', id: 'kanal', ms: 'saluran', hi: 'चैनल', de: 'Sender', es: 'canales', pt: 'canais', ru: 'каналов' },
   // ============== WELCOME / PICKER / PLANS ==============
-  'welcome.title': { ja: 'CHRTV PLAYへようこそ', ko: 'CHRTV PLAY에 오신 것을 환영합니다', th: 'ยินดีต้อนรับสู่ CHRTV PLAY', id: 'Selamat datang di CHRTV PLAY', ms: 'Selamat datang ke CHRTV PLAY', hi: 'CHRTV PLAY में आपका स्वागत है', de: 'Willkommen bei CHRTV PLAY', es: 'Bienvenido a CHRTV PLAY', pt: 'Bem-vindo ao CHRTV PLAY', ru: 'Добро пожаловать в CHRTV PLAY' },
+  'welcome.title': { ja: 'playZへようこそ', ko: 'playZ에 오신 것을 환영합니다', th: 'ยินดีต้อนรับสู่ playZ', id: 'Selamat datang di playZ', ms: 'Selamat datang ke playZ', hi: 'playZ में आपका स्वागत है', de: 'Willkommen bei playZ', es: 'Bienvenido a playZ', pt: 'Bem-vindo ao playZ', ru: 'Добро пожаловать в playZ' },
   'welcome.sub': { ja: 'テレビ・映画・スポーツ — 無料で今すぐ視聴', ko: 'TV · 영화 · 스포츠 — 무료로 지금 시청', th: 'ทีวี • หนัง • กีฬา — ดูฟรีเลยตอนนี้', id: 'TV • Film • Olahraga — tonton gratis sekarang', ms: 'TV • Filem • Sukan — tonton percuma sekarang', hi: 'टीवी • फिल्में • खेल — अभी मुफ्त देखें', de: 'TV • Filme • Sport — jetzt gratis ansehen', es: 'TV • Películas • Deportes — mira gratis ahora', pt: 'TV • Filmes • Esportes — assista grátis agora', ru: 'ТВ • Фильмы • Спорт — смотрите бесплатно' },
   'welcome.cta': { ja: '今すぐ視聴開始', ko: '지금 시청 시작', th: 'เริ่มดูเลย', id: 'Mulai menonton', ms: 'Mula menonton', hi: 'अभी देखना शुरू करें', de: 'Jetzt ansehen', es: 'Empezar a ver', pt: 'Começar a assistir', ru: 'Начать просмотр' },
   'welcome.later': { ja: '後で', ko: '나중에', th: 'ไว้ทีหลัง', id: 'Nanti', ms: 'Kemudian', hi: 'बाद में', de: 'Später', es: 'Después', pt: 'Depois', ru: 'Позже' },

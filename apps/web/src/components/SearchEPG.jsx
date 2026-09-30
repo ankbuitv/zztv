@@ -63,7 +63,7 @@ export default function SearchEPG({ epgData, channels, onPlayCatchup, onSelectCh
                   <span>{formatTimeHHMM(r.start)} - {formatTimeHHMM(r.stop)}</span>
                 </div>
               </div>
-              {r.isLive && <span className="px-1.5 py-px text-[9px] bg-[#f36f21] rounded text-white font-bold shrink-0">LIVE</span>}
+              {r.isLive && <span className="px-1.5 py-px text-[9px] bg-[#2F6BFF] rounded text-white font-bold shrink-0">LIVE</span>}
               {r.isPast && <Play className="w-3 h-3 text-purple-400 shrink-0" />}
             </button>
           ))}

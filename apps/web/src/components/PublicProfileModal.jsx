@@ -33,8 +33,8 @@ export default function PublicProfileModal({ handle, onClose }) {
           {prof && (
             <div className="space-y-3">
               <div className="flex items-center gap-3">
-                {prof.avatar_url ? <img src={prof.avatar_url} alt="" className="w-16 h-16 rounded-full object-cover border-2 border-[#f36f21]" />
-                  : <span className="w-16 h-16 rounded-full bg-gradient-to-br from-[#f36f21] to-fuchsia-600 flex items-center justify-center text-2xl font-black text-white">{(prof.name || prof.handle || '?').slice(0, 1).toUpperCase()}</span>}
+                {prof.avatar_url ? <img src={prof.avatar_url} alt="" className="w-16 h-16 rounded-full object-cover border-2 border-[#2F6BFF]" />
+                  : <span className="w-16 h-16 rounded-full bg-gradient-to-br from-[#2F6BFF] to-fuchsia-600 flex items-center justify-center text-2xl font-black text-white">{(prof.name || prof.handle || '?').slice(0, 1).toUpperCase()}</span>}
                 <div className="min-w-0">
                   <p className="text-[15px] font-black text-white truncate">{prof.name || prof.handle}</p>
                   {prof.bio && <p className="text-[11px] text-stone-400 line-clamp-2">{prof.bio}</p>}
@@ -67,7 +67,7 @@ export default function PublicProfileModal({ handle, onClose }) {
                   </div>
                 </div>
               )}
-              <ShareButtons url={link} title={`@${prof.handle} — CHRTV PLAY`} />
+              <ShareButtons url={link} title={`@${prof.handle} — playZ`} />
             </div>
           )}
         </div>

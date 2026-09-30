@@ -91,10 +91,10 @@ export default function CommentsBox({ target, initialTstamp = null, onJump = nul
           value={text} onChange={e => setText(e.target.value.slice(0, 500))}
           onKeyDown={e => { if (e.key === 'Enter') send(); }}
           placeholder={t('cmt.ph')}
-          className="flex-1 px-3 py-2 bg-black/40 border border-white/10 rounded-xl text-[12px] text-white placeholder:text-stone-600 focus:outline-none focus:border-[#f36f21]"
+          className="flex-1 px-3 py-2 bg-black/40 border border-white/10 rounded-xl text-[12px] text-white placeholder:text-stone-600 focus:outline-none focus:border-[#2F6BFF]"
         />
         {!isShort && (
-          <button onClick={() => setPinMin(pinMin === null ? 0 : null)} title="Ghim kèm phút đang xem" className={`px-2.5 rounded-xl border text-[10px] font-black flex items-center gap-1 ${pinMin !== null ? 'bg-[#ff9a3d]/20 border-[#ff9a3d]/50 text-[#ffb37a]' : 'bg-black/30 border-white/10 text-stone-500 hover:text-white'}`}>
+          <button onClick={() => setPinMin(pinMin === null ? 0 : null)} title="Ghim kèm phút đang xem" className={`px-2.5 rounded-xl border text-[10px] font-black flex items-center gap-1 ${pinMin !== null ? 'bg-[#6E9BFF]/20 border-[#6E9BFF]/50 text-[#ffb37a]' : 'bg-black/30 border-white/10 text-stone-500 hover:text-white'}`}>
             <MapPin className="w-3.5 h-3.5" />
             {pinMin !== null ? fmtTstamp(pinMin) : 'phút'}
           </button>
@@ -104,7 +104,7 @@ export default function CommentsBox({ target, initialTstamp = null, onJump = nul
         </button>
       </div>
       {!isShort && pinMin !== null && !rec.rec.on && (
-        <div className="flex items-center gap-2 mb-2 px-3 py-1.5 rounded-xl bg-[#ff9a3d]/10 border border-[#ff9a3d]/25 text-[11px] text-[#ffd9b3]">
+        <div className="flex items-center gap-2 mb-2 px-3 py-1.5 rounded-xl bg-[#6E9BFF]/10 border border-[#6E9BFF]/25 text-[11px] text-[#ffd9b3]">
           <MapPin className="w-3.5 h-3.5" /> Bình luận sẽ ghim vào <b className="font-mono">{fmtTstamp(pinMin)}</b>
           {onJump && <button onClick={() => jump(pinMin)} className="ml-auto px-2 py-0.5 rounded-md bg-white/10 hover:bg-white/20 text-[10px] font-bold">Xem lại lúc này</button>}
           <button onClick={() => setPinMin(null)} className="px-1.5 text-stone-400 hover:text-white text-[10px] font-bold">Bỏ</button>
@@ -142,9 +142,9 @@ export default function CommentsBox({ target, initialTstamp = null, onJump = nul
               <div className="flex items-center gap-2 mb-0.5">
                 <span className="text-[10px] font-black text-stone-300 truncate">{c.name || 'Bạn xem'}</span>
                 {minuteCmt && onJump ? (
-                  <button onClick={() => jump(tst)} className="flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#ff9a3d]/15 text-[#ffb37a] font-mono text-[10px] font-black hover:bg-[#ff9a3d]/30"><MapPin className="w-2.5 h-2.5" />{fmtTstamp(tst)}</button>
+                  <button onClick={() => jump(tst)} className="flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#6E9BFF]/15 text-[#ffb37a] font-mono text-[10px] font-black hover:bg-[#6E9BFF]/30"><MapPin className="w-2.5 h-2.5" />{fmtTstamp(tst)}</button>
                 ) : minuteCmt && (
-                  <span className="px-1.5 py-0.5 rounded-md bg-[#ff9a3d]/15 text-[#ffb37a] font-mono text-[10px] font-black"><MapPin className="w-2.5 h-2.5 inline" /> {fmtTstamp(tst)}</span>
+                  <span className="px-1.5 py-0.5 rounded-md bg-[#6E9BFF]/15 text-[#ffb37a] font-mono text-[10px] font-black"><MapPin className="w-2.5 h-2.5 inline" /> {fmtTstamp(tst)}</span>
                 )}
                 {!!c.pinned && <span className="flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-amber-500/15 text-amber-300 text-[9px] font-black"><Pin className="w-2.5 h-2.5" />GHIM</span>}
                 {isVoice && <span className="flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-emerald-500/15 text-emerald-300 text-[9px] font-black"><Mic className="w-2.5 h-2.5" />GIỌNG NÓI</span>}

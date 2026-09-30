@@ -471,7 +471,7 @@ export default function MoviesScreen({ openMovie = null, onOpenMovieHandled, onR
           <div className="relative h-full flex items-end pb-14 px-8 md:px-12 max-w-4xl">
             <div>
               <div className="flex items-center gap-2 mb-3 flex-wrap">
-                <span className="px-2 py-0.5 bg-[#f36f21] text-[10px] font-bold rounded flex items-center gap-1">
+                <span className="px-2 py-0.5 bg-[#2F6BFF] text-[10px] font-bold rounded flex items-center gap-1">
                   <TrendingUp className="w-3 h-3" /> {t('movies.hero.featured')}
                 </span>
                 <span className="px-2 py-0.5 bg-white/10 border border-white/15 backdrop-blur text-[10px] font-bold rounded flex items-center gap-1">
@@ -512,7 +512,7 @@ export default function MoviesScreen({ openMovie = null, onOpenMovieHandled, onR
           <div className="max-w-7xl mx-auto flex items-center gap-1.5 overflow-x-auto scrollbar-none">
             <span className="shrink-0 text-[10px] font-black uppercase tracking-widest text-stone-500 flex items-center gap-1">🔥 {t('p48.trending')}</span>
             {trending.map((x) => (
-              <button key={x.query} onClick={() => setSearch(x.query)} className="shrink-0 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/10 text-[11px] font-bold text-stone-300 hover:border-[#ff9a3d]/50 hover:text-white active:scale-95 transition">
+              <button key={x.query} onClick={() => setSearch(x.query)} className="shrink-0 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/10 text-[11px] font-bold text-stone-300 hover:border-[#6E9BFF]/50 hover:text-white active:scale-95 transition">
                 {x.query} <span className="text-[9px] text-stone-600">({x.cnt})</span>
               </button>
             ))}
@@ -525,7 +525,7 @@ export default function MoviesScreen({ openMovie = null, onOpenMovieHandled, onR
         <section className="relative z-20 px-6 md:px-8 mt-5 mb-2">
           <div className="max-w-7xl mx-auto">
             <div className="flex items-center gap-2 mb-3">
-              <span className="w-8 h-8 rounded-xl grad-brand flex items-center justify-center shadow-lg shadow-[#f36f21]/30">
+              <span className="w-8 h-8 rounded-xl grad-brand flex items-center justify-center shadow-lg shadow-[#2F6BFF]/30">
                 <Crown className="w-4 h-4 text-white" />
               </span>
               <div>
@@ -536,8 +536,8 @@ export default function MoviesScreen({ openMovie = null, onOpenMovieHandled, onR
             <HScroll>
               {topMonth.map((m, i) => (
                 <button key={`${m.media_type}-${m.id}`} onClick={() => openDetail(m)} className="group relative shrink-0 flex items-end snap-start active:scale-[0.98] transition-transform">
-                  <span aria-hidden className="font-black leading-[0.8] select-none -mr-4 md:-mr-5 mb-[-6px] z-0 transition-all group-hover:[-webkit-text-stroke-color:#f36f21]" style={{ fontSize: 'clamp(96px, 12vw, 170px)', color: 'transparent', WebkitTextStroke: '3px rgba(255,255,255,.85)', letterSpacing: '-0.05em' }}>{i + 1}</span>
-                  <span className="relative z-10 block w-[112px] md:w-[148px] aspect-[2/3] rounded-xl overflow-hidden bg-stone-900 border border-white/10 shadow-2xl shadow-black/60 group-hover:border-[#f36f21]/60 transition-all">
+                  <span aria-hidden className="font-black leading-[0.8] select-none -mr-4 md:-mr-5 mb-[-6px] z-0 transition-all group-hover:[-webkit-text-stroke-color:#2F6BFF]" style={{ fontSize: 'clamp(96px, 12vw, 170px)', color: 'transparent', WebkitTextStroke: '3px rgba(255,255,255,.85)', letterSpacing: '-0.05em' }}>{i + 1}</span>
+                  <span className="relative z-10 block w-[112px] md:w-[148px] aspect-[2/3] rounded-xl overflow-hidden bg-stone-900 border border-white/10 shadow-2xl shadow-black/60 group-hover:border-[#2F6BFF]/60 transition-all">
                     <img src={imgPath(m.poster_path, 'w342')} alt={m.title || m.name} className="w-full h-full object-cover" loading="lazy" onError={e => { e.target.style.display = 'none'; }} />
                     <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/95 to-transparent p-1.5 pt-6">
                       <span className="block text-[10px] md:text-[11px] font-bold leading-tight line-clamp-2 text-left">{m.title || m.name}</span>
@@ -562,11 +562,11 @@ export default function MoviesScreen({ openMovie = null, onOpenMovieHandled, onR
           <h2 className="text-lg md:text-xl font-black tracking-tight hidden md:block shrink-0">{t('movies.title')}</h2>
           <div className="flex-1 md:max-w-xl relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-500" />
-            <input type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder={t('movies.search.placeholder')} className="w-full pl-10 pr-11 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder:text-stone-500 focus:outline-none focus:border-[#f36f21] focus:bg-white/10 transition" />
+            <input type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder={t('movies.search.placeholder')} className="w-full pl-10 pr-11 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder:text-stone-500 focus:outline-none focus:border-[#2F6BFF] focus:bg-white/10 transition" />
             <button onClick={voiceSearch} title={t('voice.search')} className={`absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center transition-all ${listening ? 'bg-red-500 text-white animate-pulse' : 'bg-white/5 text-stone-400 hover:text-white hover:bg-white/10'}`}>
               <Mic className="w-4 h-4" />
             </button>
-            {searching && (<div className="absolute right-12 top-1/2 -translate-y-1/2 w-4 h-4 border-2 border-[#f36f21] border-t-transparent rounded-full animate-spin"></div>)}
+            {searching && (<div className="absolute right-12 top-1/2 -translate-y-1/2 w-4 h-4 border-2 border-[#2F6BFF] border-t-transparent rounded-full animate-spin"></div>)}
           </div>
           <div className="flex items-center gap-2 text-[11px] text-stone-500 shrink-0 relative">
             <SlidersHorizontal className="w-3.5 h-3.5" />
@@ -585,7 +585,7 @@ export default function MoviesScreen({ openMovie = null, onOpenMovieHandled, onR
                       const info = COUNTRY_INFO[cc];
                       const active = cc === country;
                       return (
-                        <button key={cc} onClick={() => applyRegion(cc)} className={`flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg text-[10px] font-bold transition-colors ${active ? 'bg-[#f36f21] text-white' : 'text-stone-400 hover:bg-white/10 hover:text-white'}`} title={info.name}>
+                        <button key={cc} onClick={() => applyRegion(cc)} className={`flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg text-[10px] font-bold transition-colors ${active ? 'bg-[#2F6BFF] text-white' : 'text-stone-400 hover:bg-white/10 hover:text-white'}`} title={info.name}>
                           <span className="text-base leading-none">{info.flag}</span>{cc}
                         </button>
                       );
@@ -599,9 +599,9 @@ export default function MoviesScreen({ openMovie = null, onOpenMovieHandled, onR
         {!search.trim() && genres.length > 0 && (
           <div className="max-w-7xl mx-auto mt-2.5">
             <HScroll className="pb-1">
-              <button onClick={() => setSelectedGenre('all')} className={`px-3 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap transition-all snap-start ${selectedGenre === 'all' ? 'bg-[#f36f21] text-white shadow-lg shadow-[#f36f21]/25' : 'bg-white/5 hover:bg-white/10 text-stone-400 hover:text-white border border-white/10'}`}>{t('movies.genre.all')}</button>
+              <button onClick={() => setSelectedGenre('all')} className={`px-3 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap transition-all snap-start ${selectedGenre === 'all' ? 'bg-[#2F6BFF] text-white shadow-lg shadow-[#2F6BFF]/25' : 'bg-white/5 hover:bg-white/10 text-stone-400 hover:text-white border border-white/10'}`}>{t('movies.genre.all')}</button>
               {genres.slice(0, 20).map(g => (
-                <button key={g.id} onClick={() => { setSelectedGenre(String(g.id)); setVisibleCount(CATALOG_PAGE); }} className={`px-3 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap transition-all snap-start ${selectedGenre === String(g.id) ? 'bg-[#f36f21] text-white shadow-lg shadow-[#f36f21]/25' : 'bg-white/5 hover:bg-white/10 text-stone-400 hover:text-white border border-white/10'}`}>{g.name}</button>
+                <button key={g.id} onClick={() => { setSelectedGenre(String(g.id)); setVisibleCount(CATALOG_PAGE); }} className={`px-3 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap transition-all snap-start ${selectedGenre === String(g.id) ? 'bg-[#2F6BFF] text-white shadow-lg shadow-[#2F6BFF]/25' : 'bg-white/5 hover:bg-white/10 text-stone-400 hover:text-white border border-white/10'}`}>{g.name}</button>
               ))}
             </HScroll>
           </div>
@@ -621,8 +621,8 @@ export default function MoviesScreen({ openMovie = null, onOpenMovieHandled, onR
                   <div className="flex flex-wrap gap-1.5">
                     {combined.ch.map(c => (
                       <button key={c.channel_id} onClick={() => { onOpenChannel && onOpenChannel(c); if (onGoTab) onGoTab('tv'); }}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-[11px] font-bold text-stone-200 hover:border-[#f36f21]/60 hover:text-white active:scale-95">
-                        {c.logo ? <img src={c.logo} alt="" className="w-4 h-4 rounded object-contain" onError={e => e.target.style.display = 'none'} /> : <Radio className="w-3.5 h-3.5 text-[#ff9a3d]" />}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-[11px] font-bold text-stone-200 hover:border-[#2F6BFF]/60 hover:text-white active:scale-95">
+                        {c.logo ? <img src={c.logo} alt="" className="w-4 h-4 rounded object-contain" onError={e => e.target.style.display = 'none'} /> : <Radio className="w-3.5 h-3.5 text-[#6E9BFF]" />}
                         {c.name} <span className="text-[9px] text-stone-600">{c.group_title}</span>
                       </button>
                     ))}
@@ -635,7 +635,7 @@ export default function MoviesScreen({ openMovie = null, onOpenMovieHandled, onR
                   <div className="flex flex-wrap gap-1.5">
                     {combined.cr.map(c => (
                       <button key={c.id} onClick={() => { addToast(`Mở tab Shorts → tìm @${c.handle} nhé`, 'info'); if (onGoTab) onGoTab('shorts'); }}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-[11px] font-bold text-stone-200 hover:border-[#ff9a3d]/60 active:scale-95">
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-[11px] font-bold text-stone-200 hover:border-[#6E9BFF]/60 active:scale-95">
                         {c.avatar_url ? <img src={c.avatar_url} alt="" className="w-4 h-4 rounded-full object-cover" onError={e => e.target.style.display = 'none'} /> : <BadgeCheck className="w-3.5 h-3.5 text-sky-300" />}
                         @{c.handle || c.display_name}
                       </button>
@@ -649,7 +649,7 @@ export default function MoviesScreen({ openMovie = null, onOpenMovieHandled, onR
                   <div className="flex flex-wrap gap-1.5">
                     {combined.sh.map(sh => (
                       <button key={sh.id} onClick={() => { if (onGoTab) onGoTab('shorts'); addToast(`Short #${sh.id}: ${String(sh.title || '').slice(0, 40)}`, 'info'); }}
-                        className="px-3 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-[11px] font-bold text-stone-300 hover:border-[#ff9a3d]/60 active:scale-95">
+                        className="px-3 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-[11px] font-bold text-stone-300 hover:border-[#6E9BFF]/60 active:scale-95">
                         ▶ {(sh.title || sh.caption || '').slice(0, 40)}
                       </button>
                     ))}
@@ -667,7 +667,7 @@ export default function MoviesScreen({ openMovie = null, onOpenMovieHandled, onR
           {movieHistory.length > 0 && (<MovieRow title={`⏪ ${t('mv.continue')}`} items={movieHistory} onClick={openDetail} loading={false} showProgress />)}
           {forYou.items.length > 0 && (<MovieRow title={`✨ ${t('mv.for_you', { name: forYou.base?.title || '' })}`} items={forYou.items} onClick={openDetail} loading={false} />)}
           {myList.length > 0 && (<MovieRow title={`❤️ ${t('mv.my_list')}`} items={myList} onClick={openDetail} loading={false} action={
-            <button onClick={() => setPlShareOpen(true)} className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#f36f21]/12 border border-[#f36f21]/35 text-[10px] font-black text-[#ffb37a] hover:bg-[#f36f21]/25 transition active:scale-95" title={t('p48.pl_share')}>
+            <button onClick={() => setPlShareOpen(true)} className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#2F6BFF]/12 border border-[#2F6BFF]/35 text-[10px] font-black text-[#ffb37a] hover:bg-[#2F6BFF]/25 transition active:scale-95" title={t('p48.pl_share')}>
               <ListVideo className="w-3.5 h-3.5" />{t('p48.pl_share')}
             </button>
           } />)}
@@ -681,11 +681,11 @@ export default function MoviesScreen({ openMovie = null, onOpenMovieHandled, onR
           )}
           <section className="px-6 md:px-8">
             <div className="flex items-end justify-between mb-4">
-              <div><p className="text-[10px] text-[#ff9a3d] font-bold uppercase tracking-widest mb-1">{t('mv.library')}</p><h3 className="text-xl md:text-2xl font-black tracking-tight">{selectedGenre === 'all' ? t('mv.all_titles') : genres.find(g => String(g.id) === selectedGenre)?.name || t('nav.movies')}</h3><p className="text-xs text-stone-500 mt-1">{t('mv.n_titles2', { n: filteredCatalog.length.toLocaleString(lang === 'vi' ? 'vi-VN' : 'en-US') })}</p></div>
+              <div><p className="text-[10px] text-[#6E9BFF] font-bold uppercase tracking-widest mb-1">{t('mv.library')}</p><h3 className="text-xl md:text-2xl font-black tracking-tight">{selectedGenre === 'all' ? t('mv.all_titles') : genres.find(g => String(g.id) === selectedGenre)?.name || t('nav.movies')}</h3><p className="text-xs text-stone-500 mt-1">{t('mv.n_titles2', { n: filteredCatalog.length.toLocaleString(lang === 'vi' ? 'vi-VN' : 'en-US') })}</p></div>
             <div className="flex items-center gap-2 shrink-0 flex-wrap justify-end">
               <button onClick={() => setFiltOpen(true)} className={`flex items-center gap-1.5 px-3 py-2 rounded-full border text-[11px] font-black transition active:scale-95 ${advOn ? 'bg-sky-500/20 border-sky-500/40 text-sky-300' : 'bg-white/[0.05] border-white/10 text-stone-400 hover:text-white'}`} title="Lọc năm/điểm"><SlidersHorizontal className="w-3.5 h-3.5" />Lọc{advOn ? ' ✓' : ''}</button>
-              <button onClick={() => setRouletteOpen(true)} className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-white/[0.05] border border-white/10 text-stone-300 hover:border-[#ff9a3d]/50 hover:text-white text-[11px] font-black transition active:scale-95" title="Quay số chọn phim theo tâm trạng">🎲 Quay số</button>
-              {isAuthenticated && <button onClick={() => setWrappedOpen(true)} className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-gradient-to-r from-amber-500/20 to-[#f36f21]/20 border border-amber-500/30 text-amber-300 text-[11px] font-black transition active:scale-95" title="Tổng kết năm xem phim">✨ {t('p48.wrapped_btn')}</button>}
+              <button onClick={() => setRouletteOpen(true)} className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-white/[0.05] border border-white/10 text-stone-300 hover:border-[#6E9BFF]/50 hover:text-white text-[11px] font-black transition active:scale-95" title="Quay số chọn phim theo tâm trạng">🎲 Quay số</button>
+              {isAuthenticated && <button onClick={() => setWrappedOpen(true)} className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-gradient-to-r from-amber-500/20 to-[#2F6BFF]/20 border border-amber-500/30 text-amber-300 text-[11px] font-black transition active:scale-95" title="Tổng kết năm xem phim">✨ {t('p48.wrapped_btn')}</button>}
             </div>
             </div>
             {catalogLoading && filteredCatalog.length === 0 ? (<div className={`grid gap-2.5 ${gridCls}`}>{Array.from({ length: 18 }).map((_, i) => <MovieSkeleton key={i} />)}</div>) : filteredCatalog.length === 0 ? (<div className="text-center py-16"><Tv className="w-12 h-12 text-stone-700 mx-auto mb-3" /><p className="text-stone-500 text-sm">{t('movies.no_results')}</p></div>) : (
@@ -702,8 +702,8 @@ export default function MoviesScreen({ openMovie = null, onOpenMovieHandled, onR
 
       {/* (A) Nhập mã chia sẻ + (#7) Đồng bộ TV — vào nhanh từ tab Phim */}
       <div className="fixed bottom-24 right-3 md:right-5 z-[130] flex flex-col gap-2 items-end pointer-events-none">
-        <button onClick={() => setResumeOpen(true)} className="pointer-events-auto flex items-center gap-2 pl-3.5 pr-4 py-2.5 rounded-full bg-black/70 border border-white/15 backdrop-blur text-white text-[11px] font-black hover:border-[#f36f21]/60 transition active:scale-95 shadow-xl shadow-black/40" title={t('p48.resume_code_title')}>
-          <Tv className="w-4 h-4 text-[#ff9a3d]" /> {t('p48.resume_code_title')}
+        <button onClick={() => setResumeOpen(true)} className="pointer-events-auto flex items-center gap-2 pl-3.5 pr-4 py-2.5 rounded-full bg-black/70 border border-white/15 backdrop-blur text-white text-[11px] font-black hover:border-[#2F6BFF]/60 transition active:scale-95 shadow-xl shadow-black/40" title={t('p48.resume_code_title')}>
+          <Tv className="w-4 h-4 text-[#6E9BFF]" /> {t('p48.resume_code_title')}
         </button>
         <button onClick={() => setCodesOpen(true)} className="pointer-events-auto flex items-center gap-2 pl-3.5 pr-4 py-2.5 rounded-full grad-brand text-white text-[11px] font-black hover:brightness-110 transition active:scale-95 shadow-xl shadow-black/40" title={t('p48.enter_code')}>
           <Ticket className="w-4 h-4" /> {t('p48.enter_code')}
@@ -774,14 +774,14 @@ function MovieCard({ movie, onClick, showProgress }) {
   const onLeave = () => { clearTimeout(hoverTimer.current); setHoverKey(null); };
   React.useEffect(() => () => clearTimeout(hoverTimer.current), []);
   return (
-    <button onClick={() => onClick(movie)} onMouseEnter={onEnter} onMouseLeave={onLeave} className="group relative aspect-[2/3] rounded-xl overflow-hidden bg-stone-900 border border-white/5 transition-all duration-300 hover:scale-[1.04] hover:z-10 hover:border-[#f36f21]/40 hover:shadow-2xl hover:shadow-[#f36f21]/20 w-full">
+    <button onClick={() => onClick(movie)} onMouseEnter={onEnter} onMouseLeave={onLeave} className="group relative aspect-[2/3] rounded-xl overflow-hidden bg-stone-900 border border-white/5 transition-all duration-300 hover:scale-[1.04] hover:z-10 hover:border-[#2F6BFF]/40 hover:shadow-2xl hover:shadow-[#2F6BFF]/20 w-full">
       <img src={imgPath(movie.poster_path, 'w342')} alt={movie.title || movie.name} className="w-full h-full object-cover" loading="lazy" onError={e => { e.target.style.display = 'none'; }} />
       {hoverKey && (<span className="absolute inset-0 pointer-events-none"><iframe src={`https://www.youtube.com/embed/${hoverKey}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&playsinline=1`} className="w-full h-full" allow="autoplay; encrypted-media" title="preview" /></span>)}
       {showProgress && (movie.watchSec || 0) > 0 && (<span className="absolute bottom-0 inset-x-0 px-2 py-1 bg-gradient-to-t from-black to-transparent text-left"><span className="text-[9px] font-bold text-emerald-300">⏪ {t('mv.watched_for', { d: fmtWatchSec(movie.watchSec) })}{movie.episode ? ` · T${movie.episode}` : ''}</span><span className="block h-1 mt-0.5 rounded-full bg-white/20 overflow-hidden"><span className="block h-full rounded-full bg-emerald-400" style={{ width: `${Math.min(100, Math.round((movie.watchSec / 5400) * 100))}%` }} /></span></span>)}
       {rating > 0 && (<span className="absolute top-2 right-2 flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-black/70 backdrop-blur text-[10px] font-bold text-amber-400"><Star className="w-2.5 h-2.5 fill-current" /> {rating.toFixed(1)}</span>)}
       {/* Chưa khởi chiếu -> ghi thẳng ngày chiếu lên card, user khỏi phải bấm thử */}
       <span className="absolute top-2 left-2 flex flex-col items-start gap-1">
-        <span className="px-1.5 py-0.5 rounded-md bg-[#f36f21]/90 text-[9px] font-bold uppercase tracking-wide">{movie.media_type === 'tv' ? 'TV' : 'Phim'}</span>
+        <span className="px-1.5 py-0.5 rounded-md bg-[#2F6BFF]/90 text-[9px] font-bold uppercase tracking-wide">{movie.media_type === 'tv' ? 'TV' : 'Phim'}</span>
         {!rs.released && (
           <span className="px-1.5 py-0.5 rounded-md bg-black/80 border border-sky-400/40 text-[9px] font-bold text-sky-300">
             {rs.dateLabel ? `${t('movies.badge.soon')} · ${rs.dateLabel}` : t('movies.badge.soon')}
@@ -790,7 +790,7 @@ function MovieCard({ movie, onClick, showProgress }) {
       </span>
       <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/70 to-transparent p-2.5 pt-8 opacity-0 group-hover:opacity-100 transition-opacity">
         <p className="text-[11px] font-bold leading-tight line-clamp-2">{movie.title || movie.name}</p>
-        <div className="flex items-center gap-2 mt-1.5"><span className="flex items-center gap-1 px-2 py-1 rounded-md bg-[#f36f21] text-[9px] font-bold">{rs.released ? <Play className="w-2.5 h-2.5 fill-current" /> : <Clapperboard className="w-2.5 h-2.5" />} {rs.released ? t('movies.btn.play') : t('movies.btn.trailer')}</span><span className="text-[9px] text-stone-400">{(movie.release_date || movie.first_air_date || '').substring(0, 4)}</span></div>
+        <div className="flex items-center gap-2 mt-1.5"><span className="flex items-center gap-1 px-2 py-1 rounded-md bg-[#2F6BFF] text-[9px] font-bold">{rs.released ? <Play className="w-2.5 h-2.5 fill-current" /> : <Clapperboard className="w-2.5 h-2.5" />} {rs.released ? t('movies.btn.play') : t('movies.btn.trailer')}</span><span className="text-[9px] text-stone-400">{(movie.release_date || movie.first_air_date || '').substring(0, 4)}</span></div>
       </div>
     </button>
   );
@@ -825,10 +825,10 @@ function MovieDetailModal({ movie, trailer, trailerLoading, genres = [], hasSour
     <div className="fixed inset-0 z-[200] bg-black/90 backdrop-blur-sm overflow-y-auto anim-zoom-fade" onClick={onClose}>
       <div className="relative max-w-5xl mx-auto my-4 md:my-8 bg-[#0f1015] rounded-3xl overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,.7)] border border-white/[0.07]" onClick={e => e.stopPropagation()}>
         <div className="relative h-[300px] md:h-[440px] bg-black">
-          {trailer ? (<iframe src={`https://www.youtube.com/embed/${trailer.key}?autoplay=1&modestbranding=1&rel=0`} className="w-full h-full" allow="autoplay; encrypted-media" allowFullScreen />) : (<><img src={bgPath(movie.backdrop_path || movie.poster_path)} alt="" className="w-full h-full object-cover" />{trailerLoading && (<div className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 gap-3"><div className="w-12 h-12 border-[3px] border-[#f36f21] border-t-transparent rounded-full animate-spin"></div><span className="text-[11px] text-stone-500 font-bold">{t('app.loading')}</span></div>)}</>)}
+          {trailer ? (<iframe src={`https://www.youtube.com/embed/${trailer.key}?autoplay=1&modestbranding=1&rel=0`} className="w-full h-full" allow="autoplay; encrypted-media" allowFullScreen />) : (<><img src={bgPath(movie.backdrop_path || movie.poster_path)} alt="" className="w-full h-full object-cover" />{trailerLoading && (<div className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 gap-3"><div className="w-12 h-12 border-[3px] border-[#2F6BFF] border-t-transparent rounded-full animate-spin"></div><span className="text-[11px] text-stone-500 font-bold">{t('app.loading')}</span></div>)}</>)}
           <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(15,16,21,.55) 0%, transparent 30%, transparent 55%, #0f1015 100%)' }} />
           <div className="absolute top-0 inset-x-0 flex items-center justify-between p-3.5">
-            <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/55 backdrop-blur border border-white/15 text-[10px] font-black tracking-widest text-white">{movie.media_type === 'tv' ? <Tv className="w-3.5 h-3.5 text-[#ff9a3d]" /> : <Film className="w-3.5 h-3.5 text-[#ff9a3d]" />}{movie.media_type === 'tv' ? 'TV SHOW' : 'MOVIE'}</span>
+            <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/55 backdrop-blur border border-white/15 text-[10px] font-black tracking-widest text-white">{movie.media_type === 'tv' ? <Tv className="w-3.5 h-3.5 text-[#6E9BFF]" /> : <Film className="w-3.5 h-3.5 text-[#6E9BFF]" />}{movie.media_type === 'tv' ? 'TV SHOW' : 'MOVIE'}</span>
             <button onClick={onClose} className="w-9 h-9 rounded-full bg-black/55 backdrop-blur border border-white/15 hover:bg-black/85 flex items-center justify-center text-white transition active:scale-90"><X className="w-5 h-5" /></button>
           </div>
         </div>
@@ -843,13 +843,13 @@ function MovieDetailModal({ movie, trailer, trailerLoading, genres = [], hasSour
                 {year && (<span className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/[0.07] border border-white/10 text-stone-200 text-[11px] font-bold"><Calendar className="w-3 h-3" />{year}</span>)}
                 <AgeBadge movie={movie} />
                 {movie.runtime > 0 && (<span className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/[0.07] border border-white/10 text-stone-200 text-[11px] font-bold"><Clock className="w-3 h-3" />{t('mv.n_min', { n: movie.runtime })}</span>)}
-                {gnames.slice(0, 3).map((g) => (<span key={g} className="px-2.5 py-1 rounded-full bg-[#f36f21]/12 border border-[#f36f21]/30 text-[#ffb37a] text-[11px] font-bold">#{g}</span>))}
+                {gnames.slice(0, 3).map((g) => (<span key={g} className="px-2.5 py-1 rounded-full bg-[#2F6BFF]/12 border border-[#2F6BFF]/30 text-[#ffb37a] text-[11px] font-bold">#{g}</span>))}
               </div>
             </div>
           </div>
           <div className="flex gap-2 mt-5">
-            <button onClick={onPlay} className="flex-1 px-6 py-3.5 grad-brand text-white font-black rounded-2xl flex items-center justify-center gap-2 transition active:scale-[0.98] shadow-lg shadow-[#f36f21]/30 text-[15px]">{(!rs.released || hasSource === false) ? <Clapperboard className="w-5 h-5" /> : <Play className="w-5 h-5 fill-current" />}{ctaLabel}</button>
-            <button onClick={toggleList} title={inList ? t('mv.remove_list') : t('mv.add_list')} className={`px-4 py-3.5 font-bold rounded-2xl flex items-center gap-2 border transition active:scale-95 ${inList ? 'bg-[#f36f21]/15 text-[#ff9a3d] border-[#f36f21]/40' : 'bg-white/[0.06] text-stone-200 border-white/10 hover:bg-white/[0.12]'}`}>{inList ? <Check className="w-5 h-5" /> : <Plus className="w-5 h-5" />}<span className="hidden sm:inline text-[13px]">{inList ? t('mv.following') : 'My List'}</span></button>
+            <button onClick={onPlay} className="flex-1 px-6 py-3.5 grad-brand text-white font-black rounded-2xl flex items-center justify-center gap-2 transition active:scale-[0.98] shadow-lg shadow-[#2F6BFF]/30 text-[15px]">{(!rs.released || hasSource === false) ? <Clapperboard className="w-5 h-5" /> : <Play className="w-5 h-5 fill-current" />}{ctaLabel}</button>
+            <button onClick={toggleList} title={inList ? t('mv.remove_list') : t('mv.add_list')} className={`px-4 py-3.5 font-bold rounded-2xl flex items-center gap-2 border transition active:scale-95 ${inList ? 'bg-[#2F6BFF]/15 text-[#6E9BFF] border-[#2F6BFF]/40' : 'bg-white/[0.06] text-stone-200 border-white/10 hover:bg-white/[0.12]'}`}>{inList ? <Check className="w-5 h-5" /> : <Plus className="w-5 h-5" />}<span className="hidden sm:inline text-[13px]">{inList ? t('mv.following') : 'My List'}</span></button>
             <button onClick={() => onShare && onShare(movie)} title={t('share.share')} className="px-4 py-3.5 font-bold rounded-2xl flex items-center border bg-white/[0.06] text-stone-200 border-white/10 hover:bg-white/[0.12] transition active:scale-95"><Share2 className="w-5 h-5" /></button>
           </div>
           {statusChip && (
@@ -873,14 +873,14 @@ function MovieDetailModal({ movie, trailer, trailerLoading, genres = [], hasSour
         <div className="px-5 md:px-8 pb-7">
           {cast.length > 0 && (
             <div className="mt-6">
-              <h4 className="flex items-center gap-2 text-[13px] font-black text-white mb-3"><span className="w-7 h-7 rounded-lg bg-[#f36f21]/15 border border-[#f36f21]/30 flex items-center justify-center"><Users className="w-3.5 h-3.5 text-[#ff9a3d]" /></span>{t('mv.cast')}</h4>
-              <HScroll>{cast.map((c) => (<button key={`${c.id}-${c.credit_id}`} onClick={() => { c.id && getPerson(c.id).then((p) => setPerson(p)).catch(() => {}); }} className="w-[72px] shrink-0 text-center group snap-start"><img src={c.profile_path ? imgPath(c.profile_path, 'w185') : 'data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"72\" height=\"72\"%3E%3Crect fill=\"%23272727\" width=\"72\" height=\"72\"/%3E%3C/svg%3E'} alt={c.name} className="w-[72px] h-[72px] object-cover rounded-full border-2 border-white/10 group-hover:border-[#f36f21] group-hover:scale-105 transition shadow-lg" loading="lazy" /><p className="text-[10px] font-bold mt-1.5 truncate text-stone-200">{c.name}</p><p className="text-[9px] text-stone-500 truncate">{c.character}</p></button>))}</HScroll>
+              <h4 className="flex items-center gap-2 text-[13px] font-black text-white mb-3"><span className="w-7 h-7 rounded-lg bg-[#2F6BFF]/15 border border-[#2F6BFF]/30 flex items-center justify-center"><Users className="w-3.5 h-3.5 text-[#6E9BFF]" /></span>{t('mv.cast')}</h4>
+              <HScroll>{cast.map((c) => (<button key={`${c.id}-${c.credit_id}`} onClick={() => { c.id && getPerson(c.id).then((p) => setPerson(p)).catch(() => {}); }} className="w-[72px] shrink-0 text-center group snap-start"><img src={c.profile_path ? imgPath(c.profile_path, 'w185') : 'data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"72\" height=\"72\"%3E%3Crect fill=\"%23272727\" width=\"72\" height=\"72\"/%3E%3C/svg%3E'} alt={c.name} className="w-[72px] h-[72px] object-cover rounded-full border-2 border-white/10 group-hover:border-[#2F6BFF] group-hover:scale-105 transition shadow-lg" loading="lazy" /><p className="text-[10px] font-bold mt-1.5 truncate text-stone-200">{c.name}</p><p className="text-[9px] text-stone-500 truncate">{c.character}</p></button>))}</HScroll>
             </div>
           )}
           {collection && (
             <div className="mt-6 rounded-2xl border border-white/[0.07] bg-white/[0.02] p-4">
               <h4 className="flex items-center gap-2 text-[13px] font-black text-white mb-3"><span className="w-7 h-7 rounded-lg bg-violet-500/15 border border-violet-500/30 flex items-center justify-center"><Layers className="w-3.5 h-3.5 text-violet-300" /></span><span className="truncate">{t('mv.part_of', { name: movie.belongs_to_collection?.name })}</span></h4>
-              <HScroll>{collection.parts.filter((m) => m.poster_path).sort((a, b) => (a.release_date || '').localeCompare(b.release_date || '')).map((m) => (<button key={m.id} onClick={() => onMovieChange?.({ ...m, media_type: 'movie', overview: m.overview || '' })} className="w-24 shrink-0 group text-left snap-start"><img src={imgPath(m.poster_path, 'w185')} alt={m.title} className="w-24 h-36 object-cover rounded-xl border border-white/10 group-hover:border-[#f36f21]/60 group-hover:scale-[1.03] transition shadow" loading="lazy" /><p className="text-[10px] font-semibold mt-1 truncate text-stone-300">{m.title}</p><p className="text-[9px] text-stone-600">{(m.release_date || '').slice(0, 4)}</p></button>))}</HScroll>
+              <HScroll>{collection.parts.filter((m) => m.poster_path).sort((a, b) => (a.release_date || '').localeCompare(b.release_date || '')).map((m) => (<button key={m.id} onClick={() => onMovieChange?.({ ...m, media_type: 'movie', overview: m.overview || '' })} className="w-24 shrink-0 group text-left snap-start"><img src={imgPath(m.poster_path, 'w185')} alt={m.title} className="w-24 h-36 object-cover rounded-xl border border-white/10 group-hover:border-[#2F6BFF]/60 group-hover:scale-[1.03] transition shadow" loading="lazy" /><p className="text-[10px] font-semibold mt-1 truncate text-stone-300">{m.title}</p><p className="text-[9px] text-stone-600">{(m.release_date || '').slice(0, 4)}</p></button>))}</HScroll>
             </div>
           )}
           <div className="mt-6 rounded-2xl border border-white/[0.07] bg-white/[0.02] p-4">
@@ -891,7 +891,7 @@ function MovieDetailModal({ movie, trailer, trailerLoading, genres = [], hasSour
           {recs.length > 0 && (
             <div className="mt-6">
               <h4 className="flex items-center gap-2 text-[13px] font-black text-white mb-3"><span className="w-7 h-7 rounded-lg bg-amber-500/15 border border-amber-500/30 flex items-center justify-center"><Sparkles className="w-3.5 h-3.5 text-amber-300" /></span>{t('mv.similar')}</h4>
-              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-2.5">{recs.map((m) => (<button key={`${m.media_type || 'movie'}-${m.id}`} onClick={() => onMovieChange?.({ ...m, media_type: m.media_type || (m.title ? 'movie' : 'tv'), overview: m.overview || '' })} className="group text-left"><div className="relative"><img src={imgPath(m.poster_path, 'w185')} alt={m.title || m.name} className="w-full aspect-[2/3] object-cover rounded-xl border border-white/10 group-hover:border-[#f36f21]/60 group-hover:scale-[1.03] transition shadow" loading="lazy" />{(m.vote_average || 0) > 0 && (<span className="absolute top-1.5 left-1.5 flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-black/70 text-amber-300 text-[9px] font-black"><Star className="w-2.5 h-2.5 fill-current" />{m.vote_average.toFixed(1)}</span>)}</div><p className="text-[10px] font-semibold mt-1 truncate text-stone-300">{m.title || m.name}</p></button>))}</div>
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-2.5">{recs.map((m) => (<button key={`${m.media_type || 'movie'}-${m.id}`} onClick={() => onMovieChange?.({ ...m, media_type: m.media_type || (m.title ? 'movie' : 'tv'), overview: m.overview || '' })} className="group text-left"><div className="relative"><img src={imgPath(m.poster_path, 'w185')} alt={m.title || m.name} className="w-full aspect-[2/3] object-cover rounded-xl border border-white/10 group-hover:border-[#2F6BFF]/60 group-hover:scale-[1.03] transition shadow" loading="lazy" />{(m.vote_average || 0) > 0 && (<span className="absolute top-1.5 left-1.5 flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-black/70 text-amber-300 text-[9px] font-black"><Star className="w-2.5 h-2.5 fill-current" />{m.vote_average.toFixed(1)}</span>)}</div><p className="text-[10px] font-semibold mt-1 truncate text-stone-300">{m.title || m.name}</p></button>))}</div>
             </div>
           )}
         </div>
@@ -949,12 +949,12 @@ function PersonModal({ person, onClose, onMovieChange }) {
           <div className="flex gap-4 items-end">
             <img src={person.profile_path ? imgPath(person.profile_path, 'w342') : 'data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"160\" height=\"240\"%3E%3Crect fill=\"%231c1d24\" width=\"160\" height=\"240\"/%3E%3C/svg%3E'} alt={person.name} className="w-32 md:w-40 aspect-[2/3] object-cover rounded-2xl ring-2 ring-white/20 shadow-[0_16px_40px_rgba(0,0,0,.6)] shrink-0 bg-[#1c1d24]" />
             <div className="flex-1 min-w-0 pb-1">
-              <span className="inline-block px-2.5 py-1 rounded-full bg-[#f36f21]/15 border border-[#f36f21]/40 text-[#ffb37a] text-[10px] font-black tracking-widest mb-2">{dept.toUpperCase()}</span>
+              <span className="inline-block px-2.5 py-1 rounded-full bg-[#2F6BFF]/15 border border-[#2F6BFF]/40 text-[#ffb37a] text-[10px] font-black tracking-widest mb-2">{dept.toUpperCase()}</span>
               <h2 className="text-2xl md:text-3xl font-black tracking-tight text-white leading-tight">{person.name}</h2>
               {(person.birthday || person.place_of_birth) && (<p className="text-[12px] text-stone-400 mt-1.5 flex items-center gap-1.5 flex-wrap">{person.birthday && <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5" />{t('mv.born', { d: person.birthday })}</span>}{person.place_of_birth && <span className="truncate">📍 {person.place_of_birth}</span>}</p>)}
               {/* (#65) follow diễn viên: nút bên phải header, đồng bộ server */}
               <button onClick={toggleActorFollow} disabled={busy}
-                className={`mt-2.5 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-black border transition-all active:scale-95 disabled:opacity-60 ${followed ? 'bg-[#f36f21]/15 text-[#ff9a3d] border-[#f36f21]/45' : 'bg-white/[0.06] text-stone-200 border-white/12 hover:bg-white/[0.14]'}`}>
+                className={`mt-2.5 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-black border transition-all active:scale-95 disabled:opacity-60 ${followed ? 'bg-[#2F6BFF]/15 text-[#6E9BFF] border-[#2F6BFF]/45' : 'bg-white/[0.06] text-stone-200 border-white/12 hover:bg-white/[0.14]'}`}>
                 {followed ? <Check className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
                 {followed ? t('mv.following') : t('p48.follow_actor')}
               </button>
@@ -962,7 +962,7 @@ function PersonModal({ person, onClose, onMovieChange }) {
           </div>
           {person.biography ? (<p className="text-[13px] text-stone-300 leading-relaxed mt-4 max-h-[130px] overflow-y-auto pr-1">{person.biography}</p>) : (<p className="text-[12px] text-stone-500 mt-4 italic">{t('mv.no_bio')}</p>)}
           <h4 className="flex items-center gap-2 text-[13px] font-black text-white mt-5 mb-3"><span className="w-7 h-7 rounded-lg bg-amber-500/15 border border-amber-500/30 flex items-center justify-center"><Clapperboard className="w-3.5 h-3.5 text-amber-300" /></span>{t('mv.filmography')}</h4>
-          {credits.length === 0 ? (<div className="grid grid-cols-3 sm:grid-cols-6 gap-2.5">{Array.from({ length: 6 }).map((_, i) => (<div key={i} className="aspect-[2/3] rounded-xl bg-white/[0.05] animate-pulse" />))}</div>) : (<div className="grid grid-cols-3 sm:grid-cols-6 gap-2.5">{credits.map((m) => (<button key={`${m.id}-${m.credit_id}`} onClick={() => onMovieChange({ ...m, media_type: m.media_type || (m.title ? 'movie' : 'tv'), overview: m.overview || '' })} className="group text-left"><div className="relative"><img src={imgPath(m.poster_path, 'w185')} alt={m.title || m.name} className="w-full aspect-[2/3] object-cover rounded-xl border border-white/10 group-hover:border-[#f36f21]/60 group-hover:scale-[1.03] transition shadow" loading="lazy" />{(m.vote_average || 0) > 0 && (<span className="absolute top-1.5 left-1.5 flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-black/70 text-amber-300 text-[9px] font-black"><Star className="w-2.5 h-2.5 fill-current" />{m.vote_average.toFixed(1)}</span>)}</div><p className="text-[10px] font-semibold mt-1 truncate text-stone-300">{m.title || m.name}</p><p className="text-[9px] text-stone-600 truncate">{m.character || ''}</p></button>))}</div>)}
+          {credits.length === 0 ? (<div className="grid grid-cols-3 sm:grid-cols-6 gap-2.5">{Array.from({ length: 6 }).map((_, i) => (<div key={i} className="aspect-[2/3] rounded-xl bg-white/[0.05] animate-pulse" />))}</div>) : (<div className="grid grid-cols-3 sm:grid-cols-6 gap-2.5">{credits.map((m) => (<button key={`${m.id}-${m.credit_id}`} onClick={() => onMovieChange({ ...m, media_type: m.media_type || (m.title ? 'movie' : 'tv'), overview: m.overview || '' })} className="group text-left"><div className="relative"><img src={imgPath(m.poster_path, 'w185')} alt={m.title || m.name} className="w-full aspect-[2/3] object-cover rounded-xl border border-white/10 group-hover:border-[#2F6BFF]/60 group-hover:scale-[1.03] transition shadow" loading="lazy" />{(m.vote_average || 0) > 0 && (<span className="absolute top-1.5 left-1.5 flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-black/70 text-amber-300 text-[9px] font-black"><Star className="w-2.5 h-2.5 fill-current" />{m.vote_average.toFixed(1)}</span>)}</div><p className="text-[10px] font-semibold mt-1 truncate text-stone-300">{m.title || m.name}</p><p className="text-[9px] text-stone-600 truncate">{m.character || ''}</p></button>))}</div>)}
         </div>
       </div>
     </div>

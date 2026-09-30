@@ -78,7 +78,7 @@ export default function PrerollAd({ ad, skipAfter = 30, refId = '', onDone, onUp
             href={ad.link_url}
             target="_blank"
             rel="noreferrer"
-            className="absolute bottom-24 left-1/2 -translate-x-1/2 px-5 py-2.5 rounded-full bg-[#f36f21] text-white text-[13px] font-black flex items-center gap-2"
+            className="absolute bottom-24 left-1/2 -translate-x-1/2 px-5 py-2.5 rounded-full bg-[#2F6BFF] text-white text-[13px] font-black flex items-center gap-2"
           >
             {ad.title || 'Tìm hiểu thêm'} <ExternalLink className="w-3.5 h-3.5" />
           </a>
@@ -87,11 +87,11 @@ export default function PrerollAd({ ad, skipAfter = 30, refId = '', onDone, onUp
 
       <div className="px-5 py-4 bg-[#0b0c10] border-t border-white/[0.07] flex items-center gap-3">
         <p className="text-[11px] text-stone-500 flex-1">
-          Quảng cáo giúp CHRTV PLAY duy trì máy chủ. Tối đa 5 lần mỗi giờ.
+          Quảng cáo giúp playZ duy trì máy chủ. Tối đa 5 lần mỗi giờ.
         </p>
         <button
           onClick={() => { onUpgrade?.(); finish(false); }}
-          className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#f36f21] to-[#fbbf24] text-black text-[12px] font-black flex items-center gap-1.5 shrink-0"
+          className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#2F6BFF] to-[#fbbf24] text-black text-[12px] font-black flex items-center gap-1.5 shrink-0"
         >
           <Crown className="w-3.5 h-3.5" /> Nâng gói — xem không quảng cáo
         </button>

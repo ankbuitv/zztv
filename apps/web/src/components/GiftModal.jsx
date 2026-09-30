@@ -37,7 +37,7 @@ export default function GiftModal({ onClose }) {
 
   const planMeta = (code) => PLANS.find((p) => p.code === code) || {};
   const planName = (code) => String(planMeta(code).name || (code || '').toUpperCase());
-  const planColor = (code) => planMeta(code).color || '#f36f21';
+  const planColor = (code) => planMeta(code).color || '#2F6BFF';
 
   const shareLink = (code) => {
     try {
@@ -54,7 +54,7 @@ export default function GiftModal({ onClose }) {
   const share = async (g) => {
     const text = t('gift.share_text', { plan: planName(g.plan), days: g.days, code: g.code, link: shareLink(g.code) });
     try {
-      if (navigator.share) { await navigator.share({ title: 'CHRTV PL▷Y', text }); return; }
+      if (navigator.share) { await navigator.share({ title: 'playZ', text }); return; }
     } catch {}
     copy(text);
   };

@@ -196,7 +196,7 @@ export function RouletteModal({ open, pool, onClose, onPick }) {
     <div className="fixed inset-0 z-[240] bg-black/85 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}>
       <div className="w-full max-w-md modal-panel overflow-hidden anim-pop" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
-          <p className="text-[13px] font-black text-white flex items-center gap-2"><Dices className="w-4 h-4 text-[#ff9a3d]" />Quay số chọn phim</p>
+          <p className="text-[13px] font-black text-white flex items-center gap-2"><Dices className="w-4 h-4 text-[#6E9BFF]" />Quay số chọn phim</p>
           <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-slate-400" /></button>
         </div>
         <div className="p-4 space-y-3">
@@ -248,7 +248,7 @@ export function WrappedModal({ open, onClose }) {
       <div className="w-full max-w-lg modal-panel anim-pop overflow-hidden text-center" onClick={e => e.stopPropagation()}>
         <div className="px-5 pt-5 pb-4 relative" style={{ background: 'radial-gradient(500px 160px at 50% -20%, rgba(243,111,33,.3), transparent 75%)' }}>
           <button onClick={onClose} className="absolute top-3 right-3 p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-slate-400" /></button>
-          <p className="text-[10px] font-black tracking-[0.3em] text-[#ff9a3d]">{t('p48.wrapped_title')}</p>
+          <p className="text-[10px] font-black tracking-[0.3em] text-[#6E9BFF]">{t('p48.wrapped_title')}</p>
           <h2 className="text-2xl md:text-3xl font-black text-white mt-1">🎬 {w?.year || new Date().getFullYear()} của bạn</h2>
         </div>
         <div className="px-5 pb-6 space-y-2.5">
@@ -259,14 +259,14 @@ export function WrappedModal({ open, onClose }) {
             <>
               <div className="grid grid-cols-3 gap-2">
                 {[{ l: 'Kênh TV', v: fmtMin(w.minutes?.channel) }, { l: 'Phim', v: fmtMin(w.minutes?.movie) }, { l: 'Shorts', v: fmtMin(w.minutes?.short) }].map(x => (
-                  <div key={x.l} className="rounded-2xl bg-white/[0.04] border border-white/[0.07] p-3"><p className="text-lg font-black text-[#ff9a3d]">{x.v}</p><p className="text-[9px] text-stone-500 font-bold uppercase tracking-wider mt-0.5">{x.l}</p></div>
+                  <div key={x.l} className="rounded-2xl bg-white/[0.04] border border-white/[0.07] p-3"><p className="text-lg font-black text-[#6E9BFF]">{x.v}</p><p className="text-[9px] text-stone-500 font-bold uppercase tracking-wider mt-0.5">{x.l}</p></div>
                 ))}
               </div>
               <div className="grid grid-cols-2 gap-2">
                 <div className="rounded-2xl bg-white/[0.04] border border-white/[0.07] p-3 text-left"><p className="text-[9px] text-stone-500 font-bold uppercase tracking-wider">Nhiều giờ nhất</p><p className="text-[12px] font-bold text-white truncate mt-1">{w.top_channel?.name || w.top_movie?.name || w.top_short?.name || '—'}</p></div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/[0.07] p-3 text-left"><p className="text-[9px] text-stone-500 font-bold uppercase tracking-wider">Tổng cộng</p><p className="text-[12px] font-bold text-white mt-1">⏱ {fmtMin(w.total_sec)}</p></div>
               </div>
-              <div className="rounded-2xl bg-gradient-to-r from-amber-500/10 to-[#f36f21]/10 border border-amber-500/25 p-3 flex items-center justify-center gap-2">
+              <div className="rounded-2xl bg-gradient-to-r from-amber-500/10 to-[#2F6BFF]/10 border border-amber-500/25 p-3 flex items-center justify-center gap-2">
                 <Star className="w-4 h-4 text-amber-300 fill-current" /><span className="text-[12px] font-black text-amber-200">{w.xp || 0} XP</span>
                 <span className="text-stone-600">•</span>
                 <span className="text-[11px] text-stone-300 font-bold">{w.movies_started || 0} phim đã xem</span>
@@ -322,7 +322,7 @@ export function AdvancedFilters({ open, onClose, onApply, onClear, current }) {
     <div className="fixed inset-0 z-[240] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}>
       <div className="w-full max-w-sm modal-panel overflow-hidden" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
-          <p className="text-[13px] font-black text-white flex items-center gap-2"><Filter className="w-4 h-4 text-[#ff9a3d]" />Lọc nâng cao</p>
+          <p className="text-[13px] font-black text-white flex items-center gap-2"><Filter className="w-4 h-4 text-[#6E9BFF]" />Lọc nâng cao</p>
           <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-slate-400" /></button>
         </div>
         <div className="p-4 space-y-3">
@@ -347,7 +347,7 @@ export function AdvancedFilters({ open, onClose, onApply, onClear, current }) {
             <p className="text-[10px] font-black uppercase tracking-widest text-stone-500 mb-1.5">Sắp xếp</p>
             <div className="flex gap-1.5">
               {[{ v: '', l: 'Mặc định' }, { v: 'rating', l: '★ Cao nhất' }, { v: 'year', l: 'Mới nhất' }].map(o => (
-                <button key={o.v} onClick={() => setF({ ...f, sort: o.v })} className={`flex-1 px-2 py-1.5 rounded-lg text-[11px] font-black border ${f.sort === o.v ? 'bg-[#f36f21]/15 text-[#ffb37a] border-[#f36f21]/40' : 'bg-white/[0.05] border-white/10 text-stone-400'}`}>{o.l}</button>
+                <button key={o.v} onClick={() => setF({ ...f, sort: o.v })} className={`flex-1 px-2 py-1.5 rounded-lg text-[11px] font-black border ${f.sort === o.v ? 'bg-[#2F6BFF]/15 text-[#ffb37a] border-[#2F6BFF]/40' : 'bg-white/[0.05] border-white/10 text-stone-400'}`}>{o.l}</button>
               ))}
             </div>
           </div>
@@ -386,8 +386,8 @@ export function HotCountryRow({ onOpenChannel }) {
         </div>
         <div className="flex gap-2 overflow-x-auto scrollbar-none p-3">
           {top.slice(0, 10).map((ch, i) => (
-            <button key={ch.channel_id} onClick={() => { onOpenChannel ? onOpenChannel(ch) : addToast(`📺 ${ch.name} — xem ở tab Truyền hình`, 'info'); }} className="shrink-0 flex items-center gap-2 px-3 py-2 rounded-xl bg-white/[0.04] border border-white/[0.07] hover:border-[#f36f21]/50 hover:bg-white/[0.07] transition text-left">
-              <span className="font-black text-[#ff9a3d]">{i + 1}</span>
+            <button key={ch.channel_id} onClick={() => { onOpenChannel ? onOpenChannel(ch) : addToast(`📺 ${ch.name} — xem ở tab Truyền hình`, 'info'); }} className="shrink-0 flex items-center gap-2 px-3 py-2 rounded-xl bg-white/[0.04] border border-white/[0.07] hover:border-[#2F6BFF]/50 hover:bg-white/[0.07] transition text-left">
+              <span className="font-black text-[#6E9BFF]">{i + 1}</span>
               <div className="min-w-0">
                 <p className="text-[11px] font-bold text-white truncate max-w-[130px]">{ch.name}</p>
                 <p className="text-[9px] text-stone-500">{ch.group_title || ''} · {(ch.views || 0)} lượt</p>

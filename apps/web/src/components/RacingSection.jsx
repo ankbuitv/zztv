@@ -91,7 +91,7 @@ export default function RacingSection() {
                     <span className="w-full h-full flex items-center justify-center text-3xl">🏎️</span>
                   )}
                   <span className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/10">
-                    <span className="w-11 h-11 rounded-full bg-black/70 border border-white/25 flex items-center justify-center group-hover:bg-[#f36f21] group-hover:border-transparent">
+                    <span className="w-11 h-11 rounded-full bg-black/70 border border-white/25 flex items-center justify-center group-hover:bg-[#2F6BFF] group-hover:border-transparent">
                       <Play className="w-4 h-4 text-white fill-current ml-0.5" />
                     </span>
                   </span>
@@ -154,7 +154,7 @@ export default function RacingSection() {
             <h2 className="text-[19px] font-extrabold tracking-tight">{t('race.standings')}</h2>
             <div className="flex gap-1 ml-2 bg-white/[0.05] rounded-full p-1">
               {[{ id: 'drivers', label: '🏁 ' + t('race.drivers') }, { id: 'teams', label: '🏭 ' + t('race.teams') }].map(tb => (
-                <button key={tb.id} onClick={() => setStandTab(tb.id)} className={`px-3 py-1 rounded-full text-[11px] font-bold transition-all ${standTab === tb.id ? 'bg-[#f36f21] text-white' : 'text-stone-400 hover:text-white'}`}>{tb.label}</button>
+                <button key={tb.id} onClick={() => setStandTab(tb.id)} className={`px-3 py-1 rounded-full text-[11px] font-bold transition-all ${standTab === tb.id ? 'bg-[#2F6BFF] text-white' : 'text-stone-400 hover:text-white'}`}>{tb.label}</button>
               ))}
             </div>
           </div>
