@@ -20,9 +20,6 @@ const T = {
   'app.search.placeholder': { vi: 'Tìm kênh, phim...', en: 'Search channels, movies...', zh: '搜索频道、电影...', fil: 'Maghanap ng channel, pelikula...', fr: 'Rechercher chaînes, films...' },
   'app.live_now': { vi: 'TRỰC TIẾP', en: 'LIVE NOW', zh: '直播中', fil: 'LIVE NGAYON', fr: 'EN DIRECT' },
   'app.loading': { vi: 'Đang tải...', en: 'Loading...', zh: '加载中...', fil: 'Naglo-load...', fr: 'Chargement...' },
-  // Splash tagline. Was the string "VIP PLAY", which read like a different
-  // product's name on the very first screen a user sees.
-  'app.splash_tagline': { vi: 'Truyền hình · Phim · Thể thao', en: 'Live TV · Movies · Sports', zh: '直播 · 电影 · 体育', fil: 'Live TV · Pelikula · Palakasan', fr: 'TV · Films · Sports' },
 
   // ============== NAV / SIDEBAR ==============
   'nav.home': { vi: 'Trang Chủ', en: 'Home', zh: '首页', fil: 'Home', fr: 'Accueil' },

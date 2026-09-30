@@ -1,23 +1,26 @@
 import React from 'react';
-import { reportClientError, getRecentClientErrors } from '../services/clientErrors';
 
 /**
- * Lớp chặn lỗi render toàn app: thay vì crash sạch (màn hình đen vì nền tối),
- * hiện thông báo rõ ràng + nút tải lại. Giúp mọi lỗi runtime còn sót đều
- * nhìn thấy được thay vì thành màn hình đen khó đoán.
+ * playZ — last line of defence
+ * ============================================================================
+ * The failure this exists for: the application threw during mount, React
+ * unmounted the tree, and what remained was the page background. A black
+ * rectangle with a green build, a clean dev server, and nothing in any log —
+ * which is unreadable as a bug report and indistinguishable from "still
+ * loading".
  *
- * Từ bản này, lỗi còn được:
- *  - gửi về server qua POST /api/telemetry/player (engine 'js') → xem ở
- *    Admin → tab "Lỗi player" (không cần người dùng mở DevTools);
- *  - ghi vào sessionStorage `chrtv_last_errors` nên tải lại xong vẫn đọc được
- *    "nãy crash vì gì" + đếm số lần lặp trong phiên.
+ * An error boundary turns that into text. It is deliberately plain — inline
+ * styles, no theme imports, no i18n — because whatever is broken might be the
+ * theme, the context provider, or the translation layer, and a fallback that
+ * depends on them can fail in exactly the situation it exists for.
+ *
+ * It renders in Vietnamese and English together for the same reason: the
+ * language is a preference of the healthy app, not a fact available here.
  */
 export default class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { error: null, info: null, times: 1 };
-    this.retry = this.retry.bind(this);
-    this.copy = this.copy.bind(this);
+    this.state = { error: null, info: null };
   }
 
   static getDerivedStateFromError(error) {
@@ -25,83 +28,93 @@ export default class ErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, info) {
-    // Đếm số lần lặp trong cùng phiên để hiện "lỗi này lặp lại N lần" trên màn báo lỗi
-    this._times = (this._times || 0) + 1;
-    try { this.setState({ times: this._times, info }); } catch {}
-    // eslint-disable-next-line no-console
-    console.error('[ErrorBoundary]', error, info?.componentStack || '');
-    const msg = String((error && (error.message || error)) || 'Lỗi không xác định');
-    const stack = String((error && error.stack) || '')
-      .split('\n')
-      .slice(1, 5)
-      .join(' <- ')
-      .slice(0, 160);
-    const comp = String((info && info.componentStack) || '')
-      .split('\n')
-      .map((s) => s.trim().replace(/^at\s+/, ''))
-      .filter(Boolean)[0] || '';
-    reportClientError({
-      code: 'render',
-      detail: `${msg}${comp ? ` [${comp}]` : ''}${stack ? ` || ${stack}` : ''}`,
-      fatal: 1,
-    });
-  }
-
-  retry() {
-    this.setState({ error: null, info: null });
-  }
-
-  copy() {
+    // Keep the component stack — it names the file that threw, which the message
+    // alone usually does not.
+    this.setState({ info });
     try {
-      const e = this.state.error;
-      const txt = `${e?.message || e}\n${e?.stack || ''}\n${this.state.info?.componentStack || ''}`;
-      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt.slice(0, 4000));
-    } catch {}
+      // eslint-disable-next-line no-console
+      console.error('[playZ] render crashed:', error, info);
+    } catch { /* console unavailable */ }
   }
 
   render() {
-    if (!this.state.error) return this.props.children;
-    const msg = String((this.state.error && (this.state.error.message || this.state.error)) || 'Lỗi không xác định');
-    const recent = getRecentClientErrors();
+    const { error, info } = this.state;
+    if (!error) return this.props.children;
+
+    const message = String(error?.message || error || 'Unknown error');
+    const stack = String(error?.stack || '').split('\n').slice(0, 6).join('\n');
+    const where = String(info?.componentStack || '').split('\n').filter(Boolean).slice(0, 6).join('\n');
+
     return (
-      <div className="fixed inset-0 z-[9999] bg-[#0d0e12] flex items-center justify-center p-6">
-        <div className="w-full max-w-md text-center">
-          <div className="mx-auto w-14 h-14 rounded-2xl bg-red-500/15 border border-red-500/30 flex items-center justify-center text-2xl mb-4">⚠️</div>
-          <h2 className="text-white font-black text-lg mb-1.5">Có lỗi bất ngờ xảy ra</h2>
-          <p className="text-[#7C7C8A] text-[12px] mb-1.5 leading-relaxed">
-            Ứng dụng vừa gặp lỗi khi hiển thị. Bấm tải lại để tiếp tục — nếu lặp lại, hãy gửi dòng lỗi bên dưới.
+      <div style={{
+        position: 'fixed', inset: 0, overflowY: 'auto',
+        background: '#08080A', color: '#F5F5F7',
+        fontFamily: 'Inter, system-ui, -apple-system, Segoe UI, sans-serif',
+        padding: '32px 20px', display: 'flex', justifyContent: 'center',
+      }}>
+        <div style={{ width: '100%', maxWidth: 620 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
+            <span style={{
+              display: 'inline-flex', width: 34, height: 34, borderRadius: 9,
+              background: '#2F6BFF', alignItems: 'center', justifyContent: 'center',
+              fontWeight: 800, fontSize: 15, letterSpacing: '-0.02em',
+            }}>Z</span>
+            <span style={{ fontSize: 15, fontWeight: 800, letterSpacing: '-0.01em' }}>playZ</span>
+          </div>
+
+          <p style={{ fontSize: 15, fontWeight: 700, margin: '0 0 6px' }}>
+            Ứng dụng gặp lỗi khi hiển thị
           </p>
-          {this.state.times > 1 && (
-            <p className="text-amber-300/80 text-[11px] mb-3">
-              Lỗi này lặp lại <b>{this.state.times}</b> lần trong phiên — nhiều lúc là do danh sách kênh/cấu hình tải về bị lỗi thời, thử tải lại hẳn (Ctrl+Shift+R).
-            </p>
+          <p style={{ fontSize: 13, color: '#8A8A99', margin: '0 0 20px', lineHeight: 1.6 }}>
+            The app hit an error while rendering. Chi tiết ở dưới — gửi nguyên phần này là đủ để tìm ra chỗ hỏng.
+          </p>
+
+          <div style={{
+            background: '#101014', border: '1px solid #24242C', borderRadius: 12,
+            padding: 14, marginBottom: 12, fontSize: 12,
+            fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
+            color: '#FF8A8F', wordBreak: 'break-word', lineHeight: 1.55,
+          }}>
+            {message}
+          </div>
+
+          {(stack || where) && (
+            <pre style={{
+              background: '#101014', border: '1px solid #24242C', borderRadius: 12,
+              padding: 14, marginBottom: 18, overflowX: 'auto', fontSize: 11,
+              lineHeight: 1.6, color: '#7C7C8A', fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
+              whiteSpace: 'pre-wrap',
+            }}>{[stack, where].filter(Boolean).join('\n\n')}</pre>
           )}
-          <div className="flex items-center justify-center gap-2 mb-4">
+
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             <button
-              onClick={() => { window.location.reload(); }}
-              className="px-5 py-2.5 rounded-xl grad-brand text-white text-[13px] font-black active:scale-95 transition"
+              type="button"
+              onClick={() => window.location.reload()}
+              style={{
+                padding: '10px 18px', borderRadius: 999, border: 'none', cursor: 'pointer',
+                background: '#2F6BFF', color: '#fff', fontSize: 13, fontWeight: 700,
+                fontFamily: 'inherit',
+              }}
             >
-              ⟳ Tải lại ứng dụng
+              Tải lại trang
             </button>
-            <button onClick={this.retry} className="px-4 py-2.5 rounded-xl border border-white/10 text-[#D2D2DC] text-[12px] font-bold hover:text-white transition">
-              Bỏ qua, dùng tiếp
-            </button>
-            <button onClick={this.copy} className="px-3 py-2.5 rounded-xl border border-white/10 text-[#9C9CAB] text-[12px] hover:text-white transition">
-              Chép log
+            <button
+              type="button"
+              onClick={() => { try { localStorage.clear(); sessionStorage.clear(); } catch {} window.location.reload(); }}
+              style={{
+                padding: '10px 18px', borderRadius: 999, cursor: 'pointer',
+                background: 'transparent', border: '1px solid #33333E', color: '#D2D2DC',
+                fontSize: 13, fontWeight: 600, fontFamily: 'inherit',
+              }}
+            >
+              Xoá dữ liệu lưu &amp; tải lại
             </button>
           </div>
-          <details className="mt-1 text-left">
-            <summary className="text-[11px] text-[#5A5A66] cursor-pointer select-none">Chi tiết lỗi ({recent.length || 1} gần nhất)</summary>
-            <pre className="mt-2 p-3 rounded-xl bg-black/50 border border-white/10 text-[10px] text-red-300/90 whitespace-pre-wrap break-words max-h-52 overflow-y-auto">{msg}</pre>
-            {recent.length > 1 && (
-              <pre className="mt-1 p-3 rounded-xl bg-black/30 border border-white/5 text-[10px] text-[#9C9CAB] whitespace-pre-wrap break-words max-h-40 overflow-y-auto">
-                {recent.map((r, i) => `${i + 1}. [${r.code}] ${r.detail}`).join('\n')}
-              </pre>
-            )}
-            {this.state.info && (
-              <pre className="mt-1 p-2 rounded-lg bg-black/30 border border-white/5 text-[9px] text-[#7C7C8A] whitespace-pre-wrap break-words max-h-40 overflow-y-auto">{this.state.info.componentStack}</pre>
-            )}
-          </details>
+
+          <p style={{ fontSize: 11.5, color: '#55555F', marginTop: 18, lineHeight: 1.6 }}>
+            Nếu lỗi lặp lại sau khi xoá dữ liệu, báo lại kèm dòng chữ đỏ ở trên.
+          </p>
         </div>
       </div>
     );

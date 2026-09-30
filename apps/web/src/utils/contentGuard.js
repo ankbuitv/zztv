@@ -64,11 +64,40 @@ function looksLikeDevtools() {
   return false;
 }
 
+/**
+ * Whether the guard runs at all.
+ *
+ * It used to run on every load. It no longer does, for one reason: the devtools
+ * heuristic below compares window.outerWidth against innerWidth, and a browser
+ * sidebar, a zoom level, a snapped window, or a preview pane can all push that
+ * difference past the threshold. When it fires, the guard covers the entire
+ * product with a near-black overlay — which is indistinguishable from the app
+ * failing to start, and it also swallows F12, so the person looking at the black
+ * screen cannot open the console to find out why.
+ *
+ * The guard is still here and still complete. It is opt-in now:
+ *
+ *   ?chrtv_guard=1                      one session
+ *   localStorage.chrtv_content_guard = '1'   this browser
+ *
+ * Note that `?chrtv_debug=1` still disables it, so existing bookmarks that rely
+ * on that keep working.
+ */
+function guardEnabled() {
+  try {
+    if (new URLSearchParams(window.location.search).get('chrtv_debug') === '1') return false;
+    if (new URLSearchParams(window.location.search).get('chrtv_guard') === '1') return true;
+    return localStorage.getItem('chrtv_content_guard') === '1';
+  } catch {
+    // Storage or URL unavailable: stay off. A protection feature must never be
+    // the reason the product does not open.
+    return false;
+  }
+}
+
 export function installContentGuard() {
   if (typeof window === 'undefined') return;
-  try {
-    if (new URLSearchParams(window.location.search).get('chrtv_debug') === '1') return;
-  } catch {}
+  if (!guardEnabled()) return;
 
   const block = (e) => {
     e.preventDefault();
