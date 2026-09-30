@@ -61,6 +61,13 @@ proxy['/espn'] = FIXTURE_MODE
 
 export default defineConfig({
   plugins: [react()],
+  // One React, always. A workspace can easily end up with two copies: the
+  // legacy TV-navigation dependency pins React 16, and if npm hoists that one to
+  // the root then react-dom@18 loads it and the application renders nothing.
+  // Deduping here means the bundler serves a single instance whatever the tree.
+  resolve: {
+    dedupe: ['react', 'react-dom'],
+  },
   server: {
     host: '0.0.0.0',
     port: 3000,

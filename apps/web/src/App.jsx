@@ -642,7 +642,7 @@ function AppContent() {
           <div className="splash-logo relative">
             <Logo size="xl" showSubtext={false} />
           </div>
-          <p className="mt-6 text-[11px] font-black tracking-[0.35em] text-[#7C7C8A] uppercase">VIP PLAY</p>
+          <p className="mt-6 text-[11px] font-black tracking-[0.35em] text-[#7C7C8A] uppercase">{t('app.splash_tagline')}</p>
           <div className="mt-5 w-44 h-1 rounded-full bg-white/10 overflow-hidden">
             <div className="splash-bar h-full rounded-full grad-brand" />
           </div>
