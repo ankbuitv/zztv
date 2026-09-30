@@ -14,11 +14,25 @@ function detectBase() {
     const override = localStorage.getItem('chrtv_api_base');
     if (override && override.trim()) return override.trim().replace(/\/+$/, '');
   } catch { /* storage unavailable */ }
-  // Same origin by default: the Worker serves the admin on admin.thelac.dpdns.org.
+  // Same origin by default. The admin is its own Worker (wrangler.admin.toml),
+  // so "same origin" only holds when the API is on the same hostname — set
+  // VITE_API_BASE to an absolute URL when it is not.
   return '';
 }
 
 export const API_BASE = detectBase();
+
+/**
+ * Public origin of the consumer app. The admin links to it for sign-in and
+ * from the header, so it is a build variable rather than a literal: the same
+ * admin build can point at production, at a staging consumer, or at a workers.dev
+ * subdomain without an edit to source. Falls back to the same host the admin
+ * itself is served from, which is correct for any single-hostname setup.
+ */
+export const WEB_APP_URL = (
+  (import.meta.env.VITE_WEB_APP_URL || '').trim() ||
+  (typeof window !== 'undefined' && window.location ? window.location.origin : '')
+).replace(/\/+$/, '');
 
 export function apiUrl(path) {
   const p = path.startsWith('/') ? path : `/${path}`;

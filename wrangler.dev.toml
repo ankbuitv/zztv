@@ -6,6 +6,12 @@ name = "chrtv-backend-dev"
 main = "worker/worker.js"
 compatibility_date = "2024-01-01"
 
+# Wrangler v4: this config deliberately has NO `assets` block, so there is
+# nothing to build and nothing for `assets.directory` to point at. The Vite dev
+# server serves the front end and proxies /api here.
+#
+# D1 id below is a local label only — never use this file to deploy.
+#
 # ===== BIẾN CHỈ DÙNG LOCAL DEV (KHÔNG dùng để deploy) =====
 # Production: set qua `wrangler secret put <NAME> <VALUE>` (xem SECURITY_FIX_RUNBOOK.md).
 [vars]
@@ -33,3 +39,5 @@ LICENSE_SECRET = "dev-only-license-secret-local-1234567890"
 binding = "DB"
 database_name = "chrtv-db"
 database_id = "local-dev-db"
+# Per-binding in Wrangler v4 — see the comment in wrangler.toml.
+migrations_dir = "migrations"

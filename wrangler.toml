@@ -1,75 +1,142 @@
-# CHRTV - Cloudflare Worker + Static Assets configuration
-# This file lives at the repo root so `npx wrangler deploy` (CI deploy command)
-# can find the entry point. It deploys:
-#   - worker/worker.js  -> the backend API (/api/*)
-#   - dist/             -> the built Vite frontend (static assets)
+# ===========================================================================
+# playZ / CHRTV — consumer app + API Worker  (wrangler.toml)
+#
+#   npx wrangler deploy            # builds apps/web, then ships Worker + assets
+#   npm run deploy:api              # API only, no static assets
+#   npm run db:migrate:remote       # D1 migrations against production
+#
+# ---------------------------------------------------------------------------
+# !! `name` MUST match the Worker your Cloudflare project is connected to !!
+# ---------------------------------------------------------------------------
+# `npx wrangler deploy` deploys to whatever `name` says HERE. If the connected
+# Workers Builds project is called something else, the build either fails
+# outright or — worse — succeeds and publishes to a Worker that has none of
+# your domains attached, so the site keeps serving the old build with no error
+# anywhere to notice.
+#
+# Check: Dashboard -> Workers & Pages -> <your project>, and read the Worker
+# name at the top. If it is not "chrtv-ott", change this line to match.
+#
+# ---------------------------------------------------------------------------
+# WHY assets.directory IS NOT "./dist"
+# ---------------------------------------------------------------------------
+# This is a monorepo. Vite runs inside each workspace and writes to that
+# workspace's own outDir — there is no root ./dist and there never will be one:
+#
+#   @playz/web     -> apps/web/dist      (this file)
+#   @playz/admin   -> apps/admin/dist    (wrangler.admin.toml)
+#   API            -> worker/worker.js   (this file + wrangler.api.toml)
+#
+# An earlier revision of this file pointed at "./dist" and every deploy failed
+# with `assets.directory does not exist: /opt/buildhome/repo/dist`. The fix is
+# to point each Worker at the directory its own build actually produces — not
+# to copy one app's output to the repo root, which would have hidden the
+# problem and made the admin unreachable.
+# ===========================================================================
 name = "chrtv-ott"
 main = "worker/worker.js"
 compatibility_date = "2024-01-01"
 
-# Serve the built frontend from dist/ as static assets.
-# Requests that do NOT match an asset (e.g. /api/*) fall through to worker.js.
-# NOTE: keep this BEFORE the [build] table (TOML table ordering).
-# NOTE: phải ở root level — nếu đặt sau [triggers]/[build], TOML coi nó là field
-# của table đó và wrangler sẽ cảnh báo "Unexpected fields found in ... field: assets".
-assets = { directory = "./dist" }
+# ---------------------------------------------------------------------------
+# Static assets: the built consumer app, served from the Worker origin.
+#
+# `binding = "ASSETS"` is explicit because worker/worker.js reads env.ASSETS
+# (it re-issues responses with the CSP + security headers in cspFor()).
+# Requests that match an asset are served by the platform; everything else
+# falls through to the Worker, which is what makes /api, /auth, /user, /admin
+# and /ws work on the same origin.
+#
+# NOTE: keep this BEFORE the [build] table. In TOML, a bare key after a table
+# header belongs to that table, and wrangler would reject it as
+# "Unexpected fields found in ... field: assets".
+# ---------------------------------------------------------------------------
+assets = { directory = "./apps/web/dist", binding = "ASSETS" }
 
 # ---------------------------------------------------------------------------
-# Cron triggers: TẮT vì tài khoản Workers Free bị giới hạn 5 cron triggers/account
-# (deploy fail với lỗi "reached the Workers Free limit of 5 cron triggers").
-# Kênh vẫn tự nạp mà không cần cron:
-#   - D1 rỗng  -> /api/playlist hoặc /api/channels tự fetch playlists/tv.m3u
-#                 rồi ghi vào D1 (writeChannels) ngay lần gọi đầu tiên
-#   - Refresh  -> gọi /api/playlist?refresh=1 bất cứ lúc nào
-# Nếu nâng lên Workers Paid, bỏ comment dòng dưới để bật cron 6h/lần:
+# Custom build step. This is the ONLY place the consumer bundle is built.
+#
+# Cloudflare Workers Builds must therefore be configured with
+#     Build command:  npm ci
+#     Deploy command: npx wrangler deploy
+# Running `npm run build` in the dashboard build command as well built the
+# whole monorepo twice on every deploy — the second build ran after the first
+# one had already been packaged into the upload.
+# ---------------------------------------------------------------------------
+[build]
+command = "npm run build:web"
+
+# ---------------------------------------------------------------------------
+# Cron triggers: OFF.
+# The Workers Free plan caps the account at 5 cron triggers and deploy fails
+# with "reached the Workers Free limit of 5 cron triggers".
+# Channels still populate without a cron:
+#   - empty D1  -> /api/playlist or /api/channels fetches playlists/tv.m3u on
+#                  the first request and writes it to D1 (writeChannels)
+#   - refresh   -> GET /api/playlist?refresh=1 at any time
+# On a paid plan, uncomment the line below to re-enable the 6-hourly job:
 # [triggers]
 # crons = ["0 */6 * * *"]
 # ---------------------------------------------------------------------------
 
-# Custom build step: build the Vite frontend into dist/ before every deploy
-# (runs automatically on `wrangler deploy` / `wrangler versions upload`).
-[build]
-command = "npm run build"
-
 # ---------------------------------------------------------------------------
-# Cloudflare D1 Database (users, sessions, channels, user_favorites, watch_history)
+# D1: users, sessions, channels, favourites, watch history, community, admin.
 #
-# QUAN TRỌNG: `wrangler deploy` đồng bộ bindings theo file này — binding thêm
-# tay trên Dashboard sẽ bị XOÁ nếu không khai báo ở đây. Bắt buộc giữ block này.
-# worker/worker.js có ensureSchema() tự tạo bảng nên không cần chạy schema.sql.
+# `wrangler deploy` syncs bindings from this file. A binding added by hand in
+# the dashboard is REMOVED on the next deploy unless it is declared here, so
+# this block has to stay.
+#
+# Schema changes go through migrations/ (`npm run db:migrate:remote`), not
+# through `d1 execute --file=schema.sql`. schema.sql is stale — it lists 32
+# tables while the Worker creates 78. worker.js still self-heals with
+# ensureSchema() as a safety net, but the history of record is D1's own
+# d1_migrations table.
+# ---------------------------------------------------------------------------
 [[d1_databases]]
 binding = "DB"
 database_name = "chrtv-db"
 database_id = "6beab015-333c-45a2-8062-41d1fd3f066f"
+# migrations_dir is a FIELD OF THE BINDING in Wrangler v4, not a top-level
+# key. Declaring it at the root — or after the [build] table, where TOML reads
+# it as a field of `build` — produces
+#     "Unexpected fields found in build field: migrations_dir"
+# and the migrations directory silently falls back to the default.
+migrations_dir = "migrations"
 
 # ---------------------------------------------------------------------------
-# Cloudflare KV Namespace (EPG XML/JSON cache, TTL 3600s)
-#
-# Uncomment this block and replace id with the REAL KV namespace ID from your
-# Cloudflare dashboard (Workers -> KV -> your namespace -> ID) after creating
-# the namespace:
-#
-#   npx wrangler kv namespace create EPG_KV
+# KV (EPG XML/JSON cache, TTL 3600s).
+# Create with:  npx wrangler kv namespace create EPG_KV
+# then paste the id below and uncomment.
 #
 # [[kv_namespaces]]
 # binding = "EPG_KV"
 # id = "REPLACE_WITH_REAL_KV_ID"
+# ---------------------------------------------------------------------------
 
 [vars]
 BREVO_SENDER_NAME = "NO REPLY - CHRTV PL▷Y"
 BREVO_SENDER_EMAIL = "noreply@chrtv.app"
-# Chế độ phát luồng (ĐỔI TỪ 2026-09-13):
-#   direct = LUÔN trả URL gốc ngay, phát trực tiếp từ trình duyệt/app (mặc định
-#            hiện tại). Lý do: toàn bộ kênh premium đã chuyển sang DASH (.mpd) mà
-#            proxy không rewrite được MPD XML -> đi proxy là vỡ; phát trực tiếp
-#            cũng cho chất lượng/tốc độ tốt hơn và không tốn băng thông Worker.
-#            ĐÁNH ĐỔI: link gốc lộ trên DevTools/m3u8 sniffer và lớp mã hoá
-#            AES-128 của proxy (PROTECT=on) KHÔNG còn tác dụng.
-#   auto   = proxy trước (giấu link gốc), kênh .mpd + kênh bị nguồn chặn IP
-#            Cloudflare thì client tự xin ?direct=1 (chế độ cũ 2026-09-12)
-#   proxy  = luôn proxy (giấu link tuyệt đối, kênh bị nguồn chặn sẽ không xem được)
+
+# Public origin of the consumer app. Used for password-reset links, CORS
+# fallback and same-origin checks. Change it when the domain changes instead
+# of editing worker/worker.js. Leave empty to fall back to the built-in
+# default (https://thelac.dpdns.org).
+PUBLIC_WEB_ORIGIN = ""
+# Public origin of the admin app — same idea, for CORS.
+PUBLIC_ADMIN_ORIGIN = ""
+
+# Streaming mode (changed 2026-09-13):
+#   direct = always return the original URL; the browser/app plays it directly
+#            (the current default). Premium channels have all moved to DASH
+#            (.mpd) and the proxy cannot rewrite MPD XML, so proxying breaks
+#            playback — going direct is also faster and costs no Worker
+#            bandwidth.
+#            TRADE-OFF: the origin URL is visible in DevTools / m3u8 sniffers
+#            and the proxy's AES-128 layer (PROTECT=on) no longer applies.
+#   auto   = proxy first (hides the origin URL); .mpd channels and hosts that
+#            block Cloudflare IPs fall back to the client asking for ?direct=1
+#   proxy  = always proxy (hides the URL completely; blocked hosts cannot play)
 STREAM_MODE = "direct"
 
-# Note: worker/worker.js degrades gracefully when DB / EPG_KV are not bound
-# (M3U/default channel list, per-request EPG fetch, localStorage fallbacks),
-# so the app is fully functional without them.
+# worker/worker.js degrades gracefully when DB / EPG_KV are not bound (M3U
+# default channel list, per-request EPG fetch, localStorage fallbacks), so the
+# app stays usable without them.

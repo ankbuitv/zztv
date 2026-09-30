@@ -12,8 +12,13 @@ preserved, and the product was rebranded and re-shelled around them.
 | Admin | `https://admin.thelac.dpdns.org` |
 | Previous deployment | `https://play.ankb.qzz.io` |
 
+> **Deploying?** Start with **[`DEPLOY.md`](DEPLOY.md)** for the build layout,
+> the Cloudflare Workers Builds settings and the migration procedure, and
+> **[`docs/SECRETS.md`](docs/SECRETS.md)** for every secret and variable.
+
 > **Status: foundation phase.** See §5 for what is done versus what is next.
-> Nothing in this repository is deployed yet, and no credentials are configured.
+> The Cloudflare configs and the migration set are in place; no credentials are
+> committed to this repository.
 
 ---
 
@@ -23,6 +28,8 @@ preserved, and the product was rebranded and re-shelled around them.
 |---|---|
 | [`docs/AUDIT.md`](docs/AUDIT.md) | **Phase 1** — full audit of CHRTV Play: stack, 271 endpoints, 32 tables, every feature, content sources, security findings |
 | [`docs/MIGRATION-PLAN.md`](docs/MIGRATION-PLAN.md) | **Phase 2** — target architecture, and how each legacy feature is classified (KEEP / KEEP+REDESIGN / REFACTOR / REPLACE / DEPRECATED) |
+| [`DEPLOY.md`](DEPLOY.md) | **Deploy runbook** — where each build lands, the Workers Builds settings, migrations, rollback |
+| [`docs/SECRETS.md`](docs/SECRETS.md) | **Every secret and variable**, per Worker, with how to set and rotate each one |
 | [`docs/CREDENTIALS.md`](docs/CREDENTIALS.md) | Every account, secret and Cloudflare resource required to deploy |
 | [`docs/SECURITY-NOTES.md`](docs/SECURITY-NOTES.md) | Findings, what was fixed, what the owner must still rotate |
 | [`docs/brand-preview.png`](docs/brand-preview.png) | The playZ identity on real surfaces |
@@ -44,13 +51,34 @@ zztv/
 │   ├── worker.js               the API — 271 routes (to be split into routes/)
 │   ├── stream-protect.js       AES-128 segment encryption
 │   ├── license-worker.js       license server
-│   └── migrations/             D1 migrations (additive only)
-├── docs/                       audit, plan, credentials, security, brand
-├── scripts/                    brand builder, brand preview, secret scanner
+│   └── migrations/             superseded — see the note in §6
+├── migrations/                 D1 migrations (0000_baseline, 0001_seed_plans)
+├── docs/                       audit, plan, credentials, secrets, security, brand
+├── scripts/                    build tools, deploy checks, brand builder, secret scanner
 ├── playlists/tv.m3u            181 live channels
 ├── android/                    Capacitor project
-└── wrangler.toml               Cloudflare configuration
+├── wrangler.toml               consumer app + API   (chrtv-ott)  → apps/web/dist
+├── wrangler.admin.toml         admin app            (playz-admin) → apps/admin/dist
+├── wrangler.api.toml           API only, no assets  (chrtv-api)
+├── wrangler.license.toml       license server       (chrtv-license)
+└── wrangler.dev.toml           local Worker (no assets, never deployed)
 ```
+
+### Build outputs
+
+Each Vite build runs inside its own workspace and writes to that workspace's
+`outDir`. **There is no root `dist/`**, and each wrangler config points at the
+directory its own build produces:
+
+| Workspace | Command | Output |
+|---|---|---|
+| `@playz/web` | `npm run build:web` | `apps/web/dist` |
+| `@playz/admin` | `npm run build:admin` | `apps/admin/dist` |
+| API Worker | — | `worker/worker.js` (no static assets) |
+
+`npm run verify:assets` fails locally if any `assets.directory` does not exist,
+which is the check that would have caught the `assets.directory does not exist:
+/opt/buildhome/repo/dist` production failure before it ever reached Cloudflare.
 
 ---
 
@@ -199,36 +227,62 @@ Small sizes use simplified cuts: **bold** at 32–64px and a **ZZ-only** mark at
 
 - `worker/worker.js` is still one 7,700-line file — the split into `routes/` and
   `lib/` is planned but not done.
-- The consumer bundle is 2.77 MB (838 KB gzipped) with no code splitting. The
-  admin UI is still inside it, which is the main thing the app split will fix.
-- **No automated tests exist yet.** CHRTV shipped ad-hoc `node scripts/*.mjs`
-  checks; a real test suite is part of phase 16.
-- No `wrangler.toml` has been pointed at playZ resources yet — see
-  `docs/CREDENTIALS.md` §3.
-- The admin app directory is scaffolded but empty.
+- The consumer bundle was one 2.86 MB (865 KB gzipped) chunk. It is now
+  route-split: the entry chunk is ~183 KB and the initial load is ~510 KB raw
+  (~163 KB gzipped), with hls.js, shaka-player, jsqr and the QR/XML libraries
+  fetched on first use. `npm test` fails if a chunk creeps back over 900 KB.
+- `npm test` (`scripts/deploy-check.mjs`) covers the deploy invariants: wrangler
+  config validity, `assets.directory` resolution, migration safety (including
+  that the baseline loses no rows on a populated database), and the bundle
+  budget. `npm run test:smoke` renders every route and every CHRTV rollback
+  surface in jsdom. A browser-based test suite is still phase 16.
+- The D1 database and its resources still have to be created and pointed at —
+  see `docs/CREDENTIALS.md` §3 and `docs/SECRETS.md`.
 - Reference screenshots mentioned in the brief were not provided; the layout is
   built from the written information architecture.
 
 ---
 
-## 6. Deployment (once credentials exist)
+## 6. Deployment
+
+Full runbook: **[`DEPLOY.md`](DEPLOY.md)**. Secrets:
+**[`docs/SECRETS.md`](docs/SECRETS.md)**.
 
 ```bash
-npx wrangler d1 create playz-db       # then put database_id into wrangler.toml
-npx wrangler kv namespace create PLAYZ_KV
-npx wrangler r2 bucket create playz-uploads
+npm ci
 
-npx wrangler secret put JWT_SECRET
-npx wrangler secret put PASSWORD_PEPPER
-npx wrangler secret put STREAM_TOKEN_SECRET
-npx wrangler secret put ADMIN_MASTER_TOKEN
-npx wrangler secret put TMDB_KEY
+# resources (once)
+npx wrangler d1 create chrtv-db      # then put database_id into wrangler.toml
+npx wrangler kv namespace create EPG_KV
+npx wrangler r2 bucket create chrtv-private
 
-npm run deploy
+# schema — migrations, never `d1 execute --file=schema.sql`
+npm run db:migrate:remote
+
+# deploy each surface independently
+npm run deploy          # consumer app + API  → chrtv-ott
+npm run deploy:admin    # admin app           → playz-admin
+npm run deploy:api      # API only            → chrtv-api
+npm run deploy:license  # license server      → chrtv-license
 ```
 
-Full checklist, including the domain question that must be resolved first:
-[`docs/CREDENTIALS.md`](docs/CREDENTIALS.md).
+Each config runs its own `[build]`, so **do not** prefix these with
+`npm run build` — that is the duplicate-build problem described in
+[`DEPLOY.md`](DEPLOY.md) §2.
+
+---
+
+### Schema history
+
+`schema.sql` at the repository root and `worker/migrations/000-legacy-schema.sql`
+are **stale**: they describe 32 tables, while the Worker actually uses 78
+(`SCHEMA_STATEMENTS` in `worker/worker.js`). They are kept for reference only.
+
+The schema of record is `migrations/`, applied with
+`npm run db:migrate:remote`. `migrations/0000_baseline.sql` is generated from
+`worker/worker.js` and is additive-only, so applying it to the existing
+production database is a no-op. `worker.js` still self-heals through
+`ensureSchema()` on cold starts as a safety net.
 
 ---
 

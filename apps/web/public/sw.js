@@ -113,7 +113,14 @@ self.addEventListener('fetch', (event) => {
   }
 
   // --- hashed build assets: cache first, they are immutable ------------------
-  const isHashed = /\/assets\/[^/]+-[A-Za-z0-9_]{8}\.(js|css|woff2?)$/.test(url.pathname);
+  //
+  // The hash class includes `-` and `_`: Vite emits base64url-ish hashes, so
+  // a chunk is routinely named `chevron-up-Bw2Ce-bT.js` and a class of
+  // [A-Za-z0-9_] alone fails to match it. The old pattern silently sent every
+  // such chunk down the "network every time" branch below, which is how it
+  // stayed invisible for years — there used to be exactly one JS chunk. With
+  // the app code-split, 87 of them would have paid that cost.
+  const isHashed = /\/assets\/[^/]+-[A-Za-z0-9_-]{8}\.(js|css|woff2?)$/.test(url.pathname);
 
   if (isHashed) {
     event.respondWith((async () => {

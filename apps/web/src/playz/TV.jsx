@@ -339,8 +339,14 @@ function ChannelTile({ channel, active, favourite, onOpen, onToggleFavourite, co
           : <Tv size={22} style={{ color: C.textFaint }} />}
       </span>
       <span>
-        <span style={{ display: 'block', fontSize: 12.5, fontWeight: 700, color: C.text, lineHeight: 1.35,
-          display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+        {/* `display` is declared once. It was previously written twice —
+            `display: 'block'` then `display: '-webkit-box'` — so the second
+            value silently won and the first was dead. The line clamp only
+            works because -webkit-box is set, so that is the value kept here. */}
+        <span style={{
+          display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
+          overflow: 'hidden', fontSize: 12.5, fontWeight: 700, color: C.text, lineHeight: 1.35,
+        }}>
           {channel.name}
         </span>
         <span style={{ display: 'block', fontSize: 10.5, color: C.textMuted, marginTop: 4, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>

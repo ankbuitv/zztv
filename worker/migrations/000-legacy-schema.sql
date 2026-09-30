@@ -1,3 +1,16 @@
+-- ###########################################################################
+-- DEPRECATED — superseded by ../../migrations/0000_baseline.sql
+--
+-- This file is a byte-for-byte copy of the old root-level schema.sql and
+-- describes only 32 of the 78 tables the Worker actually uses. It is kept for
+-- reference and historical diffs; it is NOT applied by any deploy path and is
+-- NOT read by `wrangler d1 migrations apply` (which only looks in
+-- ./migrations, configured per D1 binding in wrangler.toml).
+--
+-- Do not run `wrangler d1 execute --file=worker/migrations/000-legacy-schema.sql`.
+-- Use:  npm run db:migrate:remote
+-- ###########################################################################
+
 -- CHRTV Database Schema for Cloudflare D1
 
 -- Users table
