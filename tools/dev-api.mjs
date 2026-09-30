@@ -326,6 +326,37 @@ const server = http.createServer(async (req, res) => {
     return res.end();
   }
 
+  // --- landing ------------------------------------------------------------
+  // Reached only if someone opens the fixture's own preview. A bare 404 here
+  // looks like a broken deployment, so say what this process is and where the
+  // application actually lives.
+  if (path === '/' || path === '/index.html') {
+    const html = `<!DOCTYPE html><html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>playZ — fixture API</title></head>
+<body style="margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#08080A;color:#F5F5F7;font-family:Inter,system-ui,sans-serif">
+<div style="max-width:560px;padding:32px 24px">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
+    <span style="display:inline-flex;width:34px;height:34px;border-radius:9px;background:#2F6BFF;align-items:center;justify-content:center;font-weight:800">Z</span>
+    <span style="font-weight:800">playZ</span>
+  </div>
+  <p style="font-size:16px;font-weight:700;margin:0 0 8px">Đây là API giả lập, không phải ứng dụng</p>
+  <p style="font-size:13.5px;color:#8A8A99;line-height:1.7;margin:0 0 20px">
+    Tiến trình này chỉ phục vụ dữ liệu phát triển (kênh, EPG, phim, thể thao, cộng đồng, admin).
+    Nó không có giao diện. Mở cổng <b style="color:#F5F5F7">3000</b> để xem ứng dụng, cổng
+    <b style="color:#F5F5F7">3100</b> để xem trang quản trị.
+  </p>
+  <div style="border:1px solid #24242C;border-radius:12px;background:#101014;padding:14px;font:12px/1.9 ui-monospace,Menlo,monospace;color:#8A8A99">
+    GET /api/playlist · /api/epg · /api/tmdb?path=… · /api/shorts<br>
+    GET /media/&lt;clip&gt;.mp4 · /img/&lt;size&gt;/&lt;name&gt;.png<br>
+    GET /api/community/* · /api/party/*
+    GET /admin/* — 19 endpoint quản trị
+  </div>
+</div></body></html>`;
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Content-Length': Buffer.byteLength(html) });
+    return res.end(html);
+  }
+
   // --- fixture media ------------------------------------------------------
   // Vertical clips for Shorts. They are pans over a still, a few seconds and a
   // few dozen KB each — see tools/make-fixture-media.mjs. Ships nothing.
