@@ -62,11 +62,36 @@ Requires Node ≥ 20.
 npm install                 # installs all workspaces
 
 npm run dev                 # consumer app   → http://localhost:3000
-npm run dev:admin           # admin app      (once implemented)
+npm run dev:admin           # admin app      → http://localhost:3100
 npm run dev:api             # Worker + local D1 → http://127.0.0.1:8787
 
-# point the dev server at a local Worker instead of production:
+# point a dev server at a local Worker instead of production:
 VITE_DEV_API_TARGET=http://127.0.0.1:8787 npm run dev
+```
+
+Both apps default to the production API, which is the right thing on a machine
+that can reach it. Where it cannot — a sandbox, a plane, an offline laptop — the
+symptom is not an obvious error: Vite's proxy turns every `/api/*` request into a
+500, the page still loads, and the app renders empty states as though there were
+simply no content.
+
+Run against the fixture instead. It serves generated channels, EPG, catalogue,
+sports, community and short clips from memory, and nothing in it is deployed:
+
+```bash
+npm run dev:fixture         # fixture API on :8788 (leave running)
+
+VITE_DEV_API_TARGET=http://127.0.0.1:8788 npm run dev
+VITE_DEV_API_TARGET=http://127.0.0.1:8788 npm run dev:admin
+
+npm run dev:offline         # or: fixture + consumer app in one command
+```
+
+`npm run dev:fixture` also proxies artwork and serves real vertical clips for
+Shorts. Regenerate those clips after a clone with:
+
+```bash
+node tools/make-fixture-media.mjs   # needs ffmpeg on PATH for the video
 ```
 
 Other scripts:
@@ -77,6 +102,20 @@ npm run build:web           # consumer only
 npm run brand               # regenerate every logo asset from scripts/build-brand.mjs
 npm run secrets:check       # fail the build if a secret is ever committed
 ```
+
+### Two constraints that are not obvious
+
+**React is pinned at the workspace root.** `react` and `react-dom` are declared
+in the root `package.json`, and both Vite configs dedupe them. This is not
+tidiness. The legacy TV-navigation dependency pins React 16, and without the
+root declaration npm hoists that copy upward — at which point `react-dom@18`
+resolves *it*, the renderer drives React 16's hook dispatcher, and the app mounts
+nothing but a black background. If you add a dependency that wants an older
+React, leave the root pin alone and let the duplicate nest.
+
+**`packages/shared` is the intended home for the design tokens.** `apps/web`
+and `apps/admin` currently each carry their own copy, which is why they can
+drift. Moving them is planned, not done.
 
 ### Configure
 
