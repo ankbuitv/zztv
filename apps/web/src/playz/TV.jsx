@@ -435,11 +435,8 @@ export default function PlayzTVPage({
   return (
     <div style={{ padding: '0 clamp(14px,2.6vw,40px) 40px', maxWidth: 1680, margin: '0 auto' }}>
       {/* ── Player + EPG ─────────────────────────────────────────────────── */}
-      <div
-        className="flex flex-col lg:flex-row"
-        style={{ gap: 16, alignItems: 'flex-start', marginTop: 14 }}
-      >
-        <div style={{ flex: '1 1 auto', minWidth: 0, width: '100%' }}>
+      <div className="playz-split playz-split--aside" style={{ gap: 16, marginTop: 14 }}>
+        <div className="playz-aside">
           <div style={{
             position: 'relative', width: '100%', aspectRatio: '16 / 9',
             background: '#000', borderRadius: radius.lg, overflow: 'hidden',
@@ -507,8 +504,8 @@ export default function PlayzTVPage({
           )}
         </div>
 
-        {/* EPG — sits beside the player on desktop, below it on mobile. */}
-        <div style={{ flex: '0 0 auto', width: '100%', maxWidth: 400 }} className="lg:w-[368px]">
+        {/* EPG — beside the player on desktop, below it on mobile. */}
+        <div className="playz-aside">
           <EpgPanel
             channel={tvChannel}
             programmes={channelProgrammes}

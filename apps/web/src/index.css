@@ -488,6 +488,29 @@ img { -webkit-user-drag: none; }
 }
 
 /* ---------------------------------------------------------------------------
+   playZ layout helpers
+   The playZ pages style themselves inline, which is fine until a layout has to
+   change at a breakpoint — inline styles cannot hold a media query. These two
+   classes cover the recurring "content beside a panel" shape (TV: player + EPG;
+   Sports: fixtures + standings). Collapsing is the default; the two-column
+   arrangement is opt-in above 1024px, so a narrow phone can never be forced
+   into a 320px minimum column and scroll sideways.
+   --------------------------------------------------------------------------- */
+.playz-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+}
+.playz-aside {
+  min-width: 0;
+}
+@media (min-width: 1024px) {
+  .playz-split--aside {
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
+  }
+}
+
+/* ---------------------------------------------------------------------------
    Reduced motion
    Honour the OS preference by removing the animation entirely rather than
    merely shortening it. A 90ms animation is still an animation.

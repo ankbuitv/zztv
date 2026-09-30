@@ -32,19 +32,29 @@ if (FIXTURE_MODE) {
   proxy['/img'] = { target: API_TARGET, changeOrigin: true, secure: false };
 }
 
-// Lịch bóng đá: gọi cùng origin để tránh CORS/CSP chặn TheSportsDB + ESPN.
-proxy['/tsdb'] = {
-  target: 'https://www.thesportsdb.com',
-  changeOrigin: true,
-  secure: false,
-  rewrite: (p) => p.replace(/^\/tsdb/, '/api/v1/json/3'),
-};
-proxy['/espn'] = {
-  target: 'https://site.api.espn.com',
-  changeOrigin: true,
-  secure: false,
-  rewrite: (p) => p.replace(/^\/espn/, '/apis/site/v2'),
-};
+// Sports schedules: same-origin, because the browser cannot call TheSportsDB or
+// ESPN directly (no CORS) and the Worker proxy only exists in production.
+//
+// In fixture mode both point at the local fixture instead of the real hosts —
+// otherwise offline development is stuck behind a TCP timeout, and the sports
+// page renders as a blank screen with no way to tell a layout bug from a
+// network one. The fixture serves these exact paths.
+proxy['/tsdb'] = FIXTURE_MODE
+  ? { target: API_TARGET, changeOrigin: true }
+  : {
+    target: 'https://www.thesportsdb.com',
+    changeOrigin: true,
+    secure: false,
+    rewrite: (p) => p.replace(/^\/tsdb/, '/api/v1/json/3'),
+  };
+proxy['/espn'] = FIXTURE_MODE
+  ? { target: API_TARGET, changeOrigin: true }
+  : {
+    target: 'https://site.api.espn.com',
+    changeOrigin: true,
+    secure: false,
+    rewrite: (p) => p.replace(/^\/espn/, '/apis/site/v2'),
+  };
 
 export default defineConfig({
   plugins: [react()],

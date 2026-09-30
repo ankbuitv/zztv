@@ -27,6 +27,7 @@ import http from 'node:http';
 import { readFileSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createSports } from './sports-fixture.mjs';
 import { Resvg } from '@resvg/resvg-js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -59,6 +60,8 @@ function hash(str) {
 }
 
 // The app requests named sizes; map them to real pixel widths.
+const sports = createSports(hash);
+
 const SIZE_W = { w92: 92, w154: 154, w185: 185, w300: 300, w342: 342, w500: 500, w780: 780, w1280: 1280 };
 
 function artwork(seed, width, height) {
@@ -354,6 +357,28 @@ const server = http.createServer((req, res) => {
     return json(res, { success: true, data: CHANNELS.slice(0, 10).map((c, i) => ({ ...c, views: 1000 - i * 37 })) });
   }
 
+  // --- sports -------------------------------------------------------------
+  // The Sports page falls back through three sources; these cover the two that
+  // are same-origin, plus the bare /tsdb and /espn paths the dev proxy uses.
+  if (path === '/api/sports/tsdb') {
+    return json(res, sports.tsdbProxy(url));
+  }
+  if (path === '/api/sports/espn') {
+    return json(res, sports.espnProxy(url));
+  }
+  if (path.startsWith('/tsdb/')) {
+    const file = decodeURIComponent(path.slice(6));
+    const qs = url.searchParams.toString();
+    return json(res, sports.tsdbProxy(new URL(`http://x/?file=${encodeURIComponent(file)}${qs ? `&${qs}` : ''}`)));
+  }
+  if (path.startsWith('/espn/sports/soccer/')) {
+    const slug = path.slice('/espn/sports/soccer/'.length).split('/')[0];
+    return json(res, sports.espnProxy(new URL(`http://x/?league=${encodeURIComponent(slug)}`)));
+  }
+  if (path === '/api/sports-videos') {
+    return json(res, { success: true, videos: sports.SPORTS_VIDEOS, fixture: true });
+  }
+
   // Anything else: an explicit empty success, so the UI exercises its empty
   // states instead of hanging on a request that never resolves.
   if (path.startsWith('/api/') || path.startsWith('/auth/') || path.startsWith('/user/') || path.startsWith('/admin/')) {
@@ -369,6 +394,7 @@ server.listen(PORT, HOST, () => {
   console.log(`  channels      : ${CHANNELS.length} (from playlists/tv.m3u)`);
   console.log(`  epg programmes: ${EPG.programmes.length}`);
   console.log(`  catalogue     : ${CATALOG.length} titles (${MOVIES.length} movies, ${TV.length} shows)`);
+  console.log(`  sports        : ${sports.SPORTS_LEAGUES.length} leagues, ${sports.LEAGUE_INDEX.length} indexed leagues, ${sports.SPORTS_VIDEOS.length} clips`);
   console.log('  artwork       : generated on demand at /img/<size>/<name>.png');
   console.log('  NOTE — development fixture. Not product content, never deployed.');
 });
