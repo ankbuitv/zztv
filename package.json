@@ -1,0 +1,32 @@
+{
+  "name": "playz",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "playZ — premium OTT platform (consumer app, admin app, Cloudflare Worker API)",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "npm run dev -w @playz/web",
+    "dev:admin": "npm run dev -w @playz/admin",
+    "dev:api": "wrangler dev -c wrangler.dev.toml --local --ip 0.0.0.0 --port 8787",
+    "build": "npm run build:web && npm run build:admin",
+    "build:web": "npm run build -w @playz/web",
+    "build:admin": "npm run build -w @playz/admin",
+    "preview": "npm run preview -w @playz/web",
+    "deploy": "npm run build && wrangler deploy",
+    "deploy:admin": "npm run build:admin && wrangler deploy -c wrangler.admin.toml",
+    "brand": "node scripts/build-brand.mjs",
+    "secrets:check": "node scripts/secret-scan.mjs",
+    "test:smoke": "node scripts/smoke.mjs"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "wrangler": "^3.114.0"
+  }
+}

@@ -1,0 +1,48 @@
+# ---- deps / build ----
+node_modules
+dist
+build
+.vite
+.cache
+*.tsbuildinfo
+
+# ---- Cloudflare ----
+.wrangler
+.data
+.dev.vars
+.dev.vars.*
+wrangler.local.toml
+
+# ---- secrets: TUYỆT ĐỐI không commit (bài học F1 từ CHRTV) ----
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.jks
+*.keystore
+
+# ---- logs / os ----
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# ---- tests / coverage ----
+coverage
+.nyc_output
+playwright-report
+test-results
+
+# ---- brand build intermediates (PNG thật thì có commit, file tạm thì không) ----
+/public/_demo/
+/tmp
+*.tmp
+
+# ---- android build ----
+android/.gradle
+android/build
+android/app/build
+android/local.properties
+android/app/release
