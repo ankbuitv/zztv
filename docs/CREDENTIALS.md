@@ -73,7 +73,7 @@ Generate values: `openssl rand -base64 48`
 ### 2.4 Third-party APIs
 | Name | Purpose | Source | Status |
 |---|---|---|---|
-| `TMDB_KEY` | movie/TV metadata — **required for the Movies section** | themoviedb.org/settings/api | 🔴 ⚠️ **rotate the leaked key first** |
+| `TMDB_KEY` | movie/TV metadata — **required for the Movies section** | themoviedb.org/settings/api | ⚠️ A working key is committed (owner's decision). Set this secret to override it without touching code. |
 | `TSDB_KEY` | TheSportsDB scores | thesportsdb.com | ✅ |
 | `BREVO_API_KEY` | verification + password-reset email | brevo.com | ✅ |
 | `BREVO_SENDER_EMAIL` | from-address | use `noreply@thelac.dpdns.org` | ✅ |

@@ -160,7 +160,7 @@ function leagueEvents(league, { live = false } = {}) {
   // Finished — the last 12 results.
   for (let i = 0; i < 12; i += 1) {
     const { home, away } = pairAt(i);
-    const d = isoAt(-(i * 3 + 2) * 1440 - 19 * 60);
+    const d = isoAt(-(i * 2 + 1) * 1440 - 19 * 60);
     const seed = `${league.id}-past-${i}`;
     const [hs, as] = scoreFor(i, seed);
     out.push({
@@ -335,6 +335,23 @@ function tsdbProxy(url) {
       ? [`${y - 1}`, `${y - 2}`, `${y - 3}`, `${y}`]
       : [`${y - 1}-${y}`, `${y - 2}-${y - 1}`, `${y - 3}-${y - 2}`];
     return { seasons: seasons.map((s) => ({ strSeason: s })) };
+  }
+  if (file === 'eventsday.php') {
+    // Everything played on one calendar day, across every sport. This is what
+    // the client uses to work out which leagues are actually active, so it must
+    // span all sports — narrowing it to one would make the discovered list
+    // football-only again.
+    const day = String(url.searchParams.get('d') || '');
+    const sport = String(url.searchParams.get('s') || '').toLowerCase();
+    const out = [];
+    for (const league of SPORTS_LEAGUES) {
+      if (sport && String(league.sport).toLowerCase() !== sport) continue;
+      for (const ev of eventsFor(league.id)) {
+        if (day && ev.dateEvent !== day) continue;
+        out.push({ ...ev, strLeagueBadge: teamBadge(league, 'badge') });
+      }
+    }
+    return { events: out };
   }
   if (file === 'eventsnextleague.php' || file === 'eventspastleague.php' || file === 'eventsseason.php') {
     const all = eventsFor(id);

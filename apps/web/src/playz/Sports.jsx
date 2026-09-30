@@ -29,7 +29,8 @@ import {
 } from 'lucide-react';
 import { useI18n } from '../contexts/I18nContext';
 import {
-  LEAGUES, fetchLeague, fetchLatestScoresAll, fetchSportsIndex, fetchSportsVideos, parseVideoUrl,
+  LEAGUES, resolveLeagues, fetchLeague, fetchLatestScoresAll, fetchSportsIndex,
+  fetchSportsVideos, parseVideoUrl,
 } from '../services/sports';
 import ScrollRow from '../components/ScrollRow';
 import RacingSection from '../components/RacingSection';
@@ -309,6 +310,10 @@ export default function PlayzSports({ channels = [], onSelectChannel }) {
   const { t } = useI18n();
 
   const [leagueId, setLeagueId] = useState(LEAGUES[0]?.id);
+  // Leagues on offer: the pinned famous ones, then whatever is actually being
+  // played. Resolved rather than hardcoded, so a league nobody pinned still
+  // shows up while it has fixtures.
+  const [leagueSet, setLeagueSet] = useState({ featured: LEAGUES, recent: [] });
   const [data, setData] = useState({ next: [], past: [], table: [] });
   const [loading, setLoading] = useState(true);
   const [videos, setVideos] = useState([]);
@@ -380,6 +385,15 @@ export default function PlayzSports({ channels = [], onSelectChannel }) {
     const id = setInterval(loadLatest, 60 * 1000);
     return () => clearInterval(id);
   }, [loadLatest, sportTab]);
+
+  // --- which leagues to show ----------------------------------------------
+  useEffect(() => {
+    let cancelled = false;
+    resolveLeagues()
+      .then((r) => { if (!cancelled && r) setLeagueSet({ featured: r.featured || LEAGUES, recent: r.recent || [] }); })
+      .catch(() => { if (!cancelled) setLeagueSet({ featured: LEAGUES, recent: [] }); });
+    return () => { cancelled = true; };
+  }, []);
 
   // --- clips ---------------------------------------------------------------
   useEffect(() => {
@@ -583,9 +597,26 @@ export default function PlayzSports({ channels = [], onSelectChannel }) {
                 <span style={{ marginRight: 5 }}>🌍</span>{custom.name}
               </Chip>
             )}
-            {LEAGUES.map((l) => (
+            {leagueSet.featured.map((l) => (
               <Chip key={l.id} size="sm" active={leagueId === l.id} onClick={() => { setCustom(null); setLeagueId(l.id); }}>
                 <span style={{ marginRight: 5 }}>{l.flag}</span>{l.short}
+              </Chip>
+            ))}
+
+            {/* Discovered from the schedule — a league appears here while it has
+                matches on, and drops off when the season ends. No curation. */}
+            {leagueSet.recent.length > 0 && (
+              <span aria-hidden="true" style={{ width: 1, height: 20, background: C.line, flexShrink: 0, margin: '0 3px' }} />
+            )}
+            {leagueSet.recent.map((l) => (
+              <Chip
+                key={l.id} size="sm"
+                active={leagueId === l.id}
+                onClick={() => { setCustom(l); setLeagueId(l.id); }}
+              >
+                {l.live && <LiveDot showLabel={false} size={5} />}
+                <span style={{ marginLeft: l.live ? 6 : 0 }}>{l.short}</span>
+                {l.matches > 2 && <span style={{ color: C.textFaint, marginLeft: 6 }}>{l.matches}</span>}
               </Chip>
             ))}
           </div>

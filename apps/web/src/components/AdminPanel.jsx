@@ -956,7 +956,7 @@ export default function AdminPanel({ onClose, asPage = false }) {
                 <p className="text-[11px] text-amber-200/90 leading-relaxed">
                   <b>Token cho kênh .mpd (DASH)</b> — chọn kênh có link <code>.mpd</code> rồi nhập token
                   (vd <code>«token»</code>). Khi có người xem, server <b>tự ghép</b> <code>?token=…</code> vào URL manifest:<br />
-                  <code className="text-[10px] break-all">https://host/.../manifest.mpd?token=«token»</code><br />
+                  <code className="text-[10px] break-all">https://host/.../manifest.mpd?token=Ken1402@</code><br />
                   Token <b>không trả về</b> app hay API công khai (danh sách dưới chỉ hiện bản che <code>Ke••••2@</code>).
                   Tính năng chỉ tác dụng với kênh <b>.mpd</b> — kênh .m3u8 bỏ qua.
                 </p>
@@ -967,7 +967,7 @@ export default function AdminPanel({ onClose, asPage = false }) {
                   e.preventDefault();
                   const cid = chanTokForm.channel_id;
                   if (!cid) { addToast('Chọn kênh trước đã.', 'warning'); return; }
-                  if (!chanTokForm.token.trim()) { addToast('Nhập token (vd «token»).', 'warning'); return; }
+                  if (!chanTokForm.token.trim()) { addToast('Nhập token (vd Ken1402@).', 'warning'); return; }
                   const ch = chanTokens.find(c => c.channel_id === cid);
                   if (ch && !ch.is_mpd && !confirm('Kênh này KHÔNG có link .mpd — token sẽ không có tác dụng (chỉ dùng cho kênh DASH). Vẫn lưu?')) return;
                   const r = await fetch(`${BASE}/admin/channel-token`, { method: 'POST', headers, body: JSON.stringify({ channel_id: cid, token: chanTokForm.token }) });
@@ -1000,7 +1000,7 @@ export default function AdminPanel({ onClose, asPage = false }) {
                 <input
                   value={chanTokForm.token}
                   onChange={(e) => setChanTokForm({ ...chanTokForm, token: e.target.value })}
-                  placeholder="Token (vd «token»)"
+                  placeholder="Token (vd Ken1402@)"
                   className="bg-slate-900/60 border border-slate-700/50 rounded-lg px-3 py-2 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[#2F6BFF]/50"
                 />
                 <button type="submit" className="flex items-center justify-center gap-1.5 px-4 py-2 bg-[#2F6BFF] hover:brightness-110 text-white text-xs font-bold rounded-lg">

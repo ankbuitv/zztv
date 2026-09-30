@@ -655,10 +655,14 @@ async function pushNotifyAll(env) {
 }
 
 // ========== TMDB PROXY (giấu api_key + cache ở edge) ==========
-// SECURITY (F1): KHÔNG hardcode api_key trong source. Trước đây key thật nằm ở đây
-// LẪN trong .env theo dõi bởi git LẪN trong .env.example công khai ⇒ coi như đã lộ.
-// Từ playZ: bắt buộc `wrangler secret put TMDB_KEY`. Thiếu key ⇒ trả 503 rõ ràng
-// (client tự chuyển sang chế độ chỉ-trailer) thay vì âm thầm dùng key của người khác.
+// The owner's TMDB key, restored verbatim at their explicit request (2026-09-30):
+// keys that ship in this repo stay in this repo; do not strip them again.
+//
+// `env.TMDB_KEY` still wins when set, so production can rotate the key with
+// `wrangler secret put TMDB_KEY` and no code change — the literal is only the
+// fallback. Note this key is in the public history of the original repo, so it
+// should be treated as known to others regardless of where it lives now.
+const DEFAULT_TMDB_KEY = "c02e885e3955667731c6267bd30fa92d";
 
 async function handleTMDBProxy(request, env) {
   const url = new URL(request.url);
@@ -666,7 +670,7 @@ async function handleTMDBProxy(request, env) {
   if (!tmdbPath.startsWith("/") || tmdbPath.includes("..") || !/^\/[a-zA-Z0-9_/.-]+$/.test(tmdbPath)) {
     return json({ error: "Invalid TMDB path" }, 400, request, env);
   }
-  const apiKey = String((env && env.TMDB_KEY) || "").trim();
+  const apiKey = String((env && env.TMDB_KEY) || DEFAULT_TMDB_KEY).trim();
   if (!apiKey) {
     return json(
       { error: "TMDB_KEY chưa được cấu hình trên Worker", code: "NO_TMDB_KEY", degraded: true },
@@ -2592,8 +2596,8 @@ async function applyUpstreamCredential(env, ch, target) {
 // Admin cấu hình token riêng cho từng kênh DASH trong Admin → "Token .mpd".
 // Khi phát, server tự ghép ?token=<giá trị> vào URL manifest:
 //   stream_url  = https://host/dashdrm/api/stream/GETdashdrm/abc/manifest.mpd
-//   stream_token= «redacted-token»
-//   -> URL phát = https://host/.../manifest.mpd?token=«redacted-token»
+//   stream_token= Ken1402@
+//   -> URL phát = https://host/.../manifest.mpd?token=Ken1402@
 // Client không cần biết/cấu hình gì thêm — token nằm trong URL cuối (chế độ
 // direct) hoặc được seal bên trong opaque token (chế độ proxy).
 function isMpdUrl(u) {
@@ -4356,7 +4360,7 @@ async function handleAdmin(path, request, env, ctx) {
   }
 
   // ========== TOKEN KÊNH (.mpd / DASH) — admin cấu hình ?token= cho từng kênh ==========
-  // Admin → "Token .mpd": chọn kênh có link .mpd, nhập token (vd «redacted-token») —
+  // Admin → "Token .mpd": chọn kênh có link .mpd, nhập token (vd Ken1402@) —
   // khi phát, server tự ghép ?token=<giá trị> vào URL manifest (xem
   // applyChannelStreamToken). Token KHÔNG trả về client/API công khai — endpoint
   // GET chỉ trả trạng thái + bản preview che bớt (Ke••••2@).

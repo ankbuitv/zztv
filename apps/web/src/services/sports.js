@@ -3,7 +3,14 @@ import { tsdbGet as tsdbRequest, tsdbSafe, espnScoreboard, tsdbBust } from './ts
 
 const OLB = 'https://api.openligadb.de';
 
-export const LEAGUES = [
+/**
+ * Featured leagues — the ones worth pinning because people look for them by
+ * name. This is NOT the whole list any more: the page resolves the rest from
+ * what is actually being played (see fetchRecentLeagues below). Football
+ * dominates here only because football dominates the pinned set; the recent
+ * list has no sport bias at all.
+ */
+export const FEATURED_LEAGUES = [
   { id: 'u20wc', name: 'FIFA U-20 World Cup', short: 'U20 TG', tsdb: '5642', flag: '🌎', cup: true, latestSeason: true, logo: 'https://r2.thesportsdb.com/images/media/league/badge/o9zi0a1751440425.png' },
   { id: 'u20afc', name: 'U-20 châu Á 2027', short: 'U20 Á', tsdb: '', espnSlugs: ['afc.u20', 'afc.u20.championship', 'afc.u20asiancup'], espnDaysBack: 14, flag: '🌏', cup: true, latestSeason: true, logo: 'https://a.espncdn.com/i/leaguelogos/soccer/500/847.png' },
   { id: 'aff', name: 'ASEAN Championship', short: 'ASEAN', tsdb: '5889', espnSlugs: ['aff.championship'], espnDaysBack: 50, flag: '🌏', cup: true, latestSeason: true, logo: 'https://r2.thesportsdb.com/images/media/league/badge/z9dvdf1780551855.png' },
@@ -17,6 +24,121 @@ export const LEAGUES = [
   { id: 'vleague2', name: 'V.League 2', short: 'V.League 2', tsdb: '5214', flag: '🇻🇳', logo: 'https://a.espncdn.com/i/leaguelogos/soccer/500/2341.png' },
   { id: 'nba', name: 'NBA — Bóng rổ Mỹ', short: 'NBA', tsdb: '4387', flag: '🏀', logo: 'https://a.espncdn.com/i/teamlogos/leagues/500/nba.png' },
 ];
+
+/**
+ * The pinned list, kept under the old name so existing call sites keep working.
+ * The Sports page renders this *plus* whatever fetchRecentLeagues discovers.
+ */
+export const LEAGUES = FEATURED_LEAGUES;
+
+const recentLeaguesCache = { at: 0, data: null };
+const RECENT_TTL = 15 * 60 * 1000;
+
+function ymdLocal(d) {
+  const p = (n) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+}
+
+/**
+ * Leagues that are actually being played right now, or were in the last few
+ * days — resolved from the schedule rather than from a list somebody has to
+ * maintain. This is the part that used to be hardcoded, and it meant a league
+ * nobody had thought of simply did not exist in the UI.
+ *
+ * Ranking is by evidence of activity: a league with a live match first, then
+ * today's fixtures, then how many matches it has across the window. A league
+ * with nothing on drops out on its own, so the list stays current without
+ * anyone curating it.
+ *
+ * Returns [] on failure — the caller falls back to the featured list, so a
+ * dead network degrades to fewer leagues rather than an empty page.
+ */
+export async function fetchRecentLeagues({ days = 3, limit = 24 } = {}) {
+  if (recentLeaguesCache.data && Date.now() - recentLeaguesCache.at < RECENT_TTL) {
+    return recentLeaguesCache.data;
+  }
+
+  const dates = [];
+  for (let i = -(days - 1); i <= 1; i += 1) {
+    const d = new Date();
+    d.setDate(d.getDate() + i);
+    dates.push({ key: ymdLocal(d), offset: i });
+  }
+
+  // The schedule is queried per day across every sport, not just football:
+  // asking for one sport would quietly make this list football-only again.
+  const boards = await Promise.all(
+    dates.map(({ key }) => tsdbSafe('eventsday.php', { d: key }, { ttl: RECENT_TTL }))
+  );
+
+  const seen = new Map();
+  dates.forEach(({ key, offset }, i) => {
+    const events = Array.isArray(boards[i]?.events) ? boards[i].events : [];
+    for (const ev of events) {
+      const id = String(ev.idLeague || '').trim();
+      if (!id) continue;
+      const entry = seen.get(id) || {
+        tsdb: id,
+        name: ev.strLeague || `League ${id}`,
+        sport: ev.strSport || '',
+        logo: ev.strLeagueBadge || ev.strBadge || '',
+        count: 0,
+        offsets: new Set(),
+        live: false,
+      };
+      entry.count += 1;
+      entry.offsets.add(offset);
+      if (offset === 0) entry.live = entry.live || isLiveEvent(ev);
+      if (!entry.logo && (ev.strLeagueBadge || ev.strBadge)) entry.logo = ev.strLeagueBadge || ev.strBadge;
+      if (!entry.sport && ev.strSport) entry.sport = ev.strSport;
+      seen.set(id, entry);
+    }
+  });
+
+  const leagues = [...seen.values()]
+    .sort((a, b) => {
+      if (a.live !== b.live) return a.live ? -1 : 1;
+      const at = a.offsets.has(0) ? 1 : 0;
+      const bt = b.offsets.has(0) ? 1 : 0;
+      if (at !== bt) return bt - at;
+      return b.count - a.count;
+    })
+    .slice(0, limit)
+    .map((e) => ({
+      id: `tsdb_${e.tsdb}`,
+      tsdb: e.tsdb,
+      name: e.name,
+      short: e.name.length > 18 ? `${e.name.slice(0, 17)}…` : e.name,
+      sport: e.sport,
+      logo: e.logo,
+      country: '',
+      live: e.live,
+      matches: e.count,
+      discovered: true,
+    }));
+
+  recentLeaguesCache.at = Date.now();
+  recentLeaguesCache.data = leagues;
+  return leagues;
+}
+
+/** A match in progress, per TheSportsDB's own status vocabulary. */
+function isLiveEvent(ev) {
+  const st = String(ev?.strStatus || '').toUpperCase();
+  if (!st || ['NS', 'FT', 'AOT', 'POSTPONED', 'CANCELLED', 'CANCELED', 'ABANDONED'].includes(st)) return false;
+  return ev?.strPostponed !== 'yes';
+}
+
+/**
+ * Featured first, then everything else that is on. De-duplicated by league id so
+ * a famous league that is also currently active is not listed twice.
+ */
+export async function resolveLeagues() {
+  const recent = await fetchRecentLeagues().catch(() => []);
+  const featuredTsdb = new Set(FEATURED_LEAGUES.map((l) => String(l.tsdb || '')).filter(Boolean));
+  const extra = recent.filter((l) => !featuredTsdb.has(String(l.tsdb)));
+  return { featured: FEATURED_LEAGUES, recent: extra, all: [...FEATURED_LEAGUES, ...extra] };
+}
 
 export function currentSeason() {
   const now = new Date();
