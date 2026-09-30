@@ -1,7 +1,9 @@
 import { API_BASE } from './config';
 
 const TMDB_BASE = 'https://api.themoviedb.org/3';
-const TMDB_IMG = 'https://image.tmdb.org/t/p';
+// Image base is overridable so artwork can be served from a first-party CDN
+// (or a local fixture during development) instead of TMDB's. Defaults to TMDB.
+const TMDB_IMG = (import.meta.env.VITE_TMDB_IMG_BASE || 'https://image.tmdb.org/t/p').replace(/\/+$/, '');
 // Không để lộ key TMDB ở client - dùng proxy /api/tmdb qua Worker (server giữ key)
 // DUMMY_KEY chỉ để nhận biết chưa có key cá nhân, mọi request sẽ đi qua proxy
 const DUMMY_KEY = '1b3b8c6a4c1f2a0f5b8e6e2a7c8d4e1f';

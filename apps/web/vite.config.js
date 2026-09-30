@@ -7,6 +7,9 @@ import react from '@vitejs/plugin-react';
 //   VITE_DEV_API_TARGET=http://127.0.0.1:8787 npm run dev
 const API_TARGET = process.env.VITE_DEV_API_TARGET || 'https://play.ankb.qzz.io';
 const API_PREFIXES = ['/api', '/auth', '/user', '/admin', '/ws'];
+// When the API target is a local host we are in fixture mode, so artwork is
+// proxied too (see tools/dev-api.mjs). Production never hits this.
+const FIXTURE_MODE = /^https?:\/\/(127\.0\.0\.1|localhost)/.test(API_TARGET);
 
 const proxy = Object.fromEntries(
   API_PREFIXES.map((prefix) => [
@@ -24,6 +27,9 @@ proxy['/lic'] = {
   target: API_TARGET,
   changeOrigin: true,
   secure: false,
+}
+if (FIXTURE_MODE) {
+  proxy['/img'] = { target: API_TARGET, changeOrigin: true, secure: false };
 }
 
 // Lịch bóng đá: gọi cùng origin để tránh CORS/CSP chặn TheSportsDB + ESPN.

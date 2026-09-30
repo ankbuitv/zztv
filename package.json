@@ -23,7 +23,9 @@
     "deploy:admin": "npm run build:admin && wrangler deploy -c wrangler.admin.toml",
     "brand": "node scripts/build-brand.mjs",
     "secrets:check": "node scripts/secret-scan.mjs",
-    "test:smoke": "node scripts/smoke.mjs"
+    "test:smoke": "node scripts/smoke.mjs",
+    "dev:fixture": "node tools/dev-api.mjs",
+    "dev:offline": "node tools/dev-api.mjs & VITE_DEV_API_TARGET=http://127.0.0.1:8788 VITE_TMDB_IMG_BASE=/img npm run dev -w @playz/web"
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",

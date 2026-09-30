@@ -46,3 +46,6 @@ android/build
 android/app/build
 android/local.properties
 android/app/release
+
+# dev fixture art (generated on demand, never committed)
+__fixture__
