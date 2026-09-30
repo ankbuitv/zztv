@@ -30,6 +30,7 @@ import { fileURLToPath } from 'node:url';
 import { createSports } from './sports-fixture.mjs';
 import { createCommunity } from './community-fixture.mjs';
 import { createAdmin } from './admin-fixture.mjs';
+import { createShorts } from './shorts-fixture.mjs';
 import { Resvg } from '@resvg/resvg-js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -206,6 +207,7 @@ const CHANNELS = loadChannels();
 // Needs the parsed channel list, so it is created here rather than with the
 // other fixture modules near the top.
 const admin = createAdmin({ channels: CHANNELS, hash });
+const shorts = createShorts();
 
 // ============================================================================
 // EPG — a plausible schedule derived from the real channel list
@@ -324,6 +326,27 @@ const server = http.createServer(async (req, res) => {
     return res.end();
   }
 
+  // --- fixture media ------------------------------------------------------
+  // Vertical clips for Shorts. They are pans over a still, a few seconds and a
+  // few dozen KB each — see tools/make-fixture-media.mjs. Ships nothing.
+  if (path.startsWith('/media/')) {
+    const name = path.slice('/media/'.length);
+    if (!/^[a-z0-9-]+\.(mp4|png|jpg|webp)$/.test(name)) return json(res, { error: 'bad name' }, 400);
+    const file = new URL(`./fixture-media/${name}`, import.meta.url);
+    if (!existsSync(file)) return json(res, { error: 'no such media', name, hint: 'run: node tools/make-fixture-media.mjs' }, 404);
+    const type = name.endsWith('.mp4') ? 'video/mp4' : name.endsWith('.png') ? 'image/png' : name.endsWith('.webp') ? 'image/webp' : 'image/jpeg';
+    const body = readFileSync(file);
+    res.writeHead(200, {
+      'Content-Type': type,
+      'Content-Length': body.length,
+      // The clips are tiny and immutable, and SeekRange matters here: without
+      // it Safari refuses to play an <video> at all.
+      'Accept-Ranges': 'bytes',
+      'Cache-Control': 'public, max-age=3600',
+    });
+    return res.end(body);
+  }
+
   // --- artwork ------------------------------------------------------------
   if (path.startsWith('/img/')) {
     // /img/<size>/<name>.png   e.g. /img/w342/p76600.png
@@ -393,8 +416,50 @@ const server = http.createServer(async (req, res) => {
     const slug = path.slice('/espn/sports/soccer/'.length).split('/')[0];
     return json(res, sports.espnProxy(new URL(`http://x/?league=${encodeURIComponent(slug)}`)));
   }
+  if (path === '/api/challenges') {
+    return json(res, { success: true, challenges: [], fixture: true });
+  }
   if (path === '/api/sports-videos') {
     return json(res, { success: true, videos: sports.SPORTS_VIDEOS, fixture: true });
+  }
+
+  // --- shorts -------------------------------------------------------------
+  if (path === '/api/shorts' || path === '/api/shorts/feed') {
+    return json(res, { success: true, shorts: shorts.list(), fixture: true });
+  }
+  if (path === '/api/shorts/creators') {
+    return json(res, { success: true, creators: shorts.creators(), fixture: true });
+  }
+  // Must come before the /creator prefix below, or the profile route is
+  // swallowed by it and the creator studio always reads back empty.
+  if (path === '/api/shorts/creator/profile') {
+    if (req.method === 'POST') {
+      const out = shorts.saveProfile(await readJson(req));
+      return json(res, out, out.status || 200);
+    }
+    return json(res, shorts.myProfile());
+  }
+  if (path.startsWith('/api/shorts/creator')) {
+    return json(res, shorts.creatorProfile(
+      url.searchParams.get('creator_id') || url.searchParams.get('id') || '',
+      url.searchParams.get('handle') || '',
+    ), 200);
+  }
+  if (path === '/api/shorts/upload' && req.method === 'POST') {
+    const out = shorts.upload(await readJson(req));
+    return json(res, out, out.status || 200);
+  }
+  if (path === '/api/shorts/react' && req.method === 'POST') {
+    const out = shorts.react(await readJson(req));
+    return json(res, out, out.status || 200);
+  }
+  if (path === '/api/shorts/star' && req.method === 'POST') {
+    const out = shorts.star(await readJson(req));
+    return json(res, out, out.status || 200);
+  }
+  if (path === '/api/shorts/follow' && req.method === 'POST') {
+    const out = shorts.follow(await readJson(req));
+    return json(res, out, out.status || 200);
   }
 
   // --- community ----------------------------------------------------------
@@ -467,6 +532,7 @@ server.listen(PORT, HOST, () => {
   console.log(`  sports        : ${sports.SPORTS_LEAGUES.length} leagues, ${sports.LEAGUE_INDEX.length} indexed leagues, ${sports.SPORTS_VIDEOS.length} clips`);
   console.log('  community     : feed + likes + a live chat room');
   console.log('  admin         : 10 management endpoints for the admin app');
+  console.log(`  shorts        : ${shorts.list().length} vertical clips, served from /media/`);
   console.log('  artwork       : generated on demand at /img/<size>/<name>.png');
   console.log('  NOTE — development fixture. Not product content, never deployed.');
 });

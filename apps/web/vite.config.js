@@ -30,6 +30,9 @@ proxy['/lic'] = {
 }
 if (FIXTURE_MODE) {
   proxy['/img'] = { target: API_TARGET, changeOrigin: true, secure: false };
+  // Vertical clips for Shorts, served from tools/fixture-media/. Only ever
+  // reachable in fixture mode — production points at real CDN URLs.
+  proxy['/media'] = { target: API_TARGET, changeOrigin: true, secure: false };
 }
 
 // Sports schedules: same-origin, because the browser cannot call TheSportsDB or

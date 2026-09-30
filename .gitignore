@@ -58,3 +58,6 @@ __fixture__
 # has the permission. Without this entry `git add -A` silently re-adds it and
 # every push fails.
 .github/workflows/build-android.yml
+
+# Shorts fixture clips — regenerate with: node tools/make-fixture-media.mjs
+tools/fixture-media/
