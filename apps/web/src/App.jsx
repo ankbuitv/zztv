@@ -1,55 +1,24 @@
-import React, { useEffect, useState, useMemo, useCallback, useRef } from 'react';
+import React, { Suspense, lazy, useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import { addWatch, badgeName, badgeDesc } from './services/achievements';
 import { initNavigation } from '@noriginmedia/react-spatial-navigation';
 
-import Sidebar from './components/Sidebar';
 import PlayzSidebar from './playz/Sidebar';
 import PlayzHeader from './playz/Header';
 import PlayzHome from './playz/Home';
-import PlayzTVPage from './playz/TV';
-import PlayzSports from './playz/Sports';
-import PlayzCommunity from './playz/Community';
-import InfoModal from './playz/InfoModal';
-import { getWatchlistLocal, toggleWatchlistLocal } from './services/movieList';
-import PlansScreen from './components/PlansScreen';
-import AuthModal from './components/AuthModal';
-
 // Khách vãng lai (chưa đăng nhập): vẫn vào web + xem kênh VN bình thường (mức Standard).
 // Xem chương trình đã phát (catchup), phim, hoặc kênh vượt gói => mới yêu cầu đăng nhập.
 const GUEST_USER = { id: 0, username: 'khach', display_name: 'Guest', role: 'guest', plan: '', guest: true };
 import { planAllows, rankOf } from './services/plans';
-import PrerollAd from './components/PrerollAd';
-import { fetchPreroll, loadPreviewState, subscribePreview, getPreviewState, fmtPreview } from './services/ads';
-import { setPrerollHandler, runPreroll } from './services/prerollGate';
 import Logo from './components/Logo';
-import TopNav from './components/TopNav';
 import ThemeDecorator from './components/ThemeDecorator';
-import VideoPlayer from './components/VideoPlayer';
-import EpgGridTimeline from './components/EpgGridTimeline';
-import SettingsPage from './components/SettingsPage';
-import OnboardingTour from './components/OnboardingTour';
-import KeyboardShortcuts from './components/KeyboardShortcuts';
-import ChannelInfoModal from './components/ChannelInfoModal';
-import AuthScreen from './components/AuthScreen';
-import ProfileGate from './components/ProfileGate';
 import ErrorBoundary from './components/ErrorBoundary';
-import AdminPanel from './components/AdminPanel';
-import HomePage from './components/HomePage';
-import TVPage from './components/TVPage';
-import SportsScreen from './components/SportsScreen';
 import BroadcastBanner from './components/BroadcastBanner';
-import FocusableWrapper from './components/FocusableWrapper';
-import MoviesScreen from './components/MoviesScreen';
-import ShortsScreen from './components/ShortsScreen';
-import CommunityScreen from './components/CommunityScreen';
-import PublicProfileModal from './components/PublicProfileModal';
-import KidsShell from './components/KidsShell';
-import PinPad from './components/PinPad';
+import { setPrerollHandler, runPreroll } from './services/prerollGate';
+import { fetchPreroll, loadPreviewState, subscribePreview, getPreviewState, fmtPreview } from './services/ads';
+import { getWatchlistLocal, toggleWatchlistLocal } from './services/movieList';
 import { sendBeat } from './services/social';
 import { popDueReminders, fireBrowserNotification } from './services/localNotify';
 import { recordProfileWatch, hasAppPin, verifyAppPin } from './services/kids';
-import ChannelCard from './components/ChannelCard';
-import { SkeletonGrid } from './components/SkeletonLoader';
 
 import { DeviceProvider, useDevice } from './contexts/DeviceContext';
 import { SettingsProvider, useSettings } from './contexts/SettingsContext';
@@ -57,13 +26,72 @@ import { ToastProvider, useToast } from './contexts/ToastContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ProfileProvider, useProfile } from './contexts/ProfileContext';
 import { I18nProvider, useI18n } from './contexts/I18nContext';
-import LanguagePicker from './components/LanguagePicker';
 
-import { fetchChannels, fetchEPGData, fetchFavorites, toggleFavoriteApi, recordWatchHistory, DEFAULT_FALLBACK_STREAM } from './services/api';
+import { fetchChannels, fetchEPGData, fetchFavorites, toggleFavoriteApi, recordWatchHistory } from './services/api';
 import { requestStreamAccess } from './services/streamGuard';
 import { parseEpgDate } from './utils/dateUtils';
-import { getFavorites, setFavorites as saveFavs, getHistory, setHistory as saveHistory } from './hooks/useStorage';
+import { setFavorites as saveFavs, getHistory, setHistory as saveHistory } from './hooks/useStorage';
 import { findEpgForChannel } from './utils/epgMatch';
+
+// ===========================================================================
+// Code splitting
+// ---------------------------------------------------------------------------
+// Everything below is loaded with React.lazy. That is not cosmetic: the whole
+// app used to ship as a single 2.86 MB entry chunk, and it was the *unused*
+// code that made it heavy — hls.js and shaka-player are ~47% of that number
+// and are only needed once somebody actually presses play.
+//
+// What stays eager is the shell (header, sidebar, home) so the first paint is
+// unchanged. Everything that is a route, a modal, or a player waits for a
+// click. The CHRTV components under ./components stay exactly where they are
+// and keep working — they are still the rollback target behind the
+// playz_*_legacy localStorage flags, they are just fetched on demand now.
+//
+// Every one of these is wrapped in a <Suspense> further down; RouteFallback
+// keeps the layout from collapsing while a chunk is in flight.
+// ===========================================================================
+const PlayzTVPage      = lazy(() => import('./playz/TV'));
+const PlayzSports      = lazy(() => import('./playz/Sports'));
+const PlayzCommunity   = lazy(() => import('./playz/Community'));
+const InfoModal       = lazy(() => import('./playz/InfoModal'));
+
+const AuthModal       = lazy(() => import('./components/AuthModal'));
+const ChannelInfoModal= lazy(() => import('./components/ChannelInfoModal'));
+const PublicProfileModal = lazy(() => import('./components/PublicProfileModal'));
+const KeyboardShortcuts   = lazy(() => import('./components/KeyboardShortcuts'));
+const LanguagePicker  = lazy(() => import('./components/LanguagePicker'));
+const PrerollAd       = lazy(() => import('./components/PrerollAd'));
+const PlansScreen     = lazy(() => import('./components/PlansScreen'));
+const SettingsPage    = lazy(() => import('./components/SettingsPage'));
+const ProfileGate     = lazy(() => import('./components/ProfileGate'));
+const PinPad          = lazy(() => import('./components/PinPad'));
+const KidsShell       = lazy(() => import('./components/KidsShell'));
+const AdminPanel      = lazy(() => import('./components/AdminPanel'));
+const VideoPlayer     = lazy(() => import('./components/VideoPlayer'));
+const MoviesScreen    = lazy(() => import('./components/MoviesScreen'));
+const ShortsScreen    = lazy(() => import('./components/ShortsScreen'));
+const EpgGridTimeline = lazy(() => import('./components/EpgGridTimeline'));
+
+// CHRTV legacy surfaces — instant rollback targets, never on the default path.
+const HomePage         = lazy(() => import('./components/HomePage'));
+const TVPage           = lazy(() => import('./components/TVPage'));
+const SportsScreen     = lazy(() => import('./components/SportsScreen'));
+const CommunityScreen  = lazy(() => import('./components/CommunityScreen'));
+
+// Placeholder while a route chunk downloads. Deliberately unstyled beyond the
+// shell's own tokens so it cannot disagree with the page it replaces.
+function RouteFallback({ label = 'Đang tải…', fill = false }) {
+  return (
+    <div
+      className={`flex items-center justify-center gap-3 text-[13px] font-semibold text-[#8A8A99] ${fill ? 'flex-1 py-24' : 'py-10'}`}
+      role="status"
+      aria-live="polite"
+    >
+      <span className="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-white/20 border-t-white/70" />
+      {label}
+    </div>
+  );
+}
 
 initNavigation({ debug: false, visualDebug: false });
 
@@ -578,57 +606,71 @@ function AppContent() {
   // Khoá PIN mở app
   if (!appUnlocked && hasAppPin()) {
     return (
-      <PinPad
-        title={t('pin.app_title')}
-        error={pinErr}
-        onSubmit={async (pin) => {
-          if (await verifyAppPin(pin)) {
-            try { sessionStorage.setItem('chrtv_unlocked', '1'); } catch {}
-            setAppUnlocked(true);
-          } else setPinErr(t('pin.wrong'));
-        }}
-      />
+      <Suspense fallback={<RouteFallback fill />}>
+        <PinPad
+          title={t('pin.app_title')}
+          error={pinErr}
+          onSubmit={async (pin) => {
+            if (await verifyAppPin(pin)) {
+              try { sessionStorage.setItem('chrtv_unlocked', '1'); } catch {}
+              setAppUnlocked(true);
+            } else setPinErr(t('pin.wrong'));
+          }}
+        />
+      </Suspense>
     );
   }
 
   // Khách: KHÔNG chặn cổng — vào web xem bình thường (UI như user đã đăng nhập)
   if (!guestMode && !currentProfile) {
-    return <ProfileGate />;
+    return (
+      <Suspense fallback={<RouteFallback fill />}>
+        <ProfileGate />
+      </Suspense>
+    );
   }
 
   // Chế độ bé: giao diện riêng
   if (!guestMode && currentProfile?.is_child) {
     return (
       <div className="h-screen w-screen bg-black text-[#F5F5F7] overflow-y-auto font-sans select-none">
-        <KidsShell
-          channels={channels}
-          onSelectChannel={handleSelectChannel}
-          onSelectMovie={(m) => { setMovieToOpen(m); }}
-          onExitKids={() => logoutProfile()}
-        />
+        <Suspense fallback={<RouteFallback fill />}>
+          <KidsShell
+            channels={channels}
+            onSelectChannel={handleSelectChannel}
+            onSelectMovie={(m) => { setMovieToOpen(m); }}
+            onExitKids={() => logoutProfile()}
+          />
+        </Suspense>
         {movieToOpen && (
           <div className="fixed inset-0 z-[100] bg-black overflow-y-auto">
             <button onClick={() => setMovieToOpen(null)} className="fixed top-3 left-3 z-[110] px-4 py-2 rounded-full bg-black/70 border border-white/20 text-[12px] font-bold text-white">← {t('common.back')}</button>
-            <MoviesScreen openMovie={movieToOpen} onOpenMovieHandled={() => setMovieToOpen(null)} onRequireLogin={() => promptLogin(t('app.need_login_movie'))} onGoTab={goTab} onOpenChannel={handleOpenTvChannel} />
+            <Suspense fallback={<RouteFallback fill />}>
+              <MoviesScreen openMovie={movieToOpen} onOpenMovieHandled={() => setMovieToOpen(null)} onRequireLogin={() => promptLogin(t('app.need_login_movie'))} onGoTab={goTab} onOpenChannel={handleOpenTvChannel} />
+            </Suspense>
           </div>
         )}
         {isPlayerOpen && currentChannel && (
           <div className="fixed inset-0 z-[120] bg-black">
-            <VideoPlayer
-              channel={currentChannel}
-              streamUrl={activeStreamUrl}
-              epgNow={getEpgForChannel(currentChannel.channel_id).now}
-              epgNext={getEpgForChannel(currentChannel.channel_id).next}
+            <Suspense fallback={<RouteFallback fill />}>
+              <VideoPlayer
+                channel={currentChannel}
+                streamUrl={activeStreamUrl}
+                epgNow={getEpgForChannel(currentChannel.channel_id).now}
+                epgNext={getEpgForChannel(currentChannel.channel_id).next}
               onNextChannel={handleNextChannel}
               onPrevChannel={handlePrevChannel}
               onClose={() => { setIsPlayerOpen(false); setMiniPlayer(false); }}
               allChannels={channels}
               epgLookup={getEpgForChannel}
               currentUserName={currentProfile?.name || ''}
-            />
+              />
+            </Suspense>
           </div>
         )}
-        <AuthModal open={showAuth} onClose={() => setShowAuth(false)} />
+        <Suspense fallback={null}>
+          <AuthModal open={showAuth} onClose={() => setShowAuth(false)} />
+        </Suspense>
       </div>
     );
   }
@@ -698,6 +740,10 @@ function AppContent() {
               <BroadcastBanner />
             </div>
           )}
+          {/* One boundary for the whole route switch. Every screen below it is
+              lazy, so without this the first navigation would suspend the main
+              element and collapse the layout. */}
+          <Suspense fallback={<RouteFallback fill />}>
           {showAdmin && user?.role === 'admin' ? (
             <AdminPanel asPage onClose={() => { setShowAdmin(false); try { history.replaceState(null, '', location.pathname); } catch {} }} />
           ) : showSettings ? (
@@ -829,6 +875,7 @@ function AppContent() {
               })()}
             </>
           )}
+          </Suspense>
         </main>
       </div>
 
@@ -838,45 +885,53 @@ function AppContent() {
           style={miniPlayer ? { width: 340, height: 240, right: 16, bottom: 16, transform: `translate(${miniPos.x}px, ${miniPos.y}px)` } : undefined}
           onPointerDown={onMiniPointerDown}
         >
-          <VideoPlayer
-            channel={currentChannel}
-            streamUrl={activeStreamUrl}
-            epgNow={getEpgForChannel(currentChannel.channel_id).now}
-            epgNext={getEpgForChannel(currentChannel.channel_id).next}
-            isCatchupMode={isCatchupMode}
-            catchupProgram={catchupProgram}
-            onNextChannel={handleNextChannel}
-            onPrevChannel={handlePrevChannel}
-            onClose={() => { setIsPlayerOpen(false); setMiniPlayer(false); }}
-            mini={miniPlayer}
-            onMinimize={() => setMiniPlayer(true)}
-            onExpand={() => setMiniPlayer(false)}
-            allChannels={channels}
-            epgLookup={getEpgForChannel}
-            initialPartyRoom={deepPartyRoom}
-            currentUserName={currentProfile?.name || effUser?.display_name || effUser?.username || t('app.guest')}
-          />
+          {/* The player owns its own chrome, so the fallback is the page
+              background rather than a spinner over a black rectangle. */}
+          <Suspense fallback={<div className="h-full w-full bg-black" />}>
+            <VideoPlayer
+              channel={currentChannel}
+              streamUrl={activeStreamUrl}
+              epgNow={getEpgForChannel(currentChannel.channel_id).now}
+              epgNext={getEpgForChannel(currentChannel.channel_id).next}
+              isCatchupMode={isCatchupMode}
+              catchupProgram={catchupProgram}
+              onNextChannel={handleNextChannel}
+              onPrevChannel={handlePrevChannel}
+              onClose={() => { setIsPlayerOpen(false); setMiniPlayer(false); }}
+              mini={miniPlayer}
+              onMinimize={() => setMiniPlayer(true)}
+              onExpand={() => setMiniPlayer(false)}
+              allChannels={channels}
+              epgLookup={getEpgForChannel}
+              initialPartyRoom={deepPartyRoom}
+              currentUserName={currentProfile?.name || effUser?.display_name || effUser?.username || t('app.guest')}
+            />
+          </Suspense>
         </div>
       )}
 
-      <InfoModal open={!!infoModal} kind={infoModal} onClose={() => setInfoModal(null)} />
+      {/* Overlays load on demand and have nothing meaningful to show while they
+          arrive — null is the right fallback, not a spinner in the user's face. */}
+      <Suspense fallback={null}>
+        <InfoModal open={!!infoModal} kind={infoModal} onClose={() => setInfoModal(null)} />
 
-      {channelInfoModal && (
-        <ChannelInfoModal channel={channelInfoModal.channel} epgNow={channelInfoModal.epgNow} epgNext={channelInfoModal.epgNext} isFavorite={favorites.includes(channelInfoModal.channel.channel_id)} onPlay={handleSelectChannel} onToggleFavorite={handleToggleFavorite} onClose={() => setChannelInfoModal(null)} onRequireLogin={promptLogin} />
-      )}
-      {publicHandle && <PublicProfileModal handle={publicHandle} onClose={() => { setPublicHandle(null); try { history.replaceState(null, '', location.pathname); } catch {} }} />}
-      <KeyboardShortcuts open={showKeyboardShortcuts} onClose={() => setShowKeyboardShortcuts(false)} />
+        {channelInfoModal && (
+          <ChannelInfoModal channel={channelInfoModal.channel} epgNow={channelInfoModal.epgNow} epgNext={channelInfoModal.epgNext} isFavorite={favorites.includes(channelInfoModal.channel.channel_id)} onPlay={handleSelectChannel} onToggleFavorite={handleToggleFavorite} onClose={() => setChannelInfoModal(null)} onRequireLogin={promptLogin} />
+        )}
+        {publicHandle && <PublicProfileModal handle={publicHandle} onClose={() => { setPublicHandle(null); try { history.replaceState(null, '', location.pathname); } catch {} }} />}
+        <KeyboardShortcuts open={showKeyboardShortcuts} onClose={() => setShowKeyboardShortcuts(false)} />
 
-      {/* (34) Quảng cáo pre-roll — hiện trước khi vào kênh/phim */}
-      {preroll && (
-        <PrerollAd
-          ad={preroll.ad}
-          skipAfter={preroll.skipAfter}
-          refId={preroll.refId}
-          onDone={() => { preroll.resolve?.(); setPreroll(null); }}
-          onUpgrade={() => { setActiveTab('plans'); }}
-        />
-      )}
+        {/* (34) Quảng cáo pre-roll — hiện trước khi vào kênh/phim */}
+        {preroll && (
+          <PrerollAd
+            ad={preroll.ad}
+            skipAfter={preroll.skipAfter}
+            refId={preroll.refId}
+            onDone={() => { preroll.resolve?.(); setPreroll(null); }}
+            onUpgrade={() => { setActiveTab('plans'); }}
+          />
+        )}
+      </Suspense>
 
       {/* Đồng hồ 5 phút xem thử của gói Standard */}
       {preview.enabled && preview.remaining < preview.total && (isPlayerOpen || tvChannel) && (
@@ -886,8 +941,14 @@ function AppContent() {
           <button onClick={() => setActiveTab('plans')} className="ml-1 px-2.5 py-1 rounded-full bg-[#2F6BFF] text-white text-[11px] font-black">Nâng gói</button>
         </div>
       )}
-      <AuthModal open={showAuth} onClose={() => setShowAuth(false)} />
-      {showLangPicker && <LanguagePicker onClose={() => setShowLangPicker(false)} />}
+      <Suspense fallback={null}>
+        <AuthModal open={showAuth} onClose={() => setShowAuth(false)} />
+      </Suspense>
+      {showLangPicker && (
+        <Suspense fallback={null}>
+          <LanguagePicker onClose={() => setShowLangPicker(false)} />
+        </Suspense>
+      )}
     </div>
   );
 }

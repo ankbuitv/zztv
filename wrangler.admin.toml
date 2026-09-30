@@ -1,0 +1,48 @@
+# ===========================================================================
+# playZ ADMIN — standalone admin application  (wrangler.admin.toml)
+#
+#   npm run deploy:admin
+#   # or: npx wrangler deploy -c wrangler.admin.toml
+#
+# ---------------------------------------------------------------------------
+# The admin used to live inside the consumer bundle behind a #admin hash and a
+# role check in the client. It is now its own application on its own hostname
+# (see the comment in apps/admin/vite.config.js). That means it needs its own
+# Worker and its own assets — apps/admin/dist, not apps/web/dist and not a
+# root ./dist.
+#
+# There is no `main` here on purpose: this is an assets-only Worker. Cloudflare
+# serves the static files directly and never starts a JavaScript isolate, which
+# is both cheaper and a smaller blast radius than giving the admin origin a
+# Worker that could execute server-side code.
+#
+# Server-side authorisation is still the real control — /admin/* verifies the
+# caller's role on the API Worker. The split onto a separate hostname is
+# defence in depth, not the authorisation mechanism.
+# ---------------------------------------------------------------------------
+name = "playz-admin"
+compatibility_date = "2024-01-01"
+
+# Admin build output. `npm run build:admin` runs `vite build` in apps/admin,
+# which writes here.
+assets = { directory = "./apps/admin/dist" }
+
+[build]
+command = "npm run build:admin"
+
+# The admin talks to the API Worker. Same-origin is the default (leave
+# VITE_API_BASE empty in .env) because the API is reachable from this host
+# through CORS_ALLOWED_ORIGINS on the main Worker. Set VITE_API_BASE to an
+# absolute URL only when the admin is hosted somewhere the API cannot see.
+#
+# Set these in Cloudflare Workers Builds as build variables, or in a local
+# .env at the repo root (never commit it):
+#   VITE_API_BASE=https://<api-host>
+#   VITE_WEB_APP_URL=https://<consumer-host>
+#
+# Custom domain: attach it after the first deploy —
+#   Dashboard > Workers & Pages > playz-admin
+#     > Settings > Domains & Routes > Add > Custom domain
+# The hostname is deliberately NOT in this file so the same build can be
+# pointed at a staging domain, an alternate production domain, or a workers.dev
+# subdomain without editing and committing anything.

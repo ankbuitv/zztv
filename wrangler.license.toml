@@ -1,11 +1,16 @@
 # ===========================================================================
 # CHRTV LICENSE SERVER — deploy riêng, gắn domain license.ankb.qzz.io
 #
-#   npx wrangler deploy -c wrangler.license.toml
+#   npm run deploy:license
+#   # or: npx wrangler deploy -c wrangler.license.toml
 #
 # Sau khi deploy xong: Dashboard > Workers & Pages > chrtv-license
 #   > Settings > Domains & Routes > Add > Custom domain: license.ankb.qzz.io
 # (Workers Free dùng được custom domain, không cần thẻ.)
+#
+# This Worker ships NO static assets, so there is no assets.directory here and
+# no [build] table — nothing to build, nothing to go wrong. The hostname is
+# attached in the dashboard so the same config can serve any domain.
 #
 # BẮT BUỘC đặt secret TRƯỚC KHI DEPLOY (phải GIỐNG HỆT bên worker chính):
 #   npx wrangler secret put LICENSE_SECRET -c wrangler.license.toml

@@ -13,10 +13,17 @@
  * bắn sang Worker cũ và fail. Giờ tất cả đều đi qua đây.
  */
 
-// Production origin for the native Android/TV app. Capacitor serves the web layer
-// from https://localhost, so requests have no real origin to be relative to and must
-// be pointed at an absolute host.
-export const PRODUCTION_API_BASE = 'https://thelac.dpdns.org';
+// Production origin, used only where a relative path cannot work: the native
+// Android/TV build. Capacitor serves the web layer from https://localhost, so
+// there is no real origin to be relative to and the app must be pointed at an
+// absolute host.
+//
+// It is a build variable, not a source constant, so pointing a fork at another
+// domain is one line in .env (or in the Cloudflare build settings) instead of an
+// edit to the bundle. The literal is the last-resort default so a build with no
+// environment configured at all still reaches production.
+const ENV_PRODUCTION_BASE = (import.meta.env?.VITE_PRODUCTION_API_BASE || '').trim();
+export const PRODUCTION_API_BASE = (ENV_PRODUCTION_BASE || 'https://thelac.dpdns.org').replace(/\/+$/, '');
 
 const ENV_BASE = (import.meta.env?.VITE_API_BASE || '').trim();
 

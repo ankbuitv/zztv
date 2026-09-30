@@ -1,0 +1,44 @@
+# ===========================================================================
+# playZ API — Worker with NO static assets  (wrangler.api.toml)
+#
+#   npm run deploy:api
+#   # or: npx wrangler deploy -c wrangler.api.toml
+#
+# ---------------------------------------------------------------------------
+# Same worker/worker.js as wrangler.toml, but with no `assets` block at all.
+#
+# Why a second config for the same script:
+#
+#   wrangler.toml        consumer + API on one origin  (thelac.dpdns.org)
+#                        -> /api, /auth, /user, /admin, /ws AND apps/web/dist
+#   wrangler.api.toml    API only                     (api.<domain>)
+#                        -> /api, /auth, /user, /admin, /ws and nothing else
+#
+# A frontend deploy and an API deploy then become genuinely independent: a bad
+# Vite build can be rolled back without touching the API, and an API incident
+# does not force a static-asset upload. Clients that talk to this Worker need
+# an absolute API base (VITE_API_BASE) and the Worker needs this origin in
+# CORS_ALLOWED_ORIGINS; leaving VITE_API_BASE empty keeps the app on the
+# same-origin deployment in wrangler.toml, which is the simpler default.
+# ---------------------------------------------------------------------------
+name = "chrtv-api"
+main = "worker/worker.js"
+compatibility_date = "2024-01-01"
+
+# No [build] table on purpose: this deployment ships no static assets, so
+# there is nothing to build. That also means no duplicate `npm run build` when
+# this config is the one used by the Cloudflare build pipeline.
+
+[[d1_databases]]
+binding = "DB"
+database_name = "chrtv-db"
+database_id = "6beab015-333c-45a2-8062-41d1fd3f066f"
+# Per-binding in Wrangler v4 — see the comment in wrangler.toml.
+migrations_dir = "migrations"
+
+[vars]
+BREVO_SENDER_NAME = "NO REPLY - CHRTV PL▷Y"
+BREVO_SENDER_EMAIL = "noreply@chrtv.app"
+PUBLIC_WEB_ORIGIN = ""
+PUBLIC_ADMIN_ORIGIN = ""
+STREAM_MODE = "direct"

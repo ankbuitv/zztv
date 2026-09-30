@@ -9,7 +9,7 @@
  * silently omits half its surfaces is worse than one that is honest about it.
  */
 import React, { useCallback, useMemo, useState } from 'react';
-import { color as C, radius } from './api';
+import { color as C, radius, WEB_APP_URL } from './api';
 import { PANELS } from './panels';
 import { Toast } from './ui';
 
@@ -148,7 +148,7 @@ export default function AdminShell({ user }) {
             <p style={{ fontSize: 11, color: C.textMuted, margin: '2px 0 0' }}>{current?.group}</p>
           </div>
           <a
-            href="https://thelac.dpdns.org"
+            href={WEB_APP_URL}
             target="_blank" rel="noreferrer noopener"
             style={{
               fontSize: 12, fontWeight: 700, textDecoration: 'none', color: C.text,
@@ -180,7 +180,7 @@ export default function AdminShell({ user }) {
                   dữ liệu thật; mục này sẽ được bổ sung khi có bề mặt tương ứng ở Worker.
                 </p>
                 <p style={{ fontSize: 11.5, color: C.textFaint, margin: '18px 0 0', lineHeight: 1.6 }}>
-                  Ứng dụng quản trị chạy trên <b style={{ color: C.textMuted }}>admin.thelac.dpdns.org</b>,
+                  Ứng dụng quản trị chạy trên <b style={{ color: C.textMuted }}>{typeof window !== 'undefined' ? window.location.host : '—'}</b>,
                   tách khỏi ứng dụng người xem.
                 </p>
               </div>

@@ -98,11 +98,26 @@ const GUEST_TTL = 2 * 3600;       // JWT guest: 2 giờ
 // ---- CORS: chỉ echo Origin nằm trong allowlist (không dùng `*` nữa) ----
 // App native Capacitor gửi Origin "https://localhost" (androidScheme=https) hoặc
 // "capacitor://localhost" (iOS) — không có 2 origin này thì APK bị CORS chặn sạch.
+//
+// PUBLIC_WEB_ORIGIN / PUBLIC_ADMIN_ORIGIN (wrangler [vars]) are prepended so a
+// fork can be pointed at different domains without editing this file. They are
+// the environment-configurable half; the literals below remain as the default.
 const DEFAULT_CORS_ORIGINS = ["https://thelac.dpdns.org", "https://admin.thelac.dpdns.org", "https://localhost", "capacitor://localhost", "http://localhost"];
 function corsAllowedOrigins(env) {
   const raw = (env && env.CORS_ALLOWED_ORIGINS) || "";
   const list = raw.split(",").map((s) => s.trim()).filter(Boolean);
-  return list.length ? list : DEFAULT_CORS_ORIGINS;
+  if (list.length) return list;
+  const configured = [publicWebOrigin(env), (env && env.PUBLIC_ADMIN_ORIGIN) || ""]
+    .map((s) => String(s || "").trim().replace(/\/+$/, ""))
+    .filter(Boolean);
+  return [...new Set([...configured, ...DEFAULT_CORS_ORIGINS])];
+}
+
+// Origin of the consumer app, used for links the API emails out (password
+// reset) and anywhere else an absolute URL to the front end is needed.
+// PUBLIC_WEB_ORIGIN in wrangler [vars] wins; the literal is the default.
+function publicWebOrigin(env) {
+  return String((env && env.PUBLIC_WEB_ORIGIN) || "").trim().replace(/\/+$/, "") || "https://thelac.dpdns.org";
 }
 function corsHeadersFor(request, env) {
   const origin = request.headers.get("Origin") || "";
@@ -902,7 +917,7 @@ function emailTemplateVerify(code) {
   };
 }
 
-function emailTemplateReset(token) {
+function emailTemplateReset(token, webOrigin) {
   return {
     subject: "playZ — Đặt lại mật khẩu",
     html: `<!doctype html><html><body style="margin:0;padding:0;background:#0b0c10;font-family:-apple-system,Segoe UI,Roboto,sans-serif;color:#e7e5e4;">
@@ -915,7 +930,7 @@ function emailTemplateReset(token) {
     <p style="margin:0 0 16px;font-size:14px;line-height:1.6;color:#a8a29e;">Chào bạn,</p>
     <p style="margin:0 0 24px;font-size:14px;line-height:1.6;color:#d6d3d1;">Ai đó (hy vọng là bạn) vừa yêu cầu đặt lại mật khẩu cho tài khoản CHRTV. Nhấn nút bên dưới trong vòng <b>30 phút</b> để đặt mật khẩu mới.</p>
     <div style="text-align:center;margin:28px 0;">
-      <a href="https://thelac.dpdns.org/?reset=${token}" style="display:inline-block;background:#e11d48;color:#fff;padding:14px 36px;border-radius:12px;text-decoration:none;font-weight:800;font-size:14px;letter-spacing:.02em;">Đặt lại mật khẩu</a>
+      <a href="${String(webOrigin || "https://thelac.dpdns.org").replace(/\/+$/, "")}/?reset=${token}" style="display:inline-block;background:#e11d48;color:#fff;padding:14px 36px;border-radius:12px;text-decoration:none;font-weight:800;font-size:14px;letter-spacing:.02em;">Đặt lại mật khẩu</a>
     </div>
     <p style="margin:24px 0 8px;font-size:12px;line-height:1.6;color:#78716c;">Hoặc copy mã này vào app:</p>
     <div style="background:#0f1014;border:1px solid #26272e;border-radius:10px;padding:12px;text-align:center;">
@@ -3683,7 +3698,7 @@ async function handleAuth(path, request, env, ctx) {
       const updated = (r.meta?.changes ?? r.changes) > 0;
       if (!updated) return json({ success: true, message: "Nếu email tồn tại, link đặt lại đã được gửi." }, 200, request, env);
       // Gửi email qua Brevo
-      const tmpl = emailTemplateReset(resetToken);
+      const tmpl = emailTemplateReset(resetToken, publicWebOrigin(env));
       const sent = await sendBrevoEmail(env, { to: email, subject: tmpl.subject, html: tmpl.html });
       // Dev xem token trong console (không trả về response)
       console.log(`[AUTH/forgot] email=${email} resetToken=${resetToken} emailSent=${sent.ok}`);

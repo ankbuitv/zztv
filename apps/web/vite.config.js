@@ -5,7 +5,13 @@ import react from '@vitejs/plugin-react';
 // nên cần proxy sang Cloudflare Worker. Mặc định trỏ về production; muốn test Worker
 // chạy local (`npx wrangler dev --port 8787`) thì:
 //   VITE_DEV_API_TARGET=http://127.0.0.1:8787 npm run dev
-const API_TARGET = process.env.VITE_DEV_API_TARGET || 'https://thelac.dpdns.org';
+//
+// VITE_API_ORIGIN is the environment-configurable production origin, so a fork
+// or a staging environment does not need this file edited. The literal is only
+// the fallback for a shell with no environment at all.
+const API_TARGET = process.env.VITE_DEV_API_TARGET
+  || process.env.VITE_API_ORIGIN
+  || 'https://thelac.dpdns.org';
 const API_PREFIXES = ['/api', '/auth', '/user', '/admin', '/ws'];
 // When the API target is a local host we are in fixture mode, so artwork is
 // proxied too (see tools/dev-api.mjs). Production never hits this.
@@ -84,6 +90,47 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
-    chunkSizeWarningLimit: 2000,
-  }
+
+    // A budget, not a mute button.
+    //
+    // This used to sit at 2000, which silenced a warning about a 2.86 MB entry
+    // chunk while doing nothing about it. The entry chunk is now ~183 kB and
+    // the largest single file is the shaka-player vendor chunk at ~775 kB, so
+    // 900 is a ceiling comfortably above the real result and well below the
+    // old one. `npm test` asserts the same number, so raising it here without
+    // fixing a regression fails the suite rather than passing quietly.
+    chunkSizeWarningLimit: 900,
+
+    rollupOptions: {
+      output: {
+        // Split by what changes and what is needed when, not by file size.
+        //
+        //   react      — in the initial graph, but it changes only when the
+        //                framework changes; a separate file means a UI change
+        //                does not invalidate it in every visitor's cache.
+        //   hls/shaka  — 47% of the old bundle and only needed once somebody
+        //                presses play. They are reached exclusively through
+        //                lazy() in App.jsx, so they are never on the first load.
+        //   spatial-nav— the remote-control runtime, loaded with the shell.
+        //   qr / xml   — QR login and EPG parsing, both on demand.
+        //   i18n       — a 2,000-line dictionary that only changes when a
+        //                translation does.
+        manualChunks(id) {
+          if (!id.includes('node_modules')) {
+            if (id.includes('/src/i18n/')) return 'vendor-i18n';
+            return null;
+          }
+          if (/node_modules\/(react|react-dom|scheduler)\//.test(id)) return 'vendor-react';
+          if (id.includes('node_modules/@noriginmedia/')) return 'vendor-spatial-nav';
+          if (id.includes('node_modules/hls.js/')) return 'vendor-hls';
+          if (id.includes('node_modules/shaka-player/')) return 'vendor-shaka';
+          if (id.includes('node_modules/jsqr/')) return 'vendor-jsqr';
+          if (id.includes('node_modules/qrcode')) return 'vendor-qrcode';
+          if (id.includes('node_modules/fast-xml-parser/')) return 'vendor-xml-parser';
+          if (id.includes('node_modules/lodash')) return 'vendor-lodash';
+          return null;
+        },
+      },
+    },
+  },
 });

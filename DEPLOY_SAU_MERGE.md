@@ -1,3 +1,8 @@
+> ⚠️ **STALE — do not follow this document for deployment.**
+> It predates the monorepo split and still assumes a single root `dist/` and
+> `wrangler d1 execute --file=./schema.sql`. Both are wrong now.
+> See **[`DEPLOY.md`](DEPLOY.md)** and **[`docs/SECRETS.md`](docs/SECRETS.md)**.
+
 # 🚀 Sau khi merge PR #14 — làm gì trên Cloudflare
 
 Làm **đúng thứ tự** dưới đây. Tổng thời gian ~15 phút. Mọi lệnh chạy ở thư mục repo,

@@ -14,7 +14,7 @@
  */
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
-import { API_BASE, apiUrl } from './api';
+import { API_BASE, apiUrl, WEB_APP_URL } from './api';
 import AdminShell from './AdminShell';
 import './styles.css';
 
@@ -84,7 +84,7 @@ function SignIn() {
         </p>
       </div>
       <a
-        href="https://thelac.dpdns.org/?tab=channels"
+        href={`${WEB_APP_URL}/?tab=channels`}
         style={{
           display: 'inline-block', padding: '11px 24px', borderRadius: 12,
           background: '#2F6BFF', color: '#fff', fontSize: 13.5, fontWeight: 700, textDecoration: 'none',
