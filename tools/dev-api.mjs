@@ -416,6 +416,11 @@ const server = http.createServer(async (req, res) => {
     const slug = path.slice('/espn/sports/soccer/'.length).split('/')[0];
     return json(res, sports.espnProxy(new URL(`http://x/?league=${encodeURIComponent(slug)}`)));
   }
+  if (path === '/api/plans') {
+    // Same ladder the admin manages, so the package page and the admin panel
+    // can never disagree in development.
+    return json(res, admin.get('/admin/plans') || { success: true, plans: [] });
+  }
   if (path === '/api/challenges') {
     return json(res, { success: true, challenges: [], fixture: true });
   }

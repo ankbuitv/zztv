@@ -16,6 +16,7 @@ import React, { useMemo, useState } from 'react';
 import { color as C, radius, api } from './api';
 import {
   useApi, pick, asArray, Card, Stat, Button, Field, Pill, States, Table, Bars, Toast, fmtNum, fmtDate,
+  DangerButton, useMutate,
 } from './ui';
 import { CONTENT_PANELS } from './panels-content';
 
@@ -389,22 +390,145 @@ export function UsersPanel({ toast }) {
 // ---------------------------------------------------------------------------
 // Plans
 // ---------------------------------------------------------------------------
-export function PlansPanel() {
+export function PlansPanel({ toast }) {
   const list = useApi('/admin/plans');
   const plans = asArray(pick(list.data, ['plans'], []));
+  const mut = useMutate(list.reload, toast);
+  const [open, setOpen] = useState(false);
+  const [form, setForm] = useState({
+    code: '', name: '', rank: 1, price: 0, price_text: '', tagline: '', allows: '', color: '#2F6BFF',
+  });
+  const onInput = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
+
+  // The real `plans` table stores `allows` as a JSON array in one column, and
+  // the Worker accepts either that or a newline-separated string. The form deals
+  // in one-tag-per-line because that is what an operator can actually edit.
+  const allowsOf = (p) => {
+    const raw = p?.allows;
+    if (Array.isArray(raw)) return raw;
+    if (typeof raw === 'string' && raw.trim()) {
+      try { const j = JSON.parse(raw); if (Array.isArray(j)) return j; } catch { /* not JSON */ }
+      return raw.split(/[,\n]/).map((s) => s.trim()).filter(Boolean);
+    }
+    return [];
+  };
+
+  const edit = (p) => {
+    setForm({
+      code: p.code, name: p.name || '', rank: p.rank ?? 1, price: p.price ?? 0,
+      price_text: p.price_text || '', tagline: p.tagline || '',
+      allows: allowsOf(p).join('\n'), color: p.color || '#2F6BFF',
+    });
+    setOpen(true);
+  };
+
+  const save = async () => {
+    const body = {
+      ...form,
+      rank: Number(form.rank) || 1,
+      price: Number(form.price) || 0,
+      allows: String(form.allows || '').split('\n').map((x) => x.trim()).filter(Boolean),
+      is_active: 1,
+    };
+    const editing = plans.some((p) => p.code === form.code);
+    const ok = await mut.run('/admin/plans', { method: editing ? 'PUT' : 'POST', body },
+      editing ? 'Đã cập nhật gói' : 'Đã thêm gói');
+    if (ok) { setOpen(false); setForm({ code: '', name: '', rank: 1, price: 0, price_text: '', tagline: '', allows: '', color: '#2F6BFF' }); }
+  };
+
+  const sorted = [...plans].sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0));
+
   return (
-    <Card title={`Gói cước (${plans.length})`} subtitle="Bậc giá và quyền lợi hiển thị cho người xem.">
-      <States loading={list.loading} error={list.error} empty={plans.length === 0} onRetry={list.reload}>
+    <Card
+      title={`Gói cước (${plans.length})`}
+      subtitle="Bậc giá và quyền lợi hiển thị cho người xem. Sửa ở đây là đổi luôn trang Gói cước của ứng dụng."
+      action={
+        <div style={{ display: 'flex', gap: 8 }}>
+          <Button onClick={list.reload}>Tải lại</Button>
+          <Button variant="primary" onClick={() => { setOpen((v) => !v); }}>{open ? 'Đóng' : 'Thêm gói'}</Button>
+        </div>
+      }
+    >
+      {open && (
+        <div style={{ display: 'grid', gap: 10, padding: 12, marginBottom: 12, background: 'rgba(255,255,255,.03)', border: `1px solid ${C.line}`, borderRadius: radius.md }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0,1fr))', gap: 10 }}>
+            <Field label="Mã" value={form.code} onChange={(v) => setForm((f) => ({ ...f, code: v }))} placeholder="ultimate" />
+            <Field label="Tên" value={form.name} onChange={(v) => setForm((f) => ({ ...f, name: v }))} placeholder="Ultimate" />
+            <Field label="Bậc" value={String(form.rank)} onChange={(v) => setForm((f) => ({ ...f, rank: v }))} placeholder="3" />
+            <Field label="Giá (số)" value={String(form.price)} onChange={(v) => setForm((f) => ({ ...f, price: v }))} placeholder="150000" />
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0,1fr))', gap: 10 }}>
+            <Field label="Giá hiển thị" value={form.price_text} onChange={(v) => setForm((f) => ({ ...f, price_text: v }))} placeholder="150.000đ / tháng" />
+            <Field label="Câu mô tả" value={form.tagline} onChange={(v) => setForm((f) => ({ ...f, tagline: v }))} placeholder="Toàn bộ kênh và kho phim" />
+            <Field label="Màu" value={form.color} onChange={(v) => setForm((f) => ({ ...f, color: v }))} placeholder="#FF6B2C" />
+          </div>
+          <label style={{ display: 'block' }}>
+            <span style={{ fontSize: 11, color: C.textMuted, display: 'block', marginBottom: 4 }}>Quyền lợi — mỗi dòng một mã</span>
+            <textarea
+              value={form.allows} onChange={onInput('allows')} rows={4}
+              placeholder={'tv_all\nmovies\nsports\nuhd'}
+              style={{
+                width: '100%', boxSizing: 'border-box', padding: 9, background: 'rgba(255,255,255,.05)',
+                border: `1px solid ${C.line}`, borderRadius: radius.sm, color: C.text, fontSize: 12.5,
+                outline: 'none', resize: 'vertical', fontFamily: 'ui-monospace, monospace',
+              }}
+            />
+          </label>
+          <div style={{ display: 'flex', gap: 8 }}>
+            <Button variant="primary" disabled={mut.busy || !form.code.trim() || !form.name.trim()} onClick={save}>
+              {plans.some((p) => p.code === form.code) ? 'Lưu thay đổi' : 'Tạo gói'}
+            </Button>
+            <Button onClick={() => setOpen(false)}>Huỷ</Button>
+          </div>
+        </div>
+      )}
+      <States loading={list.loading} error={list.error} empty={plans.length === 0} onRetry={list.reload}
+        emptyText="Chưa có gói nào. Ứng dụng sẽ dùng bậc giá dựng sẵn cho tới khi tạo gói đầu tiên.">
         <Table
           columns={[
-            { key: 'code', label: 'Mã', width: 120 },
-            { key: 'name', label: 'Tên gói', render: (p) => p.name || '—' },
-            { key: 'price', label: 'Giá', align: 'right', numeric: true, width: 130, render: (p) => fmtNum(p.price ?? p.amount) },
-            { key: 'days', label: 'Số ngày', align: 'right', numeric: true, width: 90, render: (p) => p.days ?? p.duration ?? '—' },
-            { key: 'groups', label: 'Nhóm kênh', muted: true, render: (p) => p.groups || p.group_title || 'tất cả' },
+            {
+              key: 'name', label: 'Gói',
+              render: (p) => (
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <span style={{ width: 10, height: 10, borderRadius: 999, background: /^#[0-9a-f]{3,8}$/i.test(p.color || '') ? p.color : C.lineStrong }} />
+                    <span>{p.name || p.code}</span>
+                    <span style={{ fontFamily: 'ui-monospace, monospace', fontSize: 11, color: C.textFaint }}>{p.code}</span>
+                  </div>
+                  {p.tagline && <div style={{ fontSize: 11, color: C.textMuted, marginTop: 2 }}>{p.tagline}</div>}
+                </div>
+              ),
+            },
+            { key: 'rank', label: 'Bậc', width: 60, align: 'right', render: (p) => p.rank ?? '—' },
+            { key: 'price', label: 'Giá', align: 'right', width: 140, render: (p) => p.price_text || fmtNum(p.price ?? 0) },
+            {
+              key: 'allows', label: 'Quyền lợi', muted: true, width: 300,
+              render: (p) => {
+                const a = allowsOf(p);
+                if (a.length === 0) return <span style={{ fontSize: 11 }}>—</span>;
+                return (
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+                    {a.slice(0, 4).map((x) => <Pill key={x} tone="info">{x}</Pill>)}
+                    {a.length > 4 && <span style={{ fontSize: 11, color: C.textMuted }}>+{a.length - 4}</span>}
+                  </div>
+                );
+              },
+            },
             { key: 'is_active', label: 'Trạng thái', width: 110, render: (p) => (Number(p.is_active) ? <Pill tone="good">Đang bán</Pill> : <Pill>Ngừng bán</Pill>) },
+            {
+              key: 'act', label: '', width: 210, align: 'right',
+              render: (p) => (
+                <div style={{ display: 'flex', gap: 6, justifyContent: 'flex-end' }}>
+                  <Button disabled={mut.busy} onClick={() => edit(p)}>Sửa</Button>
+                  <Button disabled={mut.busy} onClick={() => mut.run('/admin/plans', { method: 'PUT', body: { code: p.code, is_active: Number(p.is_active) ? 0 : 1 } }, 'Đã cập nhật')}>
+                    {Number(p.is_active) ? 'Ngừng bán' : 'Mở bán'}
+                  </Button>
+                  <DangerButton disabled={mut.busy} onConfirm={() => mut.run('/admin/plans', { method: 'DELETE', body: { code: p.code } }, 'Đã xoá gói')}>Xoá</DangerButton>
+                </div>
+              ),
+            },
           ]}
-          rows={plans}
+          rows={sorted}
           rowKey={(p) => p.code || p.id}
         />
       </States>

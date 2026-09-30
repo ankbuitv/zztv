@@ -62,13 +62,22 @@ export function createAdmin({ channels = [], hash }) {
     created_at: new Date(Date.now() - (i + 3) * 86400000).toISOString().slice(0, 19).replace('T', ' '),
   }));
 
+  // Mirrors the real `plans` table, column for column: the admin panel and the
+  // consumer package page both read this, and a fixture that invents its own
+  // shape would let a schema mismatch go unnoticed until deployment. `allows`
+  // is a JSON array on the wire because that is what the column stores.
+  const plan = (code, name, rank, price, price_text, tagline, allows, color, is_active = 1) => ({
+    code, name, rank, price, price_text, tagline,
+    allows: JSON.stringify(allows), color, is_active,
+  });
   const plans = [
-    { code: 'free', name: 'Miễn phí', price: 0, days: 0, groups: 'Kênh cơ bản', is_active: 1 },
-    { code: 'day', name: 'Gói ngày', price: 10000, days: 1, groups: 'Kênh cơ bản', is_active: 1 },
-    { code: 'week', name: 'Gói tuần', price: 50000, days: 7, groups: 'Kênh cơ bản + Thể thao', is_active: 1 },
-    { code: 'month', name: 'Gói tháng', price: 150000, days: 30, groups: 'Tất cả', is_active: 1 },
-    { code: 'year', name: 'Gói năm', price: 1500000, days: 365, groups: 'Tất cả', is_active: 1 },
-    { code: 'legacy', name: 'Gói cũ (ngừng bán)', price: 99000, days: 30, groups: 'Kênh cơ bản', is_active: 0 },
+    plan('free', 'Miễn phí', 0, 0, '0đ', 'Xem truyền hình cơ bản', ['tv_basic'], '#55555F'),
+    plan('standard', 'Standard', 1, 10000, '10.000đ / ngày', 'Truyền hình + phim lẻ', ['tv_basic', 'movies'], '#2F6BFF'),
+    plan('recreational', 'Recreational', 2, 50000, '50.000đ / tuần', 'Thêm thể thao trực tiếp', ['tv_basic', 'movies', 'sports'], '#6E9BFF'),
+    plan('ultimate', 'Ultimate', 3, 150000, '150.000đ / tháng', 'Toàn bộ kênh và kho phim', ['tv_basic', 'tv_all', 'movies', 'sports', 'shorts_upload'], '#FF6B2C'),
+    plan('elite', 'Elite', 4, 390000, '390.000đ / quý', 'Thêm 4K và xem chung', ['tv_basic', 'tv_all', 'movies', 'sports', 'shorts_upload', 'watch_party', 'uhd'], '#FFC53D'),
+    plan('signature', 'Signature', 5, 1500000, '1.500.000đ / năm', 'Đầy đủ, không quảng cáo', ['tv_basic', 'tv_all', 'movies', 'sports', 'shorts_upload', 'watch_party', 'uhd', 'no_ads', 'multi_device'], '#FF3B47'),
+    plan('legacy', 'Gói cũ (ngừng bán)', 1, 99000, '99.000đ / tháng', 'Không còn bán', ['tv_basic'], '#43434E', 0),
   ];
 
   const statuses = ['paid', 'paid', 'pending', 'paid', 'failed', 'paid', 'pending', 'paid'];
@@ -241,6 +250,16 @@ export function createAdmin({ channels = [], hash }) {
       }
       if (path === '/admin/users/action') return { success: true };
 
+      // --- plans ----------------------------------------------------------
+      // Keyed by `code`, not `id`: the real table has no surrogate key, and the
+      // Worker's PUT/DELETE both address a plan by code.
+      if (path === '/admin/plans') {
+        if (!body?.code) return { success: false, error: 'Thiếu code', status: 400 };
+        if (plans.some((p) => p.code === body.code)) return { success: false, error: 'Mã gói đã tồn tại', status: 409 };
+        plans.push({ rank: 1, price: 0, allows: '[]', color: '#2F6BFF', is_active: 1, ...body });
+        return { success: true };
+      }
+
       // --- content --------------------------------------------------------
       if (path === '/admin/events') {
         events.push({ id: Math.max(0, ...events.map((e) => e.id)) + 1, blocked_regions: '', ...body });
@@ -302,6 +321,16 @@ export function createAdmin({ channels = [], hash }) {
     // two branches are the same code, so PUT merges into the existing row by id
     // rather than appending a duplicate.
     put(path, body) {
+      if (path === '/admin/plans') {
+        const i = plans.findIndex((p) => p.code === body?.code);
+        if (i < 0) return { success: false, error: 'Không có gói', status: 404 };
+        // `allows` may arrive as an array (the panel) or a string (the Worker
+        // accepts both); normalise so the row always serialises the same way.
+        const next = { ...plans[i], ...body };
+        if (Array.isArray(next.allows)) next.allows = JSON.stringify(next.allows);
+        plans[i] = next;
+        return { success: true };
+      }
       const table = {
         '/admin/events': events,
         '/admin/movie_sources': movieSources,
@@ -337,6 +366,11 @@ export function createAdmin({ channels = [], hash }) {
       if (path === '/admin/comments' && body?.id) {
         const i = comments.findIndex((c) => c.id === Number(body.id));
         if (i >= 0) comments.splice(i, 1);
+        return { success: true };
+      }
+      if (path === '/admin/plans' && body?.code) {
+        const i = plans.findIndex((p) => p.code === body.code);
+        if (i >= 0) plans.splice(i, 1);
         return { success: true };
       }
       if (path === '/admin/broadcast' && body?.id) {

@@ -129,18 +129,66 @@ export function Button({ children, onClick, variant = 'default', disabled, type 
   );
 }
 
-export function Field({ placeholder, value, onChange, onEnter, width = 220 }) {
-  return (
+export function Field({ placeholder, value, onChange, onEnter, width = 220, label }) {
+  const input = (
     <input
       value={value} placeholder={placeholder} onChange={(e) => onChange(e.target.value)}
       onKeyDown={(e) => { if (e.key === 'Enter' && onEnter) onEnter(); }}
       style={{
-        width, height: 32, padding: '0 11px', background: 'rgba(255,255,255,.05)',
+        width: label ? '100%' : width, height: 32, padding: '0 11px',
+        background: 'rgba(255,255,255,.05)',
         border: `1px solid ${C.line}`, borderRadius: radius.sm, color: C.text,
-        fontSize: 12.5, outline: 'none',
+        fontSize: 12.5, outline: 'none', boxSizing: 'border-box',
       }}
     />
   );
+  // A labelled field is a form input, so it fills its cell. An unlabelled one is
+  // usually a toolbar search box and keeps a fixed width.
+  if (!label) return input;
+  return (
+    <label style={{ display: 'block' }}>
+      <span style={{ fontSize: 11, color: C.textMuted, display: 'block', marginBottom: 4 }}>{label}</span>
+      {input}
+    </label>
+  );
+}
+
+/** Two-step destructive button. Nothing in the admin deletes on one click. */
+export function DangerButton({ children, confirmLabel = 'Chắc chắn?', onConfirm, disabled }) {
+  const [armed, setArmed] = useState(false);
+  return (
+    <Button
+      variant={armed ? 'danger' : 'default'}
+      disabled={disabled}
+      onClick={() => { if (armed) { setArmed(false); onConfirm(); } else setArmed(true); }}
+    >
+      {armed ? confirmLabel : children}
+    </Button>
+  );
+}
+
+/**
+ * Wraps the try/reload/toast dance every mutating panel repeats. Always reloads
+ * from the server rather than patching local state — an admin screen must never
+ * show a row that disagrees with what the API holds.
+ */
+export function useMutate(reload, toast) {
+  const [busy, setBusy] = useState(false);
+  return {
+    busy,
+    async run(path, opts, okMessage) {
+      setBusy(true);
+      try {
+        await api(path, opts);
+        await reload();
+        if (okMessage) toast(okMessage, 'success');
+        return true;
+      } catch (e) {
+        toast(e.message || 'Không thực hiện được', 'error');
+        return false;
+      } finally { setBusy(false); }
+    },
+  };
 }
 
 export function Pill({ children, tone = 'default' }) {

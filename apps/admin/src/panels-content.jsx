@@ -20,6 +20,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { color as C, radius, api } from './api';
 import {
   useApi, pick, asArray, Card, Stat, Button, Field, Pill, States, Table, Toast, fmtNum, fmtDate,
+  DangerButton, useMutate,
 } from './ui';
 
 // ---------------------------------------------------------------------------
@@ -43,40 +44,6 @@ function FormRow({ children, cols = 3 }) {
 }
 function FormField({ label, children }) {
   return <label style={{ display: 'block' }}><span style={labelStyle}>{label}</span>{children}</label>;
-}
-
-/** Two-step delete. First click arms, second confirms, blur disarms. */
-function DangerButton({ children, confirmLabel = 'Chắc chắn?', onConfirm, disabled }) {
-  const [armed, setArmed] = useState(false);
-  return (
-    <Button
-      variant={armed ? 'danger' : 'default'}
-      disabled={disabled}
-      onClick={() => { if (armed) { setArmed(false); onConfirm(); } else setArmed(true); }}
-    >
-      {armed ? confirmLabel : children}
-    </Button>
-  );
-}
-
-/** Wraps the try/reload/toast dance so no panel repeats it. */
-function useMutate(reload, toast) {
-  const [busy, setBusy] = useState(false);
-  return {
-    busy,
-    async run(path, opts, okMessage) {
-      setBusy(true);
-      try {
-        await api(path, opts);
-        await reload();
-        if (okMessage) toast(okMessage, 'success');
-        return true;
-      } catch (e) {
-        toast(e.message || 'Không thực hiện được', 'error');
-        return false;
-      } finally { setBusy(false); }
-    },
-  };
 }
 
 const activePill = (v) => (Number(v)
