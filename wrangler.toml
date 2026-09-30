@@ -6,6 +6,18 @@
 #   npm run db:migrate:remote       # D1 migrations against production
 #
 # ---------------------------------------------------------------------------
+# !! `name` MUST match the Worker your Cloudflare project is connected to !!
+# ---------------------------------------------------------------------------
+# `npx wrangler deploy` deploys to whatever `name` says HERE. If the connected
+# Workers Builds project is called something else, the build either fails
+# outright or — worse — succeeds and publishes to a Worker that has none of
+# your domains attached, so the site keeps serving the old build with no error
+# anywhere to notice.
+#
+# Check: Dashboard -> Workers & Pages -> <your project>, and read the Worker
+# name at the top. If it is not "chrtv-ott", change this line to match.
+#
+# ---------------------------------------------------------------------------
 # WHY assets.directory IS NOT "./dist"
 # ---------------------------------------------------------------------------
 # This is a monorepo. Vite runs inside each workspace and writes to that

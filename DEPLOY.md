@@ -58,6 +58,25 @@ npm run verify:assets
 
 ## 2. Cloudflare Workers Builds — required settings
 
+### Step 1 — the Worker name must match
+
+`npx wrangler deploy` deploys to whatever `name` says in the wrangler config,
+**not** to whatever the connected project happens to be called.
+
+| Config | `name` |
+|---|---|
+| `wrangler.toml` | `chrtv-ott` |
+| `wrangler.admin.toml` | `playz-admin` |
+| `wrangler.api.toml` | `chrtv-api` |
+| `wrangler.license.toml` | `chrtv-license` |
+
+Open **Workers & Pages** and read the Worker name at the top of the page. If it
+is not `chrtv-ott`, change that line in `wrangler.toml`. A mismatch either
+fails the build, or — worse — succeeds and publishes to a Worker that has none
+of your domains attached, so the site quietly keeps serving the old build.
+
+### Step 2 — the build commands
+
 Go to **Workers & Pages → your project → Settings → Builds**.
 
 > ⚠️ **The build command must be `npm ci`, not `npm run build`.**
@@ -225,6 +244,7 @@ The application also keeps its own hostnames configurable:
 | Where | Variable | Default |
 |---|---|---|
 | `apps/web/src/services/config.js` | `VITE_PRODUCTION_API_BASE` | `https://thelac.dpdns.org` |
+| `wrangler.toml` `name` | — | **must equal your Workers Builds Worker name** |
 | `apps/web/vite.config.js` (dev proxy only) | `VITE_API_ORIGIN` | `https://thelac.dpdns.org` |
 | `apps/admin/src/api.js` | `VITE_WEB_APP_URL` | the admin's own origin |
 | both apps | `VITE_API_BASE` | empty = same origin |
@@ -254,6 +274,8 @@ can be rolled back without touching the API and vice versa.
 
 | Symptom | Check |
 |---|---|
+| Build fails with no useful log | Read the build log at the link GitHub posts on the check. The Workers Builds project is `playz` while `wrangler.toml` says `chrtv-ott` — see §2 Step 1 |
+| Build succeeds, site unchanged | The `name` in the wrangler config does not match the Worker your domains are attached to |
 | `assets.directory does not exist` | `npm run build` then `npm run verify:assets` |
 | Build is slow / deploys twice | Dashboard build command must be `npm ci`, not `npm run build` |
 | 404 on the whole site | Custom domain not attached, or attached to the wrong Worker |
