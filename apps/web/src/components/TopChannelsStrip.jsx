@@ -36,7 +36,7 @@ export default function TopChannelsStrip({ channels = [], onSelectChannel }) {
             {live ? 'Đang hot' : t('topch.title')}
             {live && <span className="px-1.5 py-0.5 rounded-md bg-red-600/20 border border-red-500/30 text-red-300 text-[9px] font-black tracking-wider">15 PHÚT</span>}
           </h2>
-          <p className="text-[11px] text-stone-500">{live ? 'Kênh nhiều người xem nhất ngay lúc này' : t('topch.sub')}</p>
+          <p className="text-[11px] text-[#7C7C8A]">{live ? 'Kênh nhiều người xem nhất ngay lúc này' : t('topch.sub')}</p>
         </div>
       </div>
       <ScrollRow>
@@ -60,7 +60,7 @@ export default function TopChannelsStrip({ channels = [], onSelectChannel }) {
               </span>
               <span className="block px-2.5 py-2">
                 <span className="block text-[12px] font-bold text-white truncate">{name}</span>
-                <span className="block text-[10px] text-stone-500">🔥 {Number(r.views || 0).toLocaleString()} lượt xem</span>
+                <span className="block text-[10px] text-[#7C7C8A]">🔥 {Number(r.views || 0).toLocaleString()} lượt xem</span>
               </span>
             </button>
           );

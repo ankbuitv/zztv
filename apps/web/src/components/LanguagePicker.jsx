@@ -35,7 +35,7 @@ export default function LanguagePicker({ onClose }) {
 
         {/* Suggested badge */}
         <div className="px-6 pt-5">
-          <div className="text-xs text-stone-400 font-semibold uppercase tracking-wider mb-3">
+          <div className="text-xs text-[#9C9CAB] font-semibold uppercase tracking-wider mb-3">
             {t('langpicker.suggest')}
           </div>
         </div>
@@ -57,8 +57,8 @@ export default function LanguagePicker({ onClose }) {
                   }`}
                 >
                   <span className="text-4xl mb-2">{l.flag}</span>
-                  <span className={`text-sm font-bold ${isSelected ? 'text-white' : 'text-stone-300'}`}>{l.label}</span>
-                  <span className={`text-[10px] mt-1 ${isSelected ? 'text-[#ffb37a]' : 'text-stone-500'}`}>{l.country}</span>
+                  <span className={`text-sm font-bold ${isSelected ? 'text-white' : 'text-[#D2D2DC]'}`}>{l.label}</span>
+                  <span className={`text-[10px] mt-1 ${isSelected ? 'text-[#6E9BFF]' : 'text-[#7C7C8A]'}`}>{l.country}</span>
 
                   {/* Selected check */}
                   {isSelected && (

@@ -24,12 +24,12 @@ export default function Footer({ onGoTab }) {
           <p className="text-[13px] font-black text-white mt-3 tracking-wide">
             play<span className="text-[#2F6BFF]">Z</span>
           </p>
-          <p className="text-[11px] text-stone-500 mt-2 leading-relaxed max-w-sm">{t('footer.desc')}</p>
-          <p className="text-[11px] text-stone-600 mt-3 font-semibold">© 2026 ANKB CO. · {t('footer.rights')}</p>
+          <p className="text-[11px] text-[#7C7C8A] mt-2 leading-relaxed max-w-sm">{t('footer.desc')}</p>
+          <p className="text-[11px] text-[#5A5A66] mt-3 font-semibold">© 2026 ANKB CO. · {t('footer.rights')}</p>
         </div>
         {/* Khám phá */}
         <div>
-          <p className="text-[10px] font-black uppercase tracking-widest text-stone-500 mb-3">{t('footer.explore')}</p>
+          <p className="text-[10px] font-black uppercase tracking-widest text-[#7C7C8A] mb-3">{t('footer.explore')}</p>
           <div className="space-y-2">
             {[
               { tab: 'tv', label: t('footer.l_tv') },
@@ -40,7 +40,7 @@ export default function Footer({ onGoTab }) {
               <button
                 key={l.tab}
                 onClick={() => onGoTab && onGoTab(l.tab)}
-                className="block text-[13px] font-semibold text-stone-400 hover:text-white transition-colors"
+                className="block text-[13px] font-semibold text-[#9C9CAB] hover:text-white transition-colors"
               >
                 {l.label}
               </button>
@@ -49,13 +49,13 @@ export default function Footer({ onGoTab }) {
         </div>
         {/* Pháp lý */}
         <div>
-          <p className="text-[10px] font-black uppercase tracking-widest text-stone-500 mb-3">{t('footer.legal')}</p>
+          <p className="text-[10px] font-black uppercase tracking-widest text-[#7C7C8A] mb-3">{t('footer.legal')}</p>
           <div className="space-y-2">
             <a
               href="/status"
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-2 text-[13px] font-semibold text-stone-400 hover:text-white transition-colors"
+              className="flex items-center gap-2 text-[13px] font-semibold text-[#9C9CAB] hover:text-white transition-colors"
             >
               <Activity className="w-3.5 h-3.5 text-emerald-400" /> Trạng thái hệ thống
             </a>
@@ -63,7 +63,7 @@ export default function Footer({ onGoTab }) {
               <button
                 key={l.id}
                 onClick={() => setLegal(l.id)}
-                className="flex items-center gap-2 text-[13px] font-semibold text-stone-400 hover:text-white transition-colors"
+                className="flex items-center gap-2 text-[13px] font-semibold text-[#9C9CAB] hover:text-white transition-colors"
               >
                 <l.Icon className="w-3.5 h-3.5 text-[#2F6BFF]" /> {l.label}
               </button>
@@ -73,8 +73,8 @@ export default function Footer({ onGoTab }) {
       </div>
       <div className="border-t border-white/[0.05]">
         <div className="max-w-[1400px] mx-auto px-5 md:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <p className="text-[10px] text-stone-600 font-semibold tracking-wide">playZ - A Product of ANKB CO. © 2025</p>
-          <p className="text-[10px] text-stone-700">{t('footer.note')}</p>
+          <p className="text-[10px] text-[#5A5A66] font-semibold tracking-wide">playZ - A Product of ANKB CO. © 2025</p>
+          <p className="text-[10px] text-[#43434E]">{t('footer.note')}</p>
         </div>
       </div>
       {legal && <LegalModal tab={legal} onClose={() => setLegal(null)} onTab={setLegal} />}

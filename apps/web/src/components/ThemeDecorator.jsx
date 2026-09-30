@@ -352,7 +352,7 @@ export default function ThemeDecorator() {
     }
     root.style.setProperty("--theme-primary", theme.primary_color || "#2F6BFF");
     root.style.setProperty("--theme-secondary", theme.secondary_color || "#1a1c24");
-    root.style.setProperty("--theme-accent", theme.accent_color || "#ffb37a");
+    root.style.setProperty("--theme-accent", theme.accent_color || "#6E9BFF");
     root.dataset.siteTheme = theme.key || "";
     if (theme.background_url) {
       root.style.setProperty("--theme-bg-url", `url("${theme.background_url}")`);

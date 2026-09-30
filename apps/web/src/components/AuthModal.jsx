@@ -8,7 +8,7 @@ import { API_BASE } from '../services/config';
 import Logo from './Logo';
 import LegalModal from './LegalModal';
 
-const inputCls = 'w-full pl-11 pr-3 py-3 bg-white/[0.04] border border-white/10 rounded-2xl text-[13px] text-white placeholder:text-stone-600 focus:outline-none focus:border-[#2F6BFF]/70 focus:bg-white/[0.07] transition';
+const inputCls = 'w-full pl-11 pr-3 py-3 bg-white/[0.04] border border-white/10 rounded-2xl text-[13px] text-white placeholder:text-[#5A5A66] focus:outline-none focus:border-[#2F6BFF]/70 focus:bg-white/[0.07] transition';
 
 export default function AuthModal({ open, onClose, initialView = 'login' }) {
   const { t } = useI18n();
@@ -197,19 +197,19 @@ export default function AuthModal({ open, onClose, initialView = 'login' }) {
       >
         <div className="px-6 pt-6 pb-3 relative bg-gradient-to-b from-[#1a120c] to-transparent">
           <button onClick={onClose} className="absolute top-3 right-3 p-1.5 rounded-full hover:bg-white/10 transition-colors">
-            <X className="w-4 h-4 text-stone-500" />
+            <X className="w-4 h-4 text-[#7C7C8A]" />
           </button>
           <div className="flex justify-center"><Logo size="md" showSubtext /></div>
           <h2 className="text-[17px] font-black text-white text-center mt-3 tracking-tight">{titles[view]}</h2>
-          {view === 'login' && <p className="text-[12px] text-stone-500 mt-1 text-center">{t('auth.login.help')}</p>}
-          {view === 'register' && <p className="text-[12px] text-stone-500 mt-1 text-center">{t('auth.register.help')}</p>}
+          {view === 'login' && <p className="text-[12px] text-[#7C7C8A] mt-1 text-center">{t('auth.login.help')}</p>}
+          {view === 'register' && <p className="text-[12px] text-[#7C7C8A] mt-1 text-center">{t('auth.register.help')}</p>}
         </div>
 
         {showSplit ? (
           <div className="grid sm:grid-cols-[1fr_1.15fr] gap-0 px-6 pb-6">
             {/* TRÁI: QR */}
             <div className="flex flex-col items-center justify-center py-4 sm:pr-5 sm:border-r sm:border-white/[0.07]">
-              <p className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-stone-500 mb-3">
+              <p className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-[#7C7C8A] mb-3">
                 <QrIcon className="w-3.5 h-3.5 text-[#6E9BFF]" /> {t('auth.tab.qr')}
               </p>
               {qrBusy && !qrCode ? (
@@ -222,8 +222,8 @@ export default function AuthModal({ open, onClose, initialView = 'login' }) {
                     <QRCodeSVG value={`playZ-QR:${qrCode}`} size={132} level="M" />
                     <span className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full grad-brand text-white text-[10px] font-mono font-black tracking-[0.2em] shadow-lg whitespace-nowrap">{qrCode}</span>
                   </div>
-                  <p className="text-[10px] text-stone-500 mt-4">
-                    {t('auth.qr.waiting')} · <span className={`font-mono font-bold ${qrLeft <= 20 ? 'text-[#6E9BFF]' : 'text-stone-200'}`}>{Math.floor(qrLeft / 60)}:{String(qrLeft % 60).padStart(2, '0')}</span>
+                  <p className="text-[10px] text-[#7C7C8A] mt-4">
+                    {t('auth.qr.waiting')} · <span className={`font-mono font-bold ${qrLeft <= 20 ? 'text-[#6E9BFF]' : 'text-[#E6E6EC]'}`}>{Math.floor(qrLeft / 60)}:{String(qrLeft % 60).padStart(2, '0')}</span>
                   </p>
                   <div className="w-[150px] h-1 rounded-full bg-white/10 overflow-hidden mt-1.5">
                     <div className="h-full bg-gradient-to-r from-[#2F6BFF] to-[#6E9BFF] transition-all" style={{ width: `${(qrLeft / 120) * 100}%` }}></div>
@@ -231,7 +231,7 @@ export default function AuthModal({ open, onClose, initialView = 'login' }) {
                 </>
               ) : (
                 <div className="text-center px-2">
-                  <p className={`text-[11px] font-semibold mb-2.5 leading-relaxed ${qrErr ? 'text-[#6E9BFF]' : 'text-stone-400'}`}>
+                  <p className={`text-[11px] font-semibold mb-2.5 leading-relaxed ${qrErr ? 'text-[#6E9BFF]' : 'text-[#9C9CAB]'}`}>
                     {qrErr ? t('auth.qr.failed') : t('auth.qr.expired')}
                   </p>
                   <button onClick={startQr} className="px-4 py-2 rounded-xl btn-orange text-white text-xs font-bold inline-flex items-center gap-1.5">
@@ -239,7 +239,7 @@ export default function AuthModal({ open, onClose, initialView = 'login' }) {
                   </button>
                 </div>
               )}
-              <p className="text-[9px] text-stone-600 mt-3 leading-relaxed text-center max-w-[190px]">{t('auth.qr.hint')}</p>
+              <p className="text-[9px] text-[#5A5A66] mt-3 leading-relaxed text-center max-w-[190px]">{t('auth.qr.hint')}</p>
             </div>
 
             {/* PHẢI: form email/mật khẩu */}
@@ -254,7 +254,7 @@ export default function AuthModal({ open, onClose, initialView = 'login' }) {
                   <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#6E9BFF]" />
                   <input type={showPass ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} placeholder={t('auth.password')} required className={`${inputCls} pr-11`} autoComplete="current-password" />
                   <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-3 top-1/2 -translate-y-1/2 p-0.5">
-                    {showPass ? <EyeOff className="w-4 h-4 text-stone-500" /> : <Eye className="w-4 h-4 text-stone-500" />}
+                    {showPass ? <EyeOff className="w-4 h-4 text-[#7C7C8A]" /> : <Eye className="w-4 h-4 text-[#7C7C8A]" />}
                   </button>
                 </div>
                 {needTotp && (
@@ -264,8 +264,8 @@ export default function AuthModal({ open, onClose, initialView = 'login' }) {
                   {loading ? t('app.loading') : <>{t('auth.btn.login')} <ArrowRight className="w-4 h-4" /></>}
                 </button>
                 <div className="flex items-center justify-between text-[11px] pt-1">
-                  <button type="button" onClick={() => gotoView('forgot')} className="text-[#6E9BFF] hover:text-[#ffb37a]">{t('auth.link.forgot')}</button>
-                  <button type="button" onClick={() => gotoView('register')} className="text-slate-500 hover:text-white">{t('auth.link.to_register')}</button>
+                  <button type="button" onClick={() => gotoView('forgot')} className="text-[#6E9BFF] hover:text-[#6E9BFF]">{t('auth.link.forgot')}</button>
+                  <button type="button" onClick={() => gotoView('register')} className="text-[#7C7C8A] hover:text-white">{t('auth.link.to_register')}</button>
                 </div>
               </form>
             </div>
@@ -289,12 +289,12 @@ export default function AuthModal({ open, onClose, initialView = 'login' }) {
                   <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#6E9BFF]" />
                   <input type={showPass ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} placeholder={t('auth.password_hint')} required minLength={6} className={`${inputCls} pr-11`} autoComplete="new-password" />
                   <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-3 top-1/2 -translate-y-1/2 p-0.5">
-                    {showPass ? <EyeOff className="w-4 h-4 text-stone-500" /> : <Eye className="w-4 h-4 text-stone-500" />}
+                    {showPass ? <EyeOff className="w-4 h-4 text-[#7C7C8A]" /> : <Eye className="w-4 h-4 text-[#7C7C8A]" />}
                   </button>
                 </div>
                 <label className="flex items-start gap-2 cursor-pointer select-none">
                   <input type="checkbox" checked={agree} onChange={e => setAgree(e.target.checked)} className="mt-0.5 w-4 h-4 accent-[#2F6BFF] shrink-0" />
-                  <span className="text-[11px] text-slate-400 leading-relaxed">
+                  <span className="text-[11px] text-[#9C9CAB] leading-relaxed">
                     {t('auth.agree_pre')}{' '}
                     <button type="button" onClick={() => setLegal('terms')} className="text-[#6E9BFF] hover:underline font-semibold">{t('footer.terms')}</button>
                     {' '}{t('auth.agree_and')}{' '}
@@ -304,7 +304,7 @@ export default function AuthModal({ open, onClose, initialView = 'login' }) {
                 <button type="submit" disabled={loading} className="w-full h-11 btn-orange disabled:opacity-50 text-white font-black text-[13px] rounded-2xl transition-all flex items-center justify-center gap-1.5">
                   {loading ? t('app.loading') : <>{t('auth.btn.register')} <ArrowRight className="w-4 h-4" /></>}
                 </button>
-                <button type="button" onClick={() => gotoView('login')} className="w-full text-center text-[11px] text-slate-500 hover:text-white pt-1">
+                <button type="button" onClick={() => gotoView('login')} className="w-full text-center text-[11px] text-[#7C7C8A] hover:text-white pt-1">
                   {t('auth.link.to_login')}
                 </button>
               </form>
@@ -312,50 +312,50 @@ export default function AuthModal({ open, onClose, initialView = 'login' }) {
 
             {view === 'verify' && (
               <form onSubmit={handleVerify} className="space-y-2.5">
-                <p className="text-[11px] text-slate-400 text-center">{t('auth.verify.help')}</p>
-                {email && <p className="text-[11px] text-slate-300 text-center">📬 {t('auth.verify.sent_to')} <span className="text-white font-bold">{email}</span></p>}
+                <p className="text-[11px] text-[#9C9CAB] text-center">{t('auth.verify.help')}</p>
+                {email && <p className="text-[11px] text-[#D2D2DC] text-center">📬 {t('auth.verify.sent_to')} <span className="text-white font-bold">{email}</span></p>}
                 {devCode && (
                   <div className="px-3 py-2 bg-amber-500/10 border border-amber-500/30 rounded-xl text-[11px] text-amber-300 text-center">
                     <p className="leading-relaxed mb-1">{t('auth.msg.email_fail')}</p>
                     <p className="text-xl tracking-[0.35em] font-mono font-black text-amber-200">{devCode}</p>
                   </div>
                 )}
-                <input type="text" value={verifyCode} onChange={e => setVerifyCode(e.target.value)} placeholder={t('auth.verify_code')} maxLength={6} required className="w-full px-3 py-2.5 bg-slate-800/60 border border-slate-700/50 rounded-xl text-sm text-white text-center tracking-[0.3em] font-mono placeholder:text-slate-600 focus:outline-none focus:border-[#2F6BFF]/60" />
+                <input type="text" value={verifyCode} onChange={e => setVerifyCode(e.target.value)} placeholder={t('auth.verify_code')} maxLength={6} required className="w-full px-3 py-2.5 bg-[#1E1E26]/60 border border-[#24242C]/50 rounded-xl text-sm text-white text-center tracking-[0.3em] font-mono placeholder:text-[#5A5A66] focus:outline-none focus:border-[#2F6BFF]/60" />
                 <button type="submit" className="w-full py-2.5 btn-orange text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-1.5">
                   <Check className="w-4 h-4" /> {t('auth.btn.verify')}
                 </button>
                 <div className="flex items-center justify-between text-[11px]">
-                  <button type="button" onClick={handleResend} disabled={resendIn > 0 || !email} className="text-[#6E9BFF] hover:text-[#ffb37a] disabled:opacity-40 disabled:cursor-not-allowed">
+                  <button type="button" onClick={handleResend} disabled={resendIn > 0 || !email} className="text-[#6E9BFF] hover:text-[#6E9BFF] disabled:opacity-40 disabled:cursor-not-allowed">
                     {resendIn > 0 ? t('auth.verify.resend_in', { s: resendIn }) : `↻ ${t('auth.btn.resend')}`}
                   </button>
-                  <button type="button" onClick={() => setView('login')} className="text-slate-500 hover:text-white">{t('common.back')} {t('auth.title.login')}</button>
+                  <button type="button" onClick={() => setView('login')} className="text-[#7C7C8A] hover:text-white">{t('common.back')} {t('auth.title.login')}</button>
                 </div>
               </form>
             )}
 
             {view === 'forgot' && (
               <form onSubmit={handleForgot} className="space-y-2.5">
-                <p className="text-[11px] text-slate-400 text-center">{t('auth.forgot.help')}</p>
+                <p className="text-[11px] text-[#9C9CAB] text-center">{t('auth.forgot.help')}</p>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#5A5A66]" />
                   <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder={t('auth.email')} required className={inputCls} />
                 </div>
                 <button type="submit" className="w-full py-2.5 btn-orange text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-1.5">
                   <RotateCcw className="w-4 h-4" /> {t('auth.btn.send_reset')}
                 </button>
-                <button type="button" onClick={() => gotoView('login')} className="w-full text-center text-[11px] text-slate-500 hover:text-white">{t('common.back')} {t('auth.title.login')}</button>
+                <button type="button" onClick={() => gotoView('login')} className="w-full text-center text-[11px] text-[#7C7C8A] hover:text-white">{t('common.back')} {t('auth.title.login')}</button>
               </form>
             )}
 
             {view === 'reset' && (
               <form onSubmit={handleReset} className="space-y-2.5">
-                <p className="text-[11px] text-slate-400 text-center">{t('auth.reset.help')}</p>
-                <input type="text" value={verifyCode} onChange={e => setVerifyCode(e.target.value)} placeholder={t('auth.reset_code')} required className="w-full px-3 py-2.5 bg-slate-800/60 border border-slate-700/50 rounded-xl text-sm text-white text-center font-mono placeholder:text-slate-600 focus:outline-none focus:border-[#2F6BFF]/60" />
+                <p className="text-[11px] text-[#9C9CAB] text-center">{t('auth.reset.help')}</p>
+                <input type="text" value={verifyCode} onChange={e => setVerifyCode(e.target.value)} placeholder={t('auth.reset_code')} required className="w-full px-3 py-2.5 bg-[#1E1E26]/60 border border-[#24242C]/50 rounded-xl text-sm text-white text-center font-mono placeholder:text-[#5A5A66] focus:outline-none focus:border-[#2F6BFF]/60" />
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#5A5A66]" />
                   <input type={showPass ? 'text' : 'password'} value={newPassword} onChange={e => setNewPassword(e.target.value)} placeholder={t('auth.new_password_hint')} required minLength={6} className={`${inputCls} pr-10`} />
                   <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-3 top-1/2 -translate-y-1/2 p-0.5">
-                    {showPass ? <EyeOff className="w-4 h-4 text-slate-600" /> : <Eye className="w-4 h-4 text-slate-600" />}
+                    {showPass ? <EyeOff className="w-4 h-4 text-[#5A5A66]" /> : <Eye className="w-4 h-4 text-[#5A5A66]" />}
                   </button>
                 </div>
                 <button type="submit" className="w-full py-2.5 btn-orange text-white font-bold text-sm rounded-xl transition-all">{t('auth.btn.reset')}</button>

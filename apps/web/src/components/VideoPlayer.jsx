@@ -552,7 +552,7 @@ export default function VideoPlayer({
   return (
     <div ref={containerRef} className="relative w-full h-full bg-black flex items-center justify-center overflow-hidden select-none">
       {mini && onExpand && (
-        <div className="absolute top-0 left-0 right-0 z-50 flex items-center gap-2 px-3 py-2 bg-slate-900/95 border-b border-white/10">
+        <div className="absolute top-0 left-0 right-0 z-50 flex items-center gap-2 px-3 py-2 bg-[#16161C]/95 border-b border-white/10">
           <span className="text-xs">📌 {channelName}</span>
           <button onClick={onExpand} className="ml-auto px-2.5 py-1 bg-[#2F6BFF] text-white text-[11px] font-bold rounded-lg">Mở lại</button>
         </div>
@@ -583,7 +583,7 @@ export default function VideoPlayer({
               <AlertTriangle className="w-7 h-7 text-[#6E9BFF]" />
             </div>
             <h3 className="text-white font-black text-[15px] mb-1\">{channelName}</h3>
-            <p className="text-stone-400 text-xs mb-4 line-clamp-3\">{String(error).slice(0, 180)}</p>
+            <p className="text-[#9C9CAB] text-xs mb-4 line-clamp-3\">{String(error).slice(0, 180)}</p>
             <div className="flex gap-2 justify-center">
               <button onClick={() => { setError(null); setLoadKey(k => k + 1); }} className="px-4 py-2 rounded-full bg-[#2F6BFF] text-white text-xs font-bold flex items-center gap-1.5\">
                 <RefreshCw className="w-3.5 h-3.5" /> Thử lại
@@ -699,13 +699,13 @@ export default function VideoPlayer({
                       <span className="text-[10px] opacity-60\">{Math.round((tr.bandwidth||0)/1000)}k</span>
                     </button>
                   ))}
-                  {!hasQuality && <p className="text-[11px] text-stone-500 px-3 py-4 text-center\">Kênh này chỉ có 1 chất lượng</p>}
+                  {!hasQuality && <p className="text-[11px] text-[#7C7C8A] px-3 py-4 text-center\">Kênh này chỉ có 1 chất lượng</p>}
                 </div>
               )}
               {settingsTab === 'audio' && (
                 <div className="space-y-1">
                   <p className="text-[10px] font-bold text-white/40 px-2 py-1 uppercase tracking-widest\">Ngôn ngữ / Audio</p>
-                  {audioTracks.length === 0 && <p className="text-[11px] text-stone-500 px-3 py-4 text-center\">Không có lựa chọn audio khác</p>}
+                  {audioTracks.length === 0 && <p className="text-[11px] text-[#7C7C8A] px-3 py-4 text-center\">Không có lựa chọn audio khác</p>}
                   {audioTracks.map((at, idx) => (
                     <button key={`audio-${at.id}-${idx}`} onClick={() => selectAudioTrack(at.id)} className={`w-full text-left px-3 py-2.5 rounded-xl text-xs flex items-center justify-between ${ (selectedAudio === at.id || at.active) ? 'bg-[#2F6BFF] text-white font-bold' : 'text-white/70 hover:bg-white/10'}`}>
                       <span className="flex items-center gap-2\"><Languages className="w-3.5 h-3.5" /> {at.label} {at.name ? `— ${at.name}` : ''}</span>
@@ -726,7 +726,7 @@ export default function VideoPlayer({
                       <span className="text-[10px] opacity-60\">{st.lang}</span>
                     </button>
                   ))}
-                  {textTracks.length === 0 && <p className="text-[11px] text-stone-500 px-3 py-4 text-center\">Kênh này không có phụ đề</p>}
+                  {textTracks.length === 0 && <p className="text-[11px] text-[#7C7C8A] px-3 py-4 text-center\">Kênh này không có phụ đề</p>}
                 </div>
               )}
               {settingsTab === 'size' && (
@@ -739,7 +739,7 @@ export default function VideoPlayer({
                     </button>
                   ))}
                   <div className="mt-3 p-2.5 rounded-xl bg-white/[0.04] border border-white/5\">
-                    <p className="text-[10px] text-stone-500\">Mẹo: bấm nút <ZoomIn className="w-3 h-3 inline" /> ở thanh điều khiển để đổi nhanh giữa 3 chế độ. Lựa chọn được lưu theo máy.</p>
+                    <p className="text-[10px] text-[#7C7C8A]\">Mẹo: bấm nút <ZoomIn className="w-3 h-3 inline" /> ở thanh điều khiển để đổi nhanh giữa 3 chế độ. Lựa chọn được lưu theo máy.</p>
                   </div>
                 </div>
               )}

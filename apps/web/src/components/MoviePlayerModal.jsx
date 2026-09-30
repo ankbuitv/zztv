@@ -222,9 +222,9 @@ export default function MoviePlayerModal({ movie, onClose }) {
     <div className="fixed inset-0 z-[300] bg-black flex flex-col anim-zoom-fade">
       {/* ===== Header kính mờ + poster ===== */}
       <div className="relative shrink-0 border-b border-white/10" style={{ background: 'linear-gradient(180deg, rgba(20,12,8,.97), rgba(10,10,14,.95))' }}>
-        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(400px 60px at 10% 0%, rgba(243,111,33,.18), transparent 70%)' }} />
+        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(400px 60px at 10% 0%, rgba(47,107,255,.18), transparent 70%)' }} />
         <div className="relative flex items-center gap-3 px-3 md:px-5 py-2.5">
-          <button onClick={onClose} title="Thoát" className="w-9 h-9 rounded-full bg-white/[0.07] hover:bg-white/[0.16] border border-white/10 flex items-center justify-center text-stone-200 hover:text-white transition active:scale-90 shrink-0">
+          <button onClick={onClose} title="Thoát" className="w-9 h-9 rounded-full bg-white/[0.07] hover:bg-white/[0.16] border border-white/10 flex items-center justify-center text-[#E6E6EC] hover:text-white transition active:scale-90 shrink-0">
             <ChevronLeft className="w-5 h-5" />
           </button>
           {movie.poster_path ? (
@@ -237,8 +237,8 @@ export default function MoviePlayerModal({ movie, onClose }) {
           <div className="min-w-0 flex-1">
             <h2 className="text-sm md:text-[15px] font-black text-white truncate leading-tight">{movie.title || movie.name}</h2>
             <div className="flex items-center gap-1.5 mt-1 flex-wrap">
-              <span className="text-[10px] font-bold text-stone-400">{isTV ? `TV · Mùa ${season} — Tập ${episode}` : 'Phim lẻ'}</span>
-              <span className="text-[10px] text-stone-600">•</span>
+              <span className="text-[10px] font-bold text-[#9C9CAB]">{isTV ? `TV · Mùa ${season} — Tập ${episode}` : 'Phim lẻ'}</span>
+              <span className="text-[10px] text-[#5A5A66]">•</span>
               <span className="text-[10px] font-bold text-[#6E9BFF]">{current?.name || '…'}</span>
               {(resumed?.watchSec || 0) > 60 && (
                 <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 rounded-full px-2 py-px">⏪ {fmtWatchSec(resumed.watchSec)}</span>
@@ -249,7 +249,7 @@ export default function MoviePlayerModal({ movie, onClose }) {
           {isTV && (
             <button
               onClick={() => { setEpisode(e => e + 1); setLoading(true); setError(false); }}
-              className="shrink-0 px-3 py-2 rounded-xl bg-white/[0.07] hover:bg-white/[0.14] border border-white/10 text-stone-200 text-[11px] font-black flex items-center gap-1.5 transition active:scale-95"
+              className="shrink-0 px-3 py-2 rounded-xl bg-white/[0.07] hover:bg-white/[0.14] border border-white/10 text-[#E6E6EC] text-[11px] font-black flex items-center gap-1.5 transition active:scale-95"
             >
               <SkipForward className="w-3.5 h-3.5" /><span className="hidden md:inline">Tập tiếp</span>
             </button>
@@ -259,7 +259,7 @@ export default function MoviePlayerModal({ movie, onClose }) {
             onClick={() => setChatOpen(v => !v)}
             title="Bình luận gắn phút — kể cả ghi chú thoại"
             className={`shrink-0 px-3 py-2 rounded-xl text-[11px] font-black flex items-center gap-1.5 transition-all border active:scale-95 ${
-              chatOpen ? 'bg-[#6E9BFF]/20 text-[#ffb37a] border-[#6E9BFF]/50' : 'bg-white/[0.07] text-stone-200 border-white/10 hover:text-white'
+              chatOpen ? 'bg-[#6E9BFF]/20 text-[#6E9BFF] border-[#6E9BFF]/50' : 'bg-white/[0.07] text-[#E6E6EC] border-white/10 hover:text-white'
             }`}
           >
             <MessageCircle className="w-3.5 h-3.5" />
@@ -273,14 +273,14 @@ export default function MoviePlayerModal({ movie, onClose }) {
             className={`shrink-0 px-3 py-2 rounded-xl text-[11px] font-black flex items-center gap-1.5 transition-all border active:scale-95 ${
               adBlock
                 ? 'bg-emerald-600/20 text-emerald-300 border-emerald-500/40 hover:bg-emerald-600/30'
-                : 'bg-white/[0.07] text-stone-400 border-white/10 hover:text-white'
+                : 'bg-white/[0.07] text-[#9C9CAB] border-white/10 hover:text-white'
             }`}
           >
             {adBlock ? <Shield className="w-3.5 h-3.5" /> : <ShieldOff className="w-3.5 h-3.5" />}
             <span className="hidden sm:inline">Chặn QC</span>
-            <span className={`text-[9px] px-1.5 py-px rounded-full ${adBlock ? 'bg-emerald-500/30 text-emerald-200' : 'bg-white/10 text-stone-500'}`}>{adBlock ? 'BẬT' : 'TẮT'}</span>
+            <span className={`text-[9px] px-1.5 py-px rounded-full ${adBlock ? 'bg-emerald-500/30 text-emerald-200' : 'bg-white/10 text-[#7C7C8A]'}`}>{adBlock ? 'BẬT' : 'TẮT'}</span>
           </button>
-          <button onClick={onClose} className="w-9 h-9 rounded-full bg-white/[0.07] hover:bg-red-600/70 border border-white/10 flex items-center justify-center text-stone-300 hover:text-white transition active:scale-90 shrink-0">
+          <button onClick={onClose} className="w-9 h-9 rounded-full bg-white/[0.07] hover:bg-red-600/70 border border-white/10 flex items-center justify-center text-[#D2D2DC] hover:text-white transition active:scale-90 shrink-0">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -288,13 +288,13 @@ export default function MoviePlayerModal({ movie, onClose }) {
         {isTV && (
           <div className="relative flex items-center gap-2 px-3 md:px-5 pb-2.5 overflow-x-auto scrollbar-none">
             <div className="flex items-center gap-1 rounded-xl bg-white/[0.05] border border-white/10 px-1.5 py-1">
-              <span className="text-[9px] text-stone-500 font-black uppercase tracking-wider px-1">Mùa</span>
+              <span className="text-[9px] text-[#7C7C8A] font-black uppercase tracking-wider px-1">Mùa</span>
               <button onClick={() => setSeason(s => Math.max(1, s - 1))} className="w-7 h-7 rounded-lg bg-white/[0.06] hover:bg-white/[0.14] flex items-center justify-center text-white transition active:scale-90"><ChevronLeft className="w-3.5 h-3.5" /></button>
               <span className="text-[13px] font-black text-white w-7 text-center">{season}</span>
               <button onClick={() => setSeason(s => s + 1)} className="w-7 h-7 rounded-lg bg-white/[0.06] hover:bg-white/[0.14] flex items-center justify-center text-white transition active:scale-90"><ChevronRight className="w-3.5 h-3.5" /></button>
             </div>
             <div className="flex items-center gap-1 rounded-xl bg-[#2F6BFF]/10 border border-[#2F6BFF]/30 px-1.5 py-1">
-              <span className="text-[9px] text-[#ffb37a] font-black uppercase tracking-wider px-1">Tập</span>
+              <span className="text-[9px] text-[#6E9BFF] font-black uppercase tracking-wider px-1">Tập</span>
               <button onClick={() => setEpisode(e => Math.max(1, e - 1))} className="w-7 h-7 rounded-lg bg-white/[0.06] hover:bg-white/[0.14] flex items-center justify-center text-white transition active:scale-90"><ChevronLeft className="w-3.5 h-3.5" /></button>
               <span className="text-[13px] font-black text-white w-7 text-center">{episode}</span>
               <button onClick={() => setEpisode(e => e + 1)} className="w-7 h-7 rounded-lg bg-white/[0.06] hover:bg-white/[0.14] flex items-center justify-center text-white transition active:scale-90"><ChevronRight className="w-3.5 h-3.5" /></button>
@@ -313,7 +313,7 @@ export default function MoviePlayerModal({ movie, onClose }) {
         {sourcesLoading && (
           <div className="z-10 flex flex-col items-center gap-3">
             <div className="w-16 h-16 border-4 border-[#2F6BFF]/25 border-t-[#2F6BFF] rounded-full animate-spin"></div>
-            <p className="text-[12px] font-bold text-stone-300">Đang tìm nguồn phát…</p>
+            <p className="text-[12px] font-bold text-[#D2D2DC]">Đang tìm nguồn phát…</p>
           </div>
         )}
         {/* Không có nguồn -> mở TRAILER (YouTube) thay vì màn trống, kèm giải thích
@@ -338,7 +338,7 @@ export default function MoviePlayerModal({ movie, onClose }) {
               <div className="m-auto z-10 max-w-sm text-center px-6">
                 <div className="w-16 h-16 mx-auto rounded-2xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-3xl mb-3">🎬</div>
                 <h3 className="text-sm font-bold text-white mb-1">{t('movies.status.no_source')}</h3>
-                <p className="text-xs text-stone-500">{t('movies.trailer.note')}</p>
+                <p className="text-xs text-[#7C7C8A]">{t('movies.trailer.note')}</p>
               </div>
             )}
             <div className="relative z-10 mt-auto mb-6 mx-auto flex items-center gap-2">
@@ -348,8 +348,8 @@ export default function MoviePlayerModal({ movie, onClose }) {
               >
                 <RefreshCw className="w-3.5 h-3.5" /> Thử lại nguồn
               </button>
-              <span className="text-[10px] text-stone-500 leading-snug max-w-[280px] text-left">
-                Admin: thêm nguồn ở <b className="text-stone-300">Admin Panel → Nguồn phim</b> và khai domain vào secret <code className="text-stone-400">MOVIE_FRAME_SRC</code>
+              <span className="text-[10px] text-[#7C7C8A] leading-snug max-w-[280px] text-left">
+                Admin: thêm nguồn ở <b className="text-[#D2D2DC]">Admin Panel → Nguồn phim</b> và khai domain vào secret <code className="text-[#9C9CAB]">MOVIE_FRAME_SRC</code>
               </span>
             </div>
           </div>
@@ -387,7 +387,7 @@ export default function MoviePlayerModal({ movie, onClose }) {
               <Play className="absolute inset-0 m-auto w-5 h-5 fill-current text-[#6E9BFF]" />
             </div>
             <p className="text-[13px] font-bold text-white">Đang tải {current?.name}…</p>
-            <p className="text-[11px] text-stone-500 mt-1">Nếu lâu quá, chuyển server bên dưới (tự báo lỗi sau 20 giây)</p>
+            <p className="text-[11px] text-[#7C7C8A] mt-1">Nếu lâu quá, chuyển server bên dưới (tự báo lỗi sau 20 giây)</p>
           </div>
         )}
 
@@ -399,7 +399,7 @@ export default function MoviePlayerModal({ movie, onClose }) {
                 <AlertTriangle className="w-7 h-7 text-amber-400" />
               </div>
               <h3 className="text-[15px] font-black text-white mb-1">Server {current?.name} không phát được</h3>
-              <p className="text-[12px] text-stone-400 mb-4 leading-relaxed">
+              <p className="text-[12px] text-[#9C9CAB] mb-4 leading-relaxed">
                 Nguồn này có thể đang lỗi hoặc hết phim.
                 {adBlock
                   ? ' Nếu không phát được, hãy tắt "Chặn QC" ở trên rồi thử lại trong app.'
@@ -441,9 +441,9 @@ export default function MoviePlayerModal({ movie, onClose }) {
               <div className="flex items-center justify-between mb-1">
                 <p className="text-[12px] font-black text-white flex items-center gap-1.5">
                   <MessageCircle className="w-4 h-4 text-[#6E9BFF]" />Bình luận gắn phút
-                  {liveMin !== null && <span className="px-1.5 py-0.5 rounded bg-[#6E9BFF]/20 font-mono text-[10px] text-[#ffb37a]">đang @{fmtTstamp(liveMin)}</span>}
+                  {liveMin !== null && <span className="px-1.5 py-0.5 rounded bg-[#6E9BFF]/20 font-mono text-[10px] text-[#6E9BFF]">đang @{fmtTstamp(liveMin)}</span>}
                 </p>
-                <button onClick={() => setChatOpen(false)} className="p-1 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-slate-400" /></button>
+                <button onClick={() => setChatOpen(false)} className="p-1 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-[#9C9CAB]" /></button>
               </div>
               <CommentsBox target={movieDeepId(movie)} initialTstamp={liveMin} />
             </div>
@@ -454,8 +454,8 @@ export default function MoviePlayerModal({ movie, onClose }) {
       {/* ===== Server selector ===== */}
       <div className="px-3 md:px-5 py-2.5 bg-[#0c0d12]/95 border-t border-white/10 shrink-0">
         <div className="flex items-center justify-between mb-2">
-          <p className="text-[10px] text-stone-500 font-black uppercase tracking-widest">Nguồn phát · {sources.length}</p>
-          <button onClick={reload} className="flex items-center gap-1 text-[11px] font-bold text-stone-400 hover:text-white transition">
+          <p className="text-[10px] text-[#7C7C8A] font-black uppercase tracking-widest">Nguồn phát · {sources.length}</p>
+          <button onClick={reload} className="flex items-center gap-1 text-[11px] font-bold text-[#9C9CAB] hover:text-white transition">
             <RefreshCw className="w-3 h-3" /> Reload
           </button>
         </div>
@@ -467,10 +467,10 @@ export default function MoviePlayerModal({ movie, onClose }) {
               className={`pl-2.5 pr-3 py-2 rounded-2xl text-[12px] font-black whitespace-nowrap transition-all active:scale-95 flex items-center gap-2 border ${
                 i === sourceIdx
                   ? 'grad-brand text-white border-transparent shadow-lg shadow-[#2F6BFF]/30'
-                  : 'bg-white/[0.05] hover:bg-white/[0.11] text-stone-300 hover:text-white border-white/10'
+                  : 'bg-white/[0.05] hover:bg-white/[0.11] text-[#D2D2DC] hover:text-white border-white/10'
               }`}
             >
-              <span className={`w-5 h-5 rounded-lg flex items-center justify-center text-[10px] ${i === sourceIdx ? 'bg-white/25 text-white' : 'bg-white/10 text-stone-400'}`}>{i + 1}</span>
+              <span className={`w-5 h-5 rounded-lg flex items-center justify-center text-[10px] ${i === sourceIdx ? 'bg-white/25 text-white' : 'bg-white/10 text-[#9C9CAB]'}`}>{i + 1}</span>
               {s.name}
               {s.adFree && (
                 <span className={`flex items-center gap-0.5 text-[9px] font-black uppercase px-1.5 py-0.5 rounded-full ${

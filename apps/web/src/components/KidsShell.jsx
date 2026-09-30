@@ -77,7 +77,7 @@ export default function KidsShell({ channels = [], onSelectChannel, onSelectMovi
         <div className="max-w-sm">
           <div className="text-6xl mb-3">😴</div>
           <h2 className="text-xl font-black text-white mb-2">{t('kids.times_up')}</h2>
-          <p className="text-[13px] text-stone-400 mb-4">{t('kids.times_up_sub', { d: fmtDur(todaySec) })}</p>
+          <p className="text-[13px] text-[#9C9CAB] mb-4">{t('kids.times_up_sub', { d: fmtDur(todaySec) })}</p>
           <button onClick={() => { setPinErr(''); setAskPin('bonus'); }} className="px-6 py-3 rounded-2xl grad-brand text-white text-[13px] font-bold inline-flex items-center gap-2">
             <Plus className="w-4 h-4" />{t('kids.ask_parent')}
           </button>
@@ -93,7 +93,7 @@ export default function KidsShell({ channels = [], onSelectChannel, onSelectMovi
       <div className="flex gap-3 overflow-x-auto scrollbar-none pb-2 snap-x">
         {(items || []).map(m => (
           <button key={`${m.media_type || 'movie'}-${m.id}`} onClick={() => onSelectMovie && onSelectMovie({ ...m, media_type: m.media_type || 'movie' })} className="group shrink-0 w-[140px] md:w-[170px] snap-start active:scale-[0.98] transition-transform">
-            <span className="block aspect-[2/3] rounded-3xl overflow-hidden bg-stone-900 border-2 border-white/10 group-hover:border-amber-400/70 shadow-xl transition-all">
+            <span className="block aspect-[2/3] rounded-3xl overflow-hidden bg-[#16161C] border-2 border-white/10 group-hover:border-amber-400/70 shadow-xl transition-all">
               <img src={imgPath(m.poster_path, 'w342')} alt={m.title || m.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform" onError={e => { e.target.style.display = 'none'; }} />
             </span>
             <span className="block text-[13px] font-bold text-white truncate mt-1.5 text-center">{m.title || m.name}</span>
@@ -111,13 +111,13 @@ export default function KidsShell({ channels = [], onSelectChannel, onSelectMovi
             <span className="text-4xl">🧒</span>
             <div>
               <h1 className="text-[24px] font-black tracking-tight leading-none">{t('kids.title', { name: currentProfile?.name || '' })}</h1>
-              <p className="text-[11px] text-stone-500 mt-1 flex items-center gap-1.5">
+              <p className="text-[11px] text-[#7C7C8A] mt-1 flex items-center gap-1.5">
                 <Clock className="w-3 h-3" />
                 {limit ? t('kids.today', { d: fmtDur(todaySec), lim: fmtDur(limit * 60) }) : t('kids.today_free', { d: fmtDur(todaySec) })}
               </p>
             </div>
           </div>
-          <button onClick={() => { setPinErr(''); setAskPin('exit'); }} className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-white/[0.07] hover:bg-white/[0.14] border border-white/10 text-[12px] font-bold text-stone-300">
+          <button onClick={() => { setPinErr(''); setAskPin('exit'); }} className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-white/[0.07] hover:bg-white/[0.14] border border-white/10 text-[12px] font-bold text-[#D2D2DC]">
             <LogOut className="w-4 h-4" />{t('kids.exit')}
           </button>
         </div>

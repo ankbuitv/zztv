@@ -68,7 +68,7 @@ export default class ErrorBoundary extends React.Component {
         <div className="w-full max-w-md text-center">
           <div className="mx-auto w-14 h-14 rounded-2xl bg-red-500/15 border border-red-500/30 flex items-center justify-center text-2xl mb-4">⚠️</div>
           <h2 className="text-white font-black text-lg mb-1.5">Có lỗi bất ngờ xảy ra</h2>
-          <p className="text-stone-500 text-[12px] mb-1.5 leading-relaxed">
+          <p className="text-[#7C7C8A] text-[12px] mb-1.5 leading-relaxed">
             Ứng dụng vừa gặp lỗi khi hiển thị. Bấm tải lại để tiếp tục — nếu lặp lại, hãy gửi dòng lỗi bên dưới.
           </p>
           {this.state.times > 1 && (
@@ -83,23 +83,23 @@ export default class ErrorBoundary extends React.Component {
             >
               ⟳ Tải lại ứng dụng
             </button>
-            <button onClick={this.retry} className="px-4 py-2.5 rounded-xl border border-white/10 text-stone-300 text-[12px] font-bold hover:text-white transition">
+            <button onClick={this.retry} className="px-4 py-2.5 rounded-xl border border-white/10 text-[#D2D2DC] text-[12px] font-bold hover:text-white transition">
               Bỏ qua, dùng tiếp
             </button>
-            <button onClick={this.copy} className="px-3 py-2.5 rounded-xl border border-white/10 text-stone-400 text-[12px] hover:text-white transition">
+            <button onClick={this.copy} className="px-3 py-2.5 rounded-xl border border-white/10 text-[#9C9CAB] text-[12px] hover:text-white transition">
               Chép log
             </button>
           </div>
           <details className="mt-1 text-left">
-            <summary className="text-[11px] text-stone-600 cursor-pointer select-none">Chi tiết lỗi ({recent.length || 1} gần nhất)</summary>
+            <summary className="text-[11px] text-[#5A5A66] cursor-pointer select-none">Chi tiết lỗi ({recent.length || 1} gần nhất)</summary>
             <pre className="mt-2 p-3 rounded-xl bg-black/50 border border-white/10 text-[10px] text-red-300/90 whitespace-pre-wrap break-words max-h-52 overflow-y-auto">{msg}</pre>
             {recent.length > 1 && (
-              <pre className="mt-1 p-3 rounded-xl bg-black/30 border border-white/5 text-[10px] text-stone-400 whitespace-pre-wrap break-words max-h-40 overflow-y-auto">
+              <pre className="mt-1 p-3 rounded-xl bg-black/30 border border-white/5 text-[10px] text-[#9C9CAB] whitespace-pre-wrap break-words max-h-40 overflow-y-auto">
                 {recent.map((r, i) => `${i + 1}. [${r.code}] ${r.detail}`).join('\n')}
               </pre>
             )}
             {this.state.info && (
-              <pre className="mt-1 p-2 rounded-lg bg-black/30 border border-white/5 text-[9px] text-stone-500 whitespace-pre-wrap break-words max-h-40 overflow-y-auto">{this.state.info.componentStack}</pre>
+              <pre className="mt-1 p-2 rounded-lg bg-black/30 border border-white/5 text-[9px] text-[#7C7C8A] whitespace-pre-wrap break-words max-h-40 overflow-y-auto">{this.state.info.componentStack}</pre>
             )}
           </details>
         </div>

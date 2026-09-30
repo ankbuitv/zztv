@@ -164,9 +164,9 @@ export default function TVPage({
         <div className="min-w-0">
           <h1 className="text-[20px] md:text-[26px] font-black tracking-tight leading-none flex items-center gap-2">
             Truyền hình
-            <span className="px-2.5 py-1 rounded-full bg-white/10 border border-white/10 text-[11px] font-bold tracking-widest text-stone-300">{channels.length} KÊNH • {groups.length} NHÓM</span>
+            <span className="px-2.5 py-1 rounded-full bg-white/10 border border-white/10 text-[11px] font-bold tracking-widest text-[#D2D2DC]">{channels.length} KÊNH • {groups.length} NHÓM</span>
           </h1>
-          <p className="text-[11px] md:text-xs text-stone-500 mt-1 flex items-center gap-1.5"><Zap className="w-3 h-3 text-[#6E9BFF]" /> Trực tiếp • Chia nhóm theo TVG • Phóng to hình (Vừa khung / Phóng to / Kéo giãn)</p>
+          <p className="text-[11px] md:text-xs text-[#7C7C8A] mt-1 flex items-center gap-1.5"><Zap className="w-3 h-3 text-[#6E9BFF]" /> Trực tiếp • Chia nhóm theo TVG • Phóng to hình (Vừa khung / Phóng to / Kéo giãn)</p>
         </div>
         <div className="ml-auto flex items-center gap-2">
           {tvChannel && (
@@ -178,7 +178,7 @@ export default function TVPage({
           <button onClick={() => setPartyOpen(true)} disabled={!tvChannel} className="px-3.5 py-2 rounded-full text-xs font-bold border flex items-center gap-1.5 disabled:opacity-35 disabled:cursor-not-allowed bg-emerald-950/40 border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/20 transition" title="Xem chung cùng bạn bè qua mã">
             <Users className="w-4 h-4" /> Xem chung
           </button>
-          <button onClick={() => setTheater(v => !v)} className={`px-3.5 py-2 rounded-full text-xs font-bold border flex items-center gap-1.5 ${theater ? 'bg-[#2F6BFF] border-[#2F6BFF] text-white' : 'bg-white/10 border-white/10 text-stone-300 hover:text-white'}`}>
+          <button onClick={() => setTheater(v => !v)} className={`px-3.5 py-2 rounded-full text-xs font-bold border flex items-center gap-1.5 ${theater ? 'bg-[#2F6BFF] border-[#2F6BFF] text-white' : 'bg-white/10 border-white/10 text-[#D2D2DC] hover:text-white'}`}>
             <MonitorPlay className="w-4 h-4" /> {theater ? 'Thu gọn' : 'Rạp hát'}
           </button>
         </div>
@@ -194,16 +194,16 @@ export default function TVPage({
                 <div className="max-w-md w-full rounded-2xl border border-amber-500/30 bg-gradient-to-b from-amber-500/[0.08] to-black/40 p-4 text-center">
                   <div className="w-12 h-12 mx-auto rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center mb-2"><Wrench className="w-6 h-6 text-amber-300" /></div>
                   <p className="text-white font-black text-[15px] flex items-center justify-center gap-1.5"><span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>{t('p48.maintenance')} — {tvChannel.name}</p>
-                  <p className="text-[11px] text-stone-400 mt-1 line-clamp-2">{tvChannel.maintenance_note || 'Kênh đang được kỹ thuật viên kiểm tra. Quay lại sau ít phút nhé!'}</p>
+                  <p className="text-[11px] text-[#9C9CAB] mt-1 line-clamp-2">{tvChannel.maintenance_note || 'Kênh đang được kỹ thuật viên kiểm tra. Quay lại sau ít phút nhé!'}</p>
                   {Number(tvChannel.maintenance_until) > 0 && (
-                    <p className="text-[10px] font-mono text-stone-500 mt-1.5">mở lại ~ sau {Math.max(1, Math.ceil((Number(tvChannel.maintenance_until) * 1000 - Date.now()) / 60000))} phút</p>
+                    <p className="text-[10px] font-mono text-[#7C7C8A] mt-1.5">mở lại ~ sau {Math.max(1, Math.ceil((Number(tvChannel.maintenance_until) * 1000 - Date.now()) / 60000))} phút</p>
                   )}
                   {altList.length > 0 ? (
                     <>
-                      <p className="text-[10px] text-stone-500 font-black uppercase tracking-widest mt-3 mb-1.5">{t('p48.channel_alt')}</p>
+                      <p className="text-[10px] text-[#7C7C8A] font-black uppercase tracking-widest mt-3 mb-1.5">{t('p48.channel_alt')}</p>
                       <div className="flex flex-wrap gap-1.5 justify-center">
                         {altList.map(c => (
-                          <button key={c.channel_id} onClick={() => onOpenTvChannel && onOpenTvChannel(c)} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.07] border border-white/15 text-[11px] font-bold text-stone-200 hover:border-[#2F6BFF]/60 hover:text-white active:scale-95">
+                          <button key={c.channel_id} onClick={() => onOpenTvChannel && onOpenTvChannel(c)} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.07] border border-white/15 text-[11px] font-bold text-[#E6E6EC] hover:border-[#2F6BFF]/60 hover:text-white active:scale-95">
                             {c.logo ? <img src={c.logo} alt="" className="w-4 h-4 rounded object-contain" onError={e => e.target.style.display='none'} /> : <Tv className="w-3.5 h-3.5 text-[#6E9BFF]" />}
                             {c.name}
                           </button>
@@ -211,9 +211,9 @@ export default function TVPage({
                       </div>
                     </>
                   ) : (
-                    <p className="text-[10px] text-stone-600 italic mt-2">Chưa có kênh thay thế cùng nhóm — thử nhóm khác bên phải nhé</p>
+                    <p className="text-[10px] text-[#5A5A66] italic mt-2">Chưa có kênh thay thế cùng nhóm — thử nhóm khác bên phải nhé</p>
                   )}
-                  <button onClick={() => setMaintDismiss(prev => new Set(prev).add(tvChannel.channel_id))} className="mt-3 px-4 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-[10px] font-bold text-stone-400 hover:text-white">Tôi vẫn muốn thử kênh này</button>
+                  <button onClick={() => setMaintDismiss(prev => new Set(prev).add(tvChannel.channel_id))} className="mt-3 px-4 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-[10px] font-bold text-[#9C9CAB] hover:text-white">Tôi vẫn muốn thử kênh này</button>
                 </div>
               </div>
             )}
@@ -224,17 +224,17 @@ export default function TVPage({
                 {tvLoading ? (
                   <>
                     <div className="w-12 h-12 border-[3px] border-[#2F6BFF] border-t-transparent rounded-full animate-spin"></div>
-                    <p className="text-sm text-stone-400 font-bold">Đang tải {tvChannel?.name || 'kênh'}...</p>
+                    <p className="text-sm text-[#9C9CAB] font-bold">Đang tải {tvChannel?.name || 'kênh'}...</p>
                   </>
                 ) : (
                   <>
-                    <div className="w-20 h-20 rounded-[20px] bg-white/[0.04] border border-white/10 flex items-center justify-center"><Tv className="w-10 h-10 text-stone-600" /></div>
+                    <div className="w-20 h-20 rounded-[20px] bg-white/[0.04] border border-white/10 flex items-center justify-center"><Tv className="w-10 h-10 text-[#5A5A66]" /></div>
                     <div className="text-center">
                       <p className="text-base font-black text-white">Chọn một kênh để xem</p>
-                      <p className="text-xs text-stone-500 mt-1">Player to, nét, hỗ trợ HLS + DRM ClearKey</p>
+                      <p className="text-xs text-[#7C7C8A] mt-1">Player to, nét, hỗ trợ HLS + DRM ClearKey</p>
                       <div className="mt-3 flex flex-wrap gap-1.5 justify-center max-w-md">
                         {groups.slice(0, 6).map(([g]) => (
-                          <span key={g} className="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold text-stone-400 flex items-center gap-1"><GroupIcon name={g} size={10} />{g}</span>
+                          <span key={g} className="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold text-[#9C9CAB] flex items-center gap-1"><GroupIcon name={g} size={10} />{g}</span>
                         ))}
                       </div>
                     </div>
@@ -258,7 +258,7 @@ export default function TVPage({
                     {favSet.has(tvChannel.channel_id) && <Heart className="w-4 h-4 shrink-0 fill-[#2F6BFF] text-[#2F6BFF]" />}
                   </p>
                   <div className="mt-1 flex items-center gap-1.5 flex-wrap">
-                    {tvChannel.group_title && <span className="px-1.5 py-0.5 rounded bg-white/[0.08] border border-white/10 text-[9px] font-bold text-stone-300">{tvChannel.group_title}</span>}
+                    {tvChannel.group_title && <span className="px-1.5 py-0.5 rounded bg-white/[0.08] border border-white/10 text-[9px] font-bold text-[#D2D2DC]">{tvChannel.group_title}</span>}
                     {tvChannel.sponsored && <span className="px-1.5 py-0.5 rounded bg-emerald-500/15 border border-emerald-500/30 text-[9px] font-black text-emerald-300">★ TÀI TRỢ</span>}
                     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-600/15 border border-red-500/30 text-red-300 text-[9px] font-black tracking-widest">
                       <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>LIVE
@@ -267,13 +267,13 @@ export default function TVPage({
                 </div>
                 <div className="flex items-center gap-2 shrink-0 ml-auto">
                   {onToggleFavorite && (
-                    <button onClick={() => onToggleFavorite(tvChannel.channel_id)} title="Yêu thích" className={`px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1 border ${favSet.has(tvChannel.channel_id) ? 'bg-[#2F6BFF]/20 border-[#2F6BFF]/30 text-[#ffb37a]' : 'bg-white/5 border-white/10 text-stone-300 hover:text-white'}`}>
+                    <button onClick={() => onToggleFavorite(tvChannel.channel_id)} title="Yêu thích" className={`px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1 border ${favSet.has(tvChannel.channel_id) ? 'bg-[#2F6BFF]/20 border-[#2F6BFF]/30 text-[#6E9BFF]' : 'bg-white/5 border-white/10 text-[#D2D2DC] hover:text-white'}`}>
                       <Heart className={`w-3.5 h-3.5 ${favSet.has(tvChannel.channel_id) ? 'fill-current' : ''}`} />
                       <span className="hidden sm:inline">{favSet.has(tvChannel.channel_id) ? 'Đã thích' : 'Yêu thích'}</span>
                     </button>
                   )}
                   {onCloseTv && (
-                    <button onClick={onCloseTv} title="Đóng" className="px-2.5 sm:px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-bold text-stone-400 hover:text-white flex items-center gap-1">
+                    <button onClick={onCloseTv} title="Đóng" className="px-2.5 sm:px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-bold text-[#9C9CAB] hover:text-white flex items-center gap-1">
                       <X className="w-3.5 h-3.5" /><span className="hidden sm:inline">Đóng</span>
                     </button>
                   )}
@@ -285,7 +285,7 @@ export default function TVPage({
                 <div className="flex items-center gap-2">
                   <span className="flex items-center gap-1.5 text-[10px] font-black tracking-widest text-[#6E9BFF] shrink-0"><span className="w-2 h-2 rounded-full bg-[#2F6BFF] animate-pulse"></span>ĐANG PHÁT</span>
                   <p className="min-w-0 flex-1 text-[14px] font-bold text-white truncate">{epgNowNext?.now ? maskScores(epgNowNext.now.title) : tvChannel.name}</p>
-                  {epgNowNext?.now && <span className="hidden sm:inline text-[11px] text-stone-500 tabular-nums shrink-0">{formatTimeHHMM(epgNowNext.now.start)} - {formatTimeHHMM(epgNowNext.now.stop)}</span>}
+                  {epgNowNext?.now && <span className="hidden sm:inline text-[11px] text-[#7C7C8A] tabular-nums shrink-0">{formatTimeHHMM(epgNowNext.now.start)} - {formatTimeHHMM(epgNowNext.now.stop)}</span>}
                 </div>
                 {epgNowNext?.now && (
                   <div className="mt-2 h-1 rounded-full bg-white/10 overflow-hidden">
@@ -294,14 +294,14 @@ export default function TVPage({
                 )}
                 <div className="mt-2 flex items-center gap-3 flex-wrap">
                   {epgNowNext?.now && (
-                    <span className="sm:hidden text-[11px] text-stone-500 tabular-nums flex items-center gap-1"><Clock className="w-3 h-3" />{formatTimeHHMM(epgNowNext.now.start)} - {formatTimeHHMM(epgNowNext.now.stop)}</span>
+                    <span className="sm:hidden text-[11px] text-[#7C7C8A] tabular-nums flex items-center gap-1"><Clock className="w-3 h-3" />{formatTimeHHMM(epgNowNext.now.start)} - {formatTimeHHMM(epgNowNext.now.stop)}</span>
                   )}
                   {epgNowNext?.next && (
-                    <span className="text-[11px] text-stone-500 flex items-center gap-1 min-w-0">
-                      <ChevronsRight className="w-3.5 h-3.5 shrink-0 text-stone-600" />
-                      <span className="text-stone-400 shrink-0">Tiếp:</span>
-                      <span className="truncate text-stone-300">{maskScores(epgNowNext.next.title)}</span>
-                      {epgNowNext.next.start && <span className="shrink-0 text-stone-500 tabular-nums">{formatTimeHHMM(epgNowNext.next.start)}</span>}
+                    <span className="text-[11px] text-[#7C7C8A] flex items-center gap-1 min-w-0">
+                      <ChevronsRight className="w-3.5 h-3.5 shrink-0 text-[#5A5A66]" />
+                      <span className="text-[#9C9CAB] shrink-0">Tiếp:</span>
+                      <span className="truncate text-[#D2D2DC]">{maskScores(epgNowNext.next.title)}</span>
+                      {epgNowNext.next.start && <span className="shrink-0 text-[#7C7C8A] tabular-nums">{formatTimeHHMM(epgNowNext.next.start)}</span>}
                     </span>
                   )}
                 </div>
@@ -312,26 +312,26 @@ export default function TVPage({
           {/* (#22) Timeshift: quay lại X giờ qua mốc EPG (cần kênh hỗ trợ catchup) */}
           {tvChannel && onPlayCatchup && Number(tvChannel.catchup_days || 0) > 0 && (
             <div className="rounded-2xl bg-white/[0.03] border border-white/[0.07] px-3 py-2.5 flex items-center gap-2 flex-wrap">
-              <span className="flex items-center gap-1.5 text-[11px] font-black text-stone-300"><History className="w-3.5 h-3.5 text-[#6E9BFF]" />Xem lại (timeshift)</span>
+              <span className="flex items-center gap-1.5 text-[11px] font-black text-[#D2D2DC]"><History className="w-3.5 h-3.5 text-[#6E9BFF]" />Xem lại (timeshift)</span>
               <div className="flex gap-1.5">
                 {[1, 2, 3].map(h => (
                   <button key={h} onClick={() => {
                     const prog = programAtTime(dayPrograms, Date.now() - h * 3600_000);
                     if (prog) { onPlayCatchup(tvChannel, prog); addToast(`⏪ Đang tua về chương trình lúc ${formatTimeHHMM(prog.start)}`, 'info'); }
                     else addToast('Không có chương trình ở mốc này — thử mốc khác', 'info');
-                  }} className="px-3 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-[10px] font-bold text-stone-300 hover:border-[#6E9BFF]/50 hover:text-white active:scale-95">−{h} giờ</button>
+                  }} className="px-3 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-[10px] font-bold text-[#D2D2DC] hover:border-[#6E9BFF]/50 hover:text-white active:scale-95">−{h} giờ</button>
                 ))}
               </div>
-              <span className="ml-auto text-[9px] text-stone-600 hidden sm:inline">Chương trình trong ngày → tua lại đúng giờ phát</span>
+              <span className="ml-auto text-[9px] text-[#5A5A66] hidden sm:inline">Chương trình trong ngày → tua lại đúng giờ phát</span>
             </div>
           )}
 
           {tvChannel && dayPrograms.length > 0 && (
             <div className="rounded-2xl bg-[#0f0f12] border border-white/[0.06] overflow-hidden">
               <div className="px-4 py-3 border-b border-white/5 flex items-center gap-2 sticky top-0 bg-[#0f0f12] z-10">
-                <Clock className="w-4 h-4 text-stone-500" />
+                <Clock className="w-4 h-4 text-[#7C7C8A]" />
                 <h4 className="text-[13px] font-bold">Lịch hôm nay — {tvChannel.name}</h4>
-                <span className="ml-auto text-[11px] text-stone-500">{dayPrograms.length} chương trình</span>
+                <span className="ml-auto text-[11px] text-[#7C7C8A]">{dayPrograms.length} chương trình</span>
               </div>
               <div className="max-h-[380px] overflow-y-auto divide-y divide-white/[0.04]">
                 {dayPrograms.map((prog, idx) => {
@@ -340,14 +340,14 @@ export default function TVPage({
                   const pct = isLive && prog._e > prog._s ? Math.min(100, Math.max(0, ((nowTs - prog._s) / (prog._e - prog._s)) * 100)) : 0;
                   return (
                     <div key={`${prog.start}-${idx}`} className={`flex gap-3 px-4 py-3 ${isLive ? 'bg-[#2F6BFF]/10' : ''} ${isPast ? 'opacity-70' : ''}`}>
-                      <span className={`shrink-0 w-[64px] text-[12px] font-bold ${isLive ? 'text-[#ffb37a]' : 'text-stone-400'}`}>{formatTimeHHMM(prog.start)}</span>
+                      <span className={`shrink-0 w-[64px] text-[12px] font-bold ${isLive ? 'text-[#6E9BFF]' : 'text-[#9C9CAB]'}`}>{formatTimeHHMM(prog.start)}</span>
                       <span className="min-w-0 flex-1">
                         <span className="flex items-center gap-2">
-                          <span className={`text-[13px] font-semibold line-clamp-1 ${isLive ? 'text-white' : 'text-stone-300'}`}>{maskScores(prog.title)}</span>
+                          <span className={`text-[13px] font-semibold line-clamp-1 ${isLive ? 'text-white' : 'text-[#D2D2DC]'}`}>{maskScores(prog.title)}</span>
                           {isLive && <span className="px-1.5 py-0.5 text-[8px] font-black rounded-full bg-[#2F6BFF] text-white">LIVE</span>}
                         </span>
                         {isLive && <span className="block mt-2 h-1 rounded-full bg-black/50 overflow-hidden"><span className="block h-full bg-[#2F6BFF]" style={{ width: `${pct}%` }}></span></span>}
-                        {prog.desc && <span className="block text-[11px] text-stone-500 line-clamp-1 mt-1">{prog.desc}</span>}
+                        {prog.desc && <span className="block text-[11px] text-[#7C7C8A] line-clamp-1 mt-1">{prog.desc}</span>}
                       </span>
                       {isPast && onPlayCatchup && (
                         <button onClick={() => onPlayCatchup(tvChannel, prog)} className="shrink-0 p-2 rounded-full bg-white/10 hover:bg-white/15"><Play className="w-3.5 h-3.5 fill-current" /></button>
@@ -365,11 +365,11 @@ export default function TVPage({
           <div className="rounded-[20px] bg-white/[0.04] border border-white/10 p-3 flex flex-col gap-3 backdrop-blur">
             <div className="flex gap-2">
               <div className="relative flex-1">
-                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-500" />
-                <input value={query} onChange={e => setQuery(e.target.value)} placeholder="Tìm kênh, nhóm..." className="w-full pl-10 pr-9 py-3 bg-black/50 border border-white/10 rounded-full text-[13px] text-white placeholder:text-stone-500 focus:outline-none focus:border-[#2F6BFF]/50" />
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#7C7C8A]" />
+                <input value={query} onChange={e => setQuery(e.target.value)} placeholder="Tìm kênh, nhóm..." className="w-full pl-10 pr-9 py-3 bg-black/50 border border-white/10 rounded-full text-[13px] text-white placeholder:text-[#7C7C8A] focus:outline-none focus:border-[#2F6BFF]/50" />
                 {query && <button onClick={() => setQuery('')} className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-white/10 hover:bg-white/15"><X className="w-3.5 h-3.5" /></button>}
               </div>
-              <button onClick={() => setShowFavOnly(v => !v)} className={`px-4 py-3 rounded-full border text-xs font-bold flex items-center gap-1.5 transition ${showFavOnly ? 'bg-[#2F6BFF] border-[#2F6BFF] text-white shadow-lg shadow-[#2F6BFF]/20' : 'bg-white/5 border-white/10 text-stone-400 hover:text-white hover:bg-white/10'}`}>
+              <button onClick={() => setShowFavOnly(v => !v)} className={`px-4 py-3 rounded-full border text-xs font-bold flex items-center gap-1.5 transition ${showFavOnly ? 'bg-[#2F6BFF] border-[#2F6BFF] text-white shadow-lg shadow-[#2F6BFF]/20' : 'bg-white/5 border-white/10 text-[#9C9CAB] hover:text-white hover:bg-white/10'}`}>
                 <Heart className={`w-4 h-4 ${showFavOnly ? 'fill-current' : ''}`} /> {showFavOnly ? 'Yêu thích' : 'Tất cả'}
               </button>
             </div>
@@ -377,19 +377,19 @@ export default function TVPage({
             <div className="flex items-center gap-2">
               <div className="flex gap-1.5 overflow-x-auto scrollbar-none flex-1 pb-1">
                 {allGroupNames.slice(0, 30).map(g => (
-                  <button key={g} onClick={() => scrollToGroup(g)} className={`shrink-0 px-3.5 py-2 rounded-full text-[11px] font-bold border transition-all flex items-center gap-1.5 ${selectedGroup === g ? 'bg-white text-black border-white shadow' : 'bg-white/5 border-white/10 text-stone-400 hover:text-white hover:border-white/20'}`}>
+                  <button key={g} onClick={() => scrollToGroup(g)} className={`shrink-0 px-3.5 py-2 rounded-full text-[11px] font-bold border transition-all flex items-center gap-1.5 ${selectedGroup === g ? 'bg-white text-black border-white shadow' : 'bg-white/5 border-white/10 text-[#9C9CAB] hover:text-white hover:border-white/20'}`}>
                     {g !== 'Tất Cả' && <GroupIcon name={g} size={12} />}{g}
                   </button>
                 ))}
               </div>
               <div className="flex items-center gap-1 ml-1 shrink-0">
-                <button onClick={() => setViewMode('list')} className={`p-2 rounded-full border ${viewMode === 'list' ? 'bg-white text-black border-white' : 'bg-white/5 border-white/10 text-stone-500'}`}><List className="w-4 h-4" /></button>
-                <button onClick={() => setViewMode('grid')} className={`p-2 rounded-full border ${viewMode === 'grid' ? 'bg-white text-black border-white' : 'bg-white/5 border-white/10 text-stone-500'}`}><LayoutGrid className="w-4 h-4" /></button>
+                <button onClick={() => setViewMode('list')} className={`p-2 rounded-full border ${viewMode === 'list' ? 'bg-white text-black border-white' : 'bg-white/5 border-white/10 text-[#7C7C8A]'}`}><List className="w-4 h-4" /></button>
+                <button onClick={() => setViewMode('grid')} className={`p-2 rounded-full border ${viewMode === 'grid' ? 'bg-white text-black border-white' : 'bg-white/5 border-white/10 text-[#7C7C8A]'}`}><LayoutGrid className="w-4 h-4" /></button>
               </div>
             </div>
 
             <div className="flex items-center justify-between px-1">
-              <p className="text-[11px] text-stone-500 flex items-center gap-1.5"><Filter className="w-3 h-3" />{totalFiltered} kênh {showFavOnly ? 'yêu thích' : ''} {selectedGroup !== 'Tất Cả' ? `• ${selectedGroup}` : `• ${filteredGroups.length} nhóm`}</p>
+              <p className="text-[11px] text-[#7C7C8A] flex items-center gap-1.5"><Filter className="w-3 h-3" />{totalFiltered} kênh {showFavOnly ? 'yêu thích' : ''} {selectedGroup !== 'Tất Cả' ? `• ${selectedGroup}` : `• ${filteredGroups.length} nhóm`}</p>
               {(query || selectedGroup !== 'Tất Cả' || showFavOnly) && (
                 <button onClick={() => { setQuery(''); setSelectedGroup('Tất Cả'); setShowFavOnly(false); }} className="text-[11px] font-bold text-[#6E9BFF] hover:text-white">Xóa lọc</button>
               )}
@@ -399,9 +399,9 @@ export default function TVPage({
           <div className={`flex-1 overflow-y-auto rounded-[20px] bg-[#0f0f12] border border-white/10 ${theater ? 'max-h-[70vh]' : ''}`}>
             {filteredGroups.length === 0 && (
               <div className="p-12 text-center">
-                <Radio className="w-10 h-10 mx-auto text-stone-700 mb-3" />
-                <p className="text-sm text-stone-500 font-bold">Không tìm thấy kênh</p>
-                <p className="text-xs text-stone-600 mt-1">Thử đổi từ khóa hoặc nhóm</p>
+                <Radio className="w-10 h-10 mx-auto text-[#43434E] mb-3" />
+                <p className="text-sm text-[#7C7C8A] font-bold">Không tìm thấy kênh</p>
+                <p className="text-xs text-[#5A5A66] mt-1">Thử đổi từ khóa hoặc nhóm</p>
               </div>
             )}
             {filteredGroups.map(([gName, list]) => {
@@ -410,10 +410,10 @@ export default function TVPage({
               return (
                 <div key={gName} ref={el => groupRefs.current[gName] = el} className="border-b border-white/[0.06] last:border-0">
                   <button onClick={() => toggleCollapse(gName)} className={`w-full flex items-center gap-2.5 px-4 py-3 text-left sticky top-0 z-10 backdrop-blur bg-[#0f0f12]/90 hover:bg-white/[0.03] transition ${isActiveGroup ? 'bg-[#2F6BFF]/10' : ''}`}>
-                    <span className={`w-8 h-8 rounded-xl flex items-center justify-center border ${isActiveGroup ? 'bg-[#2F6BFF]/20 border-[#2F6BFF]/30 text-[#ffb37a]' : 'bg-white/5 border-white/10 text-stone-400'}`}><GroupIcon name={gName} size={14} /></span>
+                    <span className={`w-8 h-8 rounded-xl flex items-center justify-center border ${isActiveGroup ? 'bg-[#2F6BFF]/20 border-[#2F6BFF]/30 text-[#6E9BFF]' : 'bg-white/5 border-white/10 text-[#9C9CAB]'}`}><GroupIcon name={gName} size={14} /></span>
                     <div className="min-w-0 flex-1">
-                      <p className={`text-[13px] font-black truncate flex items-center gap-2 ${isActiveGroup ? 'text-[#ffb37a]' : 'text-white'}`}>{gName} <span className="px-2 py-0.5 rounded-full bg-white/10 border border-white/10 text-[10px] font-bold text-stone-400">{list.length}</span>{isActiveGroup && <span className="w-1.5 h-1.5 rounded-full bg-[#2F6BFF] animate-pulse"></span>}</p>
-                      <p className="text-[10px] text-stone-500 truncate">{list.slice(0,3).map(c=>c.name).join(' • ')}</p>
+                      <p className={`text-[13px] font-black truncate flex items-center gap-2 ${isActiveGroup ? 'text-[#6E9BFF]' : 'text-white'}`}>{gName} <span className="px-2 py-0.5 rounded-full bg-white/10 border border-white/10 text-[10px] font-bold text-[#9C9CAB]">{list.length}</span>{isActiveGroup && <span className="w-1.5 h-1.5 rounded-full bg-[#2F6BFF] animate-pulse"></span>}</p>
+                      <p className="text-[10px] text-[#7C7C8A] truncate">{list.slice(0,3).map(c=>c.name).join(' • ')}</p>
                     </div>
                     <span className="p-1.5 rounded-full bg-white/5 border border-white/10">{isCollapsed ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}</span>
                   </button>
@@ -431,13 +431,13 @@ export default function TVPage({
                                   {ch.logo ? <img src={ch.logo} alt="" loading="lazy" className="w-full h-full object-contain p-1" onError={e => e.target.style.display='none'} /> : <span className="text-[10px] font-black text-white/30">{(ch.name||'?').slice(0,2)}</span>}
                                 </div>
                                 <div className="min-w-0 flex-1">
-                                  <p className={`text-[12px] font-bold truncate ${active ? 'text-[#ffb37a]' : 'text-white'}`}>{ch.name}</p>
-                                  <p className="text-[10px] text-stone-500 truncate">{epg?.now ? maskScores(epg.now.title) : ch.group_title}</p>
+                                  <p className={`text-[12px] font-bold truncate ${active ? 'text-[#6E9BFF]' : 'text-white'}`}>{ch.name}</p>
+                                  <p className="text-[10px] text-[#7C7C8A] truncate">{epg?.now ? maskScores(epg.now.title) : ch.group_title}</p>
                                 </div>
                                 {active && <span className="w-2 h-2 rounded-full bg-[#2F6BFF] animate-pulse shrink-0"></span>}
                               </div>
                               <div className="flex items-center justify-between">
-                                <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-black/40 border border-white/10 text-stone-400">{ch.group_title.slice(0,14)}</span>
+                                <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-black/40 border border-white/10 text-[#9C9CAB]">{ch.group_title.slice(0,14)}</span>
                                 <span className={`w-6 h-6 rounded-full flex items-center justify-center ${active ? 'bg-[#2F6BFF] text-white' : 'bg-white/10 text-white/50 group-hover:bg-white/15'}`}><Play className="w-3 h-3 fill-current ml-px" /></span>
                               </div>
                             </button>
@@ -450,16 +450,16 @@ export default function TVPage({
                               {active && <span className="absolute inset-0 bg-[#2F6BFF]/20 flex items-center justify-center"><span className="w-2 h-2 rounded-full bg-[#2F6BFF] animate-pulse"></span></span>}
                             </div>
                             <div className="min-w-0 flex-1">
-                              <p className={`text-[13px] font-bold truncate flex items-center gap-1.5 ${active ? 'text-[#ffb37a]' : 'text-white'}`}>{ch.name} {isFav && <Heart className="w-3 h-3 fill-[#2F6BFF] text-[#2F6BFF] shrink-0" />}</p>
-                              <p className="text-[11px] text-stone-500 truncate flex items-center gap-1">
+                              <p className={`text-[13px] font-bold truncate flex items-center gap-1.5 ${active ? 'text-[#6E9BFF]' : 'text-white'}`}>{ch.name} {isFav && <Heart className="w-3 h-3 fill-[#2F6BFF] text-[#2F6BFF] shrink-0" />}</p>
+                              <p className="text-[11px] text-[#7C7C8A] truncate flex items-center gap-1">
                                 <span className="truncate max-w-[90px]">{ch.group_title}</span>
-                                {epg?.now && <><span className="w-1 h-1 rounded-full bg-stone-600 shrink-0"></span><span className="truncate">{maskScores(epg.now.title)}</span></>}
+                                {epg?.now && <><span className="w-1 h-1 rounded-full bg-[#5A5A66] shrink-0"></span><span className="truncate">{maskScores(epg.now.title)}</span></>}
                               </p>
                             </div>
                             <div className="flex items-center gap-1 shrink-0">
                               {onToggleFavorite && (
                                 <span role="button" tabIndex={0} onClick={(e) => { e.stopPropagation(); onToggleFavorite(ch.channel_id); }} className={`p-2 rounded-full transition ${isFav ? 'bg-[#2F6BFF]/20 hover:bg-[#2F6BFF]/30' : 'bg-white/5 hover:bg-white/10'}`}>
-                                  <Heart className={`w-3.5 h-3.5 ${isFav ? 'fill-[#2F6BFF] text-[#2F6BFF]' : 'text-stone-500'}`} />
+                                  <Heart className={`w-3.5 h-3.5 ${isFav ? 'fill-[#2F6BFF] text-[#2F6BFF]' : 'text-[#7C7C8A]'}`} />
                                 </span>
                               )}
                               <span className={`w-8 h-8 rounded-full flex items-center justify-center transition ${active ? 'bg-[#2F6BFF] text-white shadow' : 'bg-white/10 text-white/60 group-hover:bg-white/15'}`}><Play className="w-3.5 h-3.5 fill-current ml-px" /></span>

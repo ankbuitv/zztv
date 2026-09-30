@@ -100,7 +100,7 @@ export default function QrScanner({ onClose }) {
           <h3 className="text-base font-black text-white flex items-center gap-2">
             📷 {t('qr.title')}
           </h3>
-          <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-white/10 text-stone-400 hover:text-white">
+          <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-white/10 text-[#9C9CAB] hover:text-white">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -109,7 +109,7 @@ export default function QrScanner({ onClose }) {
           <div className="text-center py-8">
             <CheckCircle2 className="w-14 h-14 text-emerald-400 mx-auto mb-3" />
             <p className="text-sm font-bold text-white">{t('qr.approved')}</p>
-            <p className="text-xs text-stone-500 mt-1">{t('qr.approved_sub')}</p>
+            <p className="text-xs text-[#7C7C8A] mt-1">{t('qr.approved_sub')}</p>
             <button onClick={onClose} className="mt-5 px-6 py-2.5 btn-orange text-white text-sm font-bold rounded-2xl">
               {t('common.close')}
             </button>
@@ -117,10 +117,10 @@ export default function QrScanner({ onClose }) {
         ) : (
           <>
             <div className="flex bg-white/5 rounded-xl p-1 mb-4 border border-white/10">
-              <button onClick={() => setMode('camera')} className={`flex-1 py-2 text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 ${mode === 'camera' ? 'grad-brand text-white' : 'text-stone-400'}`}>
+              <button onClick={() => setMode('camera')} className={`flex-1 py-2 text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 ${mode === 'camera' ? 'grad-brand text-white' : 'text-[#9C9CAB]'}`}>
                 <Camera className="w-3.5 h-3.5" /> {t('qr.camera')}
               </button>
-              <button onClick={() => setMode('manual')} className={`flex-1 py-2 text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 ${mode === 'manual' ? 'grad-brand text-white' : 'text-stone-400'}`}>
+              <button onClick={() => setMode('manual')} className={`flex-1 py-2 text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 ${mode === 'manual' ? 'grad-brand text-white' : 'text-[#9C9CAB]'}`}>
                 <Keyboard className="w-3.5 h-3.5" /> {t('qr.manual')}
               </button>
             </div>
@@ -129,7 +129,7 @@ export default function QrScanner({ onClose }) {
               <div>
                 {camErr ? (
                   <div className="text-center py-8">
-                    <p className="text-xs text-stone-400 mb-3">{camErr}</p>
+                    <p className="text-xs text-[#9C9CAB] mb-3">{camErr}</p>
                     <button onClick={() => setMode('manual')} className="px-5 py-2.5 bg-white/10 text-white text-xs font-bold rounded-xl">
                       {t('qr.manual')}
                     </button>
@@ -150,12 +150,12 @@ export default function QrScanner({ onClose }) {
               </div>
             ) : (
               <div className="space-y-3">
-                <p className="text-xs text-stone-400">{t('qr.manual_help')}</p>
+                <p className="text-xs text-[#9C9CAB]">{t('qr.manual_help')}</p>
                 <input
                   value={manual}
                   onChange={e => setManual(e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6))}
                   placeholder="XXXXXX"
-                  className="w-full px-3 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-xl font-mono font-black tracking-[0.4em] text-center text-white placeholder:text-stone-600 focus:outline-none focus:border-[#2F6BFF]"
+                  className="w-full px-3 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-xl font-mono font-black tracking-[0.4em] text-center text-white placeholder:text-[#5A5A66] focus:outline-none focus:border-[#2F6BFF]"
                 />
                 <button
                   onClick={() => approve(manual)}

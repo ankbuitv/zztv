@@ -26,18 +26,18 @@ export default function SearchEPG({ epgData, channels, onPlayCatchup, onSelectCh
 
   if (!open) {
     return (
-      <button onClick={() => setOpen(true)} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900/60 border border-slate-800/50 rounded-xl text-xs text-slate-400 hover:text-white hover:border-slate-700 transition-all">
+      <button onClick={() => setOpen(true)} className="flex items-center gap-1.5 px-3 py-1.5 bg-[#16161C]/60 border border-[#24242C]/50 rounded-xl text-xs text-[#9C9CAB] hover:text-white hover:border-[#24242C] transition-all">
         <Search className="w-3.5 h-3.5" /> {t('epg.search_prog')}
       </button>
     );
   }
 
   return (
-    <div className="bg-[#13151c] border border-slate-800/40 rounded-xl p-3 space-y-2 anim-pop-fast">
+    <div className="bg-[#13151c] border border-[#24242C]/40 rounded-xl p-3 space-y-2 anim-pop-fast">
       <div className="flex items-center gap-2">
-        <Search className="w-4 h-4 text-slate-500 shrink-0" />
-        <input autoFocus type="text" value={query} onChange={e => setQuery(e.target.value)} placeholder={t('epg.search_ph')} className="flex-1 bg-transparent text-sm text-white placeholder:text-slate-600 focus:outline-none" />
-        <button onClick={() => { setOpen(false); setQuery(''); }} className="p-1 hover:bg-slate-800 rounded"><X className="w-4 h-4 text-slate-500" /></button>
+        <Search className="w-4 h-4 text-[#7C7C8A] shrink-0" />
+        <input autoFocus type="text" value={query} onChange={e => setQuery(e.target.value)} placeholder={t('epg.search_ph')} className="flex-1 bg-transparent text-sm text-white placeholder:text-[#5A5A66] focus:outline-none" />
+        <button onClick={() => { setOpen(false); setQuery(''); }} className="p-1 hover:bg-[#1E1E26] rounded"><X className="w-4 h-4 text-[#7C7C8A]" /></button>
       </div>
       {query.trim() && results.length > 0 && (
         <div className="max-h-60 overflow-y-auto space-y-1 pr-1">
@@ -52,12 +52,12 @@ export default function SearchEPG({ epgData, channels, onPlayCatchup, onSelectCh
                   onSelectChannel && onSelectChannel(r.channel);
                 }
               }}
-              className="w-full text-left flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-slate-800/60 transition-all"
+              className="w-full text-left flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-[#1E1E26]/60 transition-all"
             >
-              {r.channel?.logo && <img src={r.channel.logo} alt="" className="w-8 h-8 object-contain rounded bg-slate-900 p-0.5 shrink-0" onError={e => e.target.style.display = 'none'} />}
+              {r.channel?.logo && <img src={r.channel.logo} alt="" className="w-8 h-8 object-contain rounded bg-[#16161C] p-0.5 shrink-0" onError={e => e.target.style.display = 'none'} />}
               <div className="min-w-0 flex-1">
                 <p className="text-xs font-semibold text-white truncate">{r.title}</p>
-                <div className="flex items-center gap-1.5 text-[10px] text-slate-500">
+                <div className="flex items-center gap-1.5 text-[10px] text-[#7C7C8A]">
                   <span>{r.channel?.name || ''}</span><span>·</span>
                   <Clock className="w-2.5 h-2.5" />
                   <span>{formatTimeHHMM(r.start)} - {formatTimeHHMM(r.stop)}</span>
@@ -69,7 +69,7 @@ export default function SearchEPG({ epgData, channels, onPlayCatchup, onSelectCh
           ))}
         </div>
       )}
-      {query.trim() && results.length === 0 && <p className="text-xs text-slate-600 text-center py-3">{t('epg.search_none')}</p>}
+      {query.trim() && results.length === 0 && <p className="text-xs text-[#5A5A66] text-center py-3">{t('epg.search_none')}</p>}
     </div>
   );
 }

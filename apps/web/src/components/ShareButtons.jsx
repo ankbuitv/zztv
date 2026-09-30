@@ -47,7 +47,7 @@ export default function ShareButtons({ url, title = '', compact = false }) {
       <button onClick={zalo} title="Zalo" className={btn + size + 'bg-sky-500/15 text-sky-300 border border-sky-500/40 hover:bg-sky-500/25'}>
         <MessageCircle className="w-3.5 h-3.5" />{!compact && 'Zalo'}
       </button>
-      <button onClick={copy} title={t('share.copy')} className={btn + size + 'bg-white/[0.06] text-stone-300 border border-white/10 hover:bg-white/[0.12]'}>
+      <button onClick={copy} title={t('share.copy')} className={btn + size + 'bg-white/[0.06] text-[#D2D2DC] border border-white/10 hover:bg-white/[0.12]'}>
         {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}{!compact && t('share.copy')}
       </button>
     </div>

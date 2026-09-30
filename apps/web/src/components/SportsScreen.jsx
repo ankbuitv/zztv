@@ -39,7 +39,7 @@ function TeamBadge({ src, name, size = 'w-8 h-8' }) {
   const [err, setErr] = useState(false);
   if (!src || err) {
     return (
-      <span className={`${size} rounded-full bg-white/10 border border-white/15 flex items-center justify-center text-[10px] font-black text-stone-300 shrink-0`}>
+      <span className={`${size} rounded-full bg-white/10 border border-white/15 flex items-center justify-center text-[10px] font-black text-[#D2D2DC] shrink-0`}>
         {(name || '?').slice(0, 1)}
       </span>
     );
@@ -54,7 +54,7 @@ function MatchCard({ ev, showScore, onClick, onTeam }) {
   return (
     <div onClick={onClick} className={`rounded-2xl border p-3 transition-all cursor-pointer hover:border-[#2F6BFF]/50 hover:-translate-y-0.5 ${live ? 'bg-[#2F6BFF]/10 border-[#2F6BFF]/50 shadow-lg shadow-[#2F6BFF]/10' : 'bg-white/[0.03] border-white/[0.07]'}`}>
       <div className="flex items-center justify-between mb-2.5">
-        <span className="text-[10px] font-bold text-stone-500">
+        <span className="text-[10px] font-bold text-[#7C7C8A]">
           {ev.intRound ? `${t('sports.round', { n: ev.intRound })} · ` : ''}{fmtDT(ev.strTimestamp, ev.dateEvent, ev.strTime)}
         </span>
         {live ? (
@@ -62,9 +62,9 @@ function MatchCard({ ev, showScore, onClick, onTeam }) {
             <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>{String(ev.strStatus || 'LIVE').toUpperCase()}
           </span>
         ) : pp ? (
-          <span className="px-2 py-0.5 text-[9px] font-bold rounded-full bg-white/10 text-stone-400">{t('sports.pp')}</span>
+          <span className="px-2 py-0.5 text-[9px] font-bold rounded-full bg-white/10 text-[#9C9CAB]">{t('sports.pp')}</span>
         ) : showScore ? (
-          <span className="px-2 py-0.5 text-[9px] font-black rounded-full bg-white/10 text-stone-300">FT</span>
+          <span className="px-2 py-0.5 text-[9px] font-black rounded-full bg-white/10 text-[#D2D2DC]">FT</span>
         ) : (
           <span className="px-2 py-0.5 text-[9px] font-bold rounded-full bg-sky-500/15 text-sky-300 border border-sky-500/30">{ev.strVenue || t('sports.vs')}</span>
         )}
@@ -79,10 +79,10 @@ function MatchCard({ ev, showScore, onClick, onTeam }) {
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); onTeam && onTeam({ name: tm.name, id: tm.id }); }}
-              className="flex-1 min-w-0 text-left text-[13px] font-bold text-slate-200 truncate hover:text-[#ffb37a]"
+              className="flex-1 min-w-0 text-left text-[13px] font-bold text-[#E6E6EC] truncate hover:text-[#6E9BFF]"
             >{tm.name}</button>
             {showScore && (
-              <span className={`text-[15px] font-black tabular-nums ${live ? 'text-[#ffb37a]' : 'text-white'}`}>
+              <span className={`text-[15px] font-black tabular-nums ${live ? 'text-[#6E9BFF]' : 'text-white'}`}>
                 {tm.score ?? '-'}
               </span>
             )}
@@ -190,20 +190,20 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
     <div className="text-white pb-12">
       {/* Header */}
       <div className="px-5 md:px-8 pt-5 pb-3 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(600px 180px at 15% 0%, rgba(34,211,238,.12), transparent 70%), radial-gradient(500px 160px at 90% 0%, rgba(243,111,33,.14), transparent 70%)' }}></div>
+        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(600px 180px at 15% 0%, rgba(34,211,238,.12), transparent 70%), radial-gradient(500px 160px at 90% 0%, rgba(47,107,255,.14), transparent 70%)' }}></div>
         <div className="relative flex items-center gap-2.5">
           <span className="w-10 h-10 rounded-2xl grad-brand flex items-center justify-center shadow-lg shadow-[#2F6BFF]/30">
             <Trophy className="w-5 h-5 text-white" />
           </span>
           <div>
             <h1 className="text-[24px] font-black tracking-tight leading-none">{t('sports.title')}</h1>
-            <p className="text-[11px] text-stone-500 mt-1">{t('sports.sub')}</p>
+            <p className="text-[11px] text-[#7C7C8A] mt-1">{t('sports.sub')}</p>
           </div>
           {/* Trạng thái tự cập nhật + nút làm mới tay */}
           <div className="ml-auto flex items-center gap-2">
             {sportTab === 'football' && (
               <>
-                <span className="hidden sm:flex items-center gap-1.5 text-[10px] font-bold text-stone-500">
+                <span className="hidden sm:flex items-center gap-1.5 text-[10px] font-bold text-[#7C7C8A]">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                   {t('sports.auto')}{updatedAt ? ` · ${fmtHM(updatedAt)}` : ''}
                 </span>
@@ -213,7 +213,7 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
                   title={t('sports.refresh')}
                   className="w-8 h-8 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 flex items-center justify-center disabled:opacity-50 active:scale-95"
                 >
-                  <RefreshCw className={`w-3.5 h-3.5 text-stone-300 ${refreshing ? 'animate-spin' : ''}`} />
+                  <RefreshCw className={`w-3.5 h-3.5 text-[#D2D2DC] ${refreshing ? 'animate-spin' : ''}`} />
                 </button>
               </>
             )}
@@ -226,7 +226,7 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
               key={tb.id}
               onClick={() => setSportTab(tb.id)}
               className={`px-4 py-2 rounded-full text-[12px] font-black transition-all active:scale-95 ${
-                sportTab === tb.id ? 'grad-brand text-white shadow-lg shadow-[#2F6BFF]/30' : 'bg-white/[0.06] text-stone-300 hover:bg-white/[0.12]'
+                sportTab === tb.id ? 'grad-brand text-white shadow-lg shadow-[#2F6BFF]/30' : 'bg-white/[0.06] text-[#D2D2DC] hover:bg-white/[0.12]'
               }`}
             >
               {tb.label}
@@ -243,7 +243,7 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
               className={`shrink-0 pl-2 pr-1.5 py-1.5 rounded-full text-[12px] font-bold transition-all active:scale-95 flex items-center gap-1.5 ${
                 leagueId === custom.id
                   ? 'grad-brand text-white shadow-lg shadow-[#2F6BFF]/30'
-                  : 'bg-white/[0.06] text-stone-300 hover:bg-white/[0.12] hover:text-white'
+                  : 'bg-white/[0.06] text-[#D2D2DC] hover:bg-white/[0.12] hover:text-white'
               }`}
             >
               {custom.customBadge ? <img src={custom.customBadge} alt="" className="w-5 h-5 object-contain" onError={e => { e.target.style.display = 'none'; }} /> : <span>{custom.flag}</span>}
@@ -265,7 +265,7 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
               className={`shrink-0 pl-2 pr-3.5 py-1.5 rounded-full text-[12px] font-bold transition-all active:scale-95 flex items-center gap-2 ${
                 leagueId === l.id
                   ? 'grad-brand text-white shadow-lg shadow-[#2F6BFF]/30'
-                  : 'bg-white/[0.06] text-stone-300 hover:bg-white/[0.12] hover:text-white'
+                  : 'bg-white/[0.06] text-[#D2D2DC] hover:bg-white/[0.12] hover:text-white'
               }`}
             >
               {l.logo ? (
@@ -279,7 +279,7 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
           <button
             onClick={() => setShowExplorer(v => !v)}
             className={`shrink-0 px-3.5 py-2 rounded-full text-[12px] font-black transition-all active:scale-95 flex items-center gap-1.5 border border-dashed ${
-              showExplorer ? 'border-[#2F6BFF] text-[#6E9BFF] bg-[#2F6BFF]/10' : 'border-white/20 text-stone-300 hover:border-white/40 hover:text-white'
+              showExplorer ? 'border-[#2F6BFF] text-[#6E9BFF] bg-[#2F6BFF]/10' : 'border-white/20 text-[#D2D2DC] hover:border-white/40 hover:text-white'
             }`}
           >
             🌍 {t('sports.more')}
@@ -289,9 +289,9 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
         {/* Explorer: chọn môn -> chọn giải */}
         {sportTab === 'football' && showExplorer && (
           <div className="relative mt-3 rounded-2xl border border-white/10 bg-black/30 p-3.5">
-            <p className="text-[11px] text-stone-400 mb-2.5">🌍 <b className="text-stone-200">{t('sports.more_title')}</b> · {t('sports.more_hint')}</p>
+            <p className="text-[11px] text-[#9C9CAB] mb-2.5">🌍 <b className="text-[#E6E6EC]">{t('sports.more_title')}</b> · {t('sports.more_hint')}</p>
             {!sportsIdx ? (
-              <div className="flex items-center gap-2 text-[12px] text-stone-500 py-3">
+              <div className="flex items-center gap-2 text-[12px] text-[#7C7C8A] py-3">
                 <span className="w-4 h-4 border-2 border-[#2F6BFF] border-t-transparent rounded-full animate-spin" /> {t('app.loading')}
               </div>
             ) : (
@@ -302,7 +302,7 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
                       key={sp.name}
                       onClick={() => setExplorerSport(sp.name)}
                       className={`shrink-0 px-3 py-1.5 rounded-full text-[12px] font-bold transition-all active:scale-95 ${
-                        explorerSport === sp.name ? 'grad-brand text-white shadow' : 'bg-white/[0.06] text-stone-300 hover:bg-white/[0.12]'
+                        explorerSport === sp.name ? 'grad-brand text-white shadow' : 'bg-white/[0.06] text-[#D2D2DC] hover:bg-white/[0.12]'
                       }`}
                     >
                       {sp.icon} {sp.name} <span className="opacity-60 text-[10px]">{sp.count}</span>
@@ -315,7 +315,7 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
                       key={l.tsdb}
                       onClick={() => pickExplorerLeague(l)}
                       className={`flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-left text-[12px] font-bold transition-all active:scale-[0.98] ${
-                        custom?.tsdb === l.tsdb ? 'bg-[#2F6BFF]/15 border border-[#2F6BFF]/40 text-white' : 'bg-white/[0.04] border border-transparent text-stone-300 hover:bg-white/[0.09] hover:text-white'
+                        custom?.tsdb === l.tsdb ? 'bg-[#2F6BFF]/15 border border-[#2F6BFF]/40 text-white' : 'bg-white/[0.04] border border-transparent text-[#D2D2DC] hover:bg-white/[0.09] hover:text-white'
                       }`}
                     >
                       {l.badge ? (
@@ -325,7 +325,7 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
                       )}
                       <span className="min-w-0">
                         <span className="block truncate">{l.name}</span>
-                        {l.country ? <span className="block text-[10px] font-medium text-stone-500 truncate">{l.country}</span> : null}
+                        {l.country ? <span className="block text-[10px] font-medium text-[#7C7C8A] truncate">{l.country}</span> : null}
                       </span>
                     </button>
                   ))}
@@ -362,7 +362,7 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
                   className={`group shrink-0 w-[210px] snap-start rounded-2xl border p-2.5 text-left transition-all hover:-translate-y-0.5 ${s.live ? 'bg-[#2F6BFF]/10 border-[#2F6BFF]/50' : 'bg-white/[0.03] border-white/[0.07] hover:border-[#2F6BFF]/50'}`}
                 >
                   <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-[9px] font-black text-stone-400 flex items-center gap-1">
+                    <span className="text-[9px] font-black text-[#9C9CAB] flex items-center gap-1">
                       {s.league?.logo ? <img src={s.league.logo} alt="" className="w-3.5 h-3.5 object-contain" onError={(e) => { e.currentTarget.style.display = 'none'; }} /> : s.league?.flag} {s.league?.short}
                     </span>
                     {s.live ? (
@@ -370,7 +370,7 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
                         <span className="w-1 h-1 rounded-full bg-white animate-pulse"></span>{String(s.ev?.strStatus || 'LIVE').toUpperCase()}
                       </span>
                     ) : (
-                      <span className="px-1.5 py-0.5 text-[8px] font-black rounded-full bg-white/10 text-stone-400">FT</span>
+                      <span className="px-1.5 py-0.5 text-[8px] font-black rounded-full bg-white/10 text-[#9C9CAB]">FT</span>
                     )}
                   </div>
                   <div className="space-y-1">
@@ -380,8 +380,8 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
                     ].map((tm, i) => (
                       <div key={i} className="flex items-center gap-1.5">
                         <TeamBadge src={tm.badge} name={tm.name} size="w-6 h-6" />
-                        <span className="flex-1 min-w-0 text-[11.5px] font-bold text-slate-200 truncate">{tm.name}</span>
-                        <span className={`text-[13px] font-black tabular-nums ${s.live ? 'text-[#ffb37a]' : 'text-white'}`}>{tm.score ?? '-'}</span>
+                        <span className="flex-1 min-w-0 text-[11.5px] font-bold text-[#E6E6EC] truncate">{tm.name}</span>
+                        <span className={`text-[13px] font-black tabular-nums ${s.live ? 'text-[#6E9BFF]' : 'text-white'}`}>{tm.score ?? '-'}</span>
                       </div>
                     ))}
                   </div>
@@ -398,7 +398,7 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
                 <Radio className="w-4 h-4 text-[#6E9BFF]" />
               </span>
               <h2 className="text-[19px] font-extrabold tracking-tight">{t('sports.channels')}</h2>
-              <span className="text-[11px] text-stone-500 font-bold">{sportChannels.length}</span>
+              <span className="text-[11px] text-[#7C7C8A] font-bold">{sportChannels.length}</span>
             </div>
             <ScrollRow>
               {sportChannels.map(ch => (
@@ -419,7 +419,7 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
                   </span>
                   <span className="block px-2.5 py-2">
                     <span className="block text-[12px] font-bold text-white truncate">{ch.name}</span>
-                    <span className="block text-[10px] text-stone-500 truncate">{ch.group_title || ''}</span>
+                    <span className="block text-[10px] text-[#7C7C8A] truncate">{ch.group_title || ''}</span>
                   </span>
                 </button>
               ))}
@@ -437,10 +437,10 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
                   <CalendarDays className="w-4 h-4 text-sky-400" />
                 </span>
                 <h2 className="text-[19px] font-extrabold tracking-tight">{t('sports.fixtures')}</h2>
-                <span className="text-[11px] text-stone-500 font-bold flex items-center gap-1.5 min-w-0">
+                <span className="text-[11px] text-[#7C7C8A] font-bold flex items-center gap-1.5 min-w-0">
                   {league.logo ? <img src={league.logo} alt="" className="w-4 h-4 object-contain shrink-0" onError={(e) => { e.currentTarget.style.display = 'none'; }} /> : league.flag}
                   <span className="truncate">{league.name}</span>
-                  <span className="hidden sm:inline text-stone-600">· {t('sports.window')}</span>
+                  <span className="hidden sm:inline text-[#5A5A66]">· {t('sports.window')}</span>
                 </span>
               </div>
               {loading ? (
@@ -448,7 +448,7 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
                   {Array.from({ length: 6 }).map((_, i) => <div key={i} className="h-[132px] rounded-2xl bg-white/[0.04] animate-pulse" />)}
                 </div>
               ) : data.next.length === 0 ? (
-                <p className="text-[12px] text-stone-600 italic bg-white/[0.02] border border-white/[0.05] rounded-2xl px-4 py-6 text-center">{t('sports.no_data')}</p>
+                <p className="text-[12px] text-[#5A5A66] italic bg-white/[0.02] border border-white/[0.05] rounded-2xl px-4 py-6 text-center">{t('sports.no_data')}</p>
               ) : (
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
                   {data.next.slice(0, 12).map(ev => <MatchCard key={ev.idEvent} ev={ev} showScore={false} onClick={() => setSelMatch(ev)} onTeam={setSelTeam} />)}
@@ -463,14 +463,14 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
                   <Trophy className="w-4 h-4 text-emerald-400" />
                 </span>
                 <h2 className="text-[19px] font-extrabold tracking-tight">{t('sports.results')}</h2>
-                <span className="text-[11px] text-stone-600 font-bold">{t('sports.window')}</span>
+                <span className="text-[11px] text-[#5A5A66] font-bold">{t('sports.window')}</span>
               </div>
               {loading ? (
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
                   {Array.from({ length: 6 }).map((_, i) => <div key={i} className="h-[132px] rounded-2xl bg-white/[0.04] animate-pulse" />)}
                 </div>
               ) : data.past.length === 0 ? (
-                <p className="text-[12px] text-stone-600 italic bg-white/[0.02] border border-white/[0.05] rounded-2xl px-4 py-6 text-center">{t('sports.no_data')}</p>
+                <p className="text-[12px] text-[#5A5A66] italic bg-white/[0.02] border border-white/[0.05] rounded-2xl px-4 py-6 text-center">{t('sports.no_data')}</p>
               ) : (
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
                   {data.past.slice(0, 12).map(ev => <MatchCard key={ev.idEvent} ev={ev} showScore={true} onClick={() => setSelMatch(ev)} onTeam={setSelTeam} />)}
@@ -494,7 +494,7 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
               <div className="overflow-x-auto">
                 <table className="w-full text-[12px] min-w-[520px]">
                   <thead>
-                    <tr className="text-[10px] uppercase tracking-widest text-stone-500 border-b border-white/[0.06]">
+                    <tr className="text-[10px] uppercase tracking-widest text-[#7C7C8A] border-b border-white/[0.06]">
                       <th className="text-left font-black px-4 py-2.5 w-10">#</th>
                       <th className="text-left font-black px-2 py-2.5">{t('sports.th_team')}</th>
                       <th className="font-black px-2 py-2.5 w-10">{t('sports.th_p')}</th>
@@ -508,24 +508,24 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
                   <tbody>
                     {data.table.map((row, i) => (
                       <tr key={i} className={`border-b border-white/[0.04] last:border-0 ${i < 4 ? 'bg-emerald-500/[0.04]' : ''}`}>
-                        <td className="px-4 py-2.5 font-black text-stone-500 tabular-nums">
-                          <span className={`inline-flex w-6 h-6 items-center justify-center rounded-lg ${i === 0 ? 'bg-amber-500/20 text-amber-300' : i < 4 ? 'bg-emerald-500/15 text-emerald-300' : 'text-stone-500'}`}>{i + 1}</span>
+                        <td className="px-4 py-2.5 font-black text-[#7C7C8A] tabular-nums">
+                          <span className={`inline-flex w-6 h-6 items-center justify-center rounded-lg ${i === 0 ? 'bg-amber-500/20 text-amber-300' : i < 4 ? 'bg-emerald-500/15 text-emerald-300' : 'text-[#7C7C8A]'}`}>{i + 1}</span>
                         </td>
                         <td className="px-2 py-2.5">
                           <button
                             type="button"
                             onClick={() => setSelTeam({ name: row.name, id: row.id })}
-                            className="flex items-center gap-2 min-w-0 w-full text-left hover:text-[#ffb37a]"
+                            className="flex items-center gap-2 min-w-0 w-full text-left hover:text-[#6E9BFF]"
                           >
                             <TeamBadge src={row.badge} name={row.name} size="w-6 h-6" />
-                            <span className="font-bold text-slate-200 truncate">{row.name}</span>
+                            <span className="font-bold text-[#E6E6EC] truncate">{row.name}</span>
                           </button>
                         </td>
-                        <td className="px-2 py-2.5 text-center text-stone-400 tabular-nums">{row.played}</td>
-                        <td className="px-2 py-2.5 text-center text-stone-400 tabular-nums hidden sm:table-cell">{row.won}</td>
-                        <td className="px-2 py-2.5 text-center text-stone-400 tabular-nums hidden sm:table-cell">{row.draw}</td>
-                        <td className="px-2 py-2.5 text-center text-stone-400 tabular-nums hidden sm:table-cell">{row.lost}</td>
-                        <td className="px-2 py-2.5 text-center text-stone-400 tabular-nums">{row.gd > 0 ? `+${row.gd}` : row.gd}</td>
+                        <td className="px-2 py-2.5 text-center text-[#9C9CAB] tabular-nums">{row.played}</td>
+                        <td className="px-2 py-2.5 text-center text-[#9C9CAB] tabular-nums hidden sm:table-cell">{row.won}</td>
+                        <td className="px-2 py-2.5 text-center text-[#9C9CAB] tabular-nums hidden sm:table-cell">{row.draw}</td>
+                        <td className="px-2 py-2.5 text-center text-[#9C9CAB] tabular-nums hidden sm:table-cell">{row.lost}</td>
+                        <td className="px-2 py-2.5 text-center text-[#9C9CAB] tabular-nums">{row.gd > 0 ? `+${row.gd}` : row.gd}</td>
                         <td className="px-4 py-2.5 text-right font-black text-white tabular-nums">{row.points}</td>
                       </tr>
                     ))}
@@ -543,10 +543,10 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
               <Clapperboard className="w-4 h-4 text-fuchsia-400" />
             </span>
             <h2 className="text-[19px] font-extrabold tracking-tight">{t('sports.videos')}</h2>
-            {videos.length > 0 && <span className="text-[11px] text-stone-500 font-bold">{videos.length}</span>}
+            {videos.length > 0 && <span className="text-[11px] text-[#7C7C8A] font-bold">{videos.length}</span>}
           </div>
           {videos.length === 0 ? (
-            <p className="text-[12px] text-stone-600 italic bg-white/[0.02] border border-white/[0.05] rounded-2xl px-4 py-6 text-center">{t('sports.no_videos')}</p>
+            <p className="text-[12px] text-[#5A5A66] italic bg-white/[0.02] border border-white/[0.05] rounded-2xl px-4 py-6 text-center">{t('sports.no_videos')}</p>
           ) : (
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
               {videos.map(v => (
@@ -572,7 +572,7 @@ export default function SportsScreen({ channels = [], onSelectChannel }) {
                   <span className="block px-2.5 py-2">
                     <span className="flex items-start justify-between gap-1">
                       <span className="text-[12px] font-bold text-white leading-snug line-clamp-2">{v.title}</span>
-                      <ChevronRight className="w-3.5 h-3.5 text-stone-600 shrink-0 mt-0.5" />
+                      <ChevronRight className="w-3.5 h-3.5 text-[#5A5A66] shrink-0 mt-0.5" />
                     </span>
                   </span>
                 </button>
@@ -610,7 +610,7 @@ function VideoModal({ video, onClose }) {
       <div className="w-full max-w-3xl modal-panel overflow-hidden" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between gap-3 px-4 py-3 border-b border-white/10">
           <p className="text-[13px] font-bold text-white truncate">{video.title}</p>
-          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10 shrink-0"><X className="w-4 h-4 text-slate-400" /></button>
+          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10 shrink-0"><X className="w-4 h-4 text-[#9C9CAB]" /></button>
         </div>
         <div className="aspect-video bg-black">
           {parsed.type === 'mp4' ? (
@@ -619,7 +619,7 @@ function VideoModal({ video, onClose }) {
             <iframe src={parsed.src} title={video.title} className="w-full h-full" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowFullScreen />
           )}
         </div>
-        {video.league && <p className="px-4 py-2.5 text-[11px] text-stone-500 font-bold">{video.league}</p>}
+        {video.league && <p className="px-4 py-2.5 text-[11px] text-[#7C7C8A] font-bold">{video.league}</p>}
       </div>
     </div>
   );

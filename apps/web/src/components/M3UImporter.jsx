@@ -68,13 +68,13 @@ export default function M3UImporter({ onImport, onClose }) {
   };
 
   return (
-    <div className="bg-[#13151c] border border-slate-800/40 rounded-xl p-4 space-y-3">
+    <div className="bg-[#13151c] border border-[#24242C]/40 rounded-xl p-4 space-y-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-xs font-bold text-white">
           <Upload className="w-4 h-4 text-blue-400" /> Nhập M3U
         </div>
         {onClose && (
-          <button onClick={onClose} className="text-[10px] text-slate-500 hover:text-white">Đóng</button>
+          <button onClick={onClose} className="text-[10px] text-[#7C7C8A] hover:text-white">Đóng</button>
         )}
       </div>
 
@@ -84,7 +84,7 @@ export default function M3UImporter({ onImport, onClose }) {
           value={newName}
           onChange={e => setNewName(e.target.value)}
           placeholder="Tên playlist (tùy chọn)"
-          className="w-full bg-slate-800/60 text-xs text-slate-200 px-3 py-1.5 rounded-lg border border-slate-700/50"
+          className="w-full bg-[#1E1E26]/60 text-xs text-[#E6E6EC] px-3 py-1.5 rounded-lg border border-[#24242C]/50"
         />
         <div className="flex gap-2">
           <input
@@ -92,7 +92,7 @@ export default function M3UImporter({ onImport, onClose }) {
             value={newUrl}
             onChange={e => setNewUrl(e.target.value)}
             placeholder="https://example.com/playlist.m3u"
-            className="flex-1 bg-slate-800/60 text-xs text-slate-200 px-3 py-1.5 rounded-lg border border-slate-700/50"
+            className="flex-1 bg-[#1E1E26]/60 text-xs text-[#E6E6EC] px-3 py-1.5 rounded-lg border border-[#24242C]/50"
             onKeyDown={e => e.key === 'Enter' && addSource()}
           />
           <button
@@ -108,11 +108,11 @@ export default function M3UImporter({ onImport, onClose }) {
       {sources.length > 0 && (
         <div className="space-y-1.5 max-h-40 overflow-y-auto">
           {sources.map(src => (
-            <div key={src.id} className="flex items-center gap-2 bg-slate-900/60 rounded-lg p-2 border border-slate-800/30">
-              <FileText className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+            <div key={src.id} className="flex items-center gap-2 bg-[#16161C]/60 rounded-lg p-2 border border-[#24242C]/30">
+              <FileText className="w-3.5 h-3.5 text-[#7C7C8A] shrink-0" />
               <div className="flex-1 min-w-0">
-                <p className="text-[11px] font-semibold text-slate-200 truncate">{src.name}</p>
-                <p className="text-[9px] text-slate-500 truncate font-mono">{src.url}</p>
+                <p className="text-[11px] font-semibold text-[#E6E6EC] truncate">{src.name}</p>
+                <p className="text-[9px] text-[#7C7C8A] truncate font-mono">{src.url}</p>
               </div>
               <button
                 onClick={() => importFromUrl(src)}
@@ -122,7 +122,7 @@ export default function M3UImporter({ onImport, onClose }) {
                 <Upload className="w-3 h-3" /> Import
               </button>
               <button onClick={() => removeSource(src.id)} className="p-1 hover:bg-[#2F6BFF]/20 rounded">
-                <Trash2 className="w-3 h-3 text-slate-500 hover:text-[#6E9BFF]" />
+                <Trash2 className="w-3 h-3 text-[#7C7C8A] hover:text-[#6E9BFF]" />
               </button>
             </div>
           ))}

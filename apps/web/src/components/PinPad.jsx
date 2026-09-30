@@ -34,10 +34,10 @@ export default function PinPad({ title, error = '', onSubmit, onCancel }) {
           ))}
           <span />
           <button onClick={() => press('0')} className="h-14 rounded-2xl bg-white/[0.07] hover:bg-white/[0.14] text-xl font-black text-white active:scale-95 transition-all">0</button>
-          <button onClick={() => setPin(p => p.slice(0, -1))} className="h-14 rounded-2xl bg-white/[0.07] hover:bg-white/[0.14] text-stone-300 active:scale-95 transition-all flex items-center justify-center"><Delete className="w-5 h-5" /></button>
+          <button onClick={() => setPin(p => p.slice(0, -1))} className="h-14 rounded-2xl bg-white/[0.07] hover:bg-white/[0.14] text-[#D2D2DC] active:scale-95 transition-all flex items-center justify-center"><Delete className="w-5 h-5" /></button>
         </div>
         {onCancel && (
-          <button onClick={onCancel} className="mt-3 text-[12px] font-bold text-stone-500 hover:text-white">{t('common.back')}</button>
+          <button onClick={onCancel} className="mt-3 text-[12px] font-bold text-[#7C7C8A] hover:text-white">{t('common.back')}</button>
         )}
       </div>
     </div>

@@ -20,12 +20,12 @@ function RaceCard({ race, winner }) {
     <div className={`rounded-2xl border p-3.5 transition-all hover:-translate-y-0.5 ${upcoming ? 'bg-gradient-to-br from-white/[0.06] to-white/[0.02] border-white/[0.1]' : 'bg-white/[0.02] border-white/[0.06]'}`}>
       <div className="flex items-center justify-between mb-1.5">
         <span className="px-1.5 py-0.5 rounded-md bg-red-500/15 text-red-300 text-[10px] font-black uppercase tracking-widest">R{race.round}</span>
-        <span className={`text-[10px] font-bold ${upcoming ? 'text-sky-300' : 'text-stone-500'}`}>{fmtDT(race.ts)}</span>
+        <span className={`text-[10px] font-bold ${upcoming ? 'text-sky-300' : 'text-[#7C7C8A]'}`}>{fmtDT(race.ts)}</span>
       </div>
       <p className="text-[13px] font-extrabold text-white leading-tight">{race.name}</p>
-      <p className="text-[11px] text-stone-500 mt-0.5 truncate">{race.circuit}{race.locality ? ` · ${race.locality}` : ''}{race.country ? `, ${race.country}` : ''}</p>
+      <p className="text-[11px] text-[#7C7C8A] mt-0.5 truncate">{race.circuit}{race.locality ? ` · ${race.locality}` : ''}{race.country ? `, ${race.country}` : ''}</p>
       {!upcoming && winner && (
-        <p className="text-[11px] font-bold text-amber-300 mt-1.5 truncate">🏆 {winner.driver} <span className="text-stone-500 font-medium">({winner.team})</span></p>
+        <p className="text-[11px] font-bold text-amber-300 mt-1.5 truncate">🏆 {winner.driver} <span className="text-[#7C7C8A] font-medium">({winner.team})</span></p>
       )}
     </div>
   );
@@ -79,7 +79,7 @@ export default function RacingSection() {
               <Clapperboard className="w-4 h-4 text-red-400" />
             </span>
             <h2 className="text-[19px] font-extrabold tracking-tight">Video đua xe</h2>
-            <span className="text-[11px] text-stone-500 font-bold">{videos.length}</span>
+            <span className="text-[11px] text-[#7C7C8A] font-bold">{videos.length}</span>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
             {videos.map((v) => (
@@ -116,7 +116,7 @@ export default function RacingSection() {
             {Array.from({ length: 6 }).map((_, i) => <div key={i} className="h-[110px] rounded-2xl bg-white/[0.04] animate-pulse" />)}
           </div>
         ) : sched.length === 0 ? (
-          <p className="text-[12px] text-stone-600 italic bg-white/[0.02] border border-white/[0.05] rounded-2xl px-4 py-6 text-center">{t('sports.no_data')}</p>
+          <p className="text-[12px] text-[#5A5A66] italic bg-white/[0.02] border border-white/[0.05] rounded-2xl px-4 py-6 text-center">{t('sports.no_data')}</p>
         ) : (
           <>
             {upcoming.length > 0 && (
@@ -129,14 +129,14 @@ export default function RacingSection() {
             )}
             {past.length > 0 && (
               <>
-                <p className="text-[11px] font-black uppercase tracking-widest text-stone-500 mb-2 flex items-center gap-1.5"><Trophy className="w-3.5 h-3.5" />{t('race.done')}</p>
+                <p className="text-[11px] font-black uppercase tracking-widest text-[#7C7C8A] mb-2 flex items-center gap-1.5"><Trophy className="w-3.5 h-3.5" />{t('race.done')}</p>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
                   {(showAll ? past : past.slice(0, 3)).map(r => <RaceCard key={r.round} race={r} winner={winners[r.round]} />)}
                 </div>
               </>
             )}
             {(upcoming.length > 3 || past.length > 3) && (
-              <button onClick={() => setShowAll(v => !v)} className="mt-3 mx-auto flex items-center gap-1 text-[12px] font-bold text-stone-400 hover:text-white">
+              <button onClick={() => setShowAll(v => !v)} className="mt-3 mx-auto flex items-center gap-1 text-[12px] font-bold text-[#9C9CAB] hover:text-white">
                 {showAll ? t('race.less') : t('race.more')}<ChevronDown className={`w-4 h-4 transition-transform ${showAll ? 'rotate-180' : ''}`} />
               </button>
             )}
@@ -154,19 +154,19 @@ export default function RacingSection() {
             <h2 className="text-[19px] font-extrabold tracking-tight">{t('race.standings')}</h2>
             <div className="flex gap-1 ml-2 bg-white/[0.05] rounded-full p-1">
               {[{ id: 'drivers', label: '🏁 ' + t('race.drivers') }, { id: 'teams', label: '🏭 ' + t('race.teams') }].map(tb => (
-                <button key={tb.id} onClick={() => setStandTab(tb.id)} className={`px-3 py-1 rounded-full text-[11px] font-bold transition-all ${standTab === tb.id ? 'bg-[#2F6BFF] text-white' : 'text-stone-400 hover:text-white'}`}>{tb.label}</button>
+                <button key={tb.id} onClick={() => setStandTab(tb.id)} className={`px-3 py-1 rounded-full text-[11px] font-bold transition-all ${standTab === tb.id ? 'bg-[#2F6BFF] text-white' : 'text-[#9C9CAB] hover:text-white'}`}>{tb.label}</button>
               ))}
             </div>
           </div>
           <div className="rounded-2xl border border-white/[0.07] overflow-hidden bg-white/[0.02]">
             {(standTab === 'drivers' ? stand.drivers : stand.teams).map((r, i) => (
               <div key={i} className="flex items-center gap-2.5 px-4 py-2.5 border-b border-white/[0.04] last:border-0">
-                <span className={`w-7 h-7 rounded-lg text-[12px] font-black flex items-center justify-center shrink-0 ${i === 0 ? 'bg-amber-500/20 text-amber-300' : i < 3 ? 'bg-white/10 text-white' : 'text-stone-500'}`}>{r.pos}</span>
+                <span className={`w-7 h-7 rounded-lg text-[12px] font-black flex items-center justify-center shrink-0 ${i === 0 ? 'bg-amber-500/20 text-amber-300' : i < 3 ? 'bg-white/10 text-white' : 'text-[#7C7C8A]'}`}>{r.pos}</span>
                 <div className="flex-1 min-w-0">
-                  <p className="text-[13px] font-bold text-white truncate">{standTab === 'drivers' ? r.name : r.name}{standTab === 'drivers' && r.code ? <span className="ml-1.5 text-[10px] font-black text-stone-500">{r.code}</span> : null}</p>
-                  {standTab === 'drivers' && <p className="text-[10px] text-stone-500 truncate">{r.team}</p>}
+                  <p className="text-[13px] font-bold text-white truncate">{standTab === 'drivers' ? r.name : r.name}{standTab === 'drivers' && r.code ? <span className="ml-1.5 text-[10px] font-black text-[#7C7C8A]">{r.code}</span> : null}</p>
+                  {standTab === 'drivers' && <p className="text-[10px] text-[#7C7C8A] truncate">{r.team}</p>}
                 </div>
-                <span className="text-[10px] text-stone-500 font-bold hidden sm:block">🏆 {r.wins}</span>
+                <span className="text-[10px] text-[#7C7C8A] font-bold hidden sm:block">🏆 {r.wins}</span>
                 <span className="text-[14px] font-black text-white tabular-nums w-14 text-right">{r.pts}</span>
               </div>
             ))}
@@ -190,8 +190,8 @@ export default function RacingSection() {
                 <div className="space-y-1.5 max-h-[180px] overflow-y-auto">
                   {m.events.slice(0, 8).map((ev, j) => (
                     <div key={j} className="flex items-center justify-between gap-2 text-[11px]">
-                      <span className="text-slate-300 truncate">{ev.strEvent || ev.strHomeTeam}</span>
-                      <span className="text-stone-500 shrink-0 tabular-nums">{ev.dateEvent ? ev.dateEvent.slice(5) : ''}</span>
+                      <span className="text-[#D2D2DC] truncate">{ev.strEvent || ev.strHomeTeam}</span>
+                      <span className="text-[#7C7C8A] shrink-0 tabular-nums">{ev.dateEvent ? ev.dateEvent.slice(5) : ''}</span>
                     </div>
                   ))}
                 </div>

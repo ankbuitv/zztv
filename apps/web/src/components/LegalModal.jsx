@@ -108,14 +108,14 @@ export default function LegalModal({ tab = 'terms', onClose, onTab }) {
       <div className="modal-panel w-full max-w-2xl max-h-[85vh] flex flex-col overflow-hidden" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between px-5 pt-4 pb-3 border-b border-white/10 shrink-0">
           <h2 className="text-base font-black text-white">{L.title}</h2>
-          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-slate-400" /></button>
+          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-[#9C9CAB]" /></button>
         </div>
         <div className="flex gap-1.5 px-5 pt-3 shrink-0 overflow-x-auto scrollbar-none">
           {tabs.map(tb => (
             <button
               key={tb.id}
               onClick={() => switchTab(tb.id)}
-              className={`px-3.5 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap transition-all ${active === tb.id ? 'grad-brand text-white' : 'bg-white/[0.06] text-stone-400 hover:text-white'}`}
+              className={`px-3.5 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap transition-all ${active === tb.id ? 'grad-brand text-white' : 'bg-white/[0.06] text-[#9C9CAB] hover:text-white'}`}
             >
               {tb.label}
             </button>
@@ -124,11 +124,11 @@ export default function LegalModal({ tab = 'terms', onClose, onTab }) {
         <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
           {L.body.map(([h, p], i) => (
             <div key={i}>
-              <p className="text-[13px] font-black text-[#ffb37a] mb-1">{h}</p>
-              <p className="text-[12px] text-stone-300 leading-relaxed">{p}</p>
+              <p className="text-[13px] font-black text-[#6E9BFF] mb-1">{h}</p>
+              <p className="text-[12px] text-[#D2D2DC] leading-relaxed">{p}</p>
             </div>
           ))}
-          <p className="text-[10px] text-stone-600 pt-2 border-t border-white/5">playZ - A Product of ANKB CO. © 2025 · {t('footer.updated')}</p>
+          <p className="text-[10px] text-[#5A5A66] pt-2 border-t border-white/5">playZ - A Product of ANKB CO. © 2025 · {t('footer.updated')}</p>
         </div>
       </div>
     </div>

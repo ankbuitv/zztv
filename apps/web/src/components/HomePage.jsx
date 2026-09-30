@@ -163,7 +163,7 @@ export default function HomePage({
       className="group relative shrink-0 w-[190px] md:w-[220px] snap-start rounded-2xl overflow-hidden border border-white/[0.08] hover:border-[#2F6BFF]/60 bg-[#15161b] text-left transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-[#2F6BFF]/10"
     >
       <span className="block relative h-[104px] md:h-[120px] flex items-center justify-center bg-[#0c0d11] overflow-hidden">
-        <span className="absolute inset-0 opacity-40" style={{ background: 'radial-gradient(circle at 20% 120%, rgba(243,111,33,.3), transparent 65%)' }}></span>
+        <span className="absolute inset-0 opacity-40" style={{ background: 'radial-gradient(circle at 20% 120%, rgba(47,107,255,.3), transparent 65%)' }}></span>
         {typeof i === 'number' && (
           <span className="absolute left-1.5 bottom-0 font-black leading-none select-none" style={{ fontSize: 64, color: 'transparent', WebkitTextStroke: '2px rgba(255,255,255,.22)' }}>{i + 1}</span>
         )}
@@ -181,7 +181,7 @@ export default function HomePage({
       </span>
       <span className="block px-3 py-2.5">
         <span className="block text-[13px] font-bold text-white truncate">{ch.name}</span>
-        <span className="block text-[11px] text-stone-500 truncate mt-0.5">{epg?.now ? maskScores(epg.now.title) : (ch.group_title || '')}</span>
+        <span className="block text-[11px] text-[#7C7C8A] truncate mt-0.5">{epg?.now ? maskScores(epg.now.title) : (ch.group_title || '')}</span>
       </span>
     </button>
   );
@@ -306,7 +306,7 @@ export default function HomePage({
                   onClick={() => onSelectMovie && onSelectMovie(m)}
                   className="group relative shrink-0 w-[130px] md:w-[160px] snap-start text-left active:scale-[0.98] transition-transform"
                 >
-                  <span className="block aspect-[2/3] rounded-2xl overflow-hidden bg-stone-900 border border-white/10 shadow-xl shadow-black/50 group-hover:border-[#2F6BFF]/60 transition-all">
+                  <span className="block aspect-[2/3] rounded-2xl overflow-hidden bg-[#16161C] border border-white/10 shadow-xl shadow-black/50 group-hover:border-[#2F6BFF]/60 transition-all">
                     {m.poster_path ? (
                       <img src={imgPath(m.poster_path, 'w342')} alt={m.title || m.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onError={e => { e.target.style.display = 'none'; }} />
                     ) : (
@@ -338,7 +338,7 @@ export default function HomePage({
                   onClick={() => onOpenShort && onOpenShort(s.id)}
                   className="group relative shrink-0 w-[120px] md:w-[140px] snap-start text-left active:scale-[0.98] transition-transform"
                 >
-                  <span className="block aspect-[9/16] rounded-2xl overflow-hidden bg-stone-900 border border-white/10 group-hover:border-cyan-400/60 transition-all relative">
+                  <span className="block aspect-[9/16] rounded-2xl overflow-hidden bg-[#16161C] border border-white/10 group-hover:border-cyan-400/60 transition-all relative">
                     {s.thumb_url ? (
                       <img src={s.thumb_url} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onError={e => { e.target.style.display = 'none'; }} />
                     ) : (
@@ -350,7 +350,7 @@ export default function HomePage({
                     </span>
                     <span className="absolute inset-x-0 bottom-0 p-2">
                       <span className="block text-[11px] font-bold leading-tight line-clamp-2 text-left">{s.title || s.caption || ''}</span>
-                      <span className="flex items-center gap-1 mt-1 text-[9px] text-stone-400 font-semibold">❤ {fmtCount(s.likes)}</span>
+                      <span className="flex items-center gap-1 mt-1 text-[9px] text-[#9C9CAB] font-semibold">❤ {fmtCount(s.likes)}</span>
                     </span>
                     <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                       <span className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center"><Play className="w-4 h-4 text-black fill-current ml-0.5" /></span>
@@ -381,7 +381,7 @@ export default function HomePage({
             </div>
             <div className="space-y-2">
               {scores.length === 0 && (
-                <p className="text-[12px] text-stone-600 italic text-center py-6">{t('sports.no_data')}</p>
+                <p className="text-[12px] text-[#5A5A66] italic text-center py-6">{t('sports.no_data')}</p>
               )}
               {scores.map(s => (
                 <div key={`${s.league?.id}-${s.ev?.idEvent}`} className={`flex items-center gap-2 rounded-2xl px-3 py-2.5 border ${s.live ? 'bg-[#2F6BFF]/10 border-[#2F6BFF]/40' : 'bg-black/30 border-white/[0.05]'}`}>
@@ -391,20 +391,20 @@ export default function HomePage({
                         <span className="w-1 h-1 rounded-full bg-white animate-pulse"></span>LIVE
                       </span>
                     ) : (
-                      <span className="text-[9px] font-black text-stone-400">{s.league?.short || ''}</span>
+                      <span className="text-[9px] font-black text-[#9C9CAB]">{s.league?.short || ''}</span>
                     )}
-                    <span className="text-[9px] font-bold text-stone-600">{fmtDate(s.ev?.dateEvent)}</span>
+                    <span className="text-[9px] font-bold text-[#5A5A66]">{fmtDate(s.ev?.dateEvent)}</span>
                   </span>
                   <span className="flex-1 min-w-0 flex items-center justify-end gap-1.5">
-                    <span className="text-[12px] font-bold text-slate-200 truncate text-right">{s.ev?.strHomeTeam}</span>
+                    <span className="text-[12px] font-bold text-[#E6E6EC] truncate text-right">{s.ev?.strHomeTeam}</span>
                     {s.ev?.strHomeTeamBadge && <img src={s.ev.strHomeTeamBadge} alt="" loading="lazy" className="w-6 h-6 object-contain shrink-0" onError={e => { e.target.style.display = 'none'; }} />}
                   </span>
-                  <span className={`px-2.5 py-1 rounded-lg text-[13px] font-black tabular-nums shrink-0 ${s.live ? 'bg-[#2F6BFF]/25 text-[#ffb37a]' : 'bg-white/[0.07] text-white'}`}>
+                  <span className={`px-2.5 py-1 rounded-lg text-[13px] font-black tabular-nums shrink-0 ${s.live ? 'bg-[#2F6BFF]/25 text-[#6E9BFF]' : 'bg-white/[0.07] text-white'}`}>
                     {s.ev?.intHomeScore ?? '-'} - {s.ev?.intAwayScore ?? '-'}
                   </span>
                   <span className="flex-1 min-w-0 flex items-center gap-1.5">
                     {s.ev?.strAwayTeamBadge && <img src={s.ev.strAwayTeamBadge} alt="" loading="lazy" className="w-6 h-6 object-contain shrink-0" onError={e => { e.target.style.display = 'none'; }} />}
-                    <span className="text-[12px] font-bold text-slate-200 truncate">{s.ev?.strAwayTeam}</span>
+                    <span className="text-[12px] font-bold text-[#E6E6EC] truncate">{s.ev?.strAwayTeam}</span>
                   </span>
                 </div>
               ))}
@@ -420,7 +420,7 @@ export default function HomePage({
             </div>
             <div className="space-y-2">
               {events.length === 0 && (
-                <p className="text-[12px] text-stone-600 italic text-center py-6">{t('home.no_events')}</p>
+                <p className="text-[12px] text-[#5A5A66] italic text-center py-6">{t('home.no_events')}</p>
               )}
               {events.slice(0, 5).map(ev => (
                 <button
@@ -435,9 +435,9 @@ export default function HomePage({
                   )}
                   <span className="min-w-0 flex-1">
                     <span className="block text-[13px] font-bold text-white truncate group-hover:text-fuchsia-200">{ev.title}</span>
-                    {ev.subtitle && <span className="block text-[11px] text-stone-500 truncate mt-0.5">{ev.subtitle}</span>}
+                    {ev.subtitle && <span className="block text-[11px] text-[#7C7C8A] truncate mt-0.5">{ev.subtitle}</span>}
                   </span>
-                  <ArrowIcon className="w-4 h-4 text-stone-600 group-hover:text-white shrink-0 transition-colors" />
+                  <ArrowIcon className="w-4 h-4 text-[#5A5A66] group-hover:text-white shrink-0 transition-colors" />
                 </button>
               ))}
             </div>
@@ -458,11 +458,11 @@ function SectionHead({ icon, wrap, title, sub, action }) {
         <span className={`w-9 h-9 rounded-xl border flex items-center justify-center ${wrap}`}>{icon}</span>
         <div>
           <h2 className="text-[20px] font-extrabold tracking-tight leading-tight">{title}</h2>
-          {sub && <p className="text-[11px] text-stone-500">{sub}</p>}
+          {sub && <p className="text-[11px] text-[#7C7C8A]">{sub}</p>}
         </div>
       </div>
       {action && (
-        <button onClick={action.onClick} className="flex items-center gap-1 px-3.5 py-2 rounded-full bg-white/[0.06] hover:bg-white/[0.12] text-[12px] font-bold text-stone-200 transition-all active:scale-95">
+        <button onClick={action.onClick} className="flex items-center gap-1 px-3.5 py-2 rounded-full bg-white/[0.06] hover:bg-white/[0.12] text-[12px] font-bold text-[#E6E6EC] transition-all active:scale-95">
           {action.label} <ArrowIcon className="w-3.5 h-3.5" />
         </button>
       )}

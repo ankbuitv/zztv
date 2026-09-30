@@ -433,11 +433,11 @@ function ShortCommentsSheet({ short, onClose, onCount }) {
       >
         <div className="flex items-center gap-2 px-4 py-3 border-b border-white/10 shrink-0">
           <span className="w-1 h-4 rounded-full bg-[#2F6BFF]" />
-          <MessageCircle className="w-4 h-4 text-slate-400 shrink-0" />
+          <MessageCircle className="w-4 h-4 text-[#9C9CAB] shrink-0" />
           <p className="text-[13px] font-black text-white truncate flex-1">
-            {t('cmt.title')}{who ? <span className="text-stone-500 font-bold"> · {who}</span> : null}
+            {t('cmt.title')}{who ? <span className="text-[#7C7C8A] font-bold"> · {who}</span> : null}
           </p>
-          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-slate-400" /></button>
+          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-[#9C9CAB]" /></button>
         </div>
         <div className="flex-1 overflow-y-auto px-4 pb-6">
           <CommentsBox target={`short-${short.id}`} variant="short" onCount={onCount} />
@@ -854,7 +854,7 @@ export default function ShortsScreen({ startId = null, onStartHandled = null } =
       <div className="flex items-center justify-center py-24">
         <div className="text-center">
           <div className="w-10 h-10 mx-auto border-[3px] border-[#2F6BFF] border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-xs text-stone-500 mt-3">{t('app.loading')}</p>
+          <p className="text-xs text-[#7C7C8A] mt-3">{t('app.loading')}</p>
         </div>
       </div>
     );
@@ -865,10 +865,10 @@ export default function ShortsScreen({ startId = null, onStartHandled = null } =
       <div className="px-5 md:px-8 pt-5 pb-3 flex items-center justify-between">
         <div>
           <h2 className="text-xl font-black text-white tracking-tight">{t('shorts.title')}</h2>
-          <p className="text-[11px] text-stone-500 mt-0.5">{t('shorts.sub')}</p>
+          <p className="text-[11px] text-[#7C7C8A] mt-0.5">{t('shorts.sub')}</p>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-[11px] font-mono text-stone-500">{activeIdx + 1} / {shorts.length}</span>
+          <span className="text-[11px] font-mono text-[#7C7C8A]">{activeIdx + 1} / {shorts.length}</span>
           {isAuthenticated && myProfile && (
             <button onClick={() => setShowUpload(true)} className="p-2 rounded-full bg-white text-black hover:bg-white/90"><Upload className="w-4 h-4" /></button>
           )}
@@ -879,9 +879,9 @@ export default function ShortsScreen({ startId = null, onStartHandled = null } =
       {challenges.length > 0 && (
         <div className="px-5 md:px-8 mb-3">
           <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1">
-            <span className="shrink-0 text-[10px] font-black uppercase tracking-widest text-stone-500 flex items-center gap-1"><Flame className="w-3.5 h-3.5 text-[#2F6BFF]" />{t('p48.challenge')}</span>
+            <span className="shrink-0 text-[10px] font-black uppercase tracking-widest text-[#7C7C8A] flex items-center gap-1"><Flame className="w-3.5 h-3.5 text-[#2F6BFF]" />{t('p48.challenge')}</span>
             {challenges.slice(0, 6).map(c => (
-              <button key={c.id} onClick={() => { setChalFocus(c.id); setShowChal(true); }} className="shrink-0 px-3 py-1.5 rounded-full bg-gradient-to-r from-[#2F6BFF]/15 to-[#e94057]/10 border border-[#2F6BFF]/30 text-[11px] font-black text-[#ffb37a] hover:bg-[#2F6BFF]/25 transition active:scale-95">
+              <button key={c.id} onClick={() => { setChalFocus(c.id); setShowChal(true); }} className="shrink-0 px-3 py-1.5 rounded-full bg-gradient-to-r from-[#2F6BFF]/15 to-[#e94057]/10 border border-[#2F6BFF]/30 text-[11px] font-black text-[#6E9BFF] hover:bg-[#2F6BFF]/25 transition active:scale-95">
                 #{c.hashtag} {String(c.ends_at || '').slice(0, 10) >= new Date().toISOString().slice(0, 10) || !c.ends_at ? '🔥' : ''}
               </button>
             ))}
@@ -936,7 +936,7 @@ export default function ShortsScreen({ startId = null, onStartHandled = null } =
         <div className="px-5 py-20 text-center">
           <p className="text-5xl mb-4">🎬</p>
           <h2 className="text-lg font-black text-white">{t('shorts.title')}</h2>
-          <p className="text-[13px] text-stone-500 mt-2">{t('shorts.empty')}</p>
+          <p className="text-[13px] text-[#7C7C8A] mt-2">{t('shorts.empty')}</p>
           {isAuthenticated && !myProfile && (
             <button onClick={() => setShowCreate(true)} className="mt-4 px-5 py-2.5 rounded-full bg-white text-black font-black text-[13px]">Tạo hồ sơ để đăng video</button>
           )}
@@ -991,36 +991,36 @@ function ChallengesModal({ challenges, focusId = null, onClose, onPick }) {
       <div className="w-full max-w-2xl modal-panel overflow-hidden max-h-[88vh] flex flex-col" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
           <p className="text-[13px] font-black text-white flex items-center gap-2"><Flame className="w-4 h-4 text-[#2F6BFF]" />{t('p48.challenge_week')}</p>
-          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-slate-400" /></button>
+          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-[#9C9CAB]" /></button>
         </div>
         <div className="flex gap-1.5 px-4 pt-3 overflow-x-auto scrollbar-none">
           {challenges.map(c => (
-            <button key={c.id} onClick={() => setActive(c)} className={`shrink-0 px-3 py-1.5 rounded-full text-[11px] font-black border transition ${active?.id === c.id ? 'grad-brand text-white border-transparent' : 'bg-white/[0.05] border-white/10 text-stone-400'}`}>#{c.hashtag}</button>
+            <button key={c.id} onClick={() => setActive(c)} className={`shrink-0 px-3 py-1.5 rounded-full text-[11px] font-black border transition ${active?.id === c.id ? 'grad-brand text-white border-transparent' : 'bg-white/[0.05] border-white/10 text-[#9C9CAB]'}`}>#{c.hashtag}</button>
           ))}
         </div>
         <div className="flex-1 overflow-y-auto p-4">
           {active ? (
             <>
               <h3 className="text-[16px] font-black text-white">{active.title}</h3>
-              <p className="text-[11px] text-stone-400 mt-1 line-clamp-3">{active.description || 'Chưa có mô tả'}</p>
-              <div className="flex gap-2 text-[10px] text-stone-500 mt-1.5">
+              <p className="text-[11px] text-[#9C9CAB] mt-1 line-clamp-3">{active.description || 'Chưa có mô tả'}</p>
+              <div className="flex gap-2 text-[10px] text-[#7C7C8A] mt-1.5">
                 {active.starts_at ? <span>Bắt đầu: {String(active.starts_at).slice(0, 10)}</span> : null}
                 {active.ends_at ? <span>· Kết thúc: {String(active.ends_at).slice(0, 10)}</span> : <span>· Diễn ra thường xuyên</span>}
               </div>
               <div className="grid grid-cols-3 sm:grid-cols-4 gap-2.5 mt-4">
                 {(active.shorts || []).map(sh => (
-                  <button key={sh.id} onClick={() => onPick(sh)} className="group relative aspect-[9/16] rounded-xl overflow-hidden bg-stone-900 border border-white/10 hover:border-[#2F6BFF]/60 active:scale-[0.98] transition">
+                  <button key={sh.id} onClick={() => onPick(sh)} className="group relative aspect-[9/16] rounded-xl overflow-hidden bg-[#16161C] border border-white/10 hover:border-[#2F6BFF]/60 active:scale-[0.98] transition">
                     {sh.thumb_url ? <img src={sh.thumb_url} alt="" className="w-full h-full object-cover" onError={e => e.target.style.display = 'none'} /> : <div className="w-full h-full flex items-center justify-center text-2xl">🎬</div>}
                     <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent p-1.5 pt-6">
                       <p className="text-[10px] font-bold text-white truncate">{(sh.title || sh.caption || '').slice(0, 50)}</p>
-                      <p className="text-[9px] text-stone-400 flex items-center gap-1"><Eye className="w-2.5 h-2.5" />{(sh.views || 0)} · @{sh.creator?.handle || sh.creator_handle || 'creator'}</p>
+                      <p className="text-[9px] text-[#9C9CAB] flex items-center gap-1"><Eye className="w-2.5 h-2.5" />{(sh.views || 0)} · @{sh.creator?.handle || sh.creator_handle || 'creator'}</p>
                     </div>
                   </button>
                 ))}
-                {(active.shorts || []).length === 0 && <p className="col-span-full text-[11px] text-stone-600 italic text-center py-10">Chưa có video nào dùng #{active.hashtag} — hãy là người đầu tiên!</p>}
+                {(active.shorts || []).length === 0 && <p className="col-span-full text-[11px] text-[#5A5A66] italic text-center py-10">Chưa có video nào dùng #{active.hashtag} — hãy là người đầu tiên!</p>}
               </div>
             </>
-          ) : <p className="text-[11px] text-stone-600 italic py-10 text-center">Chưa có thử thách nào đang chạy</p>}
+          ) : <p className="text-[11px] text-[#5A5A66] italic py-10 text-center">Chưa có thử thách nào đang chạy</p>}
         </div>
       </div>
     </div>
@@ -1041,24 +1041,24 @@ function WeeklyBoardModal({ onClose, token }) {
       <div className="w-full max-w-sm modal-panel overflow-hidden" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
           <p className="text-[13px] font-black text-white flex items-center gap-2"><Trophy className="w-4 h-4 text-amber-300" />{t('p48.leaderboard')}</p>
-          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-slate-400" /></button>
+          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-[#9C9CAB]" /></button>
         </div>
         <div className="p-3 space-y-1.5 max-h-[60vh] overflow-y-auto">
-          {loading && <p className="text-[11px] text-stone-500 text-center py-6">Đang tính…</p>}
-          {!loading && board.length === 0 && <p className="text-[11px] text-stone-600 italic text-center py-6">Chưa ai nhận sao tuần này — tặng ⭐ cho creator bạn thích nhé!</p>}
+          {loading && <p className="text-[11px] text-[#7C7C8A] text-center py-6">Đang tính…</p>}
+          {!loading && board.length === 0 && <p className="text-[11px] text-[#5A5A66] italic text-center py-6">Chưa ai nhận sao tuần này — tặng ⭐ cho creator bạn thích nhé!</p>}
           {board.map((b, i) => (
             <div key={b.creator_id} className={`flex items-center gap-3 px-3 py-2 rounded-xl border ${i < 3 ? 'border-amber-400/30 bg-amber-500/[0.06]' : 'border-white/[0.06] bg-white/[0.02]'}`}>
-              <span className="w-6 text-center text-[13px] font-black">{i === 0 ? <Medal className="w-4 h-4 text-amber-300" /> : i === 1 ? <Medal className="w-4 h-4 text-slate-300" /> : i === 2 ? <Medal className="w-4 h-4 text-orange-400/80" /> : i + 1}</span>
+              <span className="w-6 text-center text-[13px] font-black">{i === 0 ? <Medal className="w-4 h-4 text-amber-300" /> : i === 1 ? <Medal className="w-4 h-4 text-[#D2D2DC]" /> : i === 2 ? <Medal className="w-4 h-4 text-orange-400/80" /> : i + 1}</span>
               <span className="w-8 h-8 rounded-full bg-white/10 overflow-hidden flex items-center justify-center text-[11px] font-black shrink-0">
                 {b.avatar_url ? <img src={b.avatar_url} alt="" className="w-full h-full object-cover" /> : '@'}
               </span>
               <div className="min-w-0 flex-1">
                 <p className="text-[12px] font-bold text-white truncate">{b.display_name || b.handle}</p>
-                <p className="text-[9px] text-stone-500">@{b.handle}</p>
+                <p className="text-[9px] text-[#7C7C8A]">@{b.handle}</p>
               </div>
               <div className="text-right shrink-0">
                 <p className="text-[13px] font-black text-amber-300">⭐ {b.stars}</p>
-                <p className="text-[9px] text-stone-500">{b.fans} fan</p>
+                <p className="text-[9px] text-[#7C7C8A]">{b.fans} fan</p>
               </div>
             </div>
           ))}

@@ -37,9 +37,9 @@ export default function ReportChannelModal({ channel, defaultCode = 'no_play', o
           </span>
           <div className="min-w-0 flex-1">
             <h3 className="text-[15px] font-black text-white leading-tight">Báo kênh lỗi</h3>
-            <p className="text-[11px] text-stone-500 truncate">{channel?.name || channel?.channel_id}</p>
+            <p className="text-[11px] text-[#7C7C8A] truncate">{channel?.name || channel?.channel_id}</p>
           </div>
-          <button type="button" onClick={onClose} className="p-2 rounded-full hover:bg-white/10 text-stone-400"><X className="w-4 h-4" /></button>
+          <button type="button" onClick={onClose} className="p-2 rounded-full hover:bg-white/10 text-[#9C9CAB]"><X className="w-4 h-4" /></button>
         </div>
 
         <div className="grid grid-cols-2 gap-2">
@@ -51,7 +51,7 @@ export default function ReportChannelModal({ channel, defaultCode = 'no_play', o
               className={`px-3 py-2.5 rounded-xl text-[12px] font-bold text-left transition-all border ${
                 code === c.code
                   ? 'bg-[#2F6BFF]/20 border-[#2F6BFF]/60 text-white'
-                  : 'bg-black/30 border-white/[0.07] text-stone-400 hover:border-white/20'
+                  : 'bg-black/30 border-white/[0.07] text-[#9C9CAB] hover:border-white/20'
               }`}
             >
               {c.label}
@@ -64,7 +64,7 @@ export default function ReportChannelModal({ channel, defaultCode = 'no_play', o
           onChange={(e) => setNote(e.target.value.slice(0, 300))}
           rows={2}
           placeholder="Mô tả thêm (không bắt buộc) — VD: lỗi từ 20h, kênh khác vẫn xem được"
-          className="w-full bg-black/40 border border-white/[0.08] rounded-xl px-3 py-2.5 text-[12px] text-white placeholder-stone-600 focus:outline-none focus:border-[#2F6BFF]/50 resize-none"
+          className="w-full bg-black/40 border border-white/[0.08] rounded-xl px-3 py-2.5 text-[12px] text-white placeholder-[#5A5A66] focus:outline-none focus:border-[#2F6BFF]/50 resize-none"
         />
 
         <button
@@ -74,7 +74,7 @@ export default function ReportChannelModal({ channel, defaultCode = 'no_play', o
         >
           {done ? <><Check className="w-4 h-4" /> Đã gửi</> : sending ? 'Đang gửi…' : 'Gửi báo lỗi'}
         </button>
-        <p className="text-[10px] text-stone-600 text-center">Nhiều người cùng báo 1 kênh, hệ thống sẽ tự kiểm tra luồng và báo kỹ thuật ngay.</p>
+        <p className="text-[10px] text-[#5A5A66] text-center">Nhiều người cùng báo 1 kênh, hệ thống sẽ tự kiểm tra luồng và báo kỹ thuật ngay.</p>
       </form>
     </div>
   );

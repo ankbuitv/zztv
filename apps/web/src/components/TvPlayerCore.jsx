@@ -358,8 +358,8 @@ export default function SimpleHlsPlayer({ streamUrl, channel, onError, onRetry }
           <div className="max-w-sm">
             <div className="w-14 h-14 mx-auto rounded-full bg-[#2F6BFF]/15 border border-[#2F6BFF]/30 flex items-center justify-center mb-3"><AlertTriangle className="w-7 h-7 text-[#6E9BFF]" /></div>
             <h3 className="text-white font-black text-[15px] mb-1">Không xem được</h3>
-            <p className="text-stone-400 text-xs mb-1">{channel?.name}</p>
-            <p className="text-stone-500 text-[11px] mb-4 line-clamp-3">{String(error).slice(0, 160)}</p>
+            <p className="text-[#9C9CAB] text-xs mb-1">{channel?.name}</p>
+            <p className="text-[#7C7C8A] text-[11px] mb-4 line-clamp-3">{String(error).slice(0, 160)}</p>
             <div className="flex gap-2 justify-center">
               <button onClick={() => { setError(null); onRetry && onRetry(); }} className="px-4 py-2 rounded-full bg-[#2F6BFF] text-white text-xs font-bold flex items-center gap-1.5 hover:brightness-110"><RefreshCw className="w-3.5 h-3.5" /> Thử lại</button>
             </div>
@@ -402,7 +402,7 @@ export default function SimpleHlsPlayer({ streamUrl, channel, onError, onRetry }
                     <span>{tr.height ? `${tr.height}p` : `Track ${tr.id}`}</span><span className="text-[10px] opacity-60">{Math.round((tr.bandwidth||0)/1000)}k</span>
                   </button>
                 ))}
-                {!hasQuality && <p className="text-[11px] text-stone-500 px-3 py-4 text-center">Chỉ có 1 chất lượng</p>}
+                {!hasQuality && <p className="text-[11px] text-[#7C7C8A] px-3 py-4 text-center">Chỉ có 1 chất lượng</p>}
               </div>
             )}
             {settingsTab==='audio' && (
@@ -412,7 +412,7 @@ export default function SimpleHlsPlayer({ streamUrl, channel, onError, onRetry }
                     <span className="flex items-center gap-2"><Languages className="w-3.5 h-3.5" /> {at.label}</span><span className="text-[10px] opacity-60">{at.lang}</span>
                   </button>
                 ))}
-                {audioTracks.length===0 && <p className="text-[11px] text-stone-500 px-3 py-4 text-center">Không có audio khác</p>}
+                {audioTracks.length===0 && <p className="text-[11px] text-[#7C7C8A] px-3 py-4 text-center">Không có audio khác</p>}
               </div>
             )}
             {settingsTab==='subtitle' && (
@@ -423,7 +423,7 @@ export default function SimpleHlsPlayer({ streamUrl, channel, onError, onRetry }
                     <span className="flex items-center gap-2"><Captions className="w-3.5 h-3.5" /> {st.label}</span><span className="text-[10px] opacity-60">{st.lang}</span>
                   </button>
                 ))}
-                {textTracks.length===0 && <p className="text-[11px] text-stone-500 px-3 py-4 text-center">Không có phụ đề</p>}
+                {textTracks.length===0 && <p className="text-[11px] text-[#7C7C8A] px-3 py-4 text-center">Không có phụ đề</p>}
               </div>
             )}
             {settingsTab==='size' && (

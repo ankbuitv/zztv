@@ -53,13 +53,13 @@ export default function FanGroupBox({ target, name }) {
           <Users className="w-4 h-4 text-fuchsia-400" />
           {group?.name || `${t('fan.group')} ${name || ''}`}
         </p>
-        <button onClick={toggle} disabled={busy} className={`px-3 py-1.5 rounded-full text-[11px] font-bold flex items-center gap-1.5 transition-all active:scale-95 ${joined ? 'bg-white/10 text-stone-300 hover:bg-white/15' : 'bg-fuchsia-600 text-white hover:bg-fuchsia-500 shadow-lg shadow-fuchsia-600/25'}`}>
+        <button onClick={toggle} disabled={busy} className={`px-3 py-1.5 rounded-full text-[11px] font-bold flex items-center gap-1.5 transition-all active:scale-95 ${joined ? 'bg-white/10 text-[#D2D2DC] hover:bg-white/15' : 'bg-fuchsia-600 text-white hover:bg-fuchsia-500 shadow-lg shadow-fuchsia-600/25'}`}>
           {joined ? <UserMinus className="w-3.5 h-3.5" /> : <UserPlus className="w-3.5 h-3.5" />}
           {joined ? t('fan.leave') : t('fan.join')}
         </button>
       </div>
       <div className="flex items-center gap-1.5 mt-2 flex-wrap">
-        <span className="text-[10px] text-stone-500 font-bold">{members.length} {t('fan.members')}</span>
+        <span className="text-[10px] text-[#7C7C8A] font-bold">{members.length} {t('fan.members')}</span>
         {members.slice(0, 8).map((m, i) => (
           <span key={i} className="w-6 h-6 rounded-full bg-gradient-to-br from-fuchsia-600 to-[#2F6BFF] flex items-center justify-center text-[9px] font-black text-white" title={m.name}>
             {(m.name || '?').slice(0, 1).toUpperCase()}

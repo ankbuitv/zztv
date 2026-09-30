@@ -66,7 +66,7 @@ export default function PrerollAd({ ad, skipAfter = 30, refId = '', onDone, onUp
           ) : (
             <button
               onClick={() => finish(false)}
-              className="px-4 py-2 rounded-xl bg-white text-black text-[12px] font-black flex items-center gap-1.5 hover:bg-stone-200"
+              className="px-4 py-2 rounded-xl bg-white text-black text-[12px] font-black flex items-center gap-1.5 hover:bg-[#E6E6EC]"
             >
               Bỏ qua <SkipForward className="w-3.5 h-3.5" />
             </button>
@@ -86,7 +86,7 @@ export default function PrerollAd({ ad, skipAfter = 30, refId = '', onDone, onUp
       </div>
 
       <div className="px-5 py-4 bg-[#0b0c10] border-t border-white/[0.07] flex items-center gap-3">
-        <p className="text-[11px] text-stone-500 flex-1">
+        <p className="text-[11px] text-[#7C7C8A] flex-1">
           Quảng cáo giúp playZ duy trì máy chủ. Tối đa 5 lần mỗi giờ.
         </p>
         <button

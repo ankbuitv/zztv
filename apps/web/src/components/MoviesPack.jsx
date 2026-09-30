@@ -63,7 +63,7 @@ export function WatchStatusBar({ movie, onChange }) {
         {opts.map(o => (
           <button key={o.id} onClick={() => pick(o.id)}
             className={`px-2.5 md:px-3 py-1.5 rounded-lg text-[10px] md:text-[11px] font-black flex items-center gap-1.5 transition-all active:scale-95 ${
-              st === o.id ? 'grad-brand text-white shadow' : 'text-stone-400 hover:text-white'
+              st === o.id ? 'grad-brand text-white shadow' : 'text-[#9C9CAB] hover:text-white'
             }`}>
             <span>{o.icon}</span><span className="hidden sm:inline">{o.label}</span>
           </button>
@@ -155,7 +155,7 @@ export function FollowSeriesBtn({ movie, follows, fresh, onToggle }) {
         else if (nowFollowing === false) addToast('Đã bỏ theo dõi series', 'info');
       }}
       title={t('p48.follow_series')}
-      className={`px-4 py-3.5 font-bold rounded-2xl flex items-center gap-2 border transition active:scale-95 ${following ? 'bg-amber-500/15 text-amber-300 border-amber-500/40' : 'bg-white/[0.06] text-stone-200 border-white/10 hover:bg-white/[0.12]'}`}
+      className={`px-4 py-3.5 font-bold rounded-2xl flex items-center gap-2 border transition active:scale-95 ${following ? 'bg-amber-500/15 text-amber-300 border-amber-500/40' : 'bg-white/[0.06] text-[#E6E6EC] border-white/10 hover:bg-white/[0.12]'}`}
     >
       {following ? <BellRing className="w-5 h-5" /> : <Bell className="w-5 h-5" />}
       <span className="hidden sm:inline text-[13px]">{following ? (f ? `TẬP MỚI S${f.season}E${f.episode}` : t('p48.following')) : t('p48.follow_series')}</span>
@@ -197,23 +197,23 @@ export function RouletteModal({ open, pool, onClose, onPick }) {
       <div className="w-full max-w-md modal-panel overflow-hidden anim-pop" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
           <p className="text-[13px] font-black text-white flex items-center gap-2"><Dices className="w-4 h-4 text-[#6E9BFF]" />Quay số chọn phim</p>
-          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-slate-400" /></button>
+          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-[#9C9CAB]" /></button>
         </div>
         <div className="p-4 space-y-3">
-          <p className="text-[11px] text-stone-500">Chọn tâm trạng — xoay là ra phim phù hợp!</p>
+          <p className="text-[11px] text-[#7C7C8A]">Chọn tâm trạng — xoay là ra phim phù hợp!</p>
           <div className="flex flex-wrap gap-1.5">
             {MOODS.map(m => (
-              <button key={m.id} onClick={() => setMood(m)} className={`px-3 py-1.5 rounded-full text-[11px] font-black border transition ${mood.id === m.id ? 'grad-brand text-white border-transparent' : 'bg-white/[0.05] border-white/10 text-stone-400 hover:text-white'}`}>{m.label}</button>
+              <button key={m.id} onClick={() => setMood(m)} className={`px-3 py-1.5 rounded-full text-[11px] font-black border transition ${mood.id === m.id ? 'grad-brand text-white border-transparent' : 'bg-white/[0.05] border-white/10 text-[#9C9CAB] hover:text-white'}`}>{m.label}</button>
             ))}
           </div>
           {list.length > 0 && (
             <div className="rounded-2xl bg-black/40 border border-white/10 p-4 text-center">
               <img src={cur?.poster_path ? `https://image.tmdb.org/t/p/w342${cur.poster_path}` : ''} alt="" onError={e => e.target.style.display = 'none'} className="mx-auto h-40 rounded-xl shadow-lg object-cover mb-2" />
               <p className={`font-black text-white text-sm transition ${spin ? 'opacity-60' : ''}`}>{cur?.title || cur?.name || '…'}</p>
-              <p className="text-[10px] text-stone-500">{(cur?.vote_average || 0) > 0 ? `★ ${cur.vote_average.toFixed(1)} · ` : ''}{(cur?.release_date || cur?.first_air_date || '').slice(0, 4) || ''}</p>
+              <p className="text-[10px] text-[#7C7C8A]">{(cur?.vote_average || 0) > 0 ? `★ ${cur.vote_average.toFixed(1)} · ` : ''}{(cur?.release_date || cur?.first_air_date || '').slice(0, 4) || ''}</p>
             </div>
           )}
-          {list.length === 0 && <p className="text-[11px] text-stone-600 italic text-center py-6">Không tìm thấy phim cho tâm trạng này trong danh mục hiện tại</p>}
+          {list.length === 0 && <p className="text-[11px] text-[#5A5A66] italic text-center py-6">Không tìm thấy phim cho tâm trạng này trong danh mục hiện tại</p>}
           <button onClick={roll} disabled={spin || !list.length} className="w-full py-3 rounded-2xl grad-brand text-white text-[13px] font-black flex items-center justify-center gap-2 disabled:opacity-40 active:scale-[0.98]">
             <Dices className={`w-5 h-5 ${spin ? 'animate-spin' : ''}`} />{spin ? 'Đang quay…' : 'Quay số!'}
           </button>
@@ -246,36 +246,36 @@ export function WrappedModal({ open, onClose }) {
   return (
     <div className="fixed inset-0 z-[240] bg-black/90 backdrop-blur flex items-center justify-center p-4" onClick={onClose}>
       <div className="w-full max-w-lg modal-panel anim-pop overflow-hidden text-center" onClick={e => e.stopPropagation()}>
-        <div className="px-5 pt-5 pb-4 relative" style={{ background: 'radial-gradient(500px 160px at 50% -20%, rgba(243,111,33,.3), transparent 75%)' }}>
-          <button onClick={onClose} className="absolute top-3 right-3 p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-slate-400" /></button>
+        <div className="px-5 pt-5 pb-4 relative" style={{ background: 'radial-gradient(500px 160px at 50% -20%, rgba(47,107,255,.3), transparent 75%)' }}>
+          <button onClick={onClose} className="absolute top-3 right-3 p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-[#9C9CAB]" /></button>
           <p className="text-[10px] font-black tracking-[0.3em] text-[#6E9BFF]">{t('p48.wrapped_title')}</p>
           <h2 className="text-2xl md:text-3xl font-black text-white mt-1">🎬 {w?.year || new Date().getFullYear()} của bạn</h2>
         </div>
         <div className="px-5 pb-6 space-y-2.5">
-          {err && <p className="text-[12px] text-stone-500 py-6 italic">{err}</p>}
-          {!err && !w && <p className="text-[12px] text-stone-500 py-6 italic">Đang tổng hợp…</p>}
-          {w && w.success === false && <p className="text-[12px] text-stone-500 py-4 italic">{w.error || 'Chưa đủ dữ liệu'}</p>}
+          {err && <p className="text-[12px] text-[#7C7C8A] py-6 italic">{err}</p>}
+          {!err && !w && <p className="text-[12px] text-[#7C7C8A] py-6 italic">Đang tổng hợp…</p>}
+          {w && w.success === false && <p className="text-[12px] text-[#7C7C8A] py-4 italic">{w.error || 'Chưa đủ dữ liệu'}</p>}
           {w && w.total_sec !== undefined && (
             <>
               <div className="grid grid-cols-3 gap-2">
                 {[{ l: 'Kênh TV', v: fmtMin(w.minutes?.channel) }, { l: 'Phim', v: fmtMin(w.minutes?.movie) }, { l: 'Shorts', v: fmtMin(w.minutes?.short) }].map(x => (
-                  <div key={x.l} className="rounded-2xl bg-white/[0.04] border border-white/[0.07] p-3"><p className="text-lg font-black text-[#6E9BFF]">{x.v}</p><p className="text-[9px] text-stone-500 font-bold uppercase tracking-wider mt-0.5">{x.l}</p></div>
+                  <div key={x.l} className="rounded-2xl bg-white/[0.04] border border-white/[0.07] p-3"><p className="text-lg font-black text-[#6E9BFF]">{x.v}</p><p className="text-[9px] text-[#7C7C8A] font-bold uppercase tracking-wider mt-0.5">{x.l}</p></div>
                 ))}
               </div>
               <div className="grid grid-cols-2 gap-2">
-                <div className="rounded-2xl bg-white/[0.04] border border-white/[0.07] p-3 text-left"><p className="text-[9px] text-stone-500 font-bold uppercase tracking-wider">Nhiều giờ nhất</p><p className="text-[12px] font-bold text-white truncate mt-1">{w.top_channel?.name || w.top_movie?.name || w.top_short?.name || '—'}</p></div>
-                <div className="rounded-2xl bg-white/[0.04] border border-white/[0.07] p-3 text-left"><p className="text-[9px] text-stone-500 font-bold uppercase tracking-wider">Tổng cộng</p><p className="text-[12px] font-bold text-white mt-1">⏱ {fmtMin(w.total_sec)}</p></div>
+                <div className="rounded-2xl bg-white/[0.04] border border-white/[0.07] p-3 text-left"><p className="text-[9px] text-[#7C7C8A] font-bold uppercase tracking-wider">Nhiều giờ nhất</p><p className="text-[12px] font-bold text-white truncate mt-1">{w.top_channel?.name || w.top_movie?.name || w.top_short?.name || '—'}</p></div>
+                <div className="rounded-2xl bg-white/[0.04] border border-white/[0.07] p-3 text-left"><p className="text-[9px] text-[#7C7C8A] font-bold uppercase tracking-wider">Tổng cộng</p><p className="text-[12px] font-bold text-white mt-1">⏱ {fmtMin(w.total_sec)}</p></div>
               </div>
               <div className="rounded-2xl bg-gradient-to-r from-amber-500/10 to-[#2F6BFF]/10 border border-amber-500/25 p-3 flex items-center justify-center gap-2">
                 <Star className="w-4 h-4 text-amber-300 fill-current" /><span className="text-[12px] font-black text-amber-200">{w.xp || 0} XP</span>
-                <span className="text-stone-600">•</span>
-                <span className="text-[11px] text-stone-300 font-bold">{w.movies_started || 0} phim đã xem</span>
-                <span className="text-stone-600">•</span>
-                <span className="text-[11px] text-stone-300 font-bold">✅ {w.movies_finished || 0} xem xong</span>
+                <span className="text-[#5A5A66]">•</span>
+                <span className="text-[11px] text-[#D2D2DC] font-bold">{w.movies_started || 0} phim đã xem</span>
+                <span className="text-[#5A5A66]">•</span>
+                <span className="text-[11px] text-[#D2D2DC] font-bold">✅ {w.movies_finished || 0} xem xong</span>
               </div>
             </>
           )}
-          <p className="text-[10px] text-stone-600 italic">Wrapped được tạo từ lịch sử xem của bạn — cập nhật theo thời gian thực.</p>
+          <p className="text-[10px] text-[#5A5A66] italic">Wrapped được tạo từ lịch sử xem của bạn — cập nhật theo thời gian thực.</p>
         </div>
       </div>
     </div>
@@ -323,36 +323,36 @@ export function AdvancedFilters({ open, onClose, onApply, onClear, current }) {
       <div className="w-full max-w-sm modal-panel overflow-hidden" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
           <p className="text-[13px] font-black text-white flex items-center gap-2"><Filter className="w-4 h-4 text-[#6E9BFF]" />Lọc nâng cao</p>
-          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-slate-400" /></button>
+          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-[#9C9CAB]" /></button>
         </div>
         <div className="p-4 space-y-3">
           <div>
-            <p className="text-[10px] font-black uppercase tracking-widest text-stone-500 mb-1.5">Năm phát hành</p>
+            <p className="text-[10px] font-black uppercase tracking-widest text-[#7C7C8A] mb-1.5">Năm phát hành</p>
             <div className="flex flex-wrap gap-1.5">
-              <button onClick={() => setF({ ...f, year: '' })} className={`px-2.5 py-1.5 rounded-full text-[10px] font-bold border ${!f.year ? 'bg-white text-black border-white' : 'bg-white/[0.05] border-white/10 text-stone-400'}`}>Tất cả</button>
+              <button onClick={() => setF({ ...f, year: '' })} className={`px-2.5 py-1.5 rounded-full text-[10px] font-bold border ${!f.year ? 'bg-white text-black border-white' : 'bg-white/[0.05] border-white/10 text-[#9C9CAB]'}`}>Tất cả</button>
               {years.slice(0, 12).map(y => (
-                <button key={y} onClick={() => setF({ ...f, year: y })} className={`px-2.5 py-1.5 rounded-full text-[10px] font-bold border ${f.year === y ? 'bg-white text-black border-white' : 'bg-white/[0.05] border-white/10 text-stone-400'}`}>{y}</button>
+                <button key={y} onClick={() => setF({ ...f, year: y })} className={`px-2.5 py-1.5 rounded-full text-[10px] font-bold border ${f.year === y ? 'bg-white text-black border-white' : 'bg-white/[0.05] border-white/10 text-[#9C9CAB]'}`}>{y}</button>
               ))}
             </div>
           </div>
           <div>
-            <p className="text-[10px] font-black uppercase tracking-widest text-stone-500 mb-1.5">Điểm IMDb ≥</p>
+            <p className="text-[10px] font-black uppercase tracking-widest text-[#7C7C8A] mb-1.5">Điểm IMDb ≥</p>
             <div className="flex gap-1.5">
               {[0, 6, 7, 8].map(r => (
-                <button key={r} onClick={() => setF({ ...f, rating: r })} className={`flex-1 px-2 py-1.5 rounded-lg text-[11px] font-black border flex items-center justify-center gap-1 ${f.rating === r ? 'bg-amber-400/20 text-amber-300 border-amber-400/40' : 'bg-white/[0.05] border-white/10 text-stone-400'}`}>{r === 0 ? 'Tất cả' : <><Star className="w-3 h-3 fill-current" />{r}+</>}</button>
+                <button key={r} onClick={() => setF({ ...f, rating: r })} className={`flex-1 px-2 py-1.5 rounded-lg text-[11px] font-black border flex items-center justify-center gap-1 ${f.rating === r ? 'bg-amber-400/20 text-amber-300 border-amber-400/40' : 'bg-white/[0.05] border-white/10 text-[#9C9CAB]'}`}>{r === 0 ? 'Tất cả' : <><Star className="w-3 h-3 fill-current" />{r}+</>}</button>
               ))}
             </div>
           </div>
           <div>
-            <p className="text-[10px] font-black uppercase tracking-widest text-stone-500 mb-1.5">Sắp xếp</p>
+            <p className="text-[10px] font-black uppercase tracking-widest text-[#7C7C8A] mb-1.5">Sắp xếp</p>
             <div className="flex gap-1.5">
               {[{ v: '', l: 'Mặc định' }, { v: 'rating', l: '★ Cao nhất' }, { v: 'year', l: 'Mới nhất' }].map(o => (
-                <button key={o.v} onClick={() => setF({ ...f, sort: o.v })} className={`flex-1 px-2 py-1.5 rounded-lg text-[11px] font-black border ${f.sort === o.v ? 'bg-[#2F6BFF]/15 text-[#ffb37a] border-[#2F6BFF]/40' : 'bg-white/[0.05] border-white/10 text-stone-400'}`}>{o.l}</button>
+                <button key={o.v} onClick={() => setF({ ...f, sort: o.v })} className={`flex-1 px-2 py-1.5 rounded-lg text-[11px] font-black border ${f.sort === o.v ? 'bg-[#2F6BFF]/15 text-[#6E9BFF] border-[#2F6BFF]/40' : 'bg-white/[0.05] border-white/10 text-[#9C9CAB]'}`}>{o.l}</button>
               ))}
             </div>
           </div>
           <div className="flex gap-2">
-            <button onClick={onClear} className="px-4 py-2.5 rounded-xl bg-white/[0.05] border border-white/10 text-stone-400 text-[12px] font-bold">Xoá bộ lọc</button>
+            <button onClick={onClear} className="px-4 py-2.5 rounded-xl bg-white/[0.05] border border-white/10 text-[#9C9CAB] text-[12px] font-bold">Xoá bộ lọc</button>
             <button onClick={() => { onApply(f); onClose(); }} className="flex-1 py-2.5 rounded-xl grad-brand text-white text-[12px] font-black">Áp dụng</button>
           </div>
         </div>
@@ -381,7 +381,7 @@ export function HotCountryRow({ onOpenChannel }) {
           <span className="w-8 h-8 rounded-xl grad-brand flex items-center justify-center"><Trophy className="w-4 h-4 text-white" /></span>
           <div>
             <h3 className="text-sm md:text-[15px] font-black leading-none flex items-center gap-1.5">{t('p48.geo_hot')} {info?.flag || '🌐'} {info?.name || cc}</h3>
-            <p className="text-[9px] text-stone-500 font-semibold mt-0.5">Từ heartbeat xem trong 24 giờ qua</p>
+            <p className="text-[9px] text-[#7C7C8A] font-semibold mt-0.5">Từ heartbeat xem trong 24 giờ qua</p>
           </div>
         </div>
         <div className="flex gap-2 overflow-x-auto scrollbar-none p-3">
@@ -390,7 +390,7 @@ export function HotCountryRow({ onOpenChannel }) {
               <span className="font-black text-[#6E9BFF]">{i + 1}</span>
               <div className="min-w-0">
                 <p className="text-[11px] font-bold text-white truncate max-w-[130px]">{ch.name}</p>
-                <p className="text-[9px] text-stone-500">{ch.group_title || ''} · {(ch.views || 0)} lượt</p>
+                <p className="text-[9px] text-[#7C7C8A]">{ch.group_title || ''} · {(ch.views || 0)} lượt</p>
               </div>
               {ch.logo ? <img src={ch.logo} alt="" className="w-6 h-6 rounded-md object-contain bg-black/40" onError={e => e.target.style.display = 'none'} /> : null}
             </button>

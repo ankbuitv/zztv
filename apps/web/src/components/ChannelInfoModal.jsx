@@ -44,8 +44,8 @@ function ChannelRating({ channelId, onRequireLogin }) {
   }, [channelId, logged, busy, onRequireLogin]);
 
   return (
-    <div className="bg-slate-900/60 rounded-lg p-2.5 border border-slate-800/30">
-      <div className="text-[10px] text-slate-500 font-semibold uppercase mb-1 flex items-center gap-1">
+    <div className="bg-[#16161C]/60 rounded-lg p-2.5 border border-[#24242C]/30">
+      <div className="text-[10px] text-[#7C7C8A] font-semibold uppercase mb-1 flex items-center gap-1">
         <Star className="w-3 h-3" /> {t('chinfo.rate')}
       </div>
       <div className="flex items-center gap-1.5">
@@ -59,11 +59,11 @@ function ChannelRating({ channelId, onRequireLogin }) {
               className="p-0.5 transition-transform hover:scale-125"
               title={`${v} sao`}
             >
-              <Star className={`w-5 h-5 ${(hover || mine) >= v ? 'fill-amber-400 text-amber-400' : 'text-slate-600'}`} />
+              <Star className={`w-5 h-5 ${(hover || mine) >= v ? 'fill-amber-400 text-amber-400' : 'text-[#5A5A66]'}`} />
             </button>
           ))}
         </div>
-        <span className="text-[10px] text-slate-400 ml-1">
+        <span className="text-[10px] text-[#9C9CAB] ml-1">
           {count > 0 ? t('chinfo.rated', { avg: Number(avg || 0).toFixed(1), n: count }) : (logged ? t('chinfo.first') : t('chinfo.login_to_rate'))}
         </span>
       </div>
@@ -78,15 +78,15 @@ export default function ChannelInfoModal({ channel, epgNow, epgNext, isFavorite,
     <div className="fixed inset-0 z-[160] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 modal-backdrop" onClick={onClose}>
       <div className="w-full max-w-sm max-h-[90vh] overflow-y-auto modal-panel" onClick={e => e.stopPropagation()}>
         <div className="relative p-5 pt-6 text-center overflow-hidden">
-          <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(280px 130px at 50% 0%, rgba(243,111,33,.22), transparent 70%)' }}></div>
-          <button onClick={onClose} className="absolute top-3 right-3 p-1 hover:bg-slate-800 rounded-lg">
-            <X className="w-4 h-4 text-slate-400" />
+          <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(280px 130px at 50% 0%, rgba(47,107,255,.22), transparent 70%)' }}></div>
+          <button onClick={onClose} className="absolute top-3 right-3 p-1 hover:bg-[#1E1E26] rounded-lg">
+            <X className="w-4 h-4 text-[#9C9CAB]" />
           </button>
 
           <img
             src={channel.logo || '/brand/playz-symbol-dark.svg'}
             alt={channel.name}
-            className="w-20 h-20 object-contain mx-auto rounded-2xl bg-slate-900 p-2 border border-slate-800/50 mb-3"
+            className="w-20 h-20 object-contain mx-auto rounded-2xl bg-[#16161C] p-2 border border-[#24242C]/50 mb-3"
             onError={e => { e.target.style.display = 'none'; }}
           />
 
@@ -103,19 +103,19 @@ export default function ChannelInfoModal({ channel, epgNow, epgNext, isFavorite,
 
         <div className="px-5 pb-3 space-y-2.5">
           {epgNow && (
-            <div className="bg-slate-900/60 rounded-lg p-2.5 border border-slate-800/30">
+            <div className="bg-[#16161C]/60 rounded-lg p-2.5 border border-[#24242C]/30">
               <div className="text-[10px] text-[#6E9BFF] font-semibold uppercase mb-0.5 flex items-center gap-1">
                 <Clock className="w-3 h-3" /> {t('chinfo.now')}
               </div>
               <p className="text-xs font-bold text-white truncate">{epgNow.title}</p>
-              <p className="text-[10px] text-slate-500">{formatTimeHHMM(epgNow.start)} - {formatTimeHHMM(epgNow.stop)}</p>
+              <p className="text-[10px] text-[#7C7C8A]">{formatTimeHHMM(epgNow.start)} - {formatTimeHHMM(epgNow.stop)}</p>
             </div>
           )}
           {epgNext && (
-            <div className="bg-slate-900/40 rounded-lg p-2.5 border border-slate-800/20">
-              <div className="text-[10px] text-slate-500 font-semibold uppercase mb-0.5">{t('chinfo.next')}</div>
-              <p className="text-xs font-medium text-slate-300 truncate">{epgNext.title}</p>
-              <p className="text-[10px] text-slate-600">{formatTimeHHMM(epgNext.start)}</p>
+            <div className="bg-[#16161C]/40 rounded-lg p-2.5 border border-[#24242C]/20">
+              <div className="text-[10px] text-[#7C7C8A] font-semibold uppercase mb-0.5">{t('chinfo.next')}</div>
+              <p className="text-xs font-medium text-[#D2D2DC] truncate">{epgNext.title}</p>
+              <p className="text-[10px] text-[#5A5A66]">{formatTimeHHMM(epgNext.start)}</p>
             </div>
           )}
 
@@ -128,13 +128,13 @@ export default function ChannelInfoModal({ channel, epgNow, epgNext, isFavorite,
 
           <div className="space-y-1.5 pt-1">
             <div className="flex items-center justify-between text-xs">
-              <span className="text-slate-500 flex items-center gap-1"><Globe className="w-3 h-3" /> ID</span>
-              <span className="text-slate-300 font-mono text-[10px]">{channel.channel_id}</span>
+              <span className="text-[#7C7C8A] flex items-center gap-1"><Globe className="w-3 h-3" /> ID</span>
+              <span className="text-[#D2D2DC] font-mono text-[10px]">{channel.channel_id}</span>
             </div>
             {channel.catchup_type && (
               <div className="flex items-center justify-between text-xs">
-                <span className="text-slate-500 flex items-center gap-1"><Clock className="w-3 h-3" /> Catchup</span>
-                <span className="text-slate-300 text-[10px]">{channel.catchup_type} ({t('chinfo.n_days', { n: channel.catchup_days || 7 })})</span>
+                <span className="text-[#7C7C8A] flex items-center gap-1"><Clock className="w-3 h-3" /> Catchup</span>
+                <span className="text-[#D2D2DC] text-[10px]">{channel.catchup_type} ({t('chinfo.n_days', { n: channel.catchup_days || 7 })})</span>
               </div>
             )}
           </div>
@@ -144,7 +144,7 @@ export default function ChannelInfoModal({ channel, epgNow, epgNext, isFavorite,
           <button
             onClick={() => { onToggleFavorite(channel.channel_id); }}
             className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold transition-all ${
-              isFavorite ? 'bg-[#2F6BFF]/20 text-[#6E9BFF] border border-[#2F6BFF]/40' : 'bg-slate-800 text-slate-400 border border-slate-700'
+              isFavorite ? 'bg-[#2F6BFF]/20 text-[#6E9BFF] border border-[#2F6BFF]/40' : 'bg-[#1E1E26] text-[#9C9CAB] border border-[#24242C]'
             }`}
           >
             <Heart className={`w-3.5 h-3.5 ${isFavorite ? 'fill-[#2F6BFF]' : ''}`} />

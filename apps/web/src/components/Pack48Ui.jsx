@@ -72,11 +72,11 @@ export function CodesModal({ open, onClose, onOpenMovie, onPartyCode, onOpenPlay
       <div className="w-full max-w-md modal-panel overflow-hidden" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
           <p className="text-[13px] font-black text-white flex items-center gap-2"><Ticket className="w-4 h-4 text-[#6E9BFF]" />Mã &amp; chia sẻ</p>
-          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-slate-400" /></button>
+          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-[#9C9CAB]" /></button>
         </div>
         <div className="flex gap-1 px-4 pt-3">
           {[{ id: 'redeem', label: '🎟️ Nhập mã' }, { id: 'my', label: '📋 Mã của tôi' }].map((x) => (
-            <button key={x.id} onClick={() => setTab(x.id)} className={`px-3 py-1.5 rounded-full text-[11px] font-black transition-all ${tab === x.id ? 'grad-brand text-white' : 'bg-white/[0.05] text-stone-400'}`}>{x.label}</button>
+            <button key={x.id} onClick={() => setTab(x.id)} className={`px-3 py-1.5 rounded-full text-[11px] font-black transition-all ${tab === x.id ? 'grad-brand text-white' : 'bg-white/[0.05] text-[#9C9CAB]'}`}>{x.label}</button>
           ))}
         </div>
         <div className="p-4 space-y-3">
@@ -85,11 +85,11 @@ export function CodesModal({ open, onClose, onOpenMovie, onPartyCode, onOpenPlay
               <div className="flex gap-2">
                 <input value={code} onChange={(e) => setCode(e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 32))}
                   onKeyDown={(e) => e.key === 'Enter' && redeem()}
-                  placeholder="Nhập mã…" className="flex-1 px-3 py-3 bg-black/40 border border-white/10 rounded-xl text-[14px] font-mono tracking-[0.2em] text-white placeholder:tracking-normal placeholder:text-stone-600 focus:outline-none focus:border-[#2F6BFF]" />
+                  placeholder="Nhập mã…" className="flex-1 px-3 py-3 bg-black/40 border border-white/10 rounded-xl text-[14px] font-mono tracking-[0.2em] text-white placeholder:tracking-normal placeholder:text-[#5A5A66] focus:outline-none focus:border-[#2F6BFF]" />
                 <button onClick={redeem} disabled={busy || !code} className="px-4 rounded-xl grad-brand text-white text-[12px] font-black disabled:opacity-40 active:scale-95">{busy ? '…' : t('p48.use')}</button>
               </div>
-              <p className="text-[11px] text-stone-500 leading-relaxed">
-                Nhập <b className="text-stone-300">mã phim</b> (mở đúng phim/tập), <b className="text-stone-300">mã mời</b> (nhận +200 XP &amp; +3 ngày gói), <b className="text-stone-300">mã phòng xem chung</b>, <b className="text-stone-300">playlist</b> hay <b className="text-stone-300">kèo dự đoán</b> từ bạn bè.
+              <p className="text-[11px] text-[#7C7C8A] leading-relaxed">
+                Nhập <b className="text-[#D2D2DC]">mã phim</b> (mở đúng phim/tập), <b className="text-[#D2D2DC]">mã mời</b> (nhận +200 XP &amp; +3 ngày gói), <b className="text-[#D2D2DC]">mã phòng xem chung</b>, <b className="text-[#D2D2DC]">playlist</b> hay <b className="text-[#D2D2DC]">kèo dự đoán</b> từ bạn bè.
               </p>
               {!isAuthenticated && <p className="text-[11px] text-amber-400/90 font-bold">Bạn cần đăng nhập để dùng mã mời / mã phòng.</p>}
             </>
@@ -98,7 +98,7 @@ export function CodesModal({ open, onClose, onOpenMovie, onPartyCode, onOpenPlay
             <>
               {myCode && (
                 <div className="rounded-2xl bg-gradient-to-br from-[#2F6BFF]/15 to-[#7c2d12]/10 border border-[#2F6BFF]/30 p-3">
-                  <p className="text-[10px] font-black uppercase tracking-widest text-[#ffb37a] flex items-center gap-1"><Gift className="w-3 h-3" />Mã mời của bạn — cả 2 nhận +200 XP &amp; +3 ngày gói</p>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-[#6E9BFF] flex items-center gap-1"><Gift className="w-3 h-3" />Mã mời của bạn — cả 2 nhận +200 XP &amp; +3 ngày gói</p>
                   <div className="mt-2 flex items-center gap-2">
                     <span className="flex-1 font-mono font-black text-white text-lg tracking-[0.25em]">{myCode}</span>
                     <button onClick={() => copyText(myCode, () => { setCopied(true); setTimeout(() => setCopied(false), 1200); addToast(t('p48.code_copied'), 'success'); })} className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white">{copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}</button>
@@ -106,18 +106,18 @@ export function CodesModal({ open, onClose, onOpenMovie, onPartyCode, onOpenPlay
                 </div>
               )}
               {mine.filter((m) => m.kind === 'movie').slice(0, 10).length > 0 && (
-                <p className="text-[10px] text-stone-500 font-black uppercase tracking-widest">Mã phim đã tạo (10 phút)</p>
+                <p className="text-[10px] text-[#7C7C8A] font-black uppercase tracking-widest">Mã phim đã tạo (10 phút)</p>
               )}
               <div className="space-y-1.5 max-h-44 overflow-y-auto">
                 {mine.filter((m) => m.kind === 'movie').slice(0, 10).map((m) => (
                   <div key={m.code} className="flex items-center gap-2 px-3 py-2 rounded-lg bg-black/25 border border-white/[0.06] text-[11px]">
                     <span className="font-mono font-black text-[#6E9BFF]">{m.code}</span>
-                    <span className="flex-1 truncate text-slate-300">{m.media_type === 'tv' ? `TV · S${m.season}E${m.episode}` : 'Phim'} · TMDB {m.tmdb_id}</span>
-                    <button onClick={() => copyText(m.code, () => addToast(t('p48.code_copied'), 'success'))} className="text-slate-500 hover:text-white"><Copy className="w-3.5 h-3.5" /></button>
+                    <span className="flex-1 truncate text-[#D2D2DC]">{m.media_type === 'tv' ? `TV · S${m.season}E${m.episode}` : 'Phim'} · TMDB {m.tmdb_id}</span>
+                    <button onClick={() => copyText(m.code, () => addToast(t('p48.code_copied'), 'success'))} className="text-[#7C7C8A] hover:text-white"><Copy className="w-3.5 h-3.5" /></button>
                   </div>
                 ))}
-                {mine.length === 0 && !isAuthenticated && <p className="text-[11px] text-stone-600 italic">Đăng nhập để xem mã của bạn.</p>}
-                {mine.length === 0 && isAuthenticated && <p className="text-[11px] text-stone-600 italic">Chưa tạo mã nào — vào phim bấm nút chia sẻ để tạo mã 6 ký tự nhé.</p>}
+                {mine.length === 0 && !isAuthenticated && <p className="text-[11px] text-[#5A5A66] italic">Đăng nhập để xem mã của bạn.</p>}
+                {mine.length === 0 && isAuthenticated && <p className="text-[11px] text-[#5A5A66] italic">Chưa tạo mã nào — vào phim bấm nút chia sẻ để tạo mã 6 ký tự nhé.</p>}
               </div>
               <ShareButtons url={myCode ? buildDeepLink({}) + '' : ''} title="" compact={false} />
             </>
@@ -208,13 +208,13 @@ export function PartyModal({ open, onClose, channel, onChangeChannel, userName }
       <div className="w-full max-w-md modal-panel overflow-hidden" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
           <p className="text-[13px] font-black text-white flex items-center gap-2"><Users className="w-4 h-4 text-emerald-400" />Xem chung cùng bạn bè</p>
-          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-slate-400" /></button>
+          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-[#9C9CAB]" /></button>
         </div>
         <div className="p-4 space-y-3">
           {!room ? (
             <>
               <div className="rounded-2xl border border-white/[0.07] bg-white/[0.03] p-3 space-y-2">
-                <p className="text-[11px] text-stone-400">Bạn đang xem <b className="text-white">{channel?.name || '—'}</b>. Tạo phòng để bạn bè vào xem cùng (chat + tự chuyển kênh theo host).</p>
+                <p className="text-[11px] text-[#9C9CAB]">Bạn đang xem <b className="text-white">{channel?.name || '—'}</b>. Tạo phòng để bạn bè vào xem cùng (chat + tự chuyển kênh theo host).</p>
                 <button onClick={create} className="w-full py-2.5 rounded-xl grad-brand text-white text-[12px] font-black flex items-center justify-center gap-1.5"><QrCode className="w-4 h-4" />Tạo phòng &amp; lấy mã mời</button>
               </div>
               <div className="flex items-center gap-2 pt-1">
@@ -227,7 +227,7 @@ export function PartyModal({ open, onClose, channel, onChangeChannel, userName }
               <div className="flex items-center justify-between rounded-xl bg-emerald-950/30 border border-emerald-500/25 px-3 py-2">
                 <div className="min-w-0">
                   <p className="text-[11px] font-black text-emerald-300">PHÒNG {room.toUpperCase().replace('PARTY:', '')} · {members.length} người</p>
-                  <p className="text-[10px] text-stone-500 truncate">Đang phát: {hostState?.channelName || channel?.name || '…'}</p>
+                  <p className="text-[10px] text-[#7C7C8A] truncate">Đang phát: {hostState?.channelName || channel?.name || '…'}</p>
                 </div>
                 <div className="flex gap-1.5">
                   {inviteCode && (
@@ -250,10 +250,10 @@ export function PartyModal({ open, onClose, channel, onChangeChannel, userName }
                 </button>
               )}
               <div className="h-44 rounded-xl bg-black/30 border border-white/[0.07] p-2 overflow-y-auto space-y-1">
-                {msgs.length === 0 && <p className="text-[10px] text-stone-600 italic">Chưa có tin nhắn — bắt đầu chat nào!</p>}
+                {msgs.length === 0 && <p className="text-[10px] text-[#5A5A66] italic">Chưa có tin nhắn — bắt đầu chat nào!</p>}
                 {msgs.map((m, i) => (
-                  <div key={m.id || i} className={`text-[11px] ${m.kind === 'reaction' ? 'text-amber-300 text-center' : m.kind === 'join' || m.kind === 'leave' ? 'text-stone-600 italic text-center' : ''}`}>
-                    {m.kind === 'chat' && <><b className="text-stone-200">{m.from_name}:</b> <span className="text-stone-300">{m.text}</span></>}
+                  <div key={m.id || i} className={`text-[11px] ${m.kind === 'reaction' ? 'text-amber-300 text-center' : m.kind === 'join' || m.kind === 'leave' ? 'text-[#5A5A66] italic text-center' : ''}`}>
+                    {m.kind === 'chat' && <><b className="text-[#E6E6EC]">{m.from_name}:</b> <span className="text-[#D2D2DC]">{m.text}</span></>}
                     {m.kind === 'reaction' && <span>{m.text}</span>}
                     {m.kind === 'join' && <span>👋 {m.text}</span>}
                     {m.kind === 'leave' && <span>👋 {m.text}</span>}
@@ -317,24 +317,24 @@ export function ResumeModal({ open, onClose, onResumeMovie }) {
       <div className="w-full max-w-sm modal-panel overflow-hidden" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
           <p className="text-[13px] font-black text-white flex items-center gap-2"><Tv className="w-4 h-4 text-[#6E9BFF]" />{t('p48.resume_code_title')}</p>
-          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-slate-400" /></button>
+          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-[#9C9CAB]" /></button>
         </div>
         <div className="p-4 space-y-3">
           <div className="flex gap-1.5">
             {[{ id: 'give', label: '📱 Điện thoại (gửi lên TV)' }, { id: 'take', label: '📺 TV (nhập mã)' }].map((x) => (
-              <button key={x.id} onClick={() => { setMode(x.id); setCode(''); }} className={`px-3 py-1.5 rounded-full text-[10px] font-black ${mode === x.id ? 'grad-brand text-white' : 'bg-white/[0.05] text-stone-400'}`}>{x.label}</button>
+              <button key={x.id} onClick={() => { setMode(x.id); setCode(''); }} className={`px-3 py-1.5 rounded-full text-[10px] font-black ${mode === x.id ? 'grad-brand text-white' : 'bg-white/[0.05] text-[#9C9CAB]'}`}>{x.label}</button>
             ))}
           </div>
           {mode === 'give' ? (
             <>
-              <p className="text-[11px] text-stone-500 leading-relaxed">{t('p48.resume_code_hint')}</p>
+              <p className="text-[11px] text-[#7C7C8A] leading-relaxed">{t('p48.resume_code_hint')}</p>
               {code ? (
                 <div className="text-center py-4 bg-black/30 border border-dashed border-[#2F6BFF]/50 rounded-2xl">
                   <p className="font-mono text-4xl font-black tracking-[0.4em] text-[#6E9BFF]">{code}</p>
-                  <p className="text-[10px] text-stone-500 mt-2">Hết hạn sau {ttl}s · TV nhập xong là tự xoá</p>
-                  <button onClick={gen} className="mt-2 px-3 py-1.5 rounded-lg bg-white/10 text-[11px] font-bold text-stone-300 hover:bg-white/15">Tạo mã mới</button>
+                  <p className="text-[10px] text-[#7C7C8A] mt-2">Hết hạn sau {ttl}s · TV nhập xong là tự xoá</p>
+                  <button onClick={gen} className="mt-2 px-3 py-1.5 rounded-lg bg-white/10 text-[11px] font-bold text-[#D2D2DC] hover:bg-white/15">Tạo mã mới</button>
                 </div>
-              ) : <p className="text-[11px] text-stone-500">Đang tạo mã… {busy && '⏳'}</p>}
+              ) : <p className="text-[11px] text-[#7C7C8A]">Đang tạo mã… {busy && '⏳'}</p>}
             </>
           ) : (
             <>

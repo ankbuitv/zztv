@@ -100,9 +100,9 @@ export default function PlansScreen({ initialCode = '' }) {
 
   return (
     <div className="min-h-full pb-16 relative">
-      <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(700px 260px at 50% 0%, rgba(243,111,33,.12), transparent 70%)' }}></div>
+      <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(700px 260px at 50% 0%, rgba(47,107,255,.12), transparent 70%)' }}></div>
       <div className="max-w-[1200px] mx-auto px-4 md:px-6 relative">
-        <div className="flex items-center justify-end gap-2 text-[11px] sm:text-[12px] pt-4 text-stone-500 flex-wrap min-w-0">
+        <div className="flex items-center justify-end gap-2 text-[11px] sm:text-[12px] pt-4 text-[#7C7C8A] flex-wrap min-w-0">
           <Mail className="w-3.5 h-3.5 text-[#2F6BFF] shrink-0" />
           <span className="shrink-0">{t('plans.support')}:</span>
           <a href={`mailto:${SUPPORT_EMAIL}`} className="font-bold text-[#6E9BFF] hover:underline break-all">{SUPPORT_EMAIL}</a>
@@ -134,7 +134,7 @@ export default function PlansScreen({ initialCode = '' }) {
                 <Sparkles className="w-3 h-3" /> playZ
               </div>
               <h1 className="text-[22px] sm:text-[26px] md:text-[32px] font-black tracking-tight text-white leading-tight break-words">{t('plans.title')}</h1>
-              <p className="text-[13px] text-stone-400 mt-1.5 flex items-center justify-center md:justify-start gap-1.5 px-1">
+              <p className="text-[13px] text-[#9C9CAB] mt-1.5 flex items-center justify-center md:justify-start gap-1.5 px-1">
                 <BadgeCheck className="w-4 h-4 text-emerald-400 shrink-0" />
                 {t('plans.sub')}
               </p>
@@ -142,9 +142,9 @@ export default function PlansScreen({ initialCode = '' }) {
             {/* Gói hiện tại */}
             {currentRank > 0 && (
               <div className="shrink-0 rounded-2xl border border-emerald-500/30 bg-emerald-500/[0.07] px-4 py-3 text-center">
-                <div className="flex items-center justify-center gap-1.5 text-[11px] text-stone-400 font-bold"><ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />{t('plans.current')}</div>
+                <div className="flex items-center justify-center gap-1.5 text-[11px] text-[#9C9CAB] font-bold"><ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />{t('plans.current')}</div>
                 <div className="text-lg font-black" style={{ color: cur?.color || '#6E9BFF' }}>{cur?.name || current.toUpperCase()}</div>
-                {currentRank < maxRank && <div className="text-[11px] text-stone-500">{t('plans.upgrade_anytime')}</div>}
+                {currentRank < maxRank && <div className="text-[11px] text-[#7C7C8A]">{t('plans.upgrade_anytime')}</div>}
               </div>
             )}
           </div>
@@ -155,10 +155,10 @@ export default function PlansScreen({ initialCode = '' }) {
               const isCur = current === p.code;
               return (
                 <React.Fragment key={p.code}>
-                  <button onClick={() => startBuy(p)} className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-black whitespace-nowrap border transition-all active:scale-95 ${isCur ? 'text-white border-transparent' : 'text-stone-300 border-white/10 bg-white/[0.04] hover:border-white/25'}`} style={isCur ? { background: a.grad } : {}}>
+                  <button onClick={() => startBuy(p)} className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-black whitespace-nowrap border transition-all active:scale-95 ${isCur ? 'text-white border-transparent' : 'text-[#D2D2DC] border-white/10 bg-white/[0.04] hover:border-white/25'}`} style={isCur ? { background: a.grad } : {}}>
                     <span>{a.art}</span> {p.name}
                   </button>
-                  {i < plans.length - 1 && <ChevronRight className="w-3.5 h-3.5 text-stone-600 shrink-0" />}
+                  {i < plans.length - 1 && <ChevronRight className="w-3.5 h-3.5 text-[#5A5A66] shrink-0" />}
                 </React.Fragment>
               );
             })}
@@ -169,16 +169,16 @@ export default function PlansScreen({ initialCode = '' }) {
           <div className="mb-8 overflow-x-auto rounded-3xl border border-white/10 bg-[#101117]">
             <div className="px-4 py-3 border-b border-white/[0.07] flex items-center justify-between">
               <p className="text-[13px] font-black text-white">{t('plans.compare')}</p>
-              <span className="text-[10px] font-bold uppercase tracking-widest text-stone-500">{t('plans.feature')}</span>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-[#7C7C8A]">{t('plans.feature')}</span>
             </div>
             <table className="w-full min-w-[720px] text-left">
               <thead>
                 <tr className="border-b border-white/[0.06]">
-                  <th className="px-4 py-3 text-[11px] font-black text-stone-500 uppercase tracking-wider w-[180px]">{t('plans.feature')}</th>
+                  <th className="px-4 py-3 text-[11px] font-black text-[#7C7C8A] uppercase tracking-wider w-[180px]">{t('plans.feature')}</th>
                   {plans.map((p) => (
                     <th key={p.code} className="px-3 py-3 text-center">
                       <div className="text-[13px] font-black italic" style={{ color: p.color || '#2F6BFF' }}>{p.name}</div>
-                      <div className="text-[11px] text-stone-400 font-bold mt-0.5">{fmtPrice(p, lang) || t('plans.free_price')}</div>
+                      <div className="text-[11px] text-[#9C9CAB] font-bold mt-0.5">{fmtPrice(p, lang) || t('plans.free_price')}</div>
                     </th>
                   ))}
                 </tr>
@@ -186,14 +186,14 @@ export default function PlansScreen({ initialCode = '' }) {
               <tbody>
                 {PLAN_FEATURES.map((feat) => (
                   <tr key={feat.id} className="border-b border-white/[0.04]">
-                    <td className="px-4 py-2.5 text-[12px] text-stone-300 font-semibold">{lang === 'vi' ? feat.vi : feat.en}</td>
+                    <td className="px-4 py-2.5 text-[12px] text-[#D2D2DC] font-semibold">{lang === 'vi' ? feat.vi : feat.en}</td>
                     {plans.map((p) => {
                       const ok = planHasFeature(p, feat.id);
                       return (
                         <td key={p.code} className="px-3 py-2.5 text-center">
                           {ok
                             ? <Check className="w-4 h-4 text-emerald-400 mx-auto" strokeWidth={3} />
-                            : <X className="w-4 h-4 text-stone-600 mx-auto" strokeWidth={3} />}
+                            : <X className="w-4 h-4 text-[#5A5A66] mx-auto" strokeWidth={3} />}
                         </td>
                       );
                     })}
@@ -230,7 +230,7 @@ export default function PlansScreen({ initialCode = '' }) {
             const priceStr = fmtPrice(p, lang);
             const a = planArt(p);
             return (
-              <div key={p.code} className={`rounded-3xl overflow-hidden flex flex-col h-full border transition-all hover:-translate-y-1 ${isCurrent ? 'border-[#2F6BFF] shadow-[0_10px_40px_rgba(243,111,33,.25)]' : isTop ? 'border-amber-400/40 shadow-[0_10px_40px_rgba(251,191,36,.12)]' : 'border-white/10 shadow-xl shadow-black/30'} bg-[#14151c]`}>
+              <div key={p.code} className={`rounded-3xl overflow-hidden flex flex-col h-full border transition-all hover:-translate-y-1 ${isCurrent ? 'border-[#2F6BFF] shadow-[0_10px_40px_rgba(47,107,255,.25)]' : isTop ? 'border-amber-400/40 shadow-[0_10px_40px_rgba(251,191,36,.12)]' : 'border-white/10 shadow-xl shadow-black/30'} bg-[#14151c]`}>
                 <div className="relative h-[118px] flex items-center justify-center overflow-hidden shrink-0" style={{ background: a.grad }}>
                   <div className="absolute -left-6 -top-8 w-28 h-28 rounded-full bg-white/15" />
                   <div className="absolute -right-4 -bottom-10 w-32 h-32 rounded-full bg-black/20" />
@@ -241,18 +241,18 @@ export default function PlansScreen({ initialCode = '' }) {
                 </div>
                 <div className="px-5 pt-4 pb-1">
                   <div className="text-[19px] font-black italic tracking-tight" style={{ color: p.color || '#2F6BFF' }}>{p.name}</div>
-                  <div className="text-[12px] text-stone-400 mt-0.5 min-h-[18px]">{lang === 'vi' ? p.tagline : (a.tagline_en || p.tagline)}</div>
+                  <div className="text-[12px] text-[#9C9CAB] mt-0.5 min-h-[18px]">{lang === 'vi' ? p.tagline : (a.tagline_en || p.tagline)}</div>
                 </div>
                 <div className="px-5 pt-1.5 h-10 flex items-baseline">
                   {priceStr ? (
                     <>
                       <span className="text-[26px] font-black text-white leading-none">{priceStr}</span>
-                      <span className="text-[12px] text-stone-500 ml-1">{t('plans.per_month')}</span>
+                      <span className="text-[12px] text-[#7C7C8A] ml-1">{t('plans.per_month')}</span>
                     </>
                   ) : (
                     <>
                       <span className="text-[26px] font-black text-emerald-400 leading-none">{t('plans.free_price')}</span>
-                      <span className="text-[12px] text-stone-500 ml-1">{t('plans.per_month')}</span>
+                      <span className="text-[12px] text-[#7C7C8A] ml-1">{t('plans.per_month')}</span>
                     </>
                   )}
                 </div>
@@ -260,8 +260,8 @@ export default function PlansScreen({ initialCode = '' }) {
                   {PLAN_FEATURES.map((feat) => {
                     const ok = planHasFeature(p, feat.id);
                     return (
-                      <li key={feat.id} className={`flex gap-2 text-[12px] leading-snug ${ok ? 'text-stone-300' : 'text-stone-600'}`}>
-                        <span className={`w-[17px] h-[17px] rounded-full flex items-center justify-center shrink-0 mt-px ${ok ? 'bg-emerald-500/20 text-emerald-400' : 'bg-white/[0.06] text-stone-600'}`}>
+                      <li key={feat.id} className={`flex gap-2 text-[12px] leading-snug ${ok ? 'text-[#D2D2DC]' : 'text-[#5A5A66]'}`}>
+                        <span className={`w-[17px] h-[17px] rounded-full flex items-center justify-center shrink-0 mt-px ${ok ? 'bg-emerald-500/20 text-emerald-400' : 'bg-white/[0.06] text-[#5A5A66]'}`}>
                           {ok ? <Check className="w-3 h-3" strokeWidth={3} /> : <X className="w-3 h-3" strokeWidth={3} />}
                         </span>
                         {lang === 'vi' ? feat.vi : feat.en}
@@ -290,7 +290,7 @@ export default function PlansScreen({ initialCode = '' }) {
               value={giftCode} onChange={e => setGiftCode(e.target.value.toUpperCase().slice(0, 32))}
               onKeyDown={e => { if (e.key === 'Enter') doGift(); }}
               placeholder="PLAYZ-XXXXXXXX"
-              className="flex-1 px-3 py-2.5 bg-black/40 border border-white/10 rounded-xl text-[13px] font-mono font-bold text-white placeholder:text-stone-600 outline-none focus:border-fuchsia-500 uppercase"
+              className="flex-1 px-3 py-2.5 bg-black/40 border border-white/10 rounded-xl text-[13px] font-mono font-bold text-white placeholder:text-[#5A5A66] outline-none focus:border-fuchsia-500 uppercase"
             />
             <button onClick={doGift} disabled={giftBusy || !giftCode.trim()} className="px-5 rounded-xl bg-fuchsia-600 hover:bg-fuchsia-500 text-white text-[13px] font-bold disabled:opacity-40 active:scale-95">
               {t('gift.redeem')}
@@ -304,15 +304,15 @@ export default function PlansScreen({ initialCode = '' }) {
           </button>
         </div>
 
-        <p className="max-w-[820px] mx-auto text-center text-[12px] text-stone-500 leading-relaxed mt-8">
+        <p className="max-w-[820px] mx-auto text-center text-[12px] text-[#7C7C8A] leading-relaxed mt-8">
           {t('plans.note1')} {t('plans.note2')}<br />
           {t('plans.note3')} <a className="text-[#6E9BFF] font-bold" href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> {t('plans.note4')}
         </p>
-        <div className="flex items-center justify-center gap-4 mt-4 text-[11px] text-stone-600">
+        <div className="flex items-center justify-center gap-4 mt-4 text-[11px] text-[#5A5A66]">
           <span className="flex items-center gap-1"><Lock className="w-3 h-3" /> {t('plans.sec1')}</span>
           <span className="flex items-center gap-1"><RefreshCcw className="w-3 h-3" /> {t('plans.sec2')}</span>
         </div>
-        {serverInfo?.support && <div className="text-center text-[11px] text-stone-600 mt-2">{t('plans.partner')}: {serverInfo.support}</div>}
+        {serverInfo?.support && <div className="text-center text-[11px] text-[#5A5A66] mt-2">{t('plans.partner')}: {serverInfo.support}</div>}
       </div>
       {payPlan && (
         <PayModal

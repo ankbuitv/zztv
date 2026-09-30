@@ -3,9 +3,9 @@ import { Film, Eye, Gift, CreditCard, Megaphone, Clock, MessageCircle, Target, F
 import { THEME_PRESETS } from '../services/siteTheme.js';
 
 // Các tab admin mới: trực tiếp, gift, thanh toán, QC, lịch đăng, bình luận, dự đoán, báo cáo.
-const inp = 'w-full bg-slate-900/60 border border-slate-700/50 rounded-lg px-3 py-2 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[#2F6BFF]/50';
+const inp = 'w-full bg-[#16161C]/60 border border-[#24242C]/50 rounded-lg px-3 py-2 text-xs text-white placeholder-[#5A5A66] focus:outline-none focus:border-[#2F6BFF]/50';
 const btnP = 'px-3 py-2 bg-[#2F6BFF] hover:bg-[#e05f0f] text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1.5';
-const btnG = 'px-3 py-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1.5';
+const btnG = 'px-3 py-2 bg-[#1E1E26] hover:bg-[#24242C] text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1.5';
 
 async function api(BASE, headers, path, opts = {}) {
   const r = await fetch(`${BASE}${path}`, { headers, ...opts });
@@ -31,15 +31,15 @@ export function LiveTab({ BASE, headers }) {
   }, [BASE]);
   return (
     <div className="p-4 space-y-2">
-      <p className="text-[11px] text-slate-400 font-bold flex items-center gap-1.5"><Eye className="w-3.5 h-3.5 text-emerald-400" />{viewers.length} người đang xem (tự refresh 10s)</p>
-      {viewers.length === 0 && <p className="text-[11px] text-slate-600 italic">Chưa có ai online.</p>}
+      <p className="text-[11px] text-[#9C9CAB] font-bold flex items-center gap-1.5"><Eye className="w-3.5 h-3.5 text-emerald-400" />{viewers.length} người đang xem (tự refresh 10s)</p>
+      {viewers.length === 0 && <p className="text-[11px] text-[#5A5A66] italic">Chưa có ai online.</p>}
       {viewers.map(v => (
         <div key={v.sid} className="flex items-center gap-2 rounded-xl bg-black/30 border border-white/[0.06] px-3 py-2">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
           <span className="text-[12px] font-bold text-white truncate">{v.name || 'Khách'}</span>
-          <span className="text-[10px] text-slate-500 shrink-0">{v.kind === 'movie' ? '🎬' : v.kind === 'short' ? '▶️' : v.kind === 'sport' ? '⚽' : '📺'}</span>
-          <span className="flex-1 text-[11px] text-slate-400 truncate">{v.ref_name || v.ref_id}</span>
-          <span className="text-[10px] text-slate-600 shrink-0">{fmtTime(v.updated_at)}</span>
+          <span className="text-[10px] text-[#7C7C8A] shrink-0">{v.kind === 'movie' ? '🎬' : v.kind === 'short' ? '▶️' : v.kind === 'sport' ? '⚽' : '📺'}</span>
+          <span className="flex-1 text-[11px] text-[#9C9CAB] truncate">{v.ref_name || v.ref_id}</span>
+          <span className="text-[10px] text-[#5A5A66] shrink-0">{fmtTime(v.updated_at)}</span>
         </div>
       ))}
     </div>
@@ -62,11 +62,11 @@ export function GiftsTab({ BASE, headers, addToast }) {
     <div className="p-4 space-y-2">
       {gifts.map(g => (
         <div key={g.code} className="flex items-center gap-2 rounded-xl bg-black/30 border border-white/[0.06] px-3 py-2">
-          <span className={`font-mono text-[12px] font-bold ${g.is_active ? 'text-fuchsia-300' : 'text-slate-600 line-through'}`}>{g.code}</span>
-          <span className="text-[10px] text-slate-400">{g.plan} · {g.days} ngày · {g.used}/{g.max_uses}</span>
+          <span className={`font-mono text-[12px] font-bold ${g.is_active ? 'text-fuchsia-300' : 'text-[#5A5A66] line-through'}`}>{g.code}</span>
+          <span className="text-[10px] text-[#9C9CAB]">{g.plan} · {g.days} ngày · {g.used}/{g.max_uses}</span>
           <span className="flex-1" />
-          <button onClick={async () => { await api(BASE, headers, '/admin/gifts', { method: 'PUT', body: JSON.stringify({ code: g.code, is_active: g.is_active ? 0 : 1 }) }); load(); }} className="text-[10px] font-bold text-slate-400 hover:text-white px-2 py-1">{g.is_active ? 'Tắt' : 'Bật'}</button>
-          <button onClick={async () => { if (!confirm('Xoá mã ' + g.code + '?')) return; await api(BASE, headers, '/admin/gifts', { method: 'DELETE', body: JSON.stringify({ code: g.code }) }); load(); }} className="text-slate-600 hover:text-red-400"><Trash2 className="w-3.5 h-3.5" /></button>
+          <button onClick={async () => { await api(BASE, headers, '/admin/gifts', { method: 'PUT', body: JSON.stringify({ code: g.code, is_active: g.is_active ? 0 : 1 }) }); load(); }} className="text-[10px] font-bold text-[#9C9CAB] hover:text-white px-2 py-1">{g.is_active ? 'Tắt' : 'Bật'}</button>
+          <button onClick={async () => { if (!confirm('Xoá mã ' + g.code + '?')) return; await api(BASE, headers, '/admin/gifts', { method: 'DELETE', body: JSON.stringify({ code: g.code }) }); load(); }} className="text-[#5A5A66] hover:text-red-400"><Trash2 className="w-3.5 h-3.5" /></button>
         </div>
       ))}
       <form onSubmit={create} className="grid grid-cols-2 gap-2 pt-2">
@@ -101,30 +101,30 @@ export function PaymentsTab({ BASE, headers, addToast }) {
     const d = await api(BASE, headers, '/admin/payment-config', { method: 'PUT', body: JSON.stringify(cfg) });
     if (d.success) addToast('Đã lưu cấu hình nhận tiền.', 'success'); else addToast(d.error || 'Lỗi', 'error');
   };
-  const stColor = { paid: 'text-emerald-400', claimed: 'text-amber-300', pending: 'text-slate-400', rejected: 'text-red-400', underpaid: 'text-orange-400' };
+  const stColor = { paid: 'text-emerald-400', claimed: 'text-amber-300', pending: 'text-[#9C9CAB]', rejected: 'text-red-400', underpaid: 'text-orange-400' };
   return (
     <div className="p-4 space-y-2">
-      <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Đơn hàng</p>
-      {list.length === 0 && <p className="text-[11px] text-slate-600 italic">Chưa có đơn nào.</p>}
+      <p className="text-[10px] text-[#7C7C8A] font-bold uppercase tracking-wider">Đơn hàng</p>
+      {list.length === 0 && <p className="text-[11px] text-[#5A5A66] italic">Chưa có đơn nào.</p>}
       {list.slice(0, 30).map(p => (
         <div key={p.order_code} className="flex items-center gap-2 rounded-xl bg-black/30 border border-white/[0.06] px-3 py-2 flex-wrap">
           <span className="font-mono text-[11px] font-bold text-white">{p.order_code}</span>
-          <span className="text-[10px] text-slate-400">{p.username} · {p.plan} · {Number(p.amount || 0).toLocaleString()}đ</span>
-          <span className={`text-[10px] font-black uppercase ${stColor[p.status] || 'text-slate-400'}`}>{p.status}</span>
+          <span className="text-[10px] text-[#9C9CAB]">{p.username} · {p.plan} · {Number(p.amount || 0).toLocaleString()}đ</span>
+          <span className={`text-[10px] font-black uppercase ${stColor[p.status] || 'text-[#9C9CAB]'}`}>{p.status}</span>
           <span className="flex-1" />
           {p.status !== 'paid' && <button onClick={() => set(p.order_code, 'paid')} title="Duyệt + kích hoạt gói" className="p-1.5 text-emerald-400 hover:bg-emerald-500/10 rounded-lg"><Check className="w-4 h-4" /></button>}
-          {p.status !== 'rejected' && p.status !== 'paid' && <button onClick={() => set(p.order_code, 'rejected')} title="Từ chối" className="p-1.5 text-slate-500 hover:text-red-400 rounded-lg"><X className="w-4 h-4" /></button>}
+          {p.status !== 'rejected' && p.status !== 'paid' && <button onClick={() => set(p.order_code, 'rejected')} title="Từ chối" className="p-1.5 text-[#7C7C8A] hover:text-red-400 rounded-lg"><X className="w-4 h-4" /></button>}
         </div>
       ))}
-      <form onSubmit={saveCfg} className="space-y-2 pt-2 border-t border-slate-800/40">
-        <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider flex items-center gap-1.5"><CreditCard className="w-3.5 h-3.5" /> Tài khoản nhận tiền (VietQR)</p>
+      <form onSubmit={saveCfg} className="space-y-2 pt-2 border-t border-[#24242C]/40">
+        <p className="text-[10px] text-[#7C7C8A] font-bold uppercase tracking-wider flex items-center gap-1.5"><CreditCard className="w-3.5 h-3.5" /> Tài khoản nhận tiền (VietQR)</p>
         <div className="grid grid-cols-2 gap-2">
           <input value={cfg.bank_id} onChange={e => setCfg({ ...cfg, bank_id: e.target.value.toUpperCase() })} placeholder="Mã NH (VD: MBBANK, VCB)" className={inp} />
           <input value={cfg.account_no} onChange={e => setCfg({ ...cfg, account_no: e.target.value })} placeholder="Số tài khoản" className={inp} />
           <input value={cfg.account_name} onChange={e => setCfg({ ...cfg, account_name: e.target.value })} placeholder="Chủ tài khoản" className={inp + ' col-span-2'} />
           <input value={cfg.sepay_token} onChange={e => setCfg({ ...cfg, sepay_token: e.target.value })} placeholder="SePay API token (tự động duyệt — để trống giữ cũ)" type="password" className={inp + ' col-span-2'} />
         </div>
-        <p className="text-[10px] text-slate-600">Webhook SePay trỏ về: <code className="text-slate-400">/api/payments/sepay-webhook</code> (header Authorization: Apikey)</p>
+        <p className="text-[10px] text-[#5A5A66]">Webhook SePay trỏ về: <code className="text-[#9C9CAB]">/api/payments/sepay-webhook</code> (header Authorization: Apikey)</p>
         <button type="submit" className={btnP + ' w-full justify-center'}>Lưu cấu hình</button>
       </form>
     </div>
@@ -155,13 +155,13 @@ export function AdsTab({ BASE, headers, addToast }) {
         <div key={a.id} className="flex items-center gap-2 rounded-xl bg-black/30 border border-white/[0.06] px-3 py-2">
           <span className="text-[10px] font-black uppercase text-sky-300 shrink-0">{a.slot}</span>
           <span className="flex-1 text-[12px] font-bold text-white truncate">{a.title || '(không tên)'}</span>
-          <span className="text-[10px] text-slate-500">{a.is_active ? 'BẬT' : 'TẮT'}</span>
-          <button onClick={() => { setEditing(a.id); setForm({ slot: a.slot, title: a.title || '', image_url: a.image_url || '', link_url: a.link_url || '', video_url: a.video_url || '', starts_at: (a.starts_at || '').replace(' ', 'T').slice(0, 16), ends_at: (a.ends_at || '').replace(' ', 'T').slice(0, 16), sort_order: a.sort_order || 0 }); }} className="text-[10px] font-bold text-slate-400 hover:text-white px-2 py-1">Sửa</button>
-          <button onClick={async () => { if (!confirm('Xoá QC này?')) return; await api(BASE, headers, '/admin/ads', { method: 'DELETE', body: JSON.stringify({ id: a.id }) }); load(); }} className="text-slate-600 hover:text-red-400"><Trash2 className="w-3.5 h-3.5" /></button>
+          <span className="text-[10px] text-[#7C7C8A]">{a.is_active ? 'BẬT' : 'TẮT'}</span>
+          <button onClick={() => { setEditing(a.id); setForm({ slot: a.slot, title: a.title || '', image_url: a.image_url || '', link_url: a.link_url || '', video_url: a.video_url || '', starts_at: (a.starts_at || '').replace(' ', 'T').slice(0, 16), ends_at: (a.ends_at || '').replace(' ', 'T').slice(0, 16), sort_order: a.sort_order || 0 }); }} className="text-[10px] font-bold text-[#9C9CAB] hover:text-white px-2 py-1">Sửa</button>
+          <button onClick={async () => { if (!confirm('Xoá QC này?')) return; await api(BASE, headers, '/admin/ads', { method: 'DELETE', body: JSON.stringify({ id: a.id }) }); load(); }} className="text-[#5A5A66] hover:text-red-400"><Trash2 className="w-3.5 h-3.5" /></button>
         </div>
       ))}
-      <form onSubmit={save} className="space-y-2 pt-2 border-t border-slate-800/40">
-        <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider flex items-center gap-1.5"><Megaphone className="w-3.5 h-3.5" />{editing ? `Sửa QC #${editing}` : 'Thêm QC mới'}</p>
+      <form onSubmit={save} className="space-y-2 pt-2 border-t border-[#24242C]/40">
+        <p className="text-[10px] text-[#7C7C8A] font-bold uppercase tracking-wider flex items-center gap-1.5"><Megaphone className="w-3.5 h-3.5" />{editing ? `Sửa QC #${editing}` : 'Thêm QC mới'}</p>
         <div className="grid grid-cols-2 gap-2">
           <select value={form.slot} onChange={e => setForm({ ...form, slot: e.target.value })} className={inp}>{SLOTS.map(s => <option key={s} value={s}>{s === 'preroll' ? 'preroll — chạy trước kênh/phim' : s}</option>)}</select>
           <input value={form.sort_order} type="number" onChange={e => setForm({ ...form, sort_order: e.target.value })} placeholder="Thứ tự" className={inp} />
@@ -169,8 +169,8 @@ export function AdsTab({ BASE, headers, addToast }) {
           <input value={form.image_url} onChange={e => setForm({ ...form, image_url: e.target.value })} placeholder="URL ảnh banner" className={inp + ' col-span-2'} />
           <input value={form.video_url} onChange={e => setForm({ ...form, video_url: e.target.value })} placeholder="URL video (tùy chọn)" className={inp + ' col-span-2'} />
           <input value={form.link_url} onChange={e => setForm({ ...form, link_url: e.target.value })} placeholder="Link khi bấm" className={inp + ' col-span-2'} />
-          <label className="text-[10px] text-slate-500">Hiện từ<input type="datetime-local" value={form.starts_at} onChange={e => setForm({ ...form, starts_at: e.target.value })} className={inp + ' mt-0.5'} /></label>
-          <label className="text-[10px] text-slate-500">Đến<input type="datetime-local" value={form.ends_at} onChange={e => setForm({ ...form, ends_at: e.target.value })} className={inp + ' mt-0.5'} /></label>
+          <label className="text-[10px] text-[#7C7C8A]">Hiện từ<input type="datetime-local" value={form.starts_at} onChange={e => setForm({ ...form, starts_at: e.target.value })} className={inp + ' mt-0.5'} /></label>
+          <label className="text-[10px] text-[#7C7C8A]">Đến<input type="datetime-local" value={form.ends_at} onChange={e => setForm({ ...form, ends_at: e.target.value })} className={inp + ' mt-0.5'} /></label>
         </div>
         <div className="flex gap-2">
           <button type="submit" className={btnP + ' flex-1 justify-center'}>{editing ? 'Cập nhật' : 'Thêm'}</button>
@@ -201,26 +201,26 @@ export function SchedTab({ BASE, headers, addToast }) {
   };
   return (
     <div className="p-4 space-y-2">
-      <p className="text-[10px] text-slate-500">Tới giờ hệ thống tự đẩy ra app (không cần cron). Có thể đặt giờ <b className="text-slate-300">tự hết hiệu lực (end_at)</b> và bật/tắt từng lịch.</p>
+      <p className="text-[10px] text-[#7C7C8A]">Tới giờ hệ thống tự đẩy ra app (không cần cron). Có thể đặt giờ <b className="text-[#D2D2DC]">tự hết hiệu lực (end_at)</b> và bật/tắt từng lịch.</p>
       {posts.map(p => (
         <div key={p.id}>
           <div className="flex items-center gap-2 rounded-xl bg-black/30 border border-white/[0.06] px-3 py-2">
-            <span className={`text-[10px] font-black uppercase shrink-0 ${p.is_done ? 'text-emerald-400' : p.is_active === 0 ? 'text-slate-600' : 'text-amber-300'}`}>{p.is_done ? '✓' : p.is_active === 0 ? '⏸' : '⏳'} {p.kind}</span>
-            <span className="flex-1 min-w-0"><span className="block text-[12px] font-bold text-white truncate">{p.title || p.body}</span><span className="block text-[10px] text-slate-500">{p.publish_at}{p.end_at ? ` → hết ${p.end_at}` : ''}</span></span>
-            <button onClick={() => doPreview(p.id)} title="Xem trước" className="text-slate-400 hover:text-white px-1.5"><Eye className="w-3.5 h-3.5" /></button>
-            <button onClick={async () => { await api(BASE, headers, '/admin/scheduled', { method: 'PUT', body: JSON.stringify({ id: p.id, is_active: p.is_active === 0 ? 1 : 0 }) }); load(); }} className="text-[10px] font-bold text-slate-400 hover:text-white px-1">{p.is_active === 0 ? 'Bật' : 'Ngừng'}</button>
-            <button onClick={async () => { if (!confirm('Xoá lịch này?')) return; await api(BASE, headers, '/admin/scheduled', { method: 'DELETE', body: JSON.stringify({ id: p.id }) }); load(); }} className="text-slate-600 hover:text-red-400"><Trash2 className="w-3.5 h-3.5" /></button>
+            <span className={`text-[10px] font-black uppercase shrink-0 ${p.is_done ? 'text-emerald-400' : p.is_active === 0 ? 'text-[#5A5A66]' : 'text-amber-300'}`}>{p.is_done ? '✓' : p.is_active === 0 ? '⏸' : '⏳'} {p.kind}</span>
+            <span className="flex-1 min-w-0"><span className="block text-[12px] font-bold text-white truncate">{p.title || p.body}</span><span className="block text-[10px] text-[#7C7C8A]">{p.publish_at}{p.end_at ? ` → hết ${p.end_at}` : ''}</span></span>
+            <button onClick={() => doPreview(p.id)} title="Xem trước" className="text-[#9C9CAB] hover:text-white px-1.5"><Eye className="w-3.5 h-3.5" /></button>
+            <button onClick={async () => { await api(BASE, headers, '/admin/scheduled', { method: 'PUT', body: JSON.stringify({ id: p.id, is_active: p.is_active === 0 ? 1 : 0 }) }); load(); }} className="text-[10px] font-bold text-[#9C9CAB] hover:text-white px-1">{p.is_active === 0 ? 'Bật' : 'Ngừng'}</button>
+            <button onClick={async () => { if (!confirm('Xoá lịch này?')) return; await api(BASE, headers, '/admin/scheduled', { method: 'DELETE', body: JSON.stringify({ id: p.id }) }); load(); }} className="text-[#5A5A66] hover:text-red-400"><Trash2 className="w-3.5 h-3.5" /></button>
           </div>
           {prev && prev.post && prev.post.id === p.id && (
-            <div className="mt-1 rounded-xl bg-sky-950/30 border border-sky-500/20 px-3 py-2 text-[11px] text-slate-300">
+            <div className="mt-1 rounded-xl bg-sky-950/30 border border-sky-500/20 px-3 py-2 text-[11px] text-[#D2D2DC]">
               <b className="text-sky-300">Xem trước:</b> {prev.preview?.title ? <><b>{prev.preview.title}</b> — </> : ''}{prev.preview?.message || prev.preview?.body || prev.preview?.subtitle || '(rỗng)'}
-              {prev.preview?.expires_at ? <span className="text-slate-500"> · tự tắt {new Date(prev.preview.expires_at * 1000).toLocaleString('vi-VN')}</span> : null}
-              <button onClick={() => setPrev(null)} className="ml-2 text-slate-500 hover:text-white">✕</button>
+              {prev.preview?.expires_at ? <span className="text-[#7C7C8A]"> · tự tắt {new Date(prev.preview.expires_at * 1000).toLocaleString('vi-VN')}</span> : null}
+              <button onClick={() => setPrev(null)} className="ml-2 text-[#7C7C8A] hover:text-white">✕</button>
             </div>
           )}
         </div>
       ))}
-      <form onSubmit={save} className="space-y-2 pt-2 border-t border-slate-800/40">
+      <form onSubmit={save} className="space-y-2 pt-2 border-t border-[#24242C]/40">
         <div className="grid grid-cols-2 gap-2">
           <select value={form.kind} onChange={e => setForm({ ...form, kind: e.target.value })} className={inp}>
             <option value="broadcast">Banner chạy chữ</option><option value="notify">Thông báo</option><option value="event">Sự kiện home</option>
@@ -253,7 +253,7 @@ export function CommentsTab({ BASE, headers, addToast }) {
   return (
     <div className="p-4 space-y-2">
       <div className="flex items-center gap-2 sticky top-0 bg-[#1a1c24] py-1">
-        <span className="text-[11px] text-slate-400 font-bold">{sel.size} đã chọn</span>
+        <span className="text-[11px] text-[#9C9CAB] font-bold">{sel.size} đã chọn</span>
         <span className="flex-1" />
         <button onClick={() => bulk('PUT', 'visible')} disabled={!sel.size} className={btnG + ' disabled:opacity-40'}><Check className="w-3.5 h-3.5" /> Hiện</button>
         <button onClick={() => bulk('PUT', 'hidden')} disabled={!sel.size} className={btnG + ' disabled:opacity-40'}><Eye className="w-3.5 h-3.5" /> Ẩn</button>
@@ -263,12 +263,12 @@ export function CommentsTab({ BASE, headers, addToast }) {
         <label key={c.id} className={`flex items-start gap-2 rounded-xl border px-3 py-2 cursor-pointer ${c.status === 'hidden' ? 'bg-red-950/20 border-red-900/40' : 'bg-black/30 border-white/[0.06]'}`}>
           <input type="checkbox" checked={sel.has(c.id)} onChange={() => toggle(c.id)} className="mt-1 accent-[#2F6BFF]" />
           <span className="flex-1 min-w-0">
-            <span className="block text-[11px] font-bold text-[#ffb37a]">{c.name} <span className="text-slate-600 font-mono">· {c.target} · {c.created_at}</span></span>
-            <span className="block text-[12px] text-slate-200 break-words">{c.body}</span>
+            <span className="block text-[11px] font-bold text-[#6E9BFF]">{c.name} <span className="text-[#5A5A66] font-mono">· {c.target} · {c.created_at}</span></span>
+            <span className="block text-[12px] text-[#E6E6EC] break-words">{c.body}</span>
           </span>
         </label>
       ))}
-      {list.length === 0 && <p className="text-[11px] text-slate-600 italic flex items-center gap-1.5"><MessageCircle className="w-3.5 h-3.5" /> Chưa có bình luận nào.</p>}
+      {list.length === 0 && <p className="text-[11px] text-[#5A5A66] italic flex items-center gap-1.5"><MessageCircle className="w-3.5 h-3.5" /> Chưa có bình luận nào.</p>}
     </div>
   );
 }
@@ -290,13 +290,13 @@ export function PredictTab({ BASE, headers, addToast }) {
       {events.map(ev => (
         <button key={ev.event_key} onClick={() => setForm({ ...form, event_key: ev.event_key })} className="w-full flex items-center gap-2 rounded-xl bg-black/30 border border-white/[0.06] hover:border-[#2F6BFF]/40 px-3 py-2 text-left">
           <Target className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-          <span className="flex-1 min-w-0"><span className="block text-[12px] font-bold text-white truncate">{ev.home} vs {ev.away}</span><span className="block text-[10px] text-slate-500 font-mono">{ev.event_key} · {ev.league}</span></span>
-          <span className="text-[10px] text-slate-400 shrink-0">{ev.settled}/{ev.n} đã chấm</span>
+          <span className="flex-1 min-w-0"><span className="block text-[12px] font-bold text-white truncate">{ev.home} vs {ev.away}</span><span className="block text-[10px] text-[#7C7C8A] font-mono">{ev.event_key} · {ev.league}</span></span>
+          <span className="text-[10px] text-[#9C9CAB] shrink-0">{ev.settled}/{ev.n} đã chấm</span>
         </button>
       ))}
-      {events.length === 0 && <p className="text-[11px] text-slate-600 italic">Chưa có dự đoán nào.</p>}
-      <form onSubmit={settle} className="space-y-2 pt-2 border-t border-slate-800/40">
-        <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Chốt tỉ số chung cuộc</p>
+      {events.length === 0 && <p className="text-[11px] text-[#5A5A66] italic">Chưa có dự đoán nào.</p>}
+      <form onSubmit={settle} className="space-y-2 pt-2 border-t border-[#24242C]/40">
+        <p className="text-[10px] text-[#7C7C8A] font-bold uppercase tracking-wider">Chốt tỉ số chung cuộc</p>
         <input value={form.event_key} onChange={e => setForm({ ...form, event_key: e.target.value })} placeholder="event_key (bấm vào trận ở trên để điền)" className={inp + ' font-mono'} />
         <div className="flex gap-2">
           <input value={form.hs} onChange={e => setForm({ ...form, hs: e.target.value.replace(/\D/g, '') })} placeholder="Chủ" inputMode="numeric" className={inp + ' text-center'} />
@@ -329,28 +329,28 @@ export function ReportsTab({ BASE, headers, token }) {
       <div className="grid grid-cols-2 gap-2">
         <div className="rounded-2xl bg-emerald-500/10 border border-emerald-500/30 p-3 text-center">
           <p className="text-[18px] font-black text-white">{price(rep?.revenue?.total)}</p>
-          <p className="text-[10px] text-slate-500 font-bold">Doanh thu ({rep?.revenue?.n || 0} đơn)</p>
+          <p className="text-[10px] text-[#7C7C8A] font-bold">Doanh thu ({rep?.revenue?.n || 0} đơn)</p>
         </div>
         <div className="rounded-2xl bg-sky-500/10 border border-sky-500/30 p-3 text-center">
           <p className="text-[18px] font-black text-white">{rep?.users || 0}</p>
-          <p className="text-[10px] text-slate-500 font-bold">Người dùng</p>
+          <p className="text-[10px] text-[#7C7C8A] font-bold">Người dùng</p>
         </div>
         <div className="rounded-2xl bg-amber-500/10 border border-amber-500/30 p-3 text-center">
           <p className="text-[18px] font-black text-white">{Number(rep?.views?.v || 0).toLocaleString()}</p>
-          <p className="text-[10px] text-slate-500 font-bold">Lượt xem kênh</p>
+          <p className="text-[10px] text-[#7C7C8A] font-bold">Lượt xem kênh</p>
         </div>
         <div className="rounded-2xl bg-fuchsia-500/10 border border-fuchsia-500/30 p-3 text-center">
           <p className="text-[18px] font-black text-white">{Number(rep?.xp || 0).toLocaleString()}</p>
-          <p className="text-[10px] text-slate-500 font-bold">Tổng XP</p>
+          <p className="text-[10px] text-[#7C7C8A] font-bold">Tổng XP</p>
         </div>
       </div>
       {rep?.revByDay?.length > 0 && (
         <div className="rounded-2xl bg-black/30 border border-white/[0.06] p-3">
-          <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-1.5">Doanh thu 30 ngày</p>
+          <p className="text-[10px] text-[#7C7C8A] font-bold uppercase tracking-wider mb-1.5">Doanh thu 30 ngày</p>
           {rep.revByDay.slice(0, 10).map(r => (
             <div key={r.d} className="flex items-center justify-between text-[11px] py-0.5">
-              <span className="text-slate-400">{r.d}</span>
-              <span className="font-bold text-white">{price(r.total)} <span className="text-slate-500">({r.n})</span></span>
+              <span className="text-[#9C9CAB]">{r.d}</span>
+              <span className="font-bold text-white">{price(r.total)} <span className="text-[#7C7C8A]">({r.n})</span></span>
             </div>
           ))}
         </div>
@@ -399,7 +399,7 @@ export function HealthTab({ BASE, headers, addToast }) {
   };
 
   const s = data.summary || {};
-  const dot = (st) => st === 'up' ? 'bg-emerald-400' : st === 'flaky' ? 'bg-amber-400' : st === 'down' ? 'bg-red-500' : 'bg-slate-600';
+  const dot = (st) => st === 'up' ? 'bg-emerald-400' : st === 'flaky' ? 'bg-amber-400' : st === 'down' ? 'bg-red-500' : 'bg-[#5A5A66]';
   const list = (data.channels || []).filter(c => filter === 'all' || ['down', 'flaky'].includes(c.status));
 
   return (
@@ -408,25 +408,25 @@ export function HealthTab({ BASE, headers, addToast }) {
         {[['Tổng', s.channels || 0, 'text-white'], ['Tốt', s.up || 0, 'text-emerald-400'], ['Chập chờn', s.flaky || 0, 'text-amber-400'], ['Chết', s.down || 0, 'text-red-400']].map(([l, v, c]) => (
           <div key={l} className="rounded-xl bg-black/30 border border-white/[0.06] px-3 py-2">
             <p className={`text-lg font-black ${c}`}>{v}</p>
-            <p className="text-[10px] text-slate-500">{l}</p>
+            <p className="text-[10px] text-[#7C7C8A]">{l}</p>
           </div>
         ))}
       </div>
       <div className="flex items-center gap-2 flex-wrap">
         <button onClick={() => runCheck(null)} disabled={busy} className={btnP}><RefreshCw className={`w-3.5 h-3.5 ${busy ? 'animate-spin' : ''}`} /> Kiểm tra 20 kênh ngay</button>
         <button onClick={() => setFilter(f => f === 'bad' ? 'all' : 'bad')} className={btnG}>{filter === 'bad' ? 'Xem tất cả kênh' : 'Chỉ xem kênh có vấn đề'}</button>
-        <span className="text-[10px] text-slate-500">{data.job?.last_result ? `Lượt tự động gần nhất: ${data.job.last_result}` : 'Chạy nền tự động ~10 phút/lượt'}</span>
+        <span className="text-[10px] text-[#7C7C8A]">{data.job?.last_result ? `Lượt tự động gần nhất: ${data.job.last_result}` : 'Chạy nền tự động ~10 phút/lượt'}</span>
       </div>
 
       {reports.grouped.length > 0 && (
         <div>
-          <p className="text-[11px] text-slate-400 font-bold flex items-center gap-1.5 mb-2"><Flag className="w-3.5 h-3.5 text-[#6E9BFF]" /> Người xem đang báo lỗi</p>
+          <p className="text-[11px] text-[#9C9CAB] font-bold flex items-center gap-1.5 mb-2"><Flag className="w-3.5 h-3.5 text-[#6E9BFF]" /> Người xem đang báo lỗi</p>
           <div className="space-y-1.5">
             {reports.grouped.map(g => (
               <div key={g.channel_id} className="flex items-center gap-2 rounded-xl bg-black/30 border border-white/[0.06] px-3 py-2">
                 <span className="px-1.5 py-0.5 rounded-md bg-red-500/20 text-red-300 text-[10px] font-black">{g.n}</span>
                 <span className="text-[12px] font-bold text-white truncate flex-1">{g.channel_name || g.channel_id}</span>
-                <button onClick={() => runCheck([g.channel_id])} className="text-[10px] text-slate-400 hover:text-white">Kiểm tra</button>
+                <button onClick={() => runCheck([g.channel_id])} className="text-[10px] text-[#9C9CAB] hover:text-white">Kiểm tra</button>
                 <button onClick={() => closeReports(g.channel_id)} className="text-[10px] text-emerald-400 hover:text-emerald-300">Đã xử lý</button>
               </div>
             ))}
@@ -435,15 +435,15 @@ export function HealthTab({ BASE, headers, addToast }) {
       )}
 
       <div>
-        <p className="text-[11px] text-slate-400 font-bold flex items-center gap-1.5 mb-2"><Activity className="w-3.5 h-3.5 text-emerald-400" /> Trạng thái luồng ({list.length})</p>
-        {list.length === 0 && <p className="text-[11px] text-slate-600 italic">Không có kênh nào lỗi 🎉</p>}
+        <p className="text-[11px] text-[#9C9CAB] font-bold flex items-center gap-1.5 mb-2"><Activity className="w-3.5 h-3.5 text-emerald-400" /> Trạng thái luồng ({list.length})</p>
+        {list.length === 0 && <p className="text-[11px] text-[#5A5A66] italic">Không có kênh nào lỗi 🎉</p>}
         <div className="space-y-1">
           {list.slice(0, 200).map(c => (
             <div key={c.channel_id} className="flex items-center gap-2 rounded-lg bg-black/20 px-3 py-1.5">
               <span className={`w-2 h-2 rounded-full shrink-0 ${dot(c.status)}`} />
               <span className="text-[12px] text-white truncate flex-1">{c.name}</span>
-              <span className="text-[10px] text-slate-500 shrink-0">{c.http_code || '—'} · {c.latency_ms || 0}ms{c.fail_count ? ` · fail ${c.fail_count}` : ''}</span>
-              <span className="text-[10px] text-slate-600 shrink-0">{fmtTime(c.checked_at)}</span>
+              <span className="text-[10px] text-[#7C7C8A] shrink-0">{c.http_code || '—'} · {c.latency_ms || 0}ms{c.fail_count ? ` · fail ${c.fail_count}` : ''}</span>
+              <span className="text-[10px] text-[#5A5A66] shrink-0">{fmtTime(c.checked_at)}</span>
             </div>
           ))}
         </div>
@@ -451,15 +451,15 @@ export function HealthTab({ BASE, headers, addToast }) {
 
       {errors.grouped.length > 0 && (
         <div>
-          <p className="text-[11px] text-slate-400 font-bold flex items-center gap-1.5 mb-2"><Bug className="w-3.5 h-3.5 text-amber-400" /> Lỗi player 3 ngày qua (từ máy người xem)</p>
+          <p className="text-[11px] text-[#9C9CAB] font-bold flex items-center gap-1.5 mb-2"><Bug className="w-3.5 h-3.5 text-amber-400" /> Lỗi player 3 ngày qua (từ máy người xem)</p>
           <div className="space-y-1">
             {errors.grouped.slice(0, 30).map((g, i) => (
               <div key={i} className="flex items-center gap-2 rounded-lg bg-black/20 px-3 py-1.5">
                 <span className="text-[10px] font-black text-amber-300 shrink-0">{g.n}×</span>
                 <span className="text-[12px] text-white truncate flex-1">{g.channel_name || g.channel_id || '(không rõ kênh)'}</span>
                 {g.engine === 'js' && <span className="text-[9px] px-1.5 py-0.5 rounded bg-sky-500/15 text-sky-300 font-black shrink-0" title="Lỗi từ chính app (render/JS), do ErrorBoundary hoặc window.onerror gửi về">APP</span>}
-                <span className="text-[10px] text-slate-500 font-mono shrink-0">{g.code}</span>
-                {g.sample && <span className="text-[10px] text-slate-500 font-mono truncate max-w-[42%]" title={g.sample}>{g.sample}</span>}
+                <span className="text-[10px] text-[#7C7C8A] font-mono shrink-0">{g.code}</span>
+                {g.sample && <span className="text-[10px] text-[#7C7C8A] font-mono truncate max-w-[42%]" title={g.sample}>{g.sample}</span>}
               </div>
             ))}
           </div>
@@ -503,25 +503,25 @@ export function MovieSourcesTab({ BASE, headers, addToast }) {
     <div className="p-4 space-y-3">
       <div className={`rounded-xl border px-3 py-2 text-[11px] leading-relaxed ${allowSet ? 'border-emerald-600/40 bg-emerald-600/10 text-emerald-200' : 'border-amber-600/40 bg-amber-600/10 text-amber-200'}`}>
         <b>Nguồn free mặc định:</b> {builtinEnabled ? `BẬT — ${builtins.length || 6} server (${(builtins.map(b => b.name) || []).join(', ') || 'VidSrc, 2Embed, VidLink, MoviesAPI, EmbedSU, VidCore'})` : 'TẮT (MOVIE_BUILTIN_SOURCES=0)'}
-        <div className="mt-1"><b>Domain tự khai (MOVIE_FRAME_SRC):</b> {customAllow.length ? customAllow.join(' · ') : <span className="text-slate-400">chưa khai thêm — không sao, nguồn mặc định vẫn chạy.</span>}</div>
-        <div className="text-slate-400 mt-1 font-mono text-[10px]">wrangler secret put MOVIE_FRAME_SRC   # nội dung: https://domain-cua-nguồn</div>
+        <div className="mt-1"><b>Domain tự khai (MOVIE_FRAME_SRC):</b> {customAllow.length ? customAllow.join(' · ') : <span className="text-[#9C9CAB]">chưa khai thêm — không sao, nguồn mặc định vẫn chạy.</span>}</div>
+        <div className="text-[#9C9CAB] mt-1 font-mono text-[10px]">wrangler secret put MOVIE_FRAME_SRC   # nội dung: https://domain-cua-nguồn</div>
       </div>
       {rows.map(s => (
         <div key={s.id} className="flex items-center gap-2 rounded-xl bg-black/30 border border-white/[0.06] px-3 py-2">
           <span className="text-[10px] font-black uppercase text-sky-300 shrink-0 w-12">{s.kind}</span>
           <span className="flex-1 min-w-0">
             <span className="block text-[12px] font-bold text-white truncate">{s.name}</span>
-            <span className="block text-[10px] text-slate-500 truncate font-mono">{s.url_template}</span>
+            <span className="block text-[10px] text-[#7C7C8A] truncate font-mono">{s.url_template}</span>
             {s.license_note && <span className="block text-[10px] text-emerald-400/80 truncate">quyền: {s.license_note}</span>}
           </span>
-          <span className="text-[10px] text-slate-500 shrink-0">{allow.includes((s.url_template.match(/^https:\/\/[^/]+/) || [''])[0]) ? 'OK' : 'NGOÀI ALLOWLIST'}</span>
-          <button onClick={async () => { await api(BASE, headers, '/admin/movie_sources', { method: 'PUT', body: JSON.stringify({ ...s, is_active: s.is_active ? 0 : 1 }) }); load(); }} className="text-[10px] font-bold px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 shrink-0">{s.is_active ? 'ĐANG BẬT' : 'ĐANG TẮT'}</button>
-          <button onClick={() => { setEditing(s.id); setForm({ name: s.name, kind: s.kind, url_template: s.url_template, license_note: s.license_note || '', sort_order: s.sort_order || 0 }); }} className="text-[10px] font-bold text-slate-400 hover:text-white px-2 py-1 shrink-0">Sửa</button>
-          <button onClick={async () => { if (!confirm('Xoá nguồn này?')) return; await api(BASE, headers, '/admin/movie_sources', { method: 'DELETE', body: JSON.stringify({ id: s.id }) }); load(); }} className="text-slate-600 hover:text-red-400 shrink-0"><Trash2 className="w-3.5 h-3.5" /></button>
+          <span className="text-[10px] text-[#7C7C8A] shrink-0">{allow.includes((s.url_template.match(/^https:\/\/[^/]+/) || [''])[0]) ? 'OK' : 'NGOÀI ALLOWLIST'}</span>
+          <button onClick={async () => { await api(BASE, headers, '/admin/movie_sources', { method: 'PUT', body: JSON.stringify({ ...s, is_active: s.is_active ? 0 : 1 }) }); load(); }} className="text-[10px] font-bold px-2 py-1 rounded-lg bg-[#1E1E26] hover:bg-[#24242C] shrink-0">{s.is_active ? 'ĐANG BẬT' : 'ĐANG TẮT'}</button>
+          <button onClick={() => { setEditing(s.id); setForm({ name: s.name, kind: s.kind, url_template: s.url_template, license_note: s.license_note || '', sort_order: s.sort_order || 0 }); }} className="text-[10px] font-bold text-[#9C9CAB] hover:text-white px-2 py-1 shrink-0">Sửa</button>
+          <button onClick={async () => { if (!confirm('Xoá nguồn này?')) return; await api(BASE, headers, '/admin/movie_sources', { method: 'DELETE', body: JSON.stringify({ id: s.id }) }); load(); }} className="text-[#5A5A66] hover:text-red-400 shrink-0"><Trash2 className="w-3.5 h-3.5" /></button>
         </div>
       ))}
-      <form onSubmit={save} className="space-y-2 pt-2 border-t border-slate-800/40">
-        <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">{editing ? `Sửa nguồn #${editing}` : 'Thêm nguồn mới'}</p>
+      <form onSubmit={save} className="space-y-2 pt-2 border-t border-[#24242C]/40">
+        <p className="text-[10px] text-[#7C7C8A] font-bold uppercase tracking-wider">{editing ? `Sửa nguồn #${editing}` : 'Thêm nguồn mới'}</p>
         <div className="grid grid-cols-2 gap-2">
           <input value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="Tên hiển thị (vd: Partner X)" className={inp} />
           <select value={form.kind} onChange={e => setForm({ ...form, kind: e.target.value })} className={inp}>
@@ -540,7 +540,7 @@ export function MovieSourcesTab({ BASE, headers, addToast }) {
           <button type="submit" className={btnP + ' flex-1 justify-center'}>{editing ? 'Cập nhật' : 'Thêm'}</button>
           {editing && <button type="button" onClick={() => { setEditing(null); setForm({ name: '', kind: 'embed', url_template: '', license_note: '', sort_order: 0 }); }} className={btnG}>Huỷ</button>}
         </div>
-        <p className="text-[10px] text-slate-500 leading-relaxed">
+        <p className="text-[10px] text-[#7C7C8A] leading-relaxed">
           Chỉ thêm nguồn bạn CÓ QUYỀN phân phối. Tên nguồn và url_template được ghi vào audit_log khi lưu.
         </p>
       </form>
@@ -566,7 +566,7 @@ export function ThemesTab({ BASE, headers, addToast }) {
     setEditing(null);
   };
   const applyPreset = (p) => {
-    setForm(f => ({ ...f, key: p.key, name: p.name, emoji: p.emoji || '🏆', description: p.description || '', primary_color: p.primary_color || '#2F6BFF', secondary_color: p.secondary_color || '#1a1c24', accent_color: p.accent_color || '#ffb37a', confetti: p.confetti || 'none' }));
+    setForm(f => ({ ...f, key: p.key, name: p.name, emoji: p.emoji || '🏆', description: p.description || '', primary_color: p.primary_color || '#2F6BFF', secondary_color: p.secondary_color || '#1a1c24', accent_color: p.accent_color || '#6E9BFF', confetti: p.confetti || 'none' }));
   };
   const submit = async (e) => {
     e.preventDefault();
@@ -581,7 +581,7 @@ export function ThemesTab({ BASE, headers, addToast }) {
     setEditing(t.id);
     setForm({
       key: t.key, name: t.name, emoji: t.emoji || '', description: t.description || '',
-      primary_color: t.primary_color || '#2F6BFF', secondary_color: t.secondary_color || '#1a1c24', accent_color: t.accent_color || '#ffb37a',
+      primary_color: t.primary_color || '#2F6BFF', secondary_color: t.secondary_color || '#1a1c24', accent_color: t.accent_color || '#6E9BFF',
       background_url: t.background_url || '', banner_url: t.banner_url || '', logo_url: t.logo_url || '',
       confetti: t.confetti || 'none', css: t.css || '', is_active: t.is_active ?? 1,
       starts_at: t.starts_at || '', ends_at: t.ends_at || '', sort_order: t.sort_order || 0,
@@ -601,7 +601,7 @@ export function ThemesTab({ BASE, headers, addToast }) {
     <div className="p-4 space-y-4">
       <div className="rounded-xl bg-gradient-to-br from-[#0e7a3a]/20 to-[#ffd700]/10 border border-[#0e7a3a]/30 p-3">
         <p className="text-[12px] font-black text-white flex items-center gap-1.5"><Palette className="w-4 h-4 text-[#ffd700]" /> Trang trí theo chủ đề</p>
-        <p className="text-[11px] text-slate-300 mt-1 leading-relaxed">Tạo chủ đề sự kiện (VD: FIFA ASEAN Cup 2026) — chọn màu, emoji, banner, hiệu ứng confetti, thời gian. Bật <b>is_active</b> → toàn bộ web tự đổi màu + banner + hiệu ứng. Chỉ 1 chủ đề active đầu (sort_order nhỏ nhất) được áp dụng.</p>
+        <p className="text-[11px] text-[#D2D2DC] mt-1 leading-relaxed">Tạo chủ đề sự kiện (VD: FIFA ASEAN Cup 2026) — chọn màu, emoji, banner, hiệu ứng confetti, thời gian. Bật <b>is_active</b> → toàn bộ web tự đổi màu + banner + hiệu ứng. Chỉ 1 chủ đề active đầu (sort_order nhỏ nhất) được áp dụng.</p>
         <div className="flex flex-wrap gap-1.5 mt-2">
           {THEME_PRESETS.map(p => (
             <button key={p.key} onClick={() => applyPreset(p)} className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-white/10 hover:bg-white/20 text-white border border-white/10 flex items-center gap-1">
@@ -612,7 +612,7 @@ export function ThemesTab({ BASE, headers, addToast }) {
       </div>
 
       <form onSubmit={submit} className="space-y-2 rounded-xl bg-black/30 border border-white/[0.06] p-3">
-        <p className="text-[11px] font-black uppercase tracking-wider text-slate-400">{editing ? `Sửa #${editing}` : 'Tạo chủ đề mới'}</p>
+        <p className="text-[11px] font-black uppercase tracking-wider text-[#9C9CAB]">{editing ? `Sửa #${editing}` : 'Tạo chủ đề mới'}</p>
         <div className="grid grid-cols-2 gap-2">
           <input value={form.key} onChange={e => setForm({ ...form, key: e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, '-') })} placeholder="key (vd: fifa-asean-cup-2026)" className={inp + ' font-mono'} />
           <input value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="Tên hiển thị (FIFA ASEAN Cup 2026)" className={inp} />
@@ -640,14 +640,14 @@ export function ThemesTab({ BASE, headers, addToast }) {
         </div>
         <textarea value={form.css} onChange={e => setForm({ ...form, css: e.target.value })} placeholder="Custom CSS (optional, VD: .topnav { border-color: var(--theme-accent)!important }) — tối đa 4000 ký tự" className={inp + ' min-h-[70px] font-mono text-[11px]'} />
         <div className="flex items-center gap-2">
-          <label className="flex items-center gap-1.5 text-[11px] text-slate-300 cursor-pointer"><input type="checkbox" checked={!!form.is_active} onChange={e => setForm({ ...form, is_active: e.target.checked ? 1 : 0 })} /> Kích hoạt ngay</label>
+          <label className="flex items-center gap-1.5 text-[11px] text-[#D2D2DC] cursor-pointer"><input type="checkbox" checked={!!form.is_active} onChange={e => setForm({ ...form, is_active: e.target.checked ? 1 : 0 })} /> Kích hoạt ngay</label>
           <span className="flex-1" />
           {editing && <button type="button" onClick={reset} className={btnG}>Huỷ sửa</button>}
           <button type="submit" className={btnP}><Sparkles className="w-3.5 h-3.5" /> {editing ? 'Lưu' : 'Tạo chủ đề'}</button>
         </div>
         {form.primary_color && (
           <div className="flex items-center gap-2 pt-1">
-            <span className="text-[10px] text-slate-500">Preview:</span>
+            <span className="text-[10px] text-[#7C7C8A]">Preview:</span>
             <span className="w-5 h-5 rounded-full border border-white/20" style={{ background: form.primary_color }} />
             <span className="w-5 h-5 rounded-full border border-white/20" style={{ background: form.secondary_color }} />
             <span className="w-5 h-5 rounded-full border border-white/20" style={{ background: form.accent_color }} />
@@ -657,22 +657,22 @@ export function ThemesTab({ BASE, headers, addToast }) {
       </form>
 
       <div className="space-y-2">
-        <p className="text-[10px] font-black uppercase tracking-wider text-slate-500">Danh sách ({themes.length})</p>
-        {themes.length === 0 && <p className="text-[11px] text-slate-600 italic">Chưa có chủ đề nào — bấm preset FIFA ASEAN Cup 2026 ở trên để tạo nhanh.</p>}
+        <p className="text-[10px] font-black uppercase tracking-wider text-[#7C7C8A]">Danh sách ({themes.length})</p>
+        {themes.length === 0 && <p className="text-[11px] text-[#5A5A66] italic">Chưa có chủ đề nào — bấm preset FIFA ASEAN Cup 2026 ở trên để tạo nhanh.</p>}
         {themes.map(t => (
           <div key={t.id} className={`flex items-center gap-2 rounded-xl border px-3 py-2 ${t.is_active ? 'bg-[#0e7a3a]/15 border-[#0e7a3a]/30' : 'bg-black/30 border-white/[0.06]'}`}>
             <span className="text-[14px]">{t.emoji || '🎨'}</span>
             <div className="flex-1 min-w-0">
-              <p className="text-[12px] font-bold text-white truncate">{t.name} <span className="font-mono text-[10px] text-slate-500">({t.key})</span></p>
-              <p className="text-[10px] text-slate-400 truncate">{t.description || ''} {t.starts_at ? `· từ ${t.starts_at}` : ''} {t.ends_at ? `→ ${t.ends_at}` : ''}</p>
+              <p className="text-[12px] font-bold text-white truncate">{t.name} <span className="font-mono text-[10px] text-[#7C7C8A]">({t.key})</span></p>
+              <p className="text-[10px] text-[#9C9CAB] truncate">{t.description || ''} {t.starts_at ? `· từ ${t.starts_at}` : ''} {t.ends_at ? `→ ${t.ends_at}` : ''}</p>
             </div>
             <div className="flex items-center gap-1">
               <span className="w-3 h-3 rounded-full border border-white/20" style={{ background: t.primary_color }} />
               <span className="w-3 h-3 rounded-full border border-white/20" style={{ background: t.accent_color }} />
             </div>
-            <button onClick={() => toggleActive(t)} className={`text-[10px] font-black px-2 py-1 rounded-full ${t.is_active ? 'bg-emerald-500/20 text-emerald-300' : 'bg-white/10 text-slate-400'}`}>{t.is_active ? 'Đang bật' : 'Tắt'}</button>
-            <button onClick={() => startEdit(t)} className="text-[11px] text-slate-400 hover:text-white px-1.5">Sửa</button>
-            <button onClick={() => del(t.id)} className="text-slate-600 hover:text-red-400"><Trash2 className="w-3.5 h-3.5" /></button>
+            <button onClick={() => toggleActive(t)} className={`text-[10px] font-black px-2 py-1 rounded-full ${t.is_active ? 'bg-emerald-500/20 text-emerald-300' : 'bg-white/10 text-[#9C9CAB]'}`}>{t.is_active ? 'Đang bật' : 'Tắt'}</button>
+            <button onClick={() => startEdit(t)} className="text-[11px] text-[#9C9CAB] hover:text-white px-1.5">Sửa</button>
+            <button onClick={() => del(t.id)} className="text-[#5A5A66] hover:text-red-400"><Trash2 className="w-3.5 h-3.5" /></button>
           </div>
         ))}
       </div>
@@ -712,7 +712,7 @@ function MiniStat({ label, value, color }) {
   return (
     <div className="rounded-xl bg-black/30 border border-white/[0.07] px-3 py-2.5">
       <p className={`text-lg font-black ${color || 'text-white'}`}>{value}</p>
-      <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">{label}</p>
+      <p className="text-[10px] text-[#7C7C8A] font-bold uppercase tracking-wider">{label}</p>
     </div>
   );
 }
@@ -732,22 +732,22 @@ export function RealtimeTab({ BASE, headers }) {
     <div className="p-4 space-y-3">
       <div className="grid grid-cols-3 gap-2">
         <MiniStat label="Đang xem" value={data ? (data.online || 0) : '…'} color="text-emerald-400" />
-        <MiniStat label="Báo lỗi mở" value={data ? (data.open_reports || 0) : '…'} color={data?.open_reports ? 'text-amber-400' : 'text-slate-300'} />
-        <MiniStat label="Kênh chết" value={data ? (data.down_list || []).length : '…'} color={(data?.down_list || []).length ? 'text-red-400' : 'text-slate-300'} />
+        <MiniStat label="Báo lỗi mở" value={data ? (data.open_reports || 0) : '…'} color={data?.open_reports ? 'text-amber-400' : 'text-[#D2D2DC]'} />
+        <MiniStat label="Kênh chết" value={data ? (data.down_list || []).length : '…'} color={(data?.down_list || []).length ? 'text-red-400' : 'text-[#D2D2DC]'} />
       </div>
       <div className="flex flex-wrap gap-1.5 text-[10px] font-bold">
-        {Object.entries(bk).map(([k, v]) => <span key={k} className="px-2 py-1 rounded-full bg-white/[0.06] text-slate-300">{k === 'movie' ? '🎬' : k === 'short' ? '▶️' : k === 'sport' ? '⚽' : '📺'} {k}: {v}</span>)}
-        {!Object.keys(bk).length && <span className="text-slate-600 italic px-1">Chưa có ai online — mở app xem kênh ~1 phút là hiện.</span>}
+        {Object.entries(bk).map(([k, v]) => <span key={k} className="px-2 py-1 rounded-full bg-white/[0.06] text-[#D2D2DC]">{k === 'movie' ? '🎬' : k === 'short' ? '▶️' : k === 'sport' ? '⚽' : '📺'} {k}: {v}</span>)}
+        {!Object.keys(bk).length && <span className="text-[#5A5A66] italic px-1">Chưa có ai online — mở app xem kênh ~1 phút là hiện.</span>}
       </div>
       {data?.presence?.length > 0 && (
         <div className="rounded-xl bg-black/30 border border-white/[0.06] p-3">
-          <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest mb-2">Đang phát (presence)</p>
+          <p className="text-[10px] text-[#7C7C8A] font-black uppercase tracking-widest mb-2">Đang phát (presence)</p>
           <div className="space-y-1 max-h-40 overflow-y-auto">
             {data.presence.map((v, i) => (
               <div key={i} className="flex items-center gap-2 text-[11px]">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-                <span className="font-bold text-slate-200 truncate max-w-[160px]">{v.name || 'Khách'}</span>
-                <span className="text-slate-500 truncate">{v.ref_name || v.ref_id}</span>
+                <span className="font-bold text-[#E6E6EC] truncate max-w-[160px]">{v.name || 'Khách'}</span>
+                <span className="text-[#7C7C8A] truncate">{v.ref_name || v.ref_id}</span>
               </div>
             ))}
           </div>
@@ -755,21 +755,21 @@ export function RealtimeTab({ BASE, headers }) {
       )}
       {data?.hot?.length > 0 && (
         <div className="rounded-xl bg-black/30 border border-white/[0.06] p-3">
-          <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest mb-2">🔥 Kênh hot 15 phút</p>
+          <p className="text-[10px] text-[#7C7C8A] font-black uppercase tracking-widest mb-2">🔥 Kênh hot 15 phút</p>
           {data.hot.map((h, i) => (
             <div key={i} className="flex items-center gap-2 text-[11px] py-0.5">
-              <b className="w-4 text-[#6E9BFF]">{i + 1}</b><span className="text-slate-200 truncate">{h.name}</span>
-              <span className="text-slate-600 shrink-0">{h.views || 0} lượt · {Math.round((h.seconds || 0) / 60)}′</span>
+              <b className="w-4 text-[#6E9BFF]">{i + 1}</b><span className="text-[#E6E6EC] truncate">{h.name}</span>
+              <span className="text-[#5A5A66] shrink-0">{h.views || 0} lượt · {Math.round((h.seconds || 0) / 60)}′</span>
             </div>
           ))}
         </div>
       )}
       {data?.errors?.length > 0 && (
         <div className="rounded-xl bg-black/30 border border-white/[0.06] p-3">
-          <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest mb-2">⚠️ Lỗi player 2h gần nhất</p>
+          <p className="text-[10px] text-[#7C7C8A] font-black uppercase tracking-widest mb-2">⚠️ Lỗi player 2h gần nhất</p>
           <div className="space-y-1 max-h-40 overflow-y-auto">
             {data.errors.map((e, i) => (
-              <div key={i} className="text-[10px] text-slate-400 flex gap-2"><span className="text-slate-600 shrink-0">{String(e.created_at || '').slice(11, 16)}</span><b className="text-slate-300 truncate">{e.channel_name}</b><span className="truncate">{e.code || e.detail}</span></div>
+              <div key={i} className="text-[10px] text-[#9C9CAB] flex gap-2"><span className="text-[#5A5A66] shrink-0">{String(e.created_at || '').slice(11, 16)}</span><b className="text-[#D2D2DC] truncate">{e.channel_name}</b><span className="truncate">{e.code || e.detail}</span></div>
             ))}
           </div>
         </div>
@@ -810,19 +810,19 @@ export function AlertsTab({ BASE, headers, addToast }) {
   return (
     <div className="p-4 space-y-3">
       <div className="flex items-center justify-between">
-        <p className="text-[11px] text-slate-400 font-bold flex items-center gap-1.5"><Activity className="w-3.5 h-3.5 text-amber-400" />Cảnh báo trong dashboard — mỗi request GET tự chạy đánh giá rule (không cần cron)</p>
+        <p className="text-[11px] text-[#9C9CAB] font-bold flex items-center gap-1.5"><Activity className="w-3.5 h-3.5 text-amber-400" />Cảnh báo trong dashboard — mỗi request GET tự chạy đánh giá rule (không cần cron)</p>
         <button onClick={async () => { const d = await api(BASE, headers, '/admin/alerts/test', { method: 'POST', body: '{}' }); addToast(d.message || 'Đã chạy', 'success'); load(); }} className={btnG + ' shrink-0'}><RefreshCw className="w-3.5 h-3.5" /> Chạy kiểm tra</button>
       </div>
       {/* Feed */}
       <div className="rounded-xl bg-black/30 border border-white/[0.07] p-3">
-        <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest mb-2">Feed ({feed.filter((f) => !f.ack).length} chưa xử lý)</p>
-        {feed.length === 0 && <p className="text-[11px] text-slate-600 italic">Chưa có cảnh báo nào.</p>}
+        <p className="text-[10px] text-[#7C7C8A] font-black uppercase tracking-widest mb-2">Feed ({feed.filter((f) => !f.ack).length} chưa xử lý)</p>
+        {feed.length === 0 && <p className="text-[11px] text-[#5A5A66] italic">Chưa có cảnh báo nào.</p>}
         <div className="space-y-1.5 max-h-52 overflow-y-auto">
           {feed.map((f) => (
             <div key={f.id} className={`flex items-center gap-2 rounded-lg px-2.5 py-1.5 border text-[11px] ${f.ack ? 'opacity-50 border-white/[0.05] bg-black/20' : f.level === 'critical' ? 'border-red-500/40 bg-red-950/30' : 'border-amber-500/30 bg-amber-950/20'}`}>
               <span>{f.level === 'critical' ? '🔴' : '⚠️'}</span>
-              <span className="flex-1 text-slate-200">{f.message}</span>
-              <span className="text-[9px] text-slate-500 shrink-0">{String(f.created_at || '').slice(0, 16).replace('T', ' ')}</span>
+              <span className="flex-1 text-[#E6E6EC]">{f.message}</span>
+              <span className="text-[9px] text-[#7C7C8A] shrink-0">{String(f.created_at || '').slice(0, 16).replace('T', ' ')}</span>
               {!f.ack && <button onClick={async () => { await api(BASE, headers, '/admin/alerts/ack', { method: 'POST', body: JSON.stringify({ ids: [f.id] }) }); load(); }} className="px-2 py-0.5 rounded-md bg-emerald-600/30 text-emerald-300 text-[10px] font-bold">Xong ✓</button>}
             </div>
           ))}
@@ -835,16 +835,16 @@ export function AlertsTab({ BASE, headers, addToast }) {
       </div>
       {/* Rules */}
       <div className="rounded-xl bg-black/30 border border-white/[0.07] p-3">
-        <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest mb-2">Rules</p>
+        <p className="text-[10px] text-[#7C7C8A] font-black uppercase tracking-widest mb-2">Rules</p>
         {rules.map((r) => (
           <div key={r.id} className="flex items-center gap-2 text-[11px] py-1 border-b border-white/[0.04] last:border-0">
-            <span className={`w-2 h-2 rounded-full ${r.enabled ? 'bg-emerald-400' : 'bg-slate-600'}`} />
-            <b className="text-slate-200">{r.name}</b>
-            <span className="text-slate-500">{METRICS.find((m) => m[0] === r.metric)?.[1] || r.metric} {r.op === 'lt' ? '<' : '>'} {r.threshold}</span>
-            <span className="text-slate-600">· cooldown {(r.cooldown_s || 3600) / 60}′</span>
+            <span className={`w-2 h-2 rounded-full ${r.enabled ? 'bg-emerald-400' : 'bg-[#5A5A66]'}`} />
+            <b className="text-[#E6E6EC]">{r.name}</b>
+            <span className="text-[#7C7C8A]">{METRICS.find((m) => m[0] === r.metric)?.[1] || r.metric} {r.op === 'lt' ? '<' : '>'} {r.threshold}</span>
+            <span className="text-[#5A5A66]">· cooldown {(r.cooldown_s || 3600) / 60}′</span>
             <span className="flex-1" />
-            <button onClick={async () => { await api(BASE, headers, '/admin/alerts/rules', { method: 'PUT', body: JSON.stringify({ id: r.id, enabled: r.enabled ? 0 : 1 }) }); load(); }} className="text-[10px] font-bold text-slate-400 hover:text-white px-1.5">{r.enabled ? 'Tắt' : 'Bật'}</button>
-            <button onClick={async () => { if (!confirm('Xoá rule?')) return; await api(BASE, headers, '/admin/alerts/rules', { method: 'DELETE', body: JSON.stringify({ id: r.id }) }); load(); }} className="text-slate-600 hover:text-red-400"><Trash2 className="w-3.5 h-3.5" /></button>
+            <button onClick={async () => { await api(BASE, headers, '/admin/alerts/rules', { method: 'PUT', body: JSON.stringify({ id: r.id, enabled: r.enabled ? 0 : 1 }) }); load(); }} className="text-[10px] font-bold text-[#9C9CAB] hover:text-white px-1.5">{r.enabled ? 'Tắt' : 'Bật'}</button>
+            <button onClick={async () => { if (!confirm('Xoá rule?')) return; await api(BASE, headers, '/admin/alerts/rules', { method: 'DELETE', body: JSON.stringify({ id: r.id }) }); load(); }} className="text-[#5A5A66] hover:text-red-400"><Trash2 className="w-3.5 h-3.5" /></button>
           </div>
         ))}
         <form onSubmit={save} className="grid grid-cols-6 gap-2 pt-2">
@@ -875,8 +875,8 @@ export function RegionsTab({ BASE, headers, addToast }) {
   const TYPES = [['channel', '📺 Kênh'], ['event', '🎪 Sự kiện/banner'], ['ad', '📢 Quảng cáo'], ['movie_source', '🎬 Nguồn phim']];
   return (
     <div className="p-4 space-y-2">
-      <p className="text-[11px] text-slate-400 font-bold flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-red-400" />Chặn cứng theo quốc gia — rỗng = phát toàn cầu. Nhập mã quốc gia cách nhau dấu phẩy: <code className="text-red-300">DE, US</code>. Xem thử UI theo vùng: mở web kèm <code className="text-red-300">?viewCountry=DE</code> (admin).</p>
-      <div className="flex flex-wrap gap-1.5">{TYPES.map(([v, l]) => <button key={v} onClick={() => { setType(v); setEdit(null); }} className={`px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all ${type === v ? 'grad-brand text-white' : 'bg-white/[0.05] text-slate-400 hover:text-white'}`}>{l}</button>)}</div>
+      <p className="text-[11px] text-[#9C9CAB] font-bold flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-red-400" />Chặn cứng theo quốc gia — rỗng = phát toàn cầu. Nhập mã quốc gia cách nhau dấu phẩy: <code className="text-red-300">DE, US</code>. Xem thử UI theo vùng: mở web kèm <code className="text-red-300">?viewCountry=DE</code> (admin).</p>
+      <div className="flex flex-wrap gap-1.5">{TYPES.map(([v, l]) => <button key={v} onClick={() => { setType(v); setEdit(null); }} className={`px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all ${type === v ? 'grad-brand text-white' : 'bg-white/[0.05] text-[#9C9CAB] hover:text-white'}`}>{l}</button>)}</div>
       <div className="space-y-1.5 max-h-[340px] overflow-y-auto">
         {items.map((it) => {
           const idKey = it.channel_id !== undefined ? it.channel_id : it.id;
@@ -884,7 +884,7 @@ export function RegionsTab({ BASE, headers, addToast }) {
           const isEdit = edit === idKey;
           return (
             <div key={String(idKey)} className="flex items-center gap-2 rounded-lg bg-black/25 border border-white/[0.06] px-2.5 py-1.5">
-              <span className="text-[11px] text-slate-300 truncate flex-1">{name}</span>
+              <span className="text-[11px] text-[#D2D2DC] truncate flex-1">{name}</span>
               {isEdit ? (
                 <>
                   <input value={regions} onChange={(e) => setRegions(e.target.value.toUpperCase())} placeholder="VD: DE, US (trống = toàn cầu)" className={inp + ' w-52'} />
@@ -892,18 +892,18 @@ export function RegionsTab({ BASE, headers, addToast }) {
                     await api(BASE, headers, '/admin/regions', { method: 'PUT', body: JSON.stringify({ type, ...(it.channel_id !== undefined ? { channel_id: it.channel_id } : { id: it.id }), regions }) });
                     addToast('Đã lưu vùng chặn', 'success'); setEdit(null); load();
                   }} className={btnP + ' shrink-0'}><Check className="w-3.5 h-3.5" /></button>
-                  <button onClick={() => setEdit(null)} className="px-2 py-1 text-slate-500"><X className="w-3.5 h-3.5" /></button>
+                  <button onClick={() => setEdit(null)} className="px-2 py-1 text-[#7C7C8A]"><X className="w-3.5 h-3.5" /></button>
                 </>
               ) : (
                 <>
                   {it.blocked_regions ? <span className="text-[10px] font-bold text-red-300">🚫 {it.blocked_regions}</span> : <span className="text-[10px] text-emerald-400/80">🌍 toàn cầu</span>}
-                  <button onClick={() => { setEdit(idKey); setRegions(it.blocked_regions || ''); }} className="text-[10px] font-bold text-slate-400 hover:text-white px-1.5">Sửa</button>
+                  <button onClick={() => { setEdit(idKey); setRegions(it.blocked_regions || ''); }} className="text-[10px] font-bold text-[#9C9CAB] hover:text-white px-1.5">Sửa</button>
                 </>
               )}
             </div>
           );
         })}
-        {items.length === 0 && <p className="text-[11px] text-slate-600 italic">Chưa có mục nào.</p>}
+        {items.length === 0 && <p className="text-[11px] text-[#5A5A66] italic">Chưa có mục nào.</p>}
       </div>
     </div>
   );
@@ -928,7 +928,7 @@ export function MaintenanceTab({ BASE, headers, addToast }) {
   };
   return (
     <div className="p-4 space-y-2">
-      <p className="text-[11px] text-slate-400 font-bold flex items-center gap-1.5"><Flag className="w-3.5 h-3.5 text-red-400" />Kênh bảo trì sẽ hiện biển "Đang bảo trì đến HH:MM" + gợi ý kênh thay thế cùng nhóm cho người xem. Hết giờ tự hết (không cần cron — đối chiếu khi xin token phát).</p>
+      <p className="text-[11px] text-[#9C9CAB] font-bold flex items-center gap-1.5"><Flag className="w-3.5 h-3.5 text-red-400" />Kênh bảo trì sẽ hiện biển "Đang bảo trì đến HH:MM" + gợi ý kênh thay thế cùng nhóm cho người xem. Hết giờ tự hết (không cần cron — đối chiếu khi xin token phát).</p>
       <div className="grid grid-cols-3 gap-2">
         <select value={cur} onChange={(e) => pickChannel(channels.find((c) => c.channel_id === e.target.value) || { channel_id: e.target.value, group_title: '' })} className={inp + ' col-span-3'}>
           <option value="">— Chọn kênh cần bảo trì —</option>
@@ -943,18 +943,18 @@ export function MaintenanceTab({ BASE, headers, addToast }) {
           else addToast(d.error || 'Lỗi', 'error');
         }} className={btnP + ' col-span-3 justify-center'}><Flag className="w-3.5 h-3.5" /> Đặt bảo trì</button>
       </div>
-      {alts.length > 0 && <p className="text-[10px] text-slate-500">Gợi ý thay thế sẽ hiện: {alts.map((a) => a.name).join(', ')}</p>}
+      {alts.length > 0 && <p className="text-[10px] text-[#7C7C8A]">Gợi ý thay thế sẽ hiện: {alts.map((a) => a.name).join(', ')}</p>}
       <div className="space-y-1.5">
         {list.map((it) => (
           <div key={it.channel_id} className="flex items-center gap-2 rounded-lg bg-red-950/20 border border-red-500/20 px-2.5 py-1.5 text-[11px]">
-            <span className="text-red-300">🔧</span><b className="text-slate-200">{it.name}</b>
-            <span className="text-slate-500">đến {new Date(it.maintenance_until * 1000).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}</span>
-            {it.note && <span className="text-slate-500 truncate">· {it.note}</span>}
+            <span className="text-red-300">🔧</span><b className="text-[#E6E6EC]">{it.name}</b>
+            <span className="text-[#7C7C8A]">đến {new Date(it.maintenance_until * 1000).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}</span>
+            {it.note && <span className="text-[#7C7C8A] truncate">· {it.note}</span>}
             <span className="flex-1" />
-            <button onClick={async () => { await api(BASE, headers, '/admin/maintenance', { method: 'DELETE', body: JSON.stringify({ channel_id: it.channel_id }) }); load(); }} className="text-slate-500 hover:text-emerald-400"><Check className="w-3.5 h-3.5" /></button>
+            <button onClick={async () => { await api(BASE, headers, '/admin/maintenance', { method: 'DELETE', body: JSON.stringify({ channel_id: it.channel_id }) }); load(); }} className="text-[#7C7C8A] hover:text-emerald-400"><Check className="w-3.5 h-3.5" /></button>
           </div>
         ))}
-        {list.length === 0 && <p className="text-[11px] text-slate-600 italic">Không kênh nào đang bảo trì.</p>}
+        {list.length === 0 && <p className="text-[11px] text-[#5A5A66] italic">Không kênh nào đang bảo trì.</p>}
       </div>
     </div>
   );
@@ -978,10 +978,10 @@ export function ChallengesTab({ BASE, headers, addToast }) {
       {list.map((c) => (
         <div key={c.id} className="flex items-center gap-2 rounded-xl bg-black/25 border border-white/[0.06] px-3 py-2 text-[11px]">
           <span className="text-base">{c.is_active ? '🏆' : '⏸️'}</span>
-          <div className="flex-1 min-w-0"><b className="text-slate-200">{c.title}</b> <span className="text-[#6E9BFF] font-mono">#{c.hashtag}</span><p className="text-slate-500 truncate">{c.description || ''}</p></div>
-          <span className="text-slate-500 shrink-0">{c.starts_at?.slice(5, 10) || '…'} → {c.ends_at?.slice(5, 10) || '∞'}</span>
-          <button onClick={async () => { await api(BASE, headers, '/admin/challenges', { method: 'PUT', body: JSON.stringify({ id: c.id, is_active: c.is_active ? 0 : 1 }) }); load(); }} className="text-slate-400 hover:text-white px-1.5">{c.is_active ? 'Tắt' : 'Bật'}</button>
-          <button onClick={async () => { if (!confirm('Xoá challenge?')) return; await api(BASE, headers, '/admin/challenges', { method: 'DELETE', body: JSON.stringify({ id: c.id }) }); load(); }} className="text-slate-600 hover:text-red-400"><Trash2 className="w-3.5 h-3.5" /></button>
+          <div className="flex-1 min-w-0"><b className="text-[#E6E6EC]">{c.title}</b> <span className="text-[#6E9BFF] font-mono">#{c.hashtag}</span><p className="text-[#7C7C8A] truncate">{c.description || ''}</p></div>
+          <span className="text-[#7C7C8A] shrink-0">{c.starts_at?.slice(5, 10) || '…'} → {c.ends_at?.slice(5, 10) || '∞'}</span>
+          <button onClick={async () => { await api(BASE, headers, '/admin/challenges', { method: 'PUT', body: JSON.stringify({ id: c.id, is_active: c.is_active ? 0 : 1 }) }); load(); }} className="text-[#9C9CAB] hover:text-white px-1.5">{c.is_active ? 'Tắt' : 'Bật'}</button>
+          <button onClick={async () => { if (!confirm('Xoá challenge?')) return; await api(BASE, headers, '/admin/challenges', { method: 'DELETE', body: JSON.stringify({ id: c.id }) }); load(); }} className="text-[#5A5A66] hover:text-red-400"><Trash2 className="w-3.5 h-3.5" /></button>
         </div>
       ))}
       <form onSubmit={save} className="grid grid-cols-2 gap-2 pt-1">
@@ -1010,12 +1010,12 @@ export function AffiliatesTab({ BASE, headers, addToast }) {
   };
   return (
     <div className="p-4 space-y-2">
-      <p className="text-[11px] text-slate-400">Link affiliate hiện cạnh phim (vé rạp 🎟 / sách 📚). Dùng <code className="text-slate-300">{'{title}'}</code> để chèn tên phim.</p>
+      <p className="text-[11px] text-[#9C9CAB]">Link affiliate hiện cạnh phim (vé rạp 🎟 / sách 📚). Dùng <code className="text-[#D2D2DC]">{'{title}'}</code> để chèn tên phim.</p>
       {list.map((a) => (
         <div key={a.id} className="flex items-center gap-2 rounded-xl bg-black/25 border border-white/[0.06] px-3 py-2 text-[11px]">
-          <span>{a.kind === 'book' ? '📚' : '🎟️'}</span><b className="text-slate-200">{a.name}</b><span className="text-slate-500 truncate flex-1">{a.url_template}</span>
-          <button onClick={async () => { await api(BASE, headers, '/admin/affiliates', { method: 'PUT', body: JSON.stringify({ id: a.id, enabled: a.enabled ? 0 : 1 }) }); load(); }} className="text-slate-400 hover:text-white px-1.5">{a.enabled ? 'Bật' : 'Tắt'}</button>
-          <button onClick={async () => { if (!confirm('Xoá?')) return; await api(BASE, headers, '/admin/affiliates', { method: 'DELETE', body: JSON.stringify({ id: a.id }) }); load(); }} className="text-slate-600 hover:text-red-400"><Trash2 className="w-3.5 h-3.5" /></button>
+          <span>{a.kind === 'book' ? '📚' : '🎟️'}</span><b className="text-[#E6E6EC]">{a.name}</b><span className="text-[#7C7C8A] truncate flex-1">{a.url_template}</span>
+          <button onClick={async () => { await api(BASE, headers, '/admin/affiliates', { method: 'PUT', body: JSON.stringify({ id: a.id, enabled: a.enabled ? 0 : 1 }) }); load(); }} className="text-[#9C9CAB] hover:text-white px-1.5">{a.enabled ? 'Bật' : 'Tắt'}</button>
+          <button onClick={async () => { if (!confirm('Xoá?')) return; await api(BASE, headers, '/admin/affiliates', { method: 'DELETE', body: JSON.stringify({ id: a.id }) }); load(); }} className="text-[#5A5A66] hover:text-red-400"><Trash2 className="w-3.5 h-3.5" /></button>
         </div>
       ))}
       <form onSubmit={save} className="grid grid-cols-2 gap-2 pt-1">
@@ -1089,34 +1089,34 @@ export function ProtectTab({ BASE, headers, addToast }) {
 
       <div className="flex items-center gap-2">
         <div className="relative flex-1">
-          <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+          <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#7C7C8A]" />
           <input value={q} onChange={e => setQ(e.target.value)} placeholder="Tìm kênh..." className={inp + ' pl-9'} />
         </div>
-        <span className="text-[10px] font-black text-slate-400 whitespace-nowrap">{onCount}/{list.length} đang bật</span>
+        <span className="text-[10px] font-black text-[#9C9CAB] whitespace-nowrap">{onCount}/{list.length} đang bật</span>
         <button onClick={load} className={btnG}><RefreshCw className="w-3.5 h-3.5" />Tải lại</button>
       </div>
 
       {loading ? (
-        <p className="text-[11px] text-slate-500 py-6 text-center">Đang tải danh sách kênh...</p>
+        <p className="text-[11px] text-[#7C7C8A] py-6 text-center">Đang tải danh sách kênh...</p>
       ) : (
         <div className="space-y-1 max-h-[52vh] overflow-y-auto pr-1">
           {filtered.map(ch => (
-            <div key={ch.channel_id} className="flex items-center gap-2.5 bg-slate-900/40 rounded-lg px-2.5 py-2 border border-slate-800/30">
-              <ShieldCheck className={`w-4 h-4 shrink-0 ${ch.protect === 0 ? 'text-slate-600' : 'text-emerald-400'}`} />
+            <div key={ch.channel_id} className="flex items-center gap-2.5 bg-[#16161C]/40 rounded-lg px-2.5 py-2 border border-[#24242C]/30">
+              <ShieldCheck className={`w-4 h-4 shrink-0 ${ch.protect === 0 ? 'text-[#5A5A66]' : 'text-emerald-400'}`} />
               <div className="min-w-0 flex-1">
                 <p className="text-[11px] font-bold text-white truncate">{ch.name}</p>
-                <p className="text-[9px] text-slate-600 truncate">{ch.group_title || '—'} · {ch.channel_id}</p>
+                <p className="text-[9px] text-[#5A5A66] truncate">{ch.group_title || '—'} · {ch.channel_id}</p>
               </div>
               <button
                 disabled={busy === ch.channel_id}
                 onClick={() => toggle(ch)}
-                className={`shrink-0 px-2.5 py-1 rounded-md text-[10px] font-black border transition-all disabled:opacity-50 ${ch.protect === 0 ? 'bg-slate-800 border-slate-700 text-slate-400' : 'bg-emerald-600/20 border-emerald-500/40 text-emerald-300'}`}
+                className={`shrink-0 px-2.5 py-1 rounded-md text-[10px] font-black border transition-all disabled:opacity-50 ${ch.protect === 0 ? 'bg-[#1E1E26] border-[#24242C] text-[#9C9CAB]' : 'bg-emerald-600/20 border-emerald-500/40 text-emerald-300'}`}
               >
                 {ch.protect === 0 ? 'ĐANG TẮT' : 'ĐANG BẬT'}
               </button>
             </div>
           ))}
-          {filtered.length === 0 && <p className="text-[11px] text-slate-600 italic text-center py-6">Không thấy kênh nào</p>}
+          {filtered.length === 0 && <p className="text-[11px] text-[#5A5A66] italic text-center py-6">Không thấy kênh nào</p>}
         </div>
       )}
     </div>

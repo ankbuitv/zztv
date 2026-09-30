@@ -90,11 +90,11 @@ export default function GiftModal({ onClose }) {
       </div>
       <div className="min-w-0 flex-1">
         <p className="text-[12.5px] font-bold text-white leading-tight">
-          {planName(g.plan)} · <span className="text-stone-400 font-semibold">{g.days} {t('gift.day_unit')}</span>
+          {planName(g.plan)} · <span className="text-[#9C9CAB] font-semibold">{g.days} {t('gift.day_unit')}</span>
         </p>
-        <p className="text-[11px] text-stone-500 font-mono truncate">{g.code}</p>
-        {g.note ? <p className="text-[11px] text-stone-400 italic truncate">“{g.note}”</p> : null}
-        {kind === 'sent' && g.to_username ? <p className="text-[11px] text-stone-500 flex items-center gap-1"><UserRound className="w-3 h-3" />{t('gift.locked_to', { name: g.to_username })}</p> : null}
+        <p className="text-[11px] text-[#7C7C8A] font-mono truncate">{g.code}</p>
+        {g.note ? <p className="text-[11px] text-[#9C9CAB] italic truncate">“{g.note}”</p> : null}
+        {kind === 'sent' && g.to_username ? <p className="text-[11px] text-[#7C7C8A] flex items-center gap-1"><UserRound className="w-3 h-3" />{t('gift.locked_to', { name: g.to_username })}</p> : null}
       </div>
       {g.status === 'redeemed' ? (
         <span className="text-[10px] font-black text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2 py-1 rounded-lg flex items-center gap-1 shrink-0"><BadgeCheck className="w-3 h-3" />{t('gift.redeemed')}</span>
@@ -117,17 +117,17 @@ export default function GiftModal({ onClose }) {
           <p className="text-[15px] font-black text-white flex items-center gap-2">
             <Gift className="w-5 h-5 text-fuchsia-400" />{t('gift.give_title')}
           </p>
-          <button onClick={onClose} className="w-8 h-8 rounded-full bg-white/[0.06] hover:bg-white/[0.12] text-stone-400 flex items-center justify-center"><X className="w-4 h-4" /></button>
+          <button onClick={onClose} className="w-8 h-8 rounded-full bg-white/[0.06] hover:bg-white/[0.12] text-[#9C9CAB] flex items-center justify-center"><X className="w-4 h-4" /></button>
         </div>
 
         <div className="p-5 flex flex-col gap-4">
           {created ? (
             <div className="rounded-3xl border border-emerald-500/30 bg-emerald-500/[0.06] p-4 flex flex-col items-center gap-3">
               <span className="text-[11px] font-black text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-1 rounded-full flex items-center gap-1"><Sparkles className="w-3 h-3" />{t('gift.created_ok')}</span>
-              <p className="text-[13px] text-stone-300 text-center">{t('gift.created_desc', { plan: planName(created.plan), days: created.days })}{created.to_username ? ` — ${created.to_username}` : ''}</p>
+              <p className="text-[13px] text-[#D2D2DC] text-center">{t('gift.created_desc', { plan: planName(created.plan), days: created.days })}{created.to_username ? ` — ${created.to_username}` : ''}</p>
               <p className="px-4 py-2.5 rounded-2xl bg-black/50 border border-fuchsia-500/40 text-fuchsia-300 font-mono font-black text-[17px] tracking-wider select-all">{created.code}</p>
-              <p className="text-[11px] text-stone-500 text-center leading-relaxed">{t('gift.link_hint')}</p>
-              <p className="text-[11.5px] text-stone-400 font-mono bg-black/40 border border-white/10 rounded-xl px-3 py-2 max-w-full truncate select-all">{shareLink(created.code)}</p>
+              <p className="text-[11px] text-[#7C7C8A] text-center leading-relaxed">{t('gift.link_hint')}</p>
+              <p className="text-[11.5px] text-[#9C9CAB] font-mono bg-black/40 border border-white/10 rounded-xl px-3 py-2 max-w-full truncate select-all">{shareLink(created.code)}</p>
               <div className="flex gap-2 w-full">
                 <button onClick={() => copy(created.code)} className="flex-1 py-2.5 rounded-2xl bg-white/[0.07] hover:bg-white/[0.12] border border-white/10 text-white text-[12.5px] font-bold flex items-center justify-center gap-1.5 active:scale-[0.98]"><Copy className="w-3.5 h-3.5" />{t('gift.copy_code')}</button>
                 <button onClick={() => share(created)} className="flex-1 py-2.5 rounded-2xl bg-fuchsia-600 hover:bg-fuchsia-500 text-white text-[12.5px] font-bold flex items-center justify-center gap-1.5 active:scale-[0.98]"><Send className="w-3.5 h-3.5" />{t('gift.share')}</button>
@@ -138,7 +138,7 @@ export default function GiftModal({ onClose }) {
             <>
               {/* Chọn gói */}
               <div>
-                <p className="text-[12px] font-bold text-stone-400 mb-2">{t('gift.pick_plan')}</p>
+                <p className="text-[12px] font-bold text-[#9C9CAB] mb-2">{t('gift.pick_plan')}</p>
                 <div className="grid grid-cols-5 gap-1.5">
                   {PLANS.map((p) => (
                     <button
@@ -156,13 +156,13 @@ export default function GiftModal({ onClose }) {
 
               {/* Thời hạn */}
               <div>
-                <p className="text-[12px] font-bold text-stone-400 mb-2">{t('gift.duration')}</p>
+                <p className="text-[12px] font-bold text-[#9C9CAB] mb-2">{t('gift.duration')}</p>
                 <div className="grid grid-cols-4 gap-1.5">
                   {DAY_OPTIONS.map((d) => (
                     <button
                       key={d.v}
                       onClick={() => setDays(d.v)}
-                      className={`py-2 rounded-xl text-[12px] font-bold border transition active:scale-95 ${days === d.v ? 'text-white border-fuchsia-500/60 bg-fuchsia-500/15' : 'text-stone-400 border-white/[0.07] bg-white/[0.03] hover:bg-white/[0.06]'}`}
+                      className={`py-2 rounded-xl text-[12px] font-bold border transition active:scale-95 ${days === d.v ? 'text-white border-fuchsia-500/60 bg-fuchsia-500/15' : 'text-[#9C9CAB] border-white/[0.07] bg-white/[0.03] hover:bg-white/[0.06]'}`}
                     >
                       {d.label}
                     </button>
@@ -172,24 +172,24 @@ export default function GiftModal({ onClose }) {
 
               {/* Người nhận */}
               <div>
-                <p className="text-[12px] font-bold text-stone-400 mb-2">{t('gift.to_label')}</p>
+                <p className="text-[12px] font-bold text-[#9C9CAB] mb-2">{t('gift.to_label')}</p>
                 <input
                   value={to}
                   onChange={(e) => setTo(e.target.value.replace(/\s+/g, '').slice(0, 40))}
                   placeholder={t('gift.to_placeholder')}
-                  className="w-full px-3.5 py-2.5 bg-black/40 border border-white/10 rounded-xl text-[13px] font-semibold text-white placeholder:text-stone-600 outline-none focus:border-fuchsia-500"
+                  className="w-full px-3.5 py-2.5 bg-black/40 border border-white/10 rounded-xl text-[13px] font-semibold text-white placeholder:text-[#5A5A66] outline-none focus:border-fuchsia-500"
                 />
-                <p className="text-[11px] text-stone-500 mt-1.5">{to.trim() ? t('gift.locked_hint') : t('gift.anyone_hint')}</p>
+                <p className="text-[11px] text-[#7C7C8A] mt-1.5">{to.trim() ? t('gift.locked_hint') : t('gift.anyone_hint')}</p>
               </div>
 
               {/* Lời nhắn */}
               <div>
-                <p className="text-[12px] font-bold text-stone-400 mb-2">{t('gift.note_label')}</p>
+                <p className="text-[12px] font-bold text-[#9C9CAB] mb-2">{t('gift.note_label')}</p>
                 <input
                   value={note}
                   onChange={(e) => setNote(e.target.value.slice(0, 200))}
                   placeholder={t('gift.note_placeholder')}
-                  className="w-full px-3.5 py-2.5 bg-black/40 border border-white/10 rounded-xl text-[13px] text-white placeholder:text-stone-600 outline-none focus:border-fuchsia-500"
+                  className="w-full px-3.5 py-2.5 bg-black/40 border border-white/10 rounded-xl text-[13px] text-white placeholder:text-[#5A5A66] outline-none focus:border-fuchsia-500"
                 />
               </div>
 
@@ -211,7 +211,7 @@ export default function GiftModal({ onClose }) {
                   <button
                     key={k}
                     onClick={() => setTab(k)}
-                    className={`px-3 py-1.5 rounded-xl text-[11.5px] font-bold border transition ${tab === k ? 'text-white border-fuchsia-500/50 bg-fuchsia-500/15' : 'text-stone-500 border-white/[0.07] bg-white/[0.03]'}`}
+                    className={`px-3 py-1.5 rounded-xl text-[11.5px] font-bold border transition ${tab === k ? 'text-white border-fuchsia-500/50 bg-fuchsia-500/15' : 'text-[#7C7C8A] border-white/[0.07] bg-white/[0.03]'}`}
                   >
                     {k === 'sent' ? t('gift.my_sent') : t('gift.my_received')}
                   </button>
@@ -219,7 +219,7 @@ export default function GiftModal({ onClose }) {
               </div>
               <div className="flex flex-col gap-1.5">
                 {(tab === 'sent' ? mine.sent : mine.received).length === 0 ? (
-                  <p className="text-[12px] text-stone-600 text-center py-3">{tab === 'sent' ? t('gift.empty_sent') : t('gift.empty_received')}</p>
+                  <p className="text-[12px] text-[#5A5A66] text-center py-3">{tab === 'sent' ? t('gift.empty_sent') : t('gift.empty_received')}</p>
                 ) : (
                   (tab === 'sent' ? mine.sent : mine.received).map((g) => <Row key={g.code} g={g} kind={tab} />)
                 )}

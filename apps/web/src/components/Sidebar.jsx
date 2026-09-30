@@ -52,7 +52,7 @@ export default function Sidebar({ activeTab, setActiveTab, onShowSettings, onSho
               className={`nav-btn w-14 h-14 rounded-2xl flex flex-col items-center justify-center gap-0.5 transition-all ${
                 isActive
                   ? 'grad-brand text-white shadow-lg shadow-cyan-500/25'
-                  : 'text-stone-500 hover:text-white hover:bg-white/5'
+                  : 'text-[#7C7C8A] hover:text-white hover:bg-white/5'
               }`}
               title={item.label}
             >
@@ -65,7 +65,7 @@ export default function Sidebar({ activeTab, setActiveTab, onShowSettings, onSho
         {onShowSettings && (
           <button
             onClick={onShowSettings}
-            className="nav-btn w-10 h-10 mt-auto hover:bg-white/5 rounded-full flex items-center justify-center text-stone-500 hover:text-white transition-all"
+            className="nav-btn w-10 h-10 mt-auto hover:bg-white/5 rounded-full flex items-center justify-center text-[#7C7C8A] hover:text-white transition-all"
             title={t('nav.settings')}
           >
             <SettingsIcon />
@@ -74,7 +74,7 @@ export default function Sidebar({ activeTab, setActiveTab, onShowSettings, onSho
         {onShowAdmin && isAdmin && (
           <button
             onClick={onShowAdmin}
-            className="nav-btn w-10 h-10 hover:bg-white/5 rounded-full flex items-center justify-center text-stone-500 hover:text-white transition-all"
+            className="nav-btn w-10 h-10 hover:bg-white/5 rounded-full flex items-center justify-center text-[#7C7C8A] hover:text-white transition-all"
             title={t('nav.admin')}
           >
             <span className="text-[10px]">⚙️</span>
@@ -105,7 +105,7 @@ export default function Sidebar({ activeTab, setActiveTab, onShowSettings, onSho
                     key={item.id}
                     onClick={() => { setActiveTab(item.id); setSheet(false); }}
                     className={`flex flex-col items-center justify-center gap-1.5 py-3.5 rounded-2xl border transition-all ${
-                      isActive ? 'grad-brand text-white border-transparent' : 'bg-white/[0.04] border-white/5 text-stone-300 active:bg-white/10'
+                      isActive ? 'grad-brand text-white border-transparent' : 'bg-white/[0.04] border-white/5 text-[#D2D2DC] active:bg-white/10'
                     }`}
                   >
                     <Icon />
@@ -117,7 +117,7 @@ export default function Sidebar({ activeTab, setActiveTab, onShowSettings, onSho
               {onShowSettings && (
                 <button
                   onClick={() => { onShowSettings(); setSheet(false); }}
-                  className="flex flex-col items-center justify-center gap-1.5 py-3.5 rounded-2xl bg-white/[0.04] border border-white/5 text-stone-300 active:bg-white/10"
+                  className="flex flex-col items-center justify-center gap-1.5 py-3.5 rounded-2xl bg-white/[0.04] border border-white/5 text-[#D2D2DC] active:bg-white/10"
                 >
                   <span className="w-5 h-5 flex items-center justify-center"><SettingsIcon /></span>
                   <span className="text-[9px] font-bold tracking-tight">{(t('nav.settings') || 'CÀI ĐẶT').toUpperCase()}</span>
@@ -127,7 +127,7 @@ export default function Sidebar({ activeTab, setActiveTab, onShowSettings, onSho
               {onShowAdmin && isAdmin && (
                 <button
                   onClick={() => { onShowAdmin(); setSheet(false); }}
-                  className="flex flex-col items-center justify-center gap-1.5 py-3.5 rounded-2xl bg-white/[0.04] border border-white/5 text-stone-300 active:bg-white/10"
+                  className="flex flex-col items-center justify-center gap-1.5 py-3.5 rounded-2xl bg-white/[0.04] border border-white/5 text-[#D2D2DC] active:bg-white/10"
                 >
                   <span className="text-lg leading-none">🛠️</span>
                   <span className="text-[9px] font-bold tracking-tight">{(t('nav.admin') || 'QUẢN TRỊ').toUpperCase()}</span>
@@ -142,13 +142,13 @@ export default function Sidebar({ activeTab, setActiveTab, onShowSettings, onSho
                 </div>
                 <div className="min-w-0">
                   <p className="text-xs font-semibold text-white truncate">{currentProfile.name}</p>
-                  <p className="text-[10px] text-stone-500 truncate">{user?.email || 'Khách'}</p>
+                  <p className="text-[10px] text-[#7C7C8A] truncate">{user?.email || 'Khách'}</p>
                 </div>
               </div>
             )}
             <button
               onClick={() => setSheet(false)}
-              className="w-full mt-4 py-3 rounded-2xl bg-white/[0.06] text-xs font-bold text-stone-300 active:bg-white/10"
+              className="w-full mt-4 py-3 rounded-2xl bg-white/[0.06] text-xs font-bold text-[#D2D2DC] active:bg-white/10"
             >
               Đóng
             </button>
@@ -167,7 +167,7 @@ export default function Sidebar({ activeTab, setActiveTab, onShowSettings, onSho
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
                 className={`relative flex flex-col items-center gap-1 rounded-xl px-2 py-1.5 transition-colors ${
-                  isActive ? 'text-white' : 'text-stone-500 active:text-stone-300'
+                  isActive ? 'text-white' : 'text-[#7C7C8A] active:text-[#D2D2DC]'
                 }`}
               >
                 {isActive && <span className="absolute -top-1.5 w-8 h-[3px] rounded-full grad-brand" />}
@@ -179,7 +179,7 @@ export default function Sidebar({ activeTab, setActiveTab, onShowSettings, onSho
           <button
             onClick={() => setSheet(true)}
             className={`relative flex flex-col items-center gap-1 rounded-xl px-2 py-1.5 transition-colors ${
-              sheet || moreItems.some((m) => m.id === activeTab) ? 'text-white' : 'text-stone-500 active:text-stone-300'
+              sheet || moreItems.some((m) => m.id === activeTab) ? 'text-white' : 'text-[#7C7C8A] active:text-[#D2D2DC]'
             }`}
           >
             {moreItems.some((m) => m.id === activeTab) && <span className="absolute -top-1.5 w-8 h-[3px] rounded-full grad-brand" />}

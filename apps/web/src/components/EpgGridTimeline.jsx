@@ -201,10 +201,10 @@ export default function EpgGridTimeline({
   }, [activeChannel, onPlayCatchup, onSelectChannel, toggleRemind, addToast]);
 
   return (
-    <div className="flex flex-col h-full bg-[#0b0b0e] text-slate-100 overflow-hidden">
+    <div className="flex flex-col h-full bg-[#0b0b0e] text-[#F5F5F7] overflow-hidden">
       {/* Header */}
       <div className="px-5 md:px-8 pt-5 pb-3 relative overflow-hidden shrink-0">
-        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(600px 180px at 15% 0%, rgba(243,111,33,.14), transparent 70%), radial-gradient(500px 160px at 90% 0%, rgba(124,45,18,.16), transparent 70%)' }}></div>
+        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(600px 180px at 15% 0%, rgba(47,107,255,.14), transparent 70%), radial-gradient(500px 160px at 90% 0%, rgba(124,45,18,.16), transparent 70%)' }}></div>
         <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-1.5 text-[#6E9BFF] font-black uppercase tracking-[0.2em] text-[10px] mb-1">
@@ -214,25 +214,25 @@ export default function EpgGridTimeline({
           </div>
           <div className="flex items-center gap-2">
             <div className="relative flex-1 md:w-56">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#7C7C8A]" />
               <input
                 type="text"
                 placeholder={t('epg.search_ch')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-3 py-2 bg-white/[0.06] border border-white/10 rounded-full text-[13px] text-slate-200 placeholder:text-stone-500 focus:outline-none focus:border-[#2F6BFF]/70 focus:ring-2 focus:ring-[#2F6BFF]/20 transition-all"
+                className="w-full pl-9 pr-3 py-2 bg-white/[0.06] border border-white/10 rounded-full text-[13px] text-[#E6E6EC] placeholder:text-[#7C7C8A] focus:outline-none focus:border-[#2F6BFF]/70 focus:ring-2 focus:ring-[#2F6BFF]/20 transition-all"
               />
             </div>
             <button
               onClick={() => setShowProgSearch((v) => !v)}
-              className={`px-4 py-2 rounded-full text-xs font-bold border transition-all whitespace-nowrap ${showProgSearch ? 'grad-brand text-white border-transparent' : 'bg-white/[0.06] text-slate-300 border-white/10 hover:text-white'}`}
+              className={`px-4 py-2 rounded-full text-xs font-bold border transition-all whitespace-nowrap ${showProgSearch ? 'grad-brand text-white border-transparent' : 'bg-white/[0.06] text-[#D2D2DC] border-white/10 hover:text-white'}`}
             >
               {t('epg.search_prog')}
             </button>
             <div className="relative">
               <button
                 onClick={() => { setShowReminders((v) => !v); reloadReminders(); }}
-                className={`p-2 rounded-full border transition-all ${showReminders ? 'bg-amber-500/20 text-amber-300 border-amber-500/50' : 'bg-white/[0.06] text-slate-300 border-white/10 hover:text-white'}`}
+                className={`p-2 rounded-full border transition-all ${showReminders ? 'bg-amber-500/20 text-amber-300 border-amber-500/50' : 'bg-white/[0.06] text-[#D2D2DC] border-white/10 hover:text-white'}`}
                 title={t('epg.my_rem')}
               >
                 <Bell className="w-4 h-4" />
@@ -246,19 +246,19 @@ export default function EpgGridTimeline({
                 <div className="absolute right-0 top-full mt-2 w-80 max-w-[85vw] bg-[#141419] border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-50 anim-pop-fast">
                   <div className="px-4 py-2.5 border-b border-white/5 flex items-center justify-between">
                     <span className="text-xs font-bold flex items-center gap-1.5"><BellRing className="w-3.5 h-3.5 text-amber-400" /> {t('epg.my_rem')}</span>
-                    <button onClick={() => setShowReminders(false)} className="p-1 hover:bg-white/10 rounded-lg"><X className="w-3.5 h-3.5 text-slate-400" /></button>
+                    <button onClick={() => setShowReminders(false)} className="p-1 hover:bg-white/10 rounded-lg"><X className="w-3.5 h-3.5 text-[#9C9CAB]" /></button>
                   </div>
                   <div className="max-h-72 overflow-y-auto">
                     {reminders.length === 0 ? (
-                      <p className="px-4 py-6 text-center text-[11px] text-slate-500">{t('epg.rem_empty')}</p>
+                      <p className="px-4 py-6 text-center text-[11px] text-[#7C7C8A]">{t('epg.rem_empty')}</p>
                     ) : reminders.map((r) => (
                       <div key={r.id} className="px-4 py-2.5 border-b border-white/5 flex items-center gap-2">
                         <div className="min-w-0 flex-1">
                           <p className="text-[11px] font-bold truncate">{r.program_title}</p>
-                          <p className="text-[10px] text-slate-500">{r.channel_id} · {String(r.remind_at || '').slice(0, 16)}</p>
+                          <p className="text-[10px] text-[#7C7C8A]">{r.channel_id} · {String(r.remind_at || '').slice(0, 16)}</p>
                         </div>
                         <button onClick={() => handleDeleteReminder(r.id)} className="p-1.5 hover:bg-[#2F6BFF]/20 rounded-lg" title={t('epg.rem_del')}>
-                          <Trash2 className="w-3.5 h-3.5 text-slate-500 hover:text-[#6E9BFF]" />
+                          <Trash2 className="w-3.5 h-3.5 text-[#7C7C8A] hover:text-[#6E9BFF]" />
                         </button>
                       </div>
                     ))}
@@ -287,7 +287,7 @@ export default function EpgGridTimeline({
                 ? (tab.future ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/30' : 'grad-brand text-white shadow-lg shadow-[#2F6BFF]/30')
                 : tab.future
                 ? 'bg-white/[0.04] border border-sky-500/25 text-sky-300/70 hover:text-sky-200 hover:border-sky-500/50'
-                : 'bg-white/[0.04] border border-white/10 text-slate-400 hover:text-white hover:border-white/25'
+                : 'bg-white/[0.04] border border-white/10 text-[#9C9CAB] hover:text-white hover:border-white/25'
             }`}
           >
             <Clock className="w-3.5 h-3.5" />
@@ -305,7 +305,7 @@ export default function EpgGridTimeline({
             className={`px-3 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap transition-all active:scale-95 ${
               selectedCategory === cat
                 ? 'bg-[#2F6BFF]/20 text-[#6E9BFF] border border-[#2F6BFF]/50'
-                : 'bg-transparent text-stone-500 border border-transparent hover:text-stone-200 hover:bg-white/[0.06]'
+                : 'bg-transparent text-[#7C7C8A] border border-transparent hover:text-[#E6E6EC] hover:bg-white/[0.06]'
             }`}
           >
             {cat}
@@ -317,12 +317,12 @@ export default function EpgGridTimeline({
       <div className="flex-1 min-h-0 flex gap-3 px-5 md:px-8 pb-6">
         {/* LEFT: channel list */}
         <div className={`${activeId !== null ? 'hidden md:flex' : 'flex'} w-full md:w-72 md:min-w-[288px] flex-col min-h-0 bg-white/[0.02] border border-white/[0.06] rounded-2xl overflow-hidden`}>
-          <div className="px-3.5 py-2.5 border-b border-white/5 text-[10px] font-black uppercase tracking-widest text-stone-500 shrink-0">
+          <div className="px-3.5 py-2.5 border-b border-white/5 text-[10px] font-black uppercase tracking-widest text-[#7C7C8A] shrink-0">
             {t('epg.channels')} · {filteredChannels.length}
           </div>
           <div className="flex-1 overflow-y-auto p-2 space-y-1">
             {filteredChannels.length === 0 && (
-              <p className="text-center text-[11px] text-stone-600 py-8">{t('epg.no_channel_found')}</p>
+              <p className="text-center text-[11px] text-[#5A5A66] py-8">{t('epg.no_channel_found')}</p>
             )}
             {filteredChannels.slice(0, 400).map((ch) => {
               const active = activeChannel && ch.channel_id === activeChannel.channel_id;
@@ -343,8 +343,8 @@ export default function EpgGridTimeline({
                     onError={(e) => { e.target.src = '/brand/playz-symbol-dark.svg'; }}
                   />
                   <span className="min-w-0 flex-1">
-                    <span className={`block truncate text-[12px] font-bold ${active ? 'text-white' : 'text-slate-300'}`}>{ch.name}</span>
-                    <span className="block truncate text-[10px] text-stone-600">{ch.group_title}</span>
+                    <span className={`block truncate text-[12px] font-bold ${active ? 'text-white' : 'text-[#D2D2DC]'}`}>{ch.name}</span>
+                    <span className="block truncate text-[10px] text-[#5A5A66]">{ch.group_title}</span>
                   </span>
                   {active && <span className="w-1.5 h-8 rounded-full grad-brand shrink-0"></span>}
                 </button>
@@ -356,7 +356,7 @@ export default function EpgGridTimeline({
         {/* RIGHT: day programs */}
         <div className={`${activeId === null ? 'hidden md:flex' : 'flex'} flex-1 min-w-0 flex-col min-h-0 bg-white/[0.02] border border-white/[0.06] rounded-2xl overflow-hidden`}>
           {!activeChannel ? (
-            <div className="flex-1 flex flex-col items-center justify-center text-stone-600 py-16">
+            <div className="flex-1 flex flex-col items-center justify-center text-[#5A5A66] py-16">
               <Tv className="w-10 h-10 mb-3" />
               <p className="text-xs">{t('epg.pick_channel')}</p>
             </div>
@@ -364,7 +364,7 @@ export default function EpgGridTimeline({
             <>
               <div className="flex items-center gap-3 px-4 py-3 border-b border-white/5 shrink-0 bg-black/20">
                 <button onClick={() => setActiveId(null)} className="md:hidden p-1.5 -ml-1 rounded-lg hover:bg-white/10" title={t('common.back')}>
-                  <ChevronLeft className="w-5 h-5 text-slate-300" />
+                  <ChevronLeft className="w-5 h-5 text-[#D2D2DC]" />
                 </button>
                 <img
                   src={activeChannel.logo || '/brand/playz-symbol-dark.svg'}
@@ -374,7 +374,7 @@ export default function EpgGridTimeline({
                 />
                 <div className="min-w-0 flex-1">
                   <h2 className="text-[15px] font-black text-white truncate">{activeChannel.name}</h2>
-                  <p className="text-[10px] text-stone-500">{activeChannel.group_title} · {dayPrograms.length} {t('epg.progs')}</p>
+                  <p className="text-[10px] text-[#7C7C8A]">{activeChannel.group_title} · {dayPrograms.length} {t('epg.progs')}</p>
                 </div>
                 <button
                   onClick={() => onSelectChannel && onSelectChannel(activeChannel)}
@@ -385,7 +385,7 @@ export default function EpgGridTimeline({
               </div>
               <div className="flex-1 overflow-y-auto p-3 space-y-2">
                 {dayPrograms.length === 0 && (
-                  <div className="text-center py-14 text-stone-600 text-xs italic">{t('epg.no_data')}</div>
+                  <div className="text-center py-14 text-[#5A5A66] text-xs italic">{t('epg.no_data')}</div>
                 )}
                 {dayPrograms.slice(0, 120).map((prog, idx) => {
                   const isPast = prog._stopTs < nowTs;
@@ -409,14 +409,14 @@ export default function EpgGridTimeline({
                       }`}
                     >
                       <span className="shrink-0 w-[104px] pt-0.5">
-                        <span className={`flex items-center gap-1 text-[11px] font-black ${isLiveNow ? 'text-[#ffb37a]' : 'text-stone-400'}`}>
+                        <span className={`flex items-center gap-1 text-[11px] font-black ${isLiveNow ? 'text-[#6E9BFF]' : 'text-[#9C9CAB]'}`}>
                           <Clock className="w-3 h-3" />{formatTimeHHMM(prog.start)}
                         </span>
-                        <span className="text-[10px] text-stone-600 font-semibold">– {formatTimeHHMM(prog.stop)}</span>
+                        <span className="text-[10px] text-[#5A5A66] font-semibold">– {formatTimeHHMM(prog.stop)}</span>
                       </span>
                       <span className="min-w-0 flex-1">
                         <span className="flex items-center justify-between gap-2 mb-1">
-                          <span className={`font-bold text-[13px] leading-snug line-clamp-2 ${isLiveNow ? 'text-white' : isPast ? 'text-slate-400' : 'text-slate-200'}`}>
+                          <span className={`font-bold text-[13px] leading-snug line-clamp-2 ${isLiveNow ? 'text-white' : isPast ? 'text-[#9C9CAB]' : 'text-[#E6E6EC]'}`}>
                             {maskScores(prog.title)}
                           </span>
                           {isLiveNow && (
@@ -433,7 +433,7 @@ export default function EpgGridTimeline({
                             <span className="px-2 py-0.5 text-[9px] font-bold rounded-full bg-sky-500/15 text-sky-300 border border-sky-500/30 shrink-0">{t('epg.soon')}</span>
                           )}
                           {isFuture && !isSoon && (
-                            <span className={`px-2 py-0.5 text-[9px] font-bold rounded-full border flex items-center gap-1 shrink-0 ${reminded ? 'bg-amber-500/20 text-amber-300 border-amber-500/40' : 'bg-white/[0.04] text-stone-500 border-white/10'}`}>
+                            <span className={`px-2 py-0.5 text-[9px] font-bold rounded-full border flex items-center gap-1 shrink-0 ${reminded ? 'bg-amber-500/20 text-amber-300 border-amber-500/40' : 'bg-white/[0.04] text-[#7C7C8A] border-white/10'}`}>
                               <Bell className="w-2 h-2" /> {reminded ? t('epg.reminded') : t('epg.remind_me')}
                             </span>
                           )}
@@ -443,7 +443,7 @@ export default function EpgGridTimeline({
                             <span className="block h-full rounded-full bg-gradient-to-r from-[#2F6BFF] to-[#6E9BFF]" style={{ width: `${livePct}%` }}></span>
                           </span>
                         ) : prog.desc ? (
-                          <span className="block text-[11px] text-stone-600 line-clamp-1 mt-0.5">{prog.desc}</span>
+                          <span className="block text-[11px] text-[#5A5A66] line-clamp-1 mt-0.5">{prog.desc}</span>
                         ) : null}
                       </span>
                     </button>

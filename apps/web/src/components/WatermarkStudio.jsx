@@ -19,21 +19,21 @@ const TEXT_OPTS = [['none', 'Không hiện'], ['right', 'Bên phải'], ['bottom
 const clamp = (v, a = 0, b = 100) => Math.min(b, Math.max(a, v));
 const r1 = (v) => Math.round(v * 10) / 10;
 
-const inp = 'w-full bg-slate-900/60 border border-slate-700/50 rounded-lg px-3 py-2 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-[#2F6BFF]/50';
+const inp = 'w-full bg-[#16161C]/60 border border-[#24242C]/50 rounded-lg px-3 py-2 text-xs text-white placeholder-[#5A5A66] focus:outline-none focus:border-[#2F6BFF]/50';
 
 function Slider({ label, value, min, max, step = 1, unit = '', onChange, hint }) {
   return (
     <label className="block">
-      <span className="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-slate-500">
+      <span className="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-[#7C7C8A]">
         <span>{label}</span>
-        <b className="text-slate-200 normal-case font-mono">{r1(value)}{unit}</b>
+        <b className="text-[#E6E6EC] normal-case font-mono">{r1(value)}{unit}</b>
       </span>
       <input
         type="range" min={min} max={max} step={step} value={value}
         onChange={(e) => onChange(parseFloat(e.target.value))}
         className="w-full accent-[#2F6BFF] mt-1"
       />
-      {hint && <span className="block text-[10px] text-slate-600 -mt-0.5">{hint}</span>}
+      {hint && <span className="block text-[10px] text-[#5A5A66] -mt-0.5">{hint}</span>}
     </label>
   );
 }
@@ -41,12 +41,12 @@ function Slider({ label, value, min, max, step = 1, unit = '', onChange, hint })
 function Seg({ label, opts, value, onChange }) {
   return (
     <div>
-      <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">{label}</p>
+      <p className="text-[10px] font-bold uppercase tracking-wider text-[#7C7C8A] mb-1">{label}</p>
       <div className="flex flex-wrap gap-1">
         {opts.map(([v, l]) => (
           <button
             key={v} type="button" onClick={() => onChange(v)}
-            className={`px-2.5 py-1.5 rounded-lg text-[11px] font-bold transition-all ${value === v ? 'grad-brand text-white' : 'bg-white/[0.05] text-slate-400 hover:text-white hover:bg-white/[0.09]'}`}
+            className={`px-2.5 py-1.5 rounded-lg text-[11px] font-bold transition-all ${value === v ? 'grad-brand text-white' : 'bg-white/[0.05] text-[#9C9CAB] hover:text-white hover:bg-white/[0.09]'}`}
           >
             {l}
           </button>
@@ -137,9 +137,9 @@ export default function WatermarkStudio({
   return (
     <div className="space-y-2.5">
       {title && (
-        <p className="text-[11px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-2">
+        <p className="text-[11px] font-black uppercase tracking-widest text-[#9C9CAB] flex items-center gap-2">
           {title}
-          <span className="ml-auto normal-case tracking-normal font-bold text-[10px] px-2 py-0.5 rounded-full bg-white/[0.06] text-slate-400">{posName}</span>
+          <span className="ml-auto normal-case tracking-normal font-bold text-[10px] px-2 py-0.5 rounded-full bg-white/[0.06] text-[#9C9CAB]">{posName}</span>
         </p>
       )}
 
@@ -148,7 +148,7 @@ export default function WatermarkStudio({
           {[['', 'Theo cấu hình chung'], ['on', 'Luôn bật kênh này'], ['off', 'Tắt kênh này']].map(([v, l]) => (
             <button
               key={v || 'auto'} type="button" onClick={() => onModeChange && onModeChange(v)}
-              className={`px-2.5 py-1.5 rounded-lg text-[11px] font-bold transition-all ${mode === v ? 'grad-brand text-white' : 'bg-white/[0.05] text-slate-400 hover:text-white'}`}
+              className={`px-2.5 py-1.5 rounded-lg text-[11px] font-bold transition-all ${mode === v ? 'grad-brand text-white' : 'bg-white/[0.05] text-[#9C9CAB] hover:text-white'}`}
             >
               {l}
             </button>
@@ -192,7 +192,7 @@ export default function WatermarkStudio({
             ...wmPlateStyle(merged),
             display: 'flex', flexDirection: dir, alignItems: 'center', gap: merged.text ? '0.45em' : 0,
             pointerEvents: readOnly ? 'none' : 'auto', cursor: 'grab',
-            outline: dragging ? '1.5px dashed rgba(243,111,33,.95)' : '1px dashed rgba(255,255,255,.35)',
+            outline: dragging ? '1.5px dashed rgba(47,107,255,.95)' : '1px dashed rgba(255,255,255,.35)',
             outlineOffset: '3px',
           }}
         >
@@ -207,10 +207,10 @@ export default function WatermarkStudio({
         </div>
       </div>
 
-      <p className="text-[10px] leading-relaxed text-slate-500">
+      <p className="text-[10px] leading-relaxed text-[#7C7C8A]">
         {hint || 'Kéo khung logo (hoặc bấm vào bất kỳ đâu trong khung) để đổi vị trí — thả ra gần góc sẽ tự hít vào góc đó. Có thể bấm vào khung rồi dùng phím mũi tên (giữ Shift = nhảy 5%).'}
       </p>
-      <p className="text-[10px] font-mono text-slate-400">
+      <p className="text-[10px] font-mono text-[#9C9CAB]">
         tâm: x {r1(merged.x)}% · y {r1(merged.y)}% · cách mép {r1(merged.margin)}%
       </p>
 
@@ -222,14 +222,14 @@ export default function WatermarkStudio({
               key={p} type="button" disabled={readOnly}
               onClick={() => onChange({ pos: p })}
               title={WM_POS_LABEL[p]}
-              className={`w-8 h-8 rounded-lg text-[10px] font-black transition-all ${merged.pos === p ? 'bg-[#2F6BFF] text-white shadow-[0_0_0_1px_rgba(255,154,61,.6)]' : 'bg-white/[0.05] text-slate-500 hover:text-white hover:bg-white/[0.12]'}`}
+              className={`w-8 h-8 rounded-lg text-[10px] font-black transition-all ${merged.pos === p ? 'bg-[#2F6BFF] text-white shadow-[0_0_0_1px_rgba(255,154,61,.6)]' : 'bg-white/[0.05] text-[#7C7C8A] hover:text-white hover:bg-white/[0.12]'}`}
             >
               {p === 'custom' ? '✦' : POS_GLYPH[p]}
             </button>
           ))}
         </div>
-        <div className="text-[10px] text-slate-500 leading-relaxed max-w-[16rem]">
-          <b className="text-slate-300">9 điểm bám</b> — góc/cạnh. Chọn <b className="text-slate-300">✦</b> để giữ đúng chỗ vừa kéo (không hít vào góc).
+        <div className="text-[10px] text-[#7C7C8A] leading-relaxed max-w-[16rem]">
+          <b className="text-[#D2D2DC]">9 điểm bám</b> — góc/cạnh. Chọn <b className="text-[#D2D2DC]">✦</b> để giữ đúng chỗ vừa kéo (không hít vào góc).
         </div>
       </div>
 
@@ -248,13 +248,13 @@ export default function WatermarkStudio({
       </div>
 
       <label className="block">
-        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Dòng mô tả kèm logo (tuỳ chọn)</span>
+        <span className="text-[10px] font-bold uppercase tracking-wider text-[#7C7C8A]">Dòng mô tả kèm logo (tuỳ chọn)</span>
         <input
           className={inp + ' mt-1'} maxLength={48} value={merged.text} disabled={readOnly}
           onChange={(e) => onChange({ text: e.target.value })}
           placeholder="VD: playZ · exclusive"
         />
-        <span className="block text-[10px] text-slate-600 mt-0.5">Để trống = chỉ hiện logo. Tối đa 48 ký tự.</span>
+        <span className="block text-[10px] text-[#5A5A66] mt-0.5">Để trống = chỉ hiện logo. Tối đa 48 ký tự.</span>
       </label>
     </div>
   );

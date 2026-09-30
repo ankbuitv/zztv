@@ -60,35 +60,35 @@ export default function PayModal({ plan, onClose, onPaid }) {
       <div className="w-full max-w-sm modal-panel overflow-hidden" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between gap-3 px-4 py-3 border-b border-white/10">
           <p className="text-[13px] font-black text-white flex items-center gap-2"><QrCode className="w-4 h-4 text-emerald-400" />{t('pay.title', { plan: plan?.name || '' })}</p>
-          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-slate-400" /></button>
+          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-[#9C9CAB]" /></button>
         </div>
         <div className="p-4 space-y-3">
           {!cfg?.bank_id ? (
-            <p className="text-[12px] text-stone-400 text-center py-4">{t('pay.no_config')}</p>
+            <p className="text-[12px] text-[#9C9CAB] text-center py-4">{t('pay.no_config')}</p>
           ) : !order ? (
-            <p className="text-[12px] text-stone-500 text-center py-8">⟳ {t('app.loading')}</p>
+            <p className="text-[12px] text-[#7C7C8A] text-center py-8">⟳ {t('app.loading')}</p>
           ) : (
             <>
               <div className="text-center">
                 <p className="text-[26px] font-black text-white">{price(order.amount)}</p>
-                <p className="text-[11px] text-stone-500">{t('pay.per_month')}</p>
+                <p className="text-[11px] text-[#7C7C8A]">{t('pay.per_month')}</p>
               </div>
               {qr && <div className="bg-white rounded-2xl p-3 flex items-center justify-center"><img src={qr} alt="VietQR" className="w-52 h-52 object-contain" /></div>}
               <div className="rounded-2xl bg-black/40 border border-white/10 p-3 space-y-1.5 text-[12px]">
                 <div className="flex items-center justify-between gap-2">
-                  <span className="text-stone-500">{t('pay.bank')}</span>
+                  <span className="text-[#7C7C8A]">{t('pay.bank')}</span>
                   <span className="font-bold text-white">{cfg.bank_id} · {cfg.account_no}</span>
                 </div>
                 <div className="flex items-center justify-between gap-2">
-                  <span className="text-stone-500">{t('pay.owner')}</span>
+                  <span className="text-[#7C7C8A]">{t('pay.owner')}</span>
                   <span className="font-bold text-white truncate">{cfg.account_name}</span>
                 </div>
                 <div className="flex items-center justify-between gap-2">
-                  <span className="text-stone-500">{t('pay.content')}</span>
+                  <span className="text-[#7C7C8A]">{t('pay.content')}</span>
                   <button onClick={() => copy(order.order_code)} className="font-black text-amber-300 flex items-center gap-1">{order.order_code}<Copy className="w-3 h-3" /></button>
                 </div>
               </div>
-              <p className="text-[11px] text-stone-500 text-center">{t('pay.hint')}</p>
+              <p className="text-[11px] text-[#7C7C8A] text-center">{t('pay.hint')}</p>
               {claimed ? (
                 <p className="text-[12px] text-amber-300 bg-amber-500/10 border border-amber-500/30 rounded-xl px-3 py-2.5 text-center flex items-center justify-center gap-1.5">
                   <RefreshCw className="w-4 h-4" />{t('pay.pending')}

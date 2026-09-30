@@ -27,7 +27,7 @@ export default function LiveStrip({ channels = [], epgData = null, onSelect }) {
       <div className="flex items-center gap-2 px-3 pt-2">
         <span className="live-dot"></span>
         <span className="text-[10px] font-black tracking-widest text-[#6E9BFF]">{t('app.live_now')}</span>
-        <span className="text-[10px] text-stone-500">· {liveNow.length} kênh</span>
+        <span className="text-[10px] text-[#7C7C8A]">· {liveNow.length} kênh</span>
       </div>
       <div className="flex gap-2 overflow-x-auto scrollbar-none px-3 py-2.5">
         {liveNow.map(({ ch, prog }) => (
@@ -44,7 +44,7 @@ export default function LiveStrip({ channels = [], epgData = null, onSelect }) {
             )}
             <span className="min-w-0 max-w-[180px]">
               <span className="block text-[11px] font-bold text-white truncate">{ch.name}</span>
-              <span className="block text-[9px] text-stone-400 truncate">{maskScores(prog.title)}</span>
+              <span className="block text-[9px] text-[#9C9CAB] truncate">{maskScores(prog.title)}</span>
             </span>
           </button>
         ))}

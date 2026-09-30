@@ -1,12 +1,12 @@
 import React from 'react';
 
 function SkeletonLine({ className = '' }) {
-  return <div className={`bg-slate-800/60 rounded animate-pulse ${className}`} />;
+  return <div className={`bg-[#1E1E26]/60 rounded animate-pulse ${className}`} />;
 }
 
 export function SkeletonCard() {
   return (
-    <div className="rounded-xl bg-[#13151c] border border-slate-800/40 p-3.5 space-y-3">
+    <div className="rounded-xl bg-[#13151c] border border-[#24242C]/40 p-3.5 space-y-3">
       <div className="flex items-center gap-3">
         <SkeletonLine className="w-12 h-12 rounded-lg shrink-0" />
         <div className="flex-1 space-y-1.5">
@@ -33,7 +33,7 @@ export function SkeletonEPG() {
   return (
     <div className="space-y-3">
       {Array.from({ length: 5 }).map((_, i) => (
-        <div key={i} className="bg-[#13151c] border border-slate-800/40 rounded-xl p-3 flex gap-3">
+        <div key={i} className="bg-[#13151c] border border-[#24242C]/40 rounded-xl p-3 flex gap-3">
           <SkeletonLine className="w-14 h-14 rounded-lg shrink-0" />
           <div className="flex-1 flex gap-2">
             {Array.from({ length: 4 }).map((_, j) => (

@@ -28,7 +28,7 @@ function Badge({ src, name, className = 'w-14 h-14' }) {
   const [err, setErr] = useState(false);
   if (!src || err) {
     return (
-      <span className={`${className} rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center text-xl font-black text-stone-300 shrink-0`}>
+      <span className={`${className} rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center text-xl font-black text-[#D2D2DC] shrink-0`}>
         {(name || '?').slice(0, 1).toUpperCase()}
       </span>
     );
@@ -86,16 +86,16 @@ export default function TeamDetailModal({ team: teamRef, name, onClose, onOpenMa
       onClick={() => onOpenMatch && onOpenMatch(ev)}
       className="w-full text-left rounded-xl bg-white/[0.04] border border-white/10 px-3 py-2 hover:border-[#2F6BFF]/40 active:scale-[0.99] transition-all"
     >
-      <p className="text-[10px] text-stone-500 font-bold truncate">{score ? fmtDate(ev) : fmtDateTime(ev)}{ev.strLeague ? ` · ${ev.strLeague}` : ''}</p>
+      <p className="text-[10px] text-[#7C7C8A] font-bold truncate">{score ? fmtDate(ev) : fmtDateTime(ev)}{ev.strLeague ? ` · ${ev.strLeague}` : ''}</p>
       <p className="text-[12px] font-bold text-white">
         {ev.strHomeTeam}
         {score ? (
           <>
-            {' '}<span className="tabular-nums text-[#ffb37a]">{ev.intHomeScore ?? '-'}</span>
-            <span className="text-stone-600"> : </span>
-            <span className="tabular-nums text-[#ffb37a]">{ev.intAwayScore ?? '-'}</span>{' '}
+            {' '}<span className="tabular-nums text-[#6E9BFF]">{ev.intHomeScore ?? '-'}</span>
+            <span className="text-[#5A5A66]"> : </span>
+            <span className="tabular-nums text-[#6E9BFF]">{ev.intAwayScore ?? '-'}</span>{' '}
           </>
-        ) : <span className="text-stone-600"> vs </span>}
+        ) : <span className="text-[#5A5A66]"> vs </span>}
         {ev.strAwayTeam}
       </p>
     </button>
@@ -119,14 +119,14 @@ export default function TeamDetailModal({ team: teamRef, name, onClose, onOpenMa
             <Badge src={team?.badge} name={team?.name || refName} />
             <div className="min-w-0 flex-1">
               <p className="text-[16px] font-black text-white leading-tight break-words">{team?.name || refName}</p>
-              {team?.nick ? <p className="text-[11px] text-[#ffb37a] font-bold mt-0.5 truncate">{team.nick}</p> : null}
-              <p className="text-[11px] text-stone-500 mt-0.5">{[team?.country, team?.sport, team?.leagues?.[0]].filter(Boolean).join(' · ')}</p>
+              {team?.nick ? <p className="text-[11px] text-[#6E9BFF] font-bold mt-0.5 truncate">{team.nick}</p> : null}
+              <p className="text-[11px] text-[#7C7C8A] mt-0.5">{[team?.country, team?.sport, team?.leagues?.[0]].filter(Boolean).join(' · ')}</p>
             </div>
             <div className="flex items-center gap-1 shrink-0">
               <button onClick={() => load(true)} title={t('sports.refresh')} className="p-1.5 rounded-full hover:bg-white/10">
-                <RefreshCw className={`w-4 h-4 text-slate-400 ${loading ? 'animate-spin' : ''}`} />
+                <RefreshCw className={`w-4 h-4 text-[#9C9CAB] ${loading ? 'animate-spin' : ''}`} />
               </button>
-              <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-slate-400" /></button>
+              <button onClick={onClose} className="p-1.5 rounded-full hover:bg-white/10"><X className="w-4 h-4 text-[#9C9CAB]" /></button>
             </div>
           </div>
         </div>
@@ -136,7 +136,7 @@ export default function TeamDetailModal({ team: teamRef, name, onClose, onOpenMa
           <div className="flex gap-1.5 px-4 pt-3">
             {tabs.map((tb) => (
               <button key={tb.id} onClick={() => setTab(tb.id)}
-                className={`flex-1 py-2 rounded-xl text-[11px] font-bold transition-all ${tab === tb.id ? 'bg-white/10 text-white' : 'text-stone-500 hover:text-stone-300'}`}>
+                className={`flex-1 py-2 rounded-xl text-[11px] font-bold transition-all ${tab === tb.id ? 'bg-white/10 text-white' : 'text-[#7C7C8A] hover:text-[#D2D2DC]'}`}>
                 {tb.label}{tb.n ? <span className="opacity-60"> {tb.n}</span> : null}
               </button>
             ))}
@@ -152,15 +152,15 @@ export default function TeamDetailModal({ team: teamRef, name, onClose, onOpenMa
 
           {!loading && error && (
             <div className="text-center py-8 space-y-3">
-              <p className="text-[12px] text-stone-400">{error}</p>
+              <p className="text-[12px] text-[#9C9CAB]">{error}</p>
               <button onClick={() => load(true)} className="px-4 py-2 rounded-xl grad-brand text-white text-[12px] font-black active:scale-95">{t('team.retry')}</button>
             </div>
           )}
 
           {!loading && !error && !team && (
             <div className="text-center py-8 space-y-3">
-              <p className="text-[12px] text-stone-600 italic">{t('team.not_found', { name: refName })}</p>
-              <button onClick={() => load(true)} className="px-4 py-2 rounded-xl bg-white/[0.08] border border-white/10 text-stone-200 text-[12px] font-bold active:scale-95">{t('team.retry')}</button>
+              <p className="text-[12px] text-[#5A5A66] italic">{t('team.not_found', { name: refName })}</p>
+              <button onClick={() => load(true)} className="px-4 py-2 rounded-xl bg-white/[0.08] border border-white/10 text-[#E6E6EC] text-[12px] font-bold active:scale-95">{t('team.retry')}</button>
             </div>
           )}
 
@@ -174,37 +174,37 @@ export default function TeamDetailModal({ team: teamRef, name, onClose, onOpenMa
               <div className="grid grid-cols-2 gap-2">
                 {team.formed ? (
                   <div className="rounded-xl bg-white/[0.04] border border-white/10 px-3 py-2">
-                    <p className="text-[9px] font-black uppercase tracking-widest text-stone-500 flex items-center gap-1"><Calendar className="w-3 h-3" />{t('team.formed')}</p>
+                    <p className="text-[9px] font-black uppercase tracking-widest text-[#7C7C8A] flex items-center gap-1"><Calendar className="w-3 h-3" />{t('team.formed')}</p>
                     <p className="text-[13px] font-bold text-white mt-0.5">{team.formed}</p>
                   </div>
                 ) : null}
                 {team.short || team.aliases?.length ? (
                   <div className="rounded-xl bg-white/[0.04] border border-white/10 px-3 py-2">
-                    <p className="text-[9px] font-black uppercase tracking-widest text-stone-500 flex items-center gap-1"><Shirt className="w-3 h-3" />{t('team.alias')}</p>
+                    <p className="text-[9px] font-black uppercase tracking-widest text-[#7C7C8A] flex items-center gap-1"><Shirt className="w-3 h-3" />{t('team.alias')}</p>
                     <p className="text-[13px] font-bold text-white mt-0.5 truncate">{team.short || team.aliases[0]}</p>
                   </div>
                 ) : null}
                 {team.stadium ? (
                   <div className="rounded-xl bg-white/[0.04] border border-white/10 px-3 py-2 col-span-2">
-                    <p className="text-[9px] font-black uppercase tracking-widest text-stone-500 flex items-center gap-1"><MapPin className="w-3 h-3" />{t('team.stadium')}</p>
+                    <p className="text-[9px] font-black uppercase tracking-widest text-[#7C7C8A] flex items-center gap-1"><MapPin className="w-3 h-3" />{t('team.stadium')}</p>
                     <p className="text-[13px] font-bold text-white mt-0.5 break-words">{team.stadium}{team.location ? ` · ${team.location}` : ''}{team.capacity ? ` · ${Number(team.capacity).toLocaleString()} ${t('team.seats')}` : ''}</p>
                   </div>
                 ) : null}
               </div>
               {team.leagues?.length ? (
                 <div>
-                  <p className="text-[9px] font-black uppercase tracking-widest text-stone-500 mb-1.5 flex items-center gap-1"><Trophy className="w-3 h-3" />{t('team.leagues')}</p>
+                  <p className="text-[9px] font-black uppercase tracking-widest text-[#7C7C8A] mb-1.5 flex items-center gap-1"><Trophy className="w-3 h-3" />{t('team.leagues')}</p>
                   <div className="flex flex-wrap gap-1.5">
                     {team.leagues.map((lg) => (
-                      <span key={lg} className="px-2 py-1 rounded-full bg-white/[0.06] border border-white/10 text-[11px] font-bold text-stone-300">{lg}</span>
+                      <span key={lg} className="px-2 py-1 rounded-full bg-white/[0.06] border border-white/10 text-[11px] font-bold text-[#D2D2DC]">{lg}</span>
                     ))}
                   </div>
                 </div>
               ) : null}
               {team.desc ? (
-                <p className="text-[12px] text-stone-300 leading-relaxed whitespace-pre-wrap">{team.desc}</p>
+                <p className="text-[12px] text-[#D2D2DC] leading-relaxed whitespace-pre-wrap">{team.desc}</p>
               ) : (
-                <p className="text-[11px] text-stone-600 italic">{t('team.no_desc')}</p>
+                <p className="text-[11px] text-[#5A5A66] italic">{t('team.no_desc')}</p>
               )}
               {(team.website || team.facebook || team.youtube || team.instagram) && (
                 <div className="flex flex-wrap gap-3 pt-1">
@@ -225,7 +225,7 @@ export default function TeamDetailModal({ team: teamRef, name, onClose, onOpenMa
             <>
               {next.length > 0 && (
                 <div>
-                  <p className="text-[9px] font-black uppercase tracking-widest text-stone-500 mb-1.5 flex items-center gap-1"><CalendarClock className="w-3 h-3" />{t('team.next')}</p>
+                  <p className="text-[9px] font-black uppercase tracking-widest text-[#7C7C8A] mb-1.5 flex items-center gap-1"><CalendarClock className="w-3 h-3" />{t('team.next')}</p>
                   <div className="space-y-1.5">
                     {next.map((ev) => <MatchRow key={ev.idEvent} ev={ev} score={false} />)}
                   </div>
@@ -233,21 +233,21 @@ export default function TeamDetailModal({ team: teamRef, name, onClose, onOpenMa
               )}
               {last.length > 0 && (
                 <div>
-                  <p className="text-[9px] font-black uppercase tracking-widest text-stone-500 mb-1.5 mt-2 flex items-center gap-1"><Users className="w-3 h-3" />{t('team.last')}</p>
+                  <p className="text-[9px] font-black uppercase tracking-widest text-[#7C7C8A] mb-1.5 mt-2 flex items-center gap-1"><Users className="w-3 h-3" />{t('team.last')}</p>
                   <div className="space-y-1.5">
                     {last.map((ev) => <MatchRow key={ev.idEvent} ev={ev} score />)}
                   </div>
                 </div>
               )}
               {next.length === 0 && last.length === 0 && (
-                <p className="text-[12px] text-stone-600 italic text-center py-8">{t('sports.no_data')}</p>
+                <p className="text-[12px] text-[#5A5A66] italic text-center py-8">{t('sports.no_data')}</p>
               )}
             </>
           )}
 
           {!loading && team && tab === 'squad' && (
             players.length === 0 ? (
-              <p className="text-[12px] text-stone-600 italic text-center py-8">{t('team.no_squad')}</p>
+              <p className="text-[12px] text-[#5A5A66] italic text-center py-8">{t('team.no_squad')}</p>
             ) : (
               <div className="grid grid-cols-2 gap-1.5">
                 {players.map((p) => (
@@ -255,7 +255,7 @@ export default function TeamDetailModal({ team: teamRef, name, onClose, onOpenMa
                     <Badge src={p.thumb} name={p.name} className="w-8 h-8 rounded-full" />
                     <span className="min-w-0">
                       <span className="block text-[11px] font-bold text-white truncate">{p.name}</span>
-                      <span className="block text-[9px] text-stone-500 truncate">{[p.number && `#${p.number}`, p.pos].filter(Boolean).join(' · ')}</span>
+                      <span className="block text-[9px] text-[#7C7C8A] truncate">{[p.number && `#${p.number}`, p.pos].filter(Boolean).join(' · ')}</span>
                     </span>
                   </div>
                 ))}

@@ -78,14 +78,14 @@ export default function SleepTimer({ onExpired, onClose, programEnd = 0 }) {
   };
 
   return (
-    <div className="bg-black/80 backdrop-blur-md rounded-xl border border-slate-700/50 p-3 w-56 shadow-2xl">
+    <div className="bg-black/80 backdrop-blur-md rounded-xl border border-[#24242C]/50 p-3 w-56 shadow-2xl">
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-1.5 text-xs font-bold text-white">
           <Timer className="w-3.5 h-3.5 text-amber-400" /> Hẹn giờ tắt
         </div>
         {remaining > 0 && (
-          <button onClick={cancelTimer} className="p-0.5 hover:bg-slate-700 rounded">
-            <X className="w-3 h-3 text-slate-400" />
+          <button onClick={cancelTimer} className="p-0.5 hover:bg-[#24242C] rounded">
+            <X className="w-3 h-3 text-[#9C9CAB]" />
           </button>
         )}
       </div>
@@ -93,7 +93,7 @@ export default function SleepTimer({ onExpired, onClose, programEnd = 0 }) {
       {remaining > 0 ? (
         <div className="text-center py-2">
           <div className="text-2xl font-mono font-bold text-amber-400">{formatRemaining(remaining)}</div>
-          <p className="text-[10px] text-slate-500 mt-1">Tự tắt sau {minutes} phút</p>
+          <p className="text-[10px] text-[#7C7C8A] mt-1">Tự tắt sau {minutes} phút</p>
         </div>
       ) : (
         <>
@@ -110,7 +110,7 @@ export default function SleepTimer({ onExpired, onClose, programEnd = 0 }) {
             <button
               key={m}
               onClick={() => m === 0 ? cancelTimer() : startTimer(m)}
-              className="px-2 py-1.5 rounded-lg text-[11px] font-medium bg-slate-800/80 text-slate-300 hover:bg-slate-700 hover:text-white transition-all"
+              className="px-2 py-1.5 rounded-lg text-[11px] font-medium bg-[#1E1E26]/80 text-[#D2D2DC] hover:bg-[#24242C] hover:text-white transition-all"
             >
               {m === 0 ? 'Tắt' : `${m}p`}
             </button>

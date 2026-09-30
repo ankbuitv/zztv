@@ -599,7 +599,7 @@ function AppContent() {
   // Chế độ bé: giao diện riêng
   if (!guestMode && currentProfile?.is_child) {
     return (
-      <div className="h-screen w-screen bg-black text-slate-100 overflow-y-auto font-sans select-none">
+      <div className="h-screen w-screen bg-black text-[#F5F5F7] overflow-y-auto font-sans select-none">
         <KidsShell
           channels={channels}
           onSelectChannel={handleSelectChannel}
@@ -634,15 +634,15 @@ function AppContent() {
   }
 
   return (
-    <div className="flex h-screen w-screen bg-black text-slate-100 overflow-hidden font-sans select-none flex-col">
+    <div className="flex h-screen w-screen bg-black text-[#F5F5F7] overflow-hidden font-sans select-none flex-col">
       <ThemeDecorator />
       {splash && (
         <div className="fixed inset-0 z-[300] flex flex-col items-center justify-center bg-[#07080c]">
-          <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(520px 280px at 50% 42%, rgba(243,111,33,.22), transparent 70%)' }} />
+          <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(520px 280px at 50% 42%, rgba(47,107,255,.22), transparent 70%)' }} />
           <div className="splash-logo relative">
             <Logo size="xl" showSubtext={false} />
           </div>
-          <p className="mt-6 text-[11px] font-black tracking-[0.35em] text-stone-500 uppercase">VIP PLAY</p>
+          <p className="mt-6 text-[11px] font-black tracking-[0.35em] text-[#7C7C8A] uppercase">VIP PLAY</p>
           <div className="mt-5 w-44 h-1 rounded-full bg-white/10 overflow-hidden">
             <div className="splash-bar h-full rounded-full grad-brand" />
           </div>
@@ -835,7 +835,7 @@ function AppContent() {
 
       {isPlayerOpen && currentChannel && (
         <div
-          className={miniPlayer ? 'fixed z-50 bg-black rounded-xl overflow-hidden shadow-2xl border border-slate-700/60' : 'fixed inset-0 z-50 bg-black'}
+          className={miniPlayer ? 'fixed z-50 bg-black rounded-xl overflow-hidden shadow-2xl border border-[#24242C]/60' : 'fixed inset-0 z-50 bg-black'}
           style={miniPlayer ? { width: 340, height: 240, right: 16, bottom: 16, transform: `translate(${miniPos.x}px, ${miniPos.y}px)` } : undefined}
           onPointerDown={onMiniPointerDown}
         >

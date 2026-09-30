@@ -40,7 +40,7 @@ export default function Logo({ size = 'md', showSubtext = true, className = '' }
       <div className="flex flex-col leading-none min-w-0">
         <PlayzWordmark height={s.word} tint="#fff" />
         {showSubtext && (
-          <span className="hidden md:block text-[8px] font-semibold tracking-[0.14em] text-stone-500 mt-1.5 uppercase truncate">
+          <span className="hidden md:block text-[8px] font-semibold tracking-[0.14em] text-[#7C7C8A] mt-1.5 uppercase truncate">
             {t('app.tagline')}
           </span>
         )}

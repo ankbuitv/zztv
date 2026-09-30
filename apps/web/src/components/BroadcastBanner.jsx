@@ -23,7 +23,7 @@ export default function BroadcastBanner() {
         <div key={b.id} className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-medium anim-slide-down ${
           b.type === 'warning' ? 'bg-amber-600/20 text-amber-300 border border-amber-600/30' :
           b.type === 'event' ? 'bg-blue-600/20 text-blue-300 border border-blue-600/30' :
-          'bg-slate-800/60 text-slate-300 border border-slate-700/30'
+          'bg-[#1E1E26]/60 text-[#D2D2DC] border border-[#24242C]/30'
         }`}>
           <Megaphone className="w-3.5 h-3.5 shrink-0" />
           <span className="flex-1">{b.message}</span>

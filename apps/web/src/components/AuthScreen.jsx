@@ -7,7 +7,7 @@ import { useI18n } from '../contexts/I18nContext';
 import { API_BASE } from '../services/config';
 import Logo from './Logo';
 
-const inputCls = 'w-full pl-10 pr-3 py-3 bg-white/5 border border-white/10 rounded-2xl text-sm text-white placeholder:text-stone-500 focus:outline-none focus:border-[#2F6BFF] focus:ring-2 focus:ring-[#2F6BFF]/25 focus:bg-white/[0.07] transition-all';
+const inputCls = 'w-full pl-10 pr-3 py-3 bg-white/5 border border-white/10 rounded-2xl text-sm text-white placeholder:text-[#7C7C8A] focus:outline-none focus:border-[#2F6BFF] focus:ring-2 focus:ring-[#2F6BFF]/25 focus:bg-white/[0.07] transition-all';
 
 export default function AuthScreen() {
   const { t } = useI18n();
@@ -202,7 +202,7 @@ export default function AuthScreen() {
                   {t('app.live_now')}
                 </span>
                 <h2 className="text-3xl font-black text-white leading-tight mt-4">{t('auth.hero.title')}</h2>
-                <p className="text-[13px] text-stone-400 mt-2 leading-relaxed">{t('auth.hero.sub')}</p>
+                <p className="text-[13px] text-[#9C9CAB] mt-2 leading-relaxed">{t('auth.hero.sub')}</p>
               </div>
             </div>
             <div className="relative space-y-3 mt-8">
@@ -215,10 +215,10 @@ export default function AuthScreen() {
                   <span className="w-9 h-9 rounded-xl grad-brand flex items-center justify-center shrink-0 shadow-lg shadow-[#2F6BFF]/30">
                     <f.icon className="w-4 h-4 text-white" />
                   </span>
-                  <span className="text-[12px] font-semibold text-stone-200">{f.text}</span>
+                  <span className="text-[12px] font-semibold text-[#E6E6EC]">{f.text}</span>
                 </div>
               ))}
-              <p className="flex items-center gap-1.5 text-[10px] text-stone-500 pt-1">
+              <p className="flex items-center gap-1.5 text-[10px] text-[#7C7C8A] pt-1">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> {t('auth.hero.secure')}
               </p>
             </div>
@@ -238,7 +238,7 @@ export default function AuthScreen() {
                 <button
                   key={tb.v}
                   onClick={() => gotoView(tb.v)}
-                  className={`flex-1 py-2.5 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 ${mainTab === tb.v ? 'grad-brand text-white shadow-lg shadow-[#2F6BFF]/30' : 'text-stone-400 hover:text-white'}`}
+                  className={`flex-1 py-2.5 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 ${mainTab === tb.v ? 'grad-brand text-white shadow-lg shadow-[#2F6BFF]/30' : 'text-[#9C9CAB] hover:text-white'}`}
                 >
                   {tb.icon && <QrIcon className="w-3.5 h-3.5" />}{tb.label}
                 </button>
@@ -247,7 +247,7 @@ export default function AuthScreen() {
 
             <h1 className="text-[22px] font-black tracking-tight text-white mb-1">{titles[view]}</h1>
             {view !== 'qr' && view !== 'verify' && (
-              <p className="text-xs text-stone-400 mb-5">
+              <p className="text-xs text-[#9C9CAB] mb-5">
                 {view === 'login' && t('auth.login.help')}
                 {view === 'register' && t('auth.register.help')}
                 {view === 'forgot' && t('auth.forgot.help')}
@@ -255,7 +255,7 @@ export default function AuthScreen() {
               </p>
             )}
             {view === 'verify' && (
-              <p className="text-xs text-stone-400 mb-5">{t('auth.verify.help')}{email && <> — <span className="text-white font-bold">{email}</span></>}</p>
+              <p className="text-xs text-[#9C9CAB] mb-5">{t('auth.verify.help')}{email && <> — <span className="text-white font-bold">{email}</span></>}</p>
             )}
 
             {error && <div className="mb-3 px-3.5 py-2.5 bg-[#2F6BFF]/12 border border-[#2F6BFF]/30 rounded-2xl text-xs text-[#6E9BFF] leading-relaxed">{error}</div>}
@@ -265,13 +265,13 @@ export default function AuthScreen() {
             {view === 'login' && (
               <form onSubmit={handleLogin} className="space-y-3">
                 <div className="relative">
-                  <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-500" />
+                  <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#7C7C8A]" />
                   <input type="text" value={loginVal} onChange={e => setLoginVal(e.target.value)} placeholder={t('auth.email_or_username')} required autoComplete="username" className={inputCls} />
                 </div>
                 <div className="relative">
-                  <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-500" />
+                  <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#7C7C8A]" />
                   <input type={showPass ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} placeholder={t('auth.password')} required autoComplete="current-password" className={`${inputCls} pr-10`} />
-                  <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1.5 text-stone-500 hover:text-stone-200">
+                  <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1.5 text-[#7C7C8A] hover:text-[#E6E6EC]">
                     {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
@@ -279,7 +279,7 @@ export default function AuthScreen() {
                   <input type="text" value={totpCode} onChange={e => setTotpCode(e.target.value.replace(/\D/g, '').slice(0, 6))} placeholder={t('auth.totp_hint')} inputMode="numeric" required className="w-full px-3 py-3 bg-amber-500/5 border border-amber-500/30 rounded-2xl text-sm font-mono tracking-[0.3em] text-center text-amber-200 placeholder:text-amber-700 focus:outline-none focus:border-amber-500" />
                 )}
                 <div className="flex items-center justify-end text-[11px]">
-                  <button type="button" onClick={() => gotoView('forgot')} className="text-[#6E9BFF] hover:text-[#ffb37a] font-semibold">{t('auth.link.forgot')}</button>
+                  <button type="button" onClick={() => gotoView('forgot')} className="text-[#6E9BFF] hover:text-[#6E9BFF] font-semibold">{t('auth.link.forgot')}</button>
                 </div>
                 <button type="submit" disabled={loading} className="w-full py-3.5 btn-orange text-white font-bold text-sm rounded-2xl shadow-xl shadow-[#2F6BFF]/25 transition-all flex items-center justify-center gap-2 disabled:opacity-60">
                   {loading ? t('app.loading') : <>{t('auth.btn.login')} <ArrowRight className="w-4 h-4" /></>}
@@ -291,25 +291,25 @@ export default function AuthScreen() {
             {view === 'register' && (
               <form onSubmit={handleRegister} className="space-y-3">
                 <div className="relative">
-                  <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-500" />
+                  <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#7C7C8A]" />
                   <input type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder={t('auth.username')} required maxLength={20} autoComplete="username" className={inputCls} />
                 </div>
                 <div className="relative">
-                  <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-500" />
+                  <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#7C7C8A]" />
                   <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder={t('auth.email')} required autoComplete="email" className={inputCls} />
                 </div>
                 <div className="relative">
-                  <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-500" />
+                  <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#7C7C8A]" />
                   <input type={showPass ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} placeholder={t('auth.password_hint')} required minLength={6} autoComplete="new-password" className={`${inputCls} pr-10`} />
-                  <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1.5 text-stone-500 hover:text-stone-200">
+                  <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1.5 text-[#7C7C8A] hover:text-[#E6E6EC]">
                     {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
                 <button type="submit" disabled={loading} className="w-full py-3.5 btn-orange text-white font-bold text-sm rounded-2xl shadow-xl shadow-[#2F6BFF]/25 transition-all flex items-center justify-center gap-2 disabled:opacity-60">
                   {loading ? t('app.loading') : <>{t('auth.btn.register')} <ArrowRight className="w-4 h-4" /></>}
                 </button>
-                <p className="text-[10px] text-stone-500 leading-relaxed text-center pt-1">
-                  {t('auth.terms_label')} <span className="text-stone-300 underline cursor-pointer">{t('auth.terms_link')}</span>
+                <p className="text-[10px] text-[#7C7C8A] leading-relaxed text-center pt-1">
+                  {t('auth.terms_label')} <span className="text-[#D2D2DC] underline cursor-pointer">{t('auth.terms_link')}</span>
                 </p>
               </form>
             )}
@@ -317,11 +317,11 @@ export default function AuthScreen() {
             {/* QR login */}
             {view === 'qr' && (
               <div className="text-center">
-                <p className="text-xs text-stone-400 mb-4 leading-relaxed">{t('auth.qr.help')}</p>
+                <p className="text-xs text-[#9C9CAB] mb-4 leading-relaxed">{t('auth.qr.help')}</p>
                 {qrBusy && !qrCode ? (
                   <div className="py-10">
                     <div className="w-10 h-10 mx-auto border-[3px] border-[#2F6BFF] border-t-transparent rounded-full animate-spin"></div>
-                    <p className="text-xs text-stone-500 mt-3">{t('app.loading')}</p>
+                    <p className="text-xs text-[#7C7C8A] mt-3">{t('app.loading')}</p>
                   </div>
                 ) : qrCode && qrLeft > 0 ? (
                   <>
@@ -329,8 +329,8 @@ export default function AuthScreen() {
                       <QRCodeSVG value={`playZ-QR:${qrCode}`} size={180} level="M" />
                       <span className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full grad-brand text-white text-[11px] font-mono font-black tracking-[0.25em] shadow-lg whitespace-nowrap">{qrCode}</span>
                     </div>
-                    <p className="text-[11px] text-stone-400 mt-6">
-                      {t('auth.qr.waiting')} · <span className={`font-mono font-bold ${qrLeft <= 20 ? 'text-[#6E9BFF]' : 'text-stone-200'}`}>{Math.floor(qrLeft / 60)}:{String(qrLeft % 60).padStart(2, '0')}</span>
+                    <p className="text-[11px] text-[#9C9CAB] mt-6">
+                      {t('auth.qr.waiting')} · <span className={`font-mono font-bold ${qrLeft <= 20 ? 'text-[#6E9BFF]' : 'text-[#E6E6EC]'}`}>{Math.floor(qrLeft / 60)}:{String(qrLeft % 60).padStart(2, '0')}</span>
                     </p>
                     <div className="mt-2 h-1 rounded-full bg-white/10 overflow-hidden max-w-[220px] mx-auto">
                       <div className="h-full bg-gradient-to-r from-[#2F6BFF] to-[#6E9BFF] transition-all" style={{ width: `${(qrLeft / 120) * 100}%` }}></div>
@@ -338,13 +338,13 @@ export default function AuthScreen() {
                   </>
                 ) : (
                   <div className="py-6">
-                    <p className="text-sm text-stone-300 font-semibold mb-4">{t('auth.qr.expired')}</p>
+                    <p className="text-sm text-[#D2D2DC] font-semibold mb-4">{t('auth.qr.expired')}</p>
                     <button onClick={startQr} className="inline-flex items-center gap-2 px-6 py-3 btn-orange text-white text-sm font-bold rounded-2xl">
                       <RefreshCw className="w-4 h-4" /> {t('auth.qr.new')}
                     </button>
                   </div>
                 )}
-                <p className="text-[10px] text-stone-600 mt-5 leading-relaxed">{t('auth.qr.hint')}</p>
+                <p className="text-[10px] text-[#5A5A66] mt-5 leading-relaxed">{t('auth.qr.hint')}</p>
               </div>
             )}
 
@@ -352,24 +352,24 @@ export default function AuthScreen() {
             {view === 'forgot' && (
               <form onSubmit={handleForgot} className="space-y-3">
                 <div className="relative">
-                  <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-500" />
+                  <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#7C7C8A]" />
                   <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder={t('auth.email')} required className={inputCls} />
                 </div>
                 <button type="submit" className="w-full py-3.5 btn-orange text-white font-bold text-sm rounded-2xl flex items-center justify-center gap-2">
                   <RotateCcw className="w-4 h-4" /> {t('auth.btn.send_reset')}
                 </button>
-                <button type="button" onClick={() => gotoView('login')} className="w-full text-xs text-stone-500 hover:text-white">{t('common.back')} {t('auth.title.login')}</button>
+                <button type="button" onClick={() => gotoView('login')} className="w-full text-xs text-[#7C7C8A] hover:text-white">{t('common.back')} {t('auth.title.login')}</button>
               </form>
             )}
 
             {/* Reset */}
             {view === 'reset' && (
               <form onSubmit={handleReset} className="space-y-3">
-                <input type="text" value={verifyCode} onChange={e => setVerifyCode(e.target.value)} placeholder={t('auth.reset_code')} required className="w-full px-3 py-3 bg-white/5 border border-white/10 rounded-2xl text-sm text-white text-center font-mono placeholder:text-stone-500 focus:outline-none focus:border-[#2F6BFF]" />
+                <input type="text" value={verifyCode} onChange={e => setVerifyCode(e.target.value)} placeholder={t('auth.reset_code')} required className="w-full px-3 py-3 bg-white/5 border border-white/10 rounded-2xl text-sm text-white text-center font-mono placeholder:text-[#7C7C8A] focus:outline-none focus:border-[#2F6BFF]" />
                 <div className="relative">
-                  <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-500" />
+                  <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#7C7C8A]" />
                   <input type={showPass ? 'text' : 'password'} value={newPassword} onChange={e => setNewPassword(e.target.value)} placeholder={t('auth.new_password_hint')} required minLength={6} className={`${inputCls} pr-10`} />
-                  <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1.5 text-stone-500 hover:text-stone-200">
+                  <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1.5 text-[#7C7C8A] hover:text-[#E6E6EC]">
                     {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
@@ -387,15 +387,15 @@ export default function AuthScreen() {
                   </div>
                 )}
                 {(!error && !success && !email) && (
-                  <input type="email" placeholder={t('auth.email')} onChange={e => setEmail(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-2xl px-3 py-3 text-sm text-white placeholder:text-stone-500 focus:outline-none focus:border-[#2F6BFF]" />
+                  <input type="email" placeholder={t('auth.email')} onChange={e => setEmail(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-2xl px-3 py-3 text-sm text-white placeholder:text-[#7C7C8A] focus:outline-none focus:border-[#2F6BFF]" />
                 )}
                 <input type="text" value={verifyCode} onChange={e => setVerifyCode(e.target.value)} placeholder="000000" maxLength={6} className="w-full bg-white/5 border border-white/10 rounded-2xl px-3 py-3 text-2xl tracking-[0.5em] font-mono text-center text-white focus:outline-none focus:border-[#2F6BFF]" />
                 <button type="submit" className="w-full py-3.5 btn-orange text-white font-bold text-sm rounded-2xl">{t('auth.btn.verify')}</button>
                 <div className="flex items-center justify-between gap-2">
-                  <button type="button" onClick={handleResend} disabled={resendIn > 0 || !email} className="text-xs text-[#6E9BFF] hover:text-[#ffb37a] disabled:opacity-40 disabled:cursor-not-allowed font-semibold">
+                  <button type="button" onClick={handleResend} disabled={resendIn > 0 || !email} className="text-xs text-[#6E9BFF] hover:text-[#6E9BFF] disabled:opacity-40 disabled:cursor-not-allowed font-semibold">
                     {resendIn > 0 ? t('auth.verify.resend_in', { s: resendIn }) : `↻ ${t('auth.btn.resend')}`}
                   </button>
-                  <button type="button" onClick={() => gotoView('login')} className="text-xs text-stone-500 hover:text-white">{t('common.back')} {t('auth.title.login')}</button>
+                  <button type="button" onClick={() => gotoView('login')} className="text-xs text-[#7C7C8A] hover:text-white">{t('common.back')} {t('auth.title.login')}</button>
                 </div>
               </form>
             )}
