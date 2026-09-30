@@ -17,6 +17,7 @@ import { color as C, radius, api } from './api';
 import {
   useApi, pick, asArray, Card, Stat, Button, Field, Pill, States, Table, Bars, Toast, fmtNum, fmtDate,
 } from './ui';
+import { CONTENT_PANELS } from './panels-content';
 
 // ---------------------------------------------------------------------------
 // Dashboard
@@ -540,6 +541,7 @@ export function AuditPanel() {
 }
 
 export const PANELS = {
+  ...CONTENT_PANELS,
   dashboard: DashboardPanel,
   analytics: AnalyticsPanel,
   livetv: LiveTvPanel,

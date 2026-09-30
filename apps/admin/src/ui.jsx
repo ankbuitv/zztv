@@ -163,7 +163,7 @@ export function Pill({ children, tone = 'default' }) {
 }
 
 /** Loading / error / empty in one place, so no panel forgets one of them. */
-export function States({ loading, error, empty, onRetry, columns = 1, children }) {
+export function States({ loading, error, empty, emptyText, onRetry, columns = 1, children }) {
   if (loading) {
     return (
       <div style={{ display: 'grid', gridTemplateColumns: `repeat(${columns}, minmax(0,1fr))`, gap: 12 }}>
@@ -185,7 +185,7 @@ export function States({ loading, error, empty, onRetry, columns = 1, children }
   if (empty) {
     return (
       <p style={{ padding: '26px 0', textAlign: 'center', fontSize: 12.5, color: C.textMuted, margin: 0 }}>
-        Chưa có dữ liệu.
+        {emptyText || 'Chưa có dữ liệu.'}
       </p>
     );
   }

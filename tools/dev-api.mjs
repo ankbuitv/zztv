@@ -507,6 +507,9 @@ const server = http.createServer(async (req, res) => {
     } else if (req.method === 'POST') {
       const out = admin.post(path, await readJson(req));
       if (out) return json(res, out);
+    } else if (req.method === 'PUT') {
+      const out = admin.put(path, await readJson(req));
+      if (out) return json(res, out);
     } else if (req.method === 'DELETE') {
       const out = admin.del(path, await readJson(req));
       if (out) return json(res, out);
@@ -531,7 +534,7 @@ server.listen(PORT, HOST, () => {
   console.log(`  catalogue     : ${CATALOG.length} titles (${MOVIES.length} movies, ${TV.length} shows)`);
   console.log(`  sports        : ${sports.SPORTS_LEAGUES.length} leagues, ${sports.LEAGUE_INDEX.length} indexed leagues, ${sports.SPORTS_VIDEOS.length} clips`);
   console.log('  community     : feed + likes + a live chat room');
-  console.log('  admin         : 10 management endpoints for the admin app');
+  console.log('  admin         : 19 management endpoints for the admin app');
   console.log(`  shorts        : ${shorts.list().length} vertical clips, served from /media/`);
   console.log('  artwork       : generated on demand at /img/<size>/<name>.png');
   console.log('  NOTE — development fixture. Not product content, never deployed.');

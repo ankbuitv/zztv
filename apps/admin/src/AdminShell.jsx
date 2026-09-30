@@ -19,16 +19,16 @@ export const NAV = [
     { id: 'analytics', ready: true, label: 'Thống kê',  },
   ]},
   { group: 'Nội dung', items: [
-    { id: 'homepage', label: 'Trang chủ', note: 'hero + rails', ready: false },
-    { id: 'movies', label: 'Phim / TV Shows', ready: false },
+    { id: 'homepage', label: 'Trang chủ', note: 'hero + rails', ready: true },
+    { id: 'movies', label: 'Phim / TV Shows', ready: true },
     { id: 'livetv', ready: true, label: 'Truyền hình',  },
     { id: 'epg', ready: true, label: 'EPG',  },
-    { id: 'sports', label: 'Thể thao', ready: false },
-    { id: 'shorts', label: 'Shorts', ready: false },
+    { id: 'sports', label: 'Thể thao', ready: true },
+    { id: 'shorts', label: 'Shorts', ready: true },
   ]},
   { group: 'Cộng đồng', items: [
     { id: 'community', ready: true, label: 'Bài viết & bình luận',  },
-    { id: 'chat', label: 'Kiểm duyệt chat', ready: false },
+    { id: 'chat', label: 'Kiểm duyệt chat', ready: true },
   ]},
   { group: 'Người dùng', items: [
     { id: 'users', ready: true, label: 'Tài khoản',  },
@@ -37,9 +37,9 @@ export const NAV = [
   ]},
   { group: 'Hệ thống', items: [
     { id: 'notifications', ready: true, label: 'Thông báo',  },
-    { id: 'branding', label: 'Nhận diện', ready: false },
-    { id: 'navigation', label: 'Điều hướng', ready: false },
-    { id: 'settings', label: 'Cài đặt', ready: false },
+    { id: 'branding', label: 'Nhận diện', ready: true },
+    { id: 'navigation', label: 'Điều hướng', ready: true },
+    { id: 'settings', label: 'Cài đặt', ready: true },
     { id: 'audit', ready: true, label: 'Nhật ký thao tác',  },
   ]},
 ];
