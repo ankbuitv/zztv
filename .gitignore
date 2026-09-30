@@ -49,3 +49,12 @@ android/app/release
 
 # dev fixture art (generated on demand, never committed)
 __fixture__
+
+# The Android CI workflow came in with the CHRTV migration as a NEW file, and the
+# integration token is a GitHub App install without the `workflows` permission —
+# so GitHub rejects any push that includes it, because creating a workflow file
+# needs that permission. It is excluded here rather than deleted: the file is
+# still on disk and can be re-added from the GitHub web UI, or by a token that
+# has the permission. Without this entry `git add -A` silently re-adds it and
+# every push fails.
+.github/workflows/build-android.yml
