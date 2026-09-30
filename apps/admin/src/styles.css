@@ -1,0 +1,58 @@
+/* playZ admin — base styles.
+   Deliberately minimal: the admin is a data tool, so the shell provides the
+   frame and the individual management screens supply their own layout. */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  --bg: #08080A;
+  --bg-elevated: #101014;
+  --card: #16161C;
+  --line: #24242C;
+  --line-strong: #33333E;
+  --text: #F5F5F7;
+  --text-muted: #8A8A99;
+  --text-faint: #55555F;
+  --blue: #2F6BFF;
+  --blue-soft: #6E9BFF;
+  --green: #22C55E;
+  --yellow: #FFC53D;
+  --red: #FF3B47;
+  --sidebar: 248px;
+  --header: 60px;
+  color-scheme: dark;
+}
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+}
+
+a { color: var(--blue-soft); }
+
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #2C2C34; border-radius: 9px; }
+::-webkit-scrollbar-thumb:hover { background: var(--line-strong); }
+
+/* The admin uses short, functional transitions only. Motion is not decoration
+   here — operators use this for long sessions and gratuitous animation is
+   tiring. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    transition-duration: .001ms !important;
+  }
+}

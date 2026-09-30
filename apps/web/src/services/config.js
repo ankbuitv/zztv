@@ -1,0 +1,77 @@
+/**
+ * Cấu hình endpoint API dùng chung cho toàn app.
+ *
+ * Quy tắc chọn base URL (theo thứ tự ưu tiên):
+ *   1. VITE_API_BASE  — build-time env (dùng khi web và Worker khác domain)
+ *   2. localStorage `chrtv_api_base` — cho phép đổi nóng khi debug / APK trỏ server khác
+ *   3. Same-origin ("")  — web được chính Cloudflare Worker phục vụ (dist/ + /api/*)
+ *      => calls the API with a relative path: no CORS, no dependency on an old host.
+ *   4. PRODUCTION_API_BASE — app native (Capacitor: capacitor://, file://) không có origin HTTP
+ *
+ * Trước đây mỗi file hardcode một domain khác nhau (AdminPanel dùng same-origin,
+ * AuthContext/ProfileContext/api.js dùng workers.dev cũ) nên đăng ký/đăng nhập
+ * bắn sang Worker cũ và fail. Giờ tất cả đều đi qua đây.
+ */
+
+// Production origin for the native Android/TV app. Capacitor serves the web layer
+// from https://localhost, so requests have no real origin to be relative to and must
+// be pointed at an absolute host.
+export const PRODUCTION_API_BASE = 'https://thelac.dpdns.org';
+
+const ENV_BASE = (import.meta.env?.VITE_API_BASE || '').trim();
+
+function readOverride() {
+  try {
+    const v = localStorage.getItem('chrtv_api_base');
+    return v && v.trim() ? v.trim() : '';
+  } catch {
+    return '';
+  }
+}
+
+/** App native (APK/TV): Capacitor phục vụ web bằng https://localhost nên KHÔNG được
+ *  coi là same-origin — phải gọi thẳng domain production, nếu không mọi API 404. */
+export function isNativeApp() {
+  try {
+    if (typeof window === 'undefined') return false;
+    const cap = window.Capacitor;
+    if (cap && (typeof cap.isNativePlatform === 'function' ? cap.isNativePlatform() : cap.isNative)) return true;
+    const proto = window.location.protocol;
+    if (proto === 'capacitor:' || proto === 'file:' || proto === 'ionic:') return true;
+    // Capacitor androidScheme=https -> https://localhost (không có cổng)
+    const h = window.location.hostname;
+    if ((h === 'localhost' || h === '127.0.0.1') && !window.location.port && /(wv|Android).*Version\//.test(navigator.userAgent || '')) return true;
+  } catch {}
+  return false;
+}
+
+function detectBase() {
+  const raw = ENV_BASE || readOverride();
+  if (raw) return raw.replace(/\/+$/, '');
+
+  if (isNativeApp()) return PRODUCTION_API_BASE;
+
+  if (typeof window !== 'undefined' && window.location) {
+    const proto = window.location.protocol;
+    // Web thường (kể cả vite dev server — dev server proxy /api,/auth,/user,/admin)
+    if (proto === 'http:' || proto === 'https:') return '';
+  }
+  // Capacitor / WebView native
+  return PRODUCTION_API_BASE;
+}
+
+export const API_BASE = detectBase();
+
+/** Ghép base + path an toàn: apiUrl('/auth/login') */
+export function apiUrl(path) {
+  const p = path.startsWith('/') ? path : `/${path}`;
+  return `${API_BASE}${p}`;
+}
+
+/** Cho phép người dùng/kỹ thuật đổi server API ngay trong app (cần reload). */
+export function setApiBaseOverride(url) {
+  try {
+    if (url && url.trim()) localStorage.setItem('chrtv_api_base', url.trim());
+    else localStorage.removeItem('chrtv_api_base');
+  } catch {}
+}

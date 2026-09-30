@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+
+    <!-- ------------------------------------------------------------------
+         Icons. favicon.ico and favicon.svg are the badge form (mark on a
+         filled rounded square) so the tab icon stays visible on both light
+         and dark browser chrome.
+         ------------------------------------------------------------------ -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/pwa-192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/pwa-512.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="mask-icon" href="/brand/playz-symbol-dark.svg" color="#2F6BFF" />
+
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#08080A" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="playZ" />
+
+    <!-- SEO / social -->
+    <meta name="description" content="playZ — Xem truyền hình trực tiếp, phim, TV Shows và thể thao trên mọi thiết bị." />
+    <meta name="color-scheme" content="dark" />
+    <title>playZ — Truyền hình, phim & thể thao</title>
+    <meta property="og:title" content="playZ" />
+    <meta property="og:description" content="Xem truyền hình trực tiếp, phim, TV Shows và thể thao trên mọi thiết bị." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/brand/playz-symbol-512.png" />
+
+    <!--
+      Preconnect to the image CDN and API hosts actually used above the fold.
+      Fonts are loaded from Google Fonts; the system stack is the fallback if
+      that request is blocked, so the UI never waits on it.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://image.tmdb.org" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body class="bg-[#08080A] text-slate-100 antialiased select-none overflow-x-hidden">
+    <div id="root"></div>
+    <noscript>
+      <div style="padding:40px;font-family:system-ui;color:#F5F5F7;background:#08080A;min-height:100vh">
+        <h1 style="font-size:20px;margin-bottom:10px">playZ cần JavaScript</h1>
+        <p style="color:#8A8A99;font-size:13.5px;line-height:1.7">
+          Trình phát và danh sách kênh được tải bằng JavaScript. Vui lòng bật JavaScript rồi tải lại trang.
+        </p>
+      </div>
+    </noscript>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
