@@ -29,6 +29,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createSports } from './sports-fixture.mjs';
 import { createCommunity } from './community-fixture.mjs';
+import { createAdmin } from './admin-fixture.mjs';
 import { Resvg } from '@resvg/resvg-js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -201,6 +202,10 @@ function loadChannels() {
 }
 
 const CHANNELS = loadChannels();
+
+// Needs the parsed channel list, so it is created here rather than with the
+// other fixture modules near the top.
+const admin = createAdmin({ channels: CHANNELS, hash });
 
 // ============================================================================
 // EPG — a plausible schedule derived from the real channel list
@@ -427,6 +432,23 @@ const server = http.createServer(async (req, res) => {
     }
   }
 
+  // --- admin --------------------------------------------------------------
+  // The management panels read these. Mutations round-trip in memory, so a
+  // toggle really does stay toggled until the fixture restarts.
+  if (path.startsWith('/admin/')) {
+    if (req.method === 'GET') {
+      const out = admin.get(path);
+      if (out) return json(res, out);
+    } else if (req.method === 'POST') {
+      const out = admin.post(path, await readJson(req));
+      if (out) return json(res, out);
+    } else if (req.method === 'DELETE') {
+      const out = admin.del(path, await readJson(req));
+      if (out) return json(res, out);
+    }
+    return json(res, { success: false, error: 'Not implemented in dev fixture', code: 'FIXTURE_404' }, 404);
+  }
+
   // Anything else: an explicit empty success, so the UI exercises its empty
   // states instead of hanging on a request that never resolves.
   if (path.startsWith('/api/') || path.startsWith('/auth/') || path.startsWith('/user/') || path.startsWith('/admin/')) {
@@ -444,6 +466,7 @@ server.listen(PORT, HOST, () => {
   console.log(`  catalogue     : ${CATALOG.length} titles (${MOVIES.length} movies, ${TV.length} shows)`);
   console.log(`  sports        : ${sports.SPORTS_LEAGUES.length} leagues, ${sports.LEAGUE_INDEX.length} indexed leagues, ${sports.SPORTS_VIDEOS.length} clips`);
   console.log('  community     : feed + likes + a live chat room');
+  console.log('  admin         : 10 management endpoints for the admin app');
   console.log('  artwork       : generated on demand at /img/<size>/<name>.png');
   console.log('  NOTE — development fixture. Not product content, never deployed.');
 });

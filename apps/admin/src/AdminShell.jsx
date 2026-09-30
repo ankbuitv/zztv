@@ -8,37 +8,39 @@
  * it is obvious what exists versus what is still to be built — an admin that
  * silently omits half its surfaces is worse than one that is honest about it.
  */
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { color as C, radius } from './api';
+import { PANELS } from './panels';
+import { Toast } from './ui';
 
 export const NAV = [
   { group: 'Tổng quan', items: [
-    { id: 'dashboard', label: 'Dashboard', ready: false },
-    { id: 'analytics', label: 'Thống kê', ready: false },
+    { id: 'dashboard', ready: true, label: 'Dashboard',  },
+    { id: 'analytics', ready: true, label: 'Thống kê',  },
   ]},
   { group: 'Nội dung', items: [
     { id: 'homepage', label: 'Trang chủ', note: 'hero + rails', ready: false },
     { id: 'movies', label: 'Phim / TV Shows', ready: false },
-    { id: 'livetv', label: 'Truyền hình', ready: false },
-    { id: 'epg', label: 'EPG', ready: false },
+    { id: 'livetv', ready: true, label: 'Truyền hình',  },
+    { id: 'epg', ready: true, label: 'EPG',  },
     { id: 'sports', label: 'Thể thao', ready: false },
     { id: 'shorts', label: 'Shorts', ready: false },
   ]},
   { group: 'Cộng đồng', items: [
-    { id: 'community', label: 'Bài viết & bình luận', ready: false },
+    { id: 'community', ready: true, label: 'Bài viết & bình luận',  },
     { id: 'chat', label: 'Kiểm duyệt chat', ready: false },
   ]},
   { group: 'Người dùng', items: [
-    { id: 'users', label: 'Tài khoản', ready: false },
-    { id: 'plans', label: 'Gói cước', ready: false },
-    { id: 'payments', label: 'Thanh toán', ready: false },
+    { id: 'users', ready: true, label: 'Tài khoản',  },
+    { id: 'plans', ready: true, label: 'Gói cước',  },
+    { id: 'payments', ready: true, label: 'Thanh toán',  },
   ]},
   { group: 'Hệ thống', items: [
-    { id: 'notifications', label: 'Thông báo', ready: false },
+    { id: 'notifications', ready: true, label: 'Thông báo',  },
     { id: 'branding', label: 'Nhận diện', ready: false },
     { id: 'navigation', label: 'Điều hướng', ready: false },
     { id: 'settings', label: 'Cài đặt', ready: false },
-    { id: 'audit', label: 'Nhật ký thao tác', ready: false },
+    { id: 'audit', ready: true, label: 'Nhật ký thao tác',  },
   ]},
 ];
 
@@ -76,6 +78,8 @@ function NavButton({ item, active, onClick }) {
 
 export default function AdminShell({ user }) {
   const [active, setActive] = useState('dashboard');
+  const [toastState, setToastState] = useState(null);
+  const toast = useCallback((message, tone = 'info') => setToastState({ message, tone, id: Date.now() }), []);
   const flat = useMemo(() => NAV.flatMap((g) => g.items.map((i) => ({ ...i, group: g.group }))), []);
   const current = flat.find((i) => i.id === active);
 
@@ -156,26 +160,38 @@ export default function AdminShell({ user }) {
         </header>
 
         <main style={{ flex: 1, overflowY: 'auto', padding: 22 }}>
-          <div style={{
-            border: `1px dashed ${C.lineStrong}`, borderRadius: radius.lg,
-            padding: '48px 28px', textAlign: 'center', background: C.bgElevated,
-          }}>
-            <img src="/brand/playz-symbol-dark.svg" alt="" width="38" height="38" style={{ opacity: .5 }} />
-            <h2 style={{ fontSize: 15.5, fontWeight: 800, margin: '16px 0 8px' }}>
-              {current?.label}
-            </h2>
-            <p style={{ fontSize: 13, color: C.textMuted, maxWidth: 460, margin: '0 auto', lineHeight: 1.7 }}>
-              Màn hình này chưa được xây dựng. Khung quản trị, xác thực quyền phía máy chủ và
-              phân tách khỏi ứng dụng người xem đã sẵn sàng — các bề mặt quản lý sẽ được bổ sung
-              theo từng đợt.
-            </p>
-            <p style={{ fontSize: 11.5, color: C.textFaint, margin: '18px 0 0', lineHeight: 1.6 }}>
-              Ứng dụng quản trị chạy trên <b style={{ color: C.textMuted }}>admin.thelac.dpdns.org</b>,
-              tách khỏi ứng dụng người xem.
-            </p>
-          </div>
+          {(() => {
+            const Panel = PANELS[active];
+            if (Panel) return <Panel toast={toast} />;
+            // Only the surfaces with no endpoint behind them land here. The rest
+            // render real data — an admin that is mostly placeholders tells an
+            // operator nothing about the state of the system.
+            return (
+              <div style={{
+                border: `1px dashed ${C.lineStrong}`, borderRadius: radius.lg,
+                padding: '48px 28px', textAlign: 'center', background: C.bgElevated,
+              }}>
+                <img src="/brand/playz-symbol-dark.svg" alt="" width="38" height="38" style={{ opacity: .5 }} />
+                <h2 style={{ fontSize: 15.5, fontWeight: 800, margin: '16px 0 8px' }}>
+                  {current?.label}
+                </h2>
+                <p style={{ fontSize: 13, color: C.textMuted, maxWidth: 460, margin: '0 auto', lineHeight: 1.7 }}>
+                  Màn hình này chưa có API phía sau. Những màn còn lại trong thanh bên đã chạy trên
+                  dữ liệu thật; mục này sẽ được bổ sung khi có bề mặt tương ứng ở Worker.
+                </p>
+                <p style={{ fontSize: 11.5, color: C.textFaint, margin: '18px 0 0', lineHeight: 1.6 }}>
+                  Ứng dụng quản trị chạy trên <b style={{ color: C.textMuted }}>admin.thelac.dpdns.org</b>,
+                  tách khỏi ứng dụng người xem.
+                </p>
+              </div>
+            );
+          })()}
         </main>
       </div>
+
+      {toastState && (
+        <Toast key={toastState.id} message={toastState.message} tone={toastState.tone} onDone={() => setToastState(null)} />
+      )}
     </div>
   );
 }
