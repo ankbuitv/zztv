@@ -8,6 +8,7 @@ import PlayzHeader from './playz/Header';
 import PlayzHome from './playz/Home';
 import PlayzTVPage from './playz/TV';
 import PlayzSports from './playz/Sports';
+import PlayzCommunity from './playz/Community';
 import InfoModal from './playz/InfoModal';
 import { getWatchlistLocal, toggleWatchlistLocal } from './services/movieList';
 import PlansScreen from './components/PlansScreen';
@@ -761,7 +762,16 @@ function AppContent() {
           ) : activeTab === 'epg' ? (
             <EpgGridTimeline channels={channels} epgData={epgData} onPlayCatchup={handlePlayCatchup} onSelectChannel={handleSelectChannel} onRequireLogin={promptLogin} />
           ) : activeTab === 'community' ? (
-            <CommunityScreen onRequireLogin={promptLogin} />
+            (() => {
+              // Legacy rollback: localStorage playz_community_legacy = "1".
+              let legacy = false;
+              try { legacy = localStorage.getItem('playz_community_legacy') === '1'; } catch { /* ignore */ }
+              return legacy ? (
+                <CommunityScreen onRequireLogin={() => promptLogin()} />
+              ) : (
+                <PlayzCommunity onRequireLogin={() => promptLogin()} />
+              );
+            })()
           ) : activeTab === 'shorts' ? (
             <ShortsScreen
               channels={channels}

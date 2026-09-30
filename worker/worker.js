@@ -1044,6 +1044,11 @@ const SCHEMA_STATEMENTS = [
   `CREATE TABLE IF NOT EXISTS public_profiles (user_id INTEGER PRIMARY KEY, handle TEXT UNIQUE, bio TEXT DEFAULT '', avatar_url TEXT DEFAULT '', is_public INTEGER DEFAULT 0)`,
   `CREATE TABLE IF NOT EXISTS comments (id INTEGER PRIMARY KEY AUTOINCREMENT, target TEXT NOT NULL, user_id INTEGER NOT NULL, name TEXT DEFAULT '', body TEXT NOT NULL, status TEXT DEFAULT 'visible', created_at DATETIME DEFAULT CURRENT_TIMESTAMP)`,
   `CREATE INDEX IF NOT EXISTS idx_comments_target ON comments(target, status, id)`,
+  // Community reactions. Additive: the feed itself reuses `comments`, so posts
+  // inherit the existing moderation queue, rate limiting and XP accounting
+  // rather than growing a second, weaker pipeline next to it.
+  `CREATE TABLE IF NOT EXISTS community_likes (target TEXT NOT NULL, user_id INTEGER NOT NULL, created_at DATETIME DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY(target, user_id))`,
+  `CREATE INDEX IF NOT EXISTS idx_community_likes_target ON community_likes(target)`,
   `CREATE TABLE IF NOT EXISTS fan_groups (id INTEGER PRIMARY KEY AUTOINCREMENT, target TEXT UNIQUE NOT NULL, name TEXT NOT NULL, created_by INTEGER DEFAULT 0, created_at DATETIME DEFAULT CURRENT_TIMESTAMP)`,
   `CREATE TABLE IF NOT EXISTS fan_members (group_id INTEGER NOT NULL, user_id INTEGER NOT NULL, name TEXT DEFAULT '', created_at DATETIME DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY(group_id, user_id))`,
   `CREATE TABLE IF NOT EXISTS gift_codes (code TEXT PRIMARY KEY, plan TEXT DEFAULT 'signature', days INTEGER DEFAULT 30, max_uses INTEGER DEFAULT 1, used INTEGER DEFAULT 0, is_active INTEGER DEFAULT 1, note TEXT DEFAULT '', created_by INTEGER DEFAULT 0, to_username TEXT DEFAULT '', created_at DATETIME DEFAULT CURRENT_TIMESTAMP)`,
@@ -1357,6 +1362,7 @@ async function handleAPI(path, request, env, ctx) {
   if (path === "/api/status") return json({ success: true, ...(await getStatusSummary(env)) }, 200, request, env);
   if (path === "/api/profile" || path === "/api/u") return await handlePublicProfile(path, request, env);
   if (path === "/api/comments") return await handleComments(request, env);
+  if (path === "/api/community/feed" || path === "/api/community/like") return await handleCommunity(path, request, env);
   if (path === "/api/fan-groups") return await handleFanGroups(request, env);
   if (path === "/api/gifts/redeem") return await handleGiftRedeem(request, env);
   if (path === "/api/gifts/create") return await handleGiftCreate(request, env);
@@ -6157,6 +6163,80 @@ async function handlePublicProfile(path, request, env) {
 }
 
 // ========== BÌNH LUẬN (phim/kênh) ==========
+// ========== COMMUNITY FEED ==========
+// Posts live in the `comments` table under a reserved target, so everything the
+// moderation system already does — status filtering, rate limits, XP, delete —
+// applies to community posts for free. The only new state is the like table.
+const COMMUNITY_TARGET = "community";
+const COMMUNITY_LIKE_PREFIX = "community:";
+
+async function handleCommunity(path, request, env) {
+  if (!hasDB(env)) return dbUnavailable();
+  await ensureSchema(env);
+
+  if (path === "/api/community/feed" && request.method === "GET") {
+    const { results: posts } = await env.DB
+      .prepare("SELECT id, user_id, name, body, created_at FROM comments WHERE target = ? AND status = 'visible' ORDER BY id DESC LIMIT 60")
+      .bind(COMMUNITY_TARGET).all();
+
+    if (!posts || posts.length === 0) return json({ success: true, posts: [], likes: {}, mine: [] }, 200, request, env);
+
+    const keys = posts.map((p) => COMMUNITY_LIKE_PREFIX + p.id);
+    const placeholders = keys.map(() => "?").join(",");
+    const { results: counts } = await env.DB
+      .prepare(`SELECT target, COUNT(*) AS n FROM community_likes WHERE target IN (${placeholders}) GROUP BY target`)
+      .bind(...keys).all();
+
+    const likes = {};
+    for (const row of counts || []) likes[row.target] = row.n;
+
+    // Which of these the caller has already liked, so the button renders right
+    // on first paint instead of flickering after a round trip.
+    let mine = [];
+    const auth = await getAuth(request, env).catch(() => null);
+    if (auth && auth.user) {
+      const { results: mineRows } = await env.DB
+        .prepare(`SELECT target FROM community_likes WHERE user_id = ? AND target IN (${placeholders})`)
+        .bind(auth.user.id, ...keys).all();
+      mine = (mineRows || []).map((r) => r.target);
+    }
+
+    return json({ success: true, posts, likes, mine }, 200, request, env);
+  }
+
+  if (path === "/api/community/like" && request.method === "POST") {
+    const auth = await getAuth(request, env);
+    if (!auth || !auth.user) return json({ error: "LOGIN_REQUIRED" }, 401, request, env);
+    try {
+      const rl = await rateLimitCheck(env, "like:u:" + auth.user.id, 60, 60);
+      if (!rl.allowed) return json({ error: "Quá nhanh — thử lại sau.", code: "RATE_LIMITED" }, 429, request, env);
+    } catch { /* rate limiting is best-effort; never block the action on it */ }
+
+    const b = await request.json().catch(() => ({}));
+    const id = Math.floor(Number(b.id) || 0);
+    if (!id) return json({ error: "Thiếu id" }, 400, request, env);
+    const target = COMMUNITY_LIKE_PREFIX + id;
+
+    const { results: existing } = await env.DB
+      .prepare("SELECT 1 FROM community_likes WHERE target = ? AND user_id = ?").bind(target, auth.user.id).all();
+
+    let liked;
+    if (existing && existing.length) {
+      await env.DB.prepare("DELETE FROM community_likes WHERE target = ? AND user_id = ?").bind(target, auth.user.id).run();
+      liked = false;
+    } else {
+      await env.DB.prepare("INSERT INTO community_likes (target, user_id) VALUES (?, ?)").bind(target, auth.user.id).run();
+      liked = true;
+    }
+
+    const { results: cnt } = await env.DB
+      .prepare("SELECT COUNT(*) AS n FROM community_likes WHERE target = ?").bind(target).all();
+    return json({ success: true, liked, count: cnt?.[0]?.n || 0 }, 200, request, env);
+  }
+
+  return json({ error: "Not found" }, 404, request, env);
+}
+
 async function handleComments(request, env) {
   if (!hasDB(env)) return dbUnavailable();
   await ensureSchema(env);

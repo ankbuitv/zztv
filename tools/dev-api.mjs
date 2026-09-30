@@ -28,6 +28,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createSports } from './sports-fixture.mjs';
+import { createCommunity } from './community-fixture.mjs';
 import { Resvg } from '@resvg/resvg-js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -61,6 +62,7 @@ function hash(str) {
 
 // The app requests named sizes; map them to real pixel widths.
 const sports = createSports(hash);
+const community = createCommunity();
 
 const SIZE_W = { w92: 92, w154: 154, w185: 185, w300: 300, w342: 342, w500: 500, w780: 780, w1280: 1280 };
 
@@ -259,6 +261,17 @@ const png = (res, buf, cache = 'public, max-age=3600') => {
   res.end(buf);
 };
 
+/** Read a JSON request body. Returns {} on anything unparseable — a malformed
+ *  body should produce a normal validation error, not a crashed fixture. */
+function readJson(req) {
+  return new Promise((resolve) => {
+    let raw = '';
+    req.on('data', (c) => { raw += c; if (raw.length > 1e6) req.destroy(); });
+    req.on('end', () => { try { resolve(raw ? JSON.parse(raw) : {}); } catch { resolve({}); } });
+    req.on('error', () => resolve({}));
+  });
+}
+
 function tmdbProxy(url) {
   const p = url.searchParams.get('path') || '';
   let results = ALL;
@@ -297,7 +310,7 @@ function tmdbProxy(url) {
   return { results, ...extra };
 }
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
   const path = url.pathname;
 
@@ -379,6 +392,41 @@ const server = http.createServer((req, res) => {
     return json(res, { success: true, videos: sports.SPORTS_VIDEOS, fixture: true });
   }
 
+  // --- community ----------------------------------------------------------
+  if (path === '/api/community/feed') {
+    return json(res, community.feed());
+  }
+  if (path === '/api/community/like' && req.method === 'POST') {
+    const b = await readJson(req);
+    const out = community.like(b);
+    return json(res, out, out.status || 200);
+  }
+  if (path === '/api/comments') {
+    if (req.method === 'GET') return json(res, community.listComments(url.searchParams.get('target') || ''));
+    if (req.method === 'POST') {
+      const b = await readJson(req);
+      const out = community.addComment(b);
+      return json(res, out, out.status || 200);
+    }
+    if (req.method === 'DELETE') {
+      return json(res, community.removeComment(url.searchParams.get('id')));
+    }
+  }
+  if (path.startsWith('/api/party/')) {
+    if (req.method === 'GET' && path === '/api/party/feed') {
+      return json(res, community.chatFeed(url.searchParams.get('room') || '', url.searchParams.get('after') || 0));
+    }
+    if (req.method === 'POST') {
+      const b = await readJson(req);
+      const action = path.slice('/api/party/'.length);
+      const fn = community[action];
+      if (typeof fn === 'function') {
+        const out = community[action](b);
+        return json(res, out, out.status || 200);
+      }
+    }
+  }
+
   // Anything else: an explicit empty success, so the UI exercises its empty
   // states instead of hanging on a request that never resolves.
   if (path.startsWith('/api/') || path.startsWith('/auth/') || path.startsWith('/user/') || path.startsWith('/admin/')) {
@@ -395,6 +443,7 @@ server.listen(PORT, HOST, () => {
   console.log(`  epg programmes: ${EPG.programmes.length}`);
   console.log(`  catalogue     : ${CATALOG.length} titles (${MOVIES.length} movies, ${TV.length} shows)`);
   console.log(`  sports        : ${sports.SPORTS_LEAGUES.length} leagues, ${sports.LEAGUE_INDEX.length} indexed leagues, ${sports.SPORTS_VIDEOS.length} clips`);
+  console.log('  community     : feed + likes + a live chat room');
   console.log('  artwork       : generated on demand at /img/<size>/<name>.png');
   console.log('  NOTE — development fixture. Not product content, never deployed.');
 });
