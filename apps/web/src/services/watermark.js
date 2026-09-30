@@ -1,5 +1,5 @@
 /**
- * CHRTV WATERMARK — đắp logo CỦA WEB lên khung hình khi đang phát.
+ * playZ WATERMARK — đắp logo CỦA WEB lên khung hình khi đang phát.
  * (Chi tiết: LOGO_WATERMARK.md)
  *
  * 2 lớp cấu hình, lớp kênh đè lớp chung:

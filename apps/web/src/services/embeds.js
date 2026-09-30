@@ -1,5 +1,5 @@
 /**
- * CHRTV — danh sách nguồn phát cho mục Phim/TV show.
+ * playZ — danh sách nguồn phát cho mục Phim/TV show.
  *
  * LỊCH SỬ:
  * - Trước đây file này hard-code ~50 domain embed kiểu "vidsrc".

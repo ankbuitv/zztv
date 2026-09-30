@@ -1,6 +1,6 @@
 /**
- * CHRTV - Xử lý Thời gian & Định dạng EPG
- * Tác giả: CHRTV OTT Full-stack Architect
+ * playZ - Xử lý Thời gian & Định dạng EPG
+ * Tác giả: playZ OTT Full-stack Architect
  */
 
 /**

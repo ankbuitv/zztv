@@ -30,7 +30,7 @@ export default function M3UImporter({ onImport, onClose }) {
     setImporting(true);
     setResult(null);
     try {
-      const res = await fetch(src.url, { headers: { 'User-Agent': 'CHRTV-OTT/1.0' } });
+      const res = await fetch(src.url, { headers: { 'User-Agent': 'playZ-OTT/1.0' } });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const text = await res.text();
       const channels = parseM3UFromText(text);

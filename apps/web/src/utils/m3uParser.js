@@ -1,6 +1,6 @@
 /**
- * CHRTV - M3U Playlist Client-side Parser
- * Tác giả: CHRTV OTT Full-stack Architect
+ * playZ - M3U Playlist Client-side Parser
+ * Tác giả: playZ OTT Full-stack Architect
  *
  * Hỗ trợ:
  * - #EXTINF: thông tin kênh

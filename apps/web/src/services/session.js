@@ -7,7 +7,7 @@ import { API_BASE } from "./config";
  *    tài khoản, server coi là phiên hợp lệ ở mức gói Standard (kênh VN/FTA).
  *
  * Mọi request API nhạy cảm (stream token, EPG, favorites...) đều kèm JWT —
- * KHÔNG còn dùng header X-CHRTV-Client làm "xác thực" (chỉ là phiên bản client).
+ * KHÔNG còn dùng header X-playZ-Client làm "xác thực" (chỉ là phiên bản client).
  */
 
 let _guestToken = "";

@@ -1,5 +1,5 @@
 /**
- * CHRTV - EPG channel matching utilities
+ * playZ - EPG channel matching utilities
  * Real EPG XML sources often use channel IDs that differ slightly from the
  * M3U tvg-id (e.g. "VTV1" vs "VTV1.vn", or "vtv1.vn" vs "VTV1.vn").
  * This helper tries several strategies so EPG data shows up reliably.

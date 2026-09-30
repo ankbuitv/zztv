@@ -4,7 +4,8 @@ import { authHeaders } from "./session";
 const BASE_WORKER_URL = API_BASE;
 
 export const DEFAULT_FALLBACK_STREAM = "http://bore.pub:30113/hls/index.m3u8";
-export const CHRTV_LOGO_URL = "https://i.ibb.co/VcLxwgM2/logo.png";
+export const PLAYZ_LOGO_URL = "/brand/playz-symbol-dark.svg";
+export const CHRTV_LOGO_URL = PLAYZ_LOGO_URL; // legacy alias
 
 /**
  * Danh sách kênh là thứ duy nhất mà nếu thiếu thì app coi như "crash" (trắng màn hình),

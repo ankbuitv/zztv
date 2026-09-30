@@ -41,8 +41,7 @@ function About() {
       </div>
       <p style={{ fontSize: 13, color: C.textMuted, lineHeight: 1.75, marginBottom: 18 }}>
         playZ là nền tảng xem truyền hình và phim đa nền tảng — web, điện thoại và Android TV.
-        Sản phẩm kế thừa hạ tầng của CHRTV Play và được thiết kế lại toàn bộ giao diện theo
-        ngôn ngữ thị giác mới.
+        Xem trực tiếp hơn 180 kênh, phim và TV Shows, cùng dữ liệu thể thao cập nhật liên tục.
       </p>
       <Row label="Phiên bản" value="1.0.0" />
       <Row label="Website" value="thelac.dpdns.org" href={SITE} />

@@ -36,7 +36,7 @@ export default function ChannelCard({
 
       <div className="flex items-center gap-2.5 mb-2">
         <div className="relative w-11 h-11 rounded-lg bg-[#0d0e12] p-1.5 border border-slate-800/30 shrink-0 flex items-center justify-center overflow-hidden">
-          <img src={channel.logo || 'https://i.ibb.co/VcLxwgM2/logo.png'} alt={channel.name} className="w-full h-full object-contain transition-transform group-hover:scale-105" onError={e => { e.target.src = 'https://i.ibb.co/VcLxwgM2/logo.png'; }} />
+          <img src={channel.logo || '/brand/playz-symbol-dark.svg'} alt={channel.name} className="w-full h-full object-contain transition-transform group-hover:scale-105" onError={e => { e.target.src = '/brand/playz-symbol-dark.svg'; }} />
         </div>
         <div className="min-w-0 flex-1">
           <span className="text-[9px] font-bold text-[#2F6BFF]/80 uppercase tracking-widest block mb-0.5">{channel.group_title || 'TỔNG HỢP'}</span>

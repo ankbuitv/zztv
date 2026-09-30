@@ -10,7 +10,7 @@ import { API_BASE } from "./config";
 // elite        : + kênh Phim (phim/movie)
 // signature    : tất cả mọi kênh
 // Shorts xem miễn phí mọi gói (không gating)
-export const SUPPORT_EMAIL = "support@ankb.qzz.io";
+export const SUPPORT_EMAIL = "support@thelac.dpdns.org";
 
 // art/grad: hình minh hoạ cho thẻ gói (PlansScreen)
 export const PLANS = [

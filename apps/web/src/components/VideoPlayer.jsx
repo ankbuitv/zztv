@@ -188,7 +188,7 @@ export default function VideoPlayer({
             const d = e.detail || {};
             const critical = isCriticalShakaError(d);
             console.error('shaka error', e.detail);
-            if (dash) console.warn('[CHRTV] kênh .mpd — không gửi báo cáo lỗi shaka:', d.code, d.message || '');
+            if (dash) console.warn('[playZ] kênh .mpd — không gửi báo cáo lỗi shaka:', d.code, d.message || '');
             else logPlayerError({ channel, engine: 'shaka', code: `shaka_${d.code || 'err'}`, detail: d.message || '', fatal: critical });
             if (!dash || critical) {
               setError(d.message || 'Không phát được');

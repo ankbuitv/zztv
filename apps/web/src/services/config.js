@@ -5,7 +5,7 @@
  *   1. VITE_API_BASE  — build-time env (dùng khi web và Worker khác domain)
  *   2. localStorage `chrtv_api_base` — cho phép đổi nóng khi debug / APK trỏ server khác
  *   3. Same-origin ("")  — web được chính Cloudflare Worker phục vụ (dist/ + /api/*)
- *      => gọi API bằng đường dẫn tương đối, không lo CORS, không phụ thuộc domain cũ.
+ *      => calls the API with a relative path: no CORS, no dependency on an old host.
  *   4. PRODUCTION_API_BASE — app native (Capacitor: capacitor://, file://) không có origin HTTP
  *
  * Trước đây mỗi file hardcode một domain khác nhau (AdminPanel dùng same-origin,
@@ -13,8 +13,10 @@
  * bắn sang Worker cũ và fail. Giờ tất cả đều đi qua đây.
  */
 
-// Domain production dùng cho app Android/TV (không chạy trên http/https origin)
-export const PRODUCTION_API_BASE = 'https://play.ankb.qzz.io';
+// Production origin for the native Android/TV app. Capacitor serves the web layer
+// from https://localhost, so requests have no real origin to be relative to and must
+// be pointed at an absolute host.
+export const PRODUCTION_API_BASE = 'https://thelac.dpdns.org';
 
 const ENV_BASE = (import.meta.env?.VITE_API_BASE || '').trim();
 

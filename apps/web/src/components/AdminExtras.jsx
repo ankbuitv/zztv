@@ -1032,7 +1032,7 @@ export function AffiliatesTab({ BASE, headers, addToast }) {
 }
 
 // ============================================================================
-// BẢO VỆ LUỒNG (AES-128 + license.ankb.qzz.io)
+// STREAM PROTECTION (AES-128 + license worker on the playZ domain)
 // Mặc định TẤT CẢ kênh bật. Tắt từng kênh tại đây (kênh hay lỗi khi qua proxy,
 // kênh nguồn tự mã hoá...). FPT Play tự né ở lớp phát, không cần tắt tay.
 // ============================================================================

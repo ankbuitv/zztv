@@ -219,7 +219,7 @@ export default function AuthModal({ open, onClose, initialView = 'login' }) {
               ) : qrCode && qrLeft > 0 ? (
                 <>
                   <div className="relative bg-white p-2.5 rounded-2xl shadow-lg shadow-black/40">
-                    <QRCodeSVG value={`CHRTV-QR:${qrCode}`} size={132} level="M" />
+                    <QRCodeSVG value={`playZ-QR:${qrCode}`} size={132} level="M" />
                     <span className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full grad-brand text-white text-[10px] font-mono font-black tracking-[0.2em] shadow-lg whitespace-nowrap">{qrCode}</span>
                   </div>
                   <p className="text-[10px] text-stone-500 mt-4">

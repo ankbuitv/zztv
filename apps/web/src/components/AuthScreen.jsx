@@ -326,7 +326,7 @@ export default function AuthScreen() {
                 ) : qrCode && qrLeft > 0 ? (
                   <>
                     <div className="inline-block bg-white p-4 rounded-3xl shadow-2xl shadow-[#2F6BFF]/20 relative">
-                      <QRCodeSVG value={`CHRTV-QR:${qrCode}`} size={180} level="M" />
+                      <QRCodeSVG value={`playZ-QR:${qrCode}`} size={180} level="M" />
                       <span className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full grad-brand text-white text-[11px] font-mono font-black tracking-[0.25em] shadow-lg whitespace-nowrap">{qrCode}</span>
                     </div>
                     <p className="text-[11px] text-stone-400 mt-6">

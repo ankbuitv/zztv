@@ -2,7 +2,7 @@
  * CHRTV STREAM PROTECT — mã hoá luồng HLS (AES-128) ngay tại Cloudflare Workers.
  *
  * Mục tiêu: mọi luồng đi QUA PROXY (/api/stream/proxy) đều tự được mã hoá,
- * muốn giải mã phải gọi license server (mặc định https://license.ankb.qzz.io).
+ * muốn giải mã phải gọi license server (default https://license.thelac.dpdns.org).
  * Bỏ VLC/potplayer/ffmpeg copy link: chúng lấy được playlist nhưng gọi key
  * không có token hợp lệ -> 403 -> không giải được.
  *

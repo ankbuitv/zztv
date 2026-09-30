@@ -7,7 +7,7 @@
  * rename, disable or reschedule any rail without a code change (see
  * `DEFAULT_SECTIONS` and the override read from `playz_home_sections`).
  *
- * Data comes from the existing CHRTV integrations — the TMDB service and the
+ * Data comes from the existing playZ integrations — the TMDB service and the
  * channel list — rather than a new backend. Rails render skeletons while
  * loading and a real empty/error state instead of a blank box.
  */

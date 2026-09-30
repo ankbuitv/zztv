@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Download } from 'lucide-react';
 import { useI18n } from '../contexts/I18nContext';
 
-const APK_URL = 'https://ankb.qzz.io/apk';
+const APK_URL = 'https://github.com/ankbuitv/zztv/releases/latest';
 
 export default function DownloadAppModal() {
   const { t } = useI18n();

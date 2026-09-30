@@ -1,5 +1,5 @@
 /**
- * CHRTV STREAM GUARD — xin quyền phát từ server trước khi chạy luồng.
+ * playZ STREAM GUARD — xin quyền phát từ server trước khi chạy luồng.
  *
  * Luồng hiện tại (chế độ AUTO — mặc định từ 2026-09-12):
  *
@@ -83,7 +83,7 @@ export function isStreamableUrl(u) {
   return !!u && isHttpUrl(u) && (isHlsUrl(u) || isMpdUrl(u));
 }
 
-/** true nếu URL đang phát là URL proxy của CHRTV (player nên coi như HLS). */
+/** true nếu URL đang phát là URL proxy của playZ (player nên coi như HLS). */
 export function isProxiedStreamUrl(u) {
   return /\/api\/stream\/proxy\?/.test(String(u || ""));
 }
@@ -291,8 +291,8 @@ export function canFallbackToDirect(channelId) {
 }
 
 /**
- * Filter cho shaka: gắn header định danh client cho mọi request tới proxy CHRTV.
- * (Trình duyệt không cho set User-Agent nên dùng X-CHRTV-*.)
+ * Filter cho shaka: gắn header định danh client cho mọi request tới proxy playZ.
+ * (Trình duyệt không cho set User-Agent nên dùng X-playZ-*.)
  */
 export function makeStreamRequestFilter(channel) {
   return (type, request) => {
@@ -309,7 +309,7 @@ export function makeStreamRequestFilter(channel) {
   };
 }
 
-/** Headers gắn thêm cho hls.js (xhrSetup) khi gọi proxy CHRTV. */
+/** Headers gắn thêm cho hls.js (xhrSetup) khi gọi proxy playZ. */
 export function applyStreamClientHeaders(headers, channel) {
   const h = headers || {};
   h["X-CHRTV-Client"] = CHRTV_CLIENT_UA;

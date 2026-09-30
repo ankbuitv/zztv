@@ -289,7 +289,7 @@ export default function PlansScreen({ initialCode = '' }) {
             <input
               value={giftCode} onChange={e => setGiftCode(e.target.value.toUpperCase().slice(0, 32))}
               onKeyDown={e => { if (e.key === 'Enter') doGift(); }}
-              placeholder="CHRTV-XXXXXXXX"
+              placeholder="PLAYZ-XXXXXXXX"
               className="flex-1 px-3 py-2.5 bg-black/40 border border-white/10 rounded-xl text-[13px] font-mono font-bold text-white placeholder:text-stone-600 outline-none focus:border-fuchsia-500 uppercase"
             />
             <button onClick={doGift} disabled={giftBusy || !giftCode.trim()} className="px-5 rounded-xl bg-fuchsia-600 hover:bg-fuchsia-500 text-white text-[13px] font-bold disabled:opacity-40 active:scale-95">

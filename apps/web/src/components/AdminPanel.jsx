@@ -46,7 +46,7 @@ export default function AdminPanel({ onClose, asPage = false }) {
   const [feedback, setFeedback] = useState([]);
   const [shorts, setShorts] = useState([]);
   const [shortCreators, setShortCreators] = useState([]);
-  const [shortForm, setShortForm] = useState({ title: '', caption: '', video_url: '', thumb_url: '', author: 'CHRTV' });
+  const [shortForm, setShortForm] = useState({ title: '', caption: '', video_url: '', thumb_url: '', author: 'playZ' });
   const [events, setEvents] = useState([]);
   const [evForm, setEvForm] = useState({ title: '', subtitle: '', image_url: '', link_type: 'none', link_value: '', starts_at: '', ends_at: '', sort_order: 0 });
   const [editingEv, setEditingEv] = useState(null);
@@ -247,7 +247,7 @@ export default function AdminPanel({ onClose, asPage = false }) {
     <div className={asPage ? 'w-full min-h-full bg-[#0b0b0d]' : 'fixed inset-0 z-[150] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 modal-backdrop'} onClick={asPage ? undefined : onClose}>
       <div className={asPage ? 'bg-[#14151c] border border-white/[0.07] rounded-none md:rounded-2xl shadow-none md:shadow-2xl w-full max-w-[1400px] mx-auto min-h-[calc(100vh-5rem)] overflow-hidden flex flex-col' : 'bg-[#1a1c24] border border-slate-800/60 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[85vh] overflow-hidden flex flex-col modal-panel'} onClick={e => e.stopPropagation()}>
         <div className="px-5 py-3.5 border-b border-white/[0.07] flex items-center justify-between bg-gradient-to-r from-[#1a120c] to-[#12131a]">
-          <div className="flex items-center gap-2 text-sm font-black text-white tracking-tight"><Settings className="w-4 h-4 text-[#6E9BFF]" /> Quản trị CHRTV</div>
+          <div className="flex items-center gap-2 text-sm font-black text-white tracking-tight"><Settings className="w-4 h-4 text-[#6E9BFF]" /> Quản trị playZ</div>
           <button onClick={onClose} className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-bold text-stone-300">Đóng</button>
         </div>
 
@@ -831,7 +831,7 @@ export default function AdminPanel({ onClose, asPage = false }) {
                   const d = await r.json();
                   if (d.success) {
                     addToast('Đã đăng short!', 'success');
-                    setShortForm({ title: '', caption: '', video_url: '', thumb_url: '', author: 'CHRTV' });
+                    setShortForm({ title: '', caption: '', video_url: '', thumb_url: '', author: 'playZ' });
                     fetch(`${BASE}/admin/shorts`, { headers }).then(r2 => r2.json()).then(dd => setShorts(dd.shorts || [])).catch(() => {});
                   } else addToast(d.error || 'Lỗi', 'error');
                 }}

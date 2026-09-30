@@ -1,5 +1,5 @@
 /**
- * CHRTV LICENSE SERVER — chạy tại license.ankb.qzz.io (Cloudflare Workers).
+ * playZ LICENSE SERVER — runs at license.thelac.dpdns.org (Cloudflare Workers).
  *
  * Làm 2 việc:
  *  1. Cấp key giải mã luồng HLS AES-128:  GET /k/<token>  -> đúng 16 byte thô.

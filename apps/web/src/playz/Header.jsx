@@ -90,7 +90,7 @@ export default function PlayzHeader({
   const reduced = prefersReducedMotion();
 
   // --- notifications --------------------------------------------------------
-  // Preserved from the CHRTV TopNav implementation, including the storage key.
+  // Preserved from the playZ TopNav implementation, including the storage key.
   // `chrtv_notif_read` is deliberately NOT renamed: a new name would make every
   // existing user see every historical notification as unread.
   const [notifs, setNotifs] = useState([]);
@@ -151,16 +151,15 @@ export default function PlayzHeader({
     >
       <MenuButton onClick={onToggleSidebar} expanded={sidebarExpanded} />
 
-      {/* Logo appears in the header only when the rail is collapsed or on mobile,
-          which keeps the two from competing for the same space. */}
-      {(!sidebarExpanded || isMobile) && (
-        <button
-          type="button" onClick={() => onSearchSubmit && onSearchSubmit('')} aria-label="playZ — trang chủ"
-          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
-        >
-          <PlayzLogo size={isMobile ? 24 : 26} tint="#fff" showWordmark={!isMobile} />
-        </button>
-      )}
+      {/* The mark lives here, always. It was previously conditional on the rail
+          being collapsed, because the sidebar had its own logo — but the sidebar
+          no longer carries branding, so the header must be the constant. */}
+      <button
+        type="button" onClick={() => onSearchSubmit && onSearchSubmit('')} aria-label="playZ — trang chủ"
+        style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, flexShrink: 0 }}
+      >
+        <PlayzLogo size={isMobile ? 25 : 27} tint="#fff" showWordmark={!isMobile} />
+      </button>
 
       {/* Search — a normal OTT search field, not a command palette. */}
       <form onSubmit={submitSearch} role="search" className="flex-1" style={{ maxWidth: 460, minWidth: 0 }}>

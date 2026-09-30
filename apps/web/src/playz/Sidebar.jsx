@@ -3,40 +3,46 @@
  * ============================================================================
  * Two real states rather than an icon rail plus a hover popout:
  *
- *   collapsed  80px  — icon above a compact label (the label is kept because
- *                      Vietnamese navigation terms are not self-evident from
- *                      icons alone, and it keeps the rail scannable)
+ *   collapsed  80px  — icon above a compact label
  *   expanded  248px  — full labels; a backdrop dims the page beneath
  *
- * Both states animate on transform/width with a spring-like curve. Reduced
- * motion collapses the animation to zero rather than merely shortening it.
+ * NAVIGATION IS DELIBERATELY SHORT.
+ * An earlier pass had ten items (seven content surfaces plus settings, about
+ * and contact) and it read as a wall of links. The list is now five primary
+ * surfaces plus two utility entries, with about/contact demoted to small text
+ * at the bottom. EPG is not a top-level destination any more: it lives inside
+ * the TV page as a schedule panel beside the player, which is where it is
+ * actually useful and removes a redundant way to reach the same data.
  *
- * On mobile the sidebar becomes a drawer that slides in over the content.
+ * There is no logo here. The mark belongs in the header, which is always
+ * visible; repeating it in the rail competed with the navigation for attention.
  */
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import {
-  Home, Tv, Film, Trophy, CalendarDays, PlaySquare, Users,
-  Settings, Info, Mail, ShieldCheck, ChevronLeft, X,
+  Home, Tv, Film, Trophy, PlaySquare, Users, Settings, ShieldCheck, ChevronLeft, X,
 } from 'lucide-react';
 import { color as C, motion, radius, layout, z, prefersReducedMotion } from './tokens';
-import { PlayzMark } from './Logo';
 
-// Primary navigation — these are the product's real content surfaces.
+// Content surfaces. Five entries, ordered by how often they are opened.
 export const PRIMARY_NAV = [
   { id: 'channels', label: 'Trang chủ', Icon: Home },
   { id: 'tv', label: 'Truyền hình', Icon: Tv },
   { id: 'movies', label: 'Phim & TV Shows', Icon: Film },
   { id: 'sports', label: 'Thể thao', Icon: Trophy },
-  { id: 'epg', label: 'EPG', Icon: CalendarDays },
   { id: 'shorts', label: 'Shorts', Icon: PlaySquare },
-  { id: 'community', label: 'Cộng đồng', Icon: Users },
 ];
 
-// Secondary — utility surfaces, visually separated from content.
+// Utility surfaces — quieter, separated from content.
 export const SECONDARY_NAV = [
+  { id: 'community', label: 'Cộng đồng', Icon: Users },
   { id: 'settings', label: 'Cài đặt', Icon: Settings, action: 'settings' },
-  { id: 'about', label: 'Giới thiệu', Icon: Info, action: 'about' },
-  { id: 'contact', label: 'Liên hệ', Icon: Mail, action: 'contact' },
+];
+
+// Tertiary: plain text links at the very bottom. These do not deserve an icon
+// or a row of their own, but they must stay reachable.
+const TERTIARY = [
+  { id: 'about', label: 'Giới thiệu' },
+  { id: 'contact', label: 'Liên hệ' },
 ];
 
 function NavItem({ item, active, collapsed, onClick }) {
@@ -54,11 +60,11 @@ function NavItem({ item, active, collapsed, onClick }) {
       onMouseLeave={() => setHover(false)}
       className="relative flex items-center w-full"
       style={{
-        height: collapsed ? 58 : 44,
+        height: collapsed ? 56 : 42,
         flexDirection: collapsed ? 'column' : 'row',
         justifyContent: collapsed ? 'center' : 'flex-start',
-        padding: collapsed ? '0 4px' : '0 14px',
-        gap: collapsed ? 4 : 13,
+        padding: collapsed ? '0 4px' : '0 13px',
+        gap: collapsed ? 4 : 12,
         borderRadius: radius.md,
         background: on ? 'rgba(47,107,255,.14)' : hover ? 'rgba(255,255,255,.06)' : 'transparent',
         color: on ? '#fff' : hover ? C.text : C.textMuted,
@@ -67,27 +73,24 @@ function NavItem({ item, active, collapsed, onClick }) {
         transition: prefersReducedMotion() ? 'none' : motion.t(motion.fast, motion.ease, 'background,color'),
       }}
     >
-      {/* Active indicator — the only place the brand gradient appears in nav. */}
+      {/* Active indicator — the only place the brand colour appears in nav. */}
       {on && (
         <span aria-hidden="true" style={{
           position: 'absolute', left: 0, top: collapsed ? '18%' : '22%', bottom: collapsed ? '18%' : '22%',
           width: 3, borderRadius: radius.pill, background: C.blue,
         }} />
       )}
-      <Icon size={collapsed ? 20 : 19} strokeWidth={on ? 2.6 : 2.1} style={{ flexShrink: 0 }} />
+      <Icon size={collapsed ? 19 : 18} strokeWidth={on ? 2.6 : 2.1} style={{ flexShrink: 0 }} />
       <span
         style={{
-          fontSize: collapsed ? 9.5 : 13.5,
+          fontSize: collapsed ? 9.5 : 13,
           fontWeight: on ? 800 : 600,
-          letterSpacing: collapsed ? '.01em' : 0,
           lineHeight: 1.15,
           textAlign: collapsed ? 'center' : 'left',
           whiteSpace: collapsed ? 'normal' : 'nowrap',
           overflow: 'hidden',
-          maxWidth: collapsed ? '100%' : undefined,
         }}
       >
-        {/* In the rail the first word is enough; full label lives in the tooltip. */}
         {collapsed ? label.split(' ')[0] : label}
       </span>
     </button>
@@ -112,74 +115,58 @@ export default function PlayzSidebar({
   }, [expanded, isMobile, onCloseMobile, onToggleExpanded]);
 
   const handle = (item) => {
-    if (item.action === 'settings' || item.action === 'about' || item.action === 'contact') {
-      onOpenInfo && onOpenInfo(item.action);
-    } else {
-      onNavigate && onNavigate(item.id);
-    }
+    if (item.action) onOpenInfo && onOpenInfo(item.action);
+    else onNavigate && onNavigate(item.id);
     if (isMobile) onCloseMobile && onCloseMobile();
   };
 
   const body = (
     <>
-      {/* Brand */}
+      {/* Collapse / close control. No branding here — see the note at the top. */}
       <div
         className="flex items-center shrink-0"
         style={{
-          height: layout.headerHeight,
-          padding: collapsed ? '0 10px' : '0 16px',
-          gap: 10,
-          justifyContent: collapsed ? 'center' : 'space-between',
-          borderBottom: `1px solid ${C.line}`,
+          height: 52,
+          padding: collapsed ? '0 10px' : '0 14px',
+          justifyContent: collapsed ? 'center' : 'flex-end',
         }}
       >
-        <button
-          type="button"
-          onClick={() => handle({ id: 'channels' })}
-          aria-label="playZ — về trang chủ"
-          className="flex items-center"
-          style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#fff', gap: 10, padding: 0 }}
-        >
-          <PlayzMark size={collapsed ? 30 : 28} tint="#fff" />
-          {!collapsed && (
-            <span style={{ fontSize: 18, fontWeight: 800, letterSpacing: '-.02em' }}>
-              play<span style={{ color: C.blueSoft }}>Z</span>
-            </span>
-          )}
-        </button>
-
-        {!collapsed && !isMobile && (
-          <button
-            type="button" onClick={onToggleExpanded} aria-label="Thu gọn thanh điều hướng"
-            className="flex items-center justify-center"
-            style={{
-              width: 28, height: 28, borderRadius: radius.sm, background: 'rgba(255,255,255,.07)',
-              color: C.textMuted, border: 'none', cursor: 'pointer',
-            }}
-          >
-            <ChevronLeft size={15} strokeWidth={2.6} />
-          </button>
-        )}
-        {isMobile && (
+        {isMobile ? (
           <button
             type="button" onClick={onCloseMobile} aria-label="Đóng menu"
             className="flex items-center justify-center"
-            style={{ width: 30, height: 30, borderRadius: radius.sm, background: 'rgba(255,255,255,.07)', color: C.text, border: 'none', cursor: 'pointer' }}
+            style={{ width: 32, height: 32, borderRadius: radius.sm, background: 'rgba(255,255,255,.07)', color: C.text, border: 'none', cursor: 'pointer' }}
           >
             <X size={16} strokeWidth={2.6} />
+          </button>
+        ) : (
+          <button
+            type="button" onClick={onToggleExpanded}
+            aria-label={collapsed ? 'Mở rộng thanh điều hướng' : 'Thu gọn thanh điều hướng'}
+            aria-expanded={expanded}
+            className="flex items-center justify-center"
+            style={{
+              width: 30, height: 30, borderRadius: radius.sm,
+              background: 'rgba(255,255,255,.06)', color: C.textMuted,
+              border: 'none', cursor: 'pointer',
+              transform: collapsed ? 'rotate(180deg)' : 'none',
+              transition: reduced ? 'none' : 'transform 240ms ' + motion.ease,
+            }}
+          >
+            <ChevronLeft size={16} strokeWidth={2.6} />
           </button>
         )}
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto scrollbar-none" style={{ padding: collapsed ? '10px 8px' : '10px 10px' }}>
+      <nav className="flex-1 overflow-y-auto scrollbar-none" style={{ padding: collapsed ? '4px 8px' : '4px 10px' }}>
         <div className="flex flex-col" style={{ gap: collapsed ? 2 : 3 }}>
           {PRIMARY_NAV.map((item) => (
             <NavItem key={item.id} item={item} active={activeTab} collapsed={collapsed} onClick={() => handle(item)} />
           ))}
         </div>
 
-        <div style={{ height: 1, background: C.line, margin: '12px 4px' }} />
+        <div style={{ height: 1, background: C.line, margin: '12px 6px' }} />
 
         <div className="flex flex-col" style={{ gap: collapsed ? 2 : 3 }}>
           {SECONDARY_NAV.map((item) => (
@@ -195,12 +182,25 @@ export default function PlayzSidebar({
         </div>
       </nav>
 
-      {/* Legal footer — only meaningful once there is room for it. */}
+      {/* Footer: tertiary text links, only when there is room for them. */}
       {!collapsed && (
-        <div className="shrink-0" style={{ padding: '12px 16px', borderTop: `1px solid ${C.line}` }}>
-          <p style={{ fontSize: 10, color: C.textFaint, lineHeight: 1.6 }}>
-            playZ · thelac.dpdns.org<br />
-            Nội dung do bên thứ ba cung cấp.
+        <div className="shrink-0" style={{ padding: '12px 16px 14px', borderTop: `1px solid ${C.line}` }}>
+          <div className="flex items-center" style={{ gap: 14, marginBottom: 8 }}>
+            {TERTIARY.map((t) => (
+              <button
+                key={t.id} type="button"
+                onClick={() => { onOpenInfo && onOpenInfo(t.id); if (isMobile) onCloseMobile && onCloseMobile(); }}
+                style={{
+                  background: 'none', border: 'none', padding: 0, cursor: 'pointer',
+                  fontSize: 11.5, fontWeight: 600, color: C.textMuted,
+                }}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
+          <p style={{ fontSize: 10, color: C.textFaint, lineHeight: 1.55 }}>
+            playZ · thelac.dpdns.org
           </p>
         </div>
       )}
@@ -224,7 +224,7 @@ export default function PlayzSidebar({
           className="flex flex-col"
           style={{
             position: 'fixed', top: 0, bottom: 0, left: 0,
-            width: Math.min(280, window.innerWidth * 0.84),
+            width: Math.min(272, window.innerWidth * 0.82),
             background: C.bg, borderRight: `1px solid ${C.line}`, zIndex: z.drawer,
             animation: reduced ? 'none' : 'playzDrawerIn 260ms ' + motion.ease + ' both',
           }}

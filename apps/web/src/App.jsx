@@ -6,6 +6,7 @@ import Sidebar from './components/Sidebar';
 import PlayzSidebar from './playz/Sidebar';
 import PlayzHeader from './playz/Header';
 import PlayzHome from './playz/Home';
+import PlayzTVPage from './playz/TV';
 import InfoModal from './playz/InfoModal';
 import { getWatchlistLocal, toggleWatchlistLocal } from './services/movieList';
 import PlansScreen from './components/PlansScreen';
@@ -703,23 +704,48 @@ function AppContent() {
           ) : activeTab === 'movies' ? (
             <MoviesScreen openMovie={movieToOpen} onOpenMovieHandled={() => setMovieToOpen(null)} onRequireLogin={() => promptLogin(t('app.need_login_movie'))} onGoTab={goTab} onOpenChannel={handleOpenTvChannel} />
           ) : activeTab === 'tv' ? (
-            <TVPage
-              channels={channels}
-              epgData={epgData}
-              tvChannel={tvChannel}
-              tvStreamUrl={tvStreamUrl}
-              tvLoading={tvLoading}
-              onOpenTvChannel={handleOpenTvChannel}
-              onPlayCatchup={handlePlayCatchup}
-              onToggleFavorite={handleToggleFavorite}
-              favorites={favorites}
-              onNextTv={handleNextTv}
-              onPrevTv={handlePrevTv}
-              onCloseTv={() => { setTvChannel(null); setTvStreamUrl(null); }}
-              partyRoom={deepPartyRoom}
-              userName={currentProfile?.name || effUser?.display_name || effUser?.username || t('app.guest')}
-              getEpgForChannel={getEpgForChannel}
-            />
+            (() => {
+              // Legacy rollback: localStorage playz_tv_legacy = "1" restores the
+              // previous TV page. Same pattern as the home page.
+              let legacy = false;
+              try { legacy = localStorage.getItem('playz_tv_legacy') === '1'; } catch { /* ignore */ }
+              return legacy ? (
+                <TVPage
+                  channels={channels}
+                  epgData={epgData}
+                  tvChannel={tvChannel}
+                  tvStreamUrl={tvStreamUrl}
+                  tvLoading={tvLoading}
+                  onOpenTvChannel={handleOpenTvChannel}
+                  onPlayCatchup={handlePlayCatchup}
+                  onToggleFavorite={handleToggleFavorite}
+                  favorites={favorites}
+                  onNextTv={handleNextTv}
+                  onPrevTv={handlePrevTv}
+                  onCloseTv={() => { setTvChannel(null); setTvStreamUrl(null); }}
+                  partyRoom={deepPartyRoom}
+                  userName={currentProfile?.name || effUser?.display_name || effUser?.username || t('app.guest')}
+                  getEpgForChannel={getEpgForChannel}
+                />
+              ) : (
+                <PlayzTVPage
+                  channels={channels}
+                  epgData={epgData}
+                  tvChannel={tvChannel}
+                  tvStreamUrl={tvStreamUrl}
+                  tvLoading={tvLoading}
+                  onOpenTvChannel={handleOpenTvChannel}
+                  onPlayCatchup={handlePlayCatchup}
+                  onToggleFavorite={handleToggleFavorite}
+                  favorites={favorites}
+                  onNextTv={handleNextTv}
+                  onPrevTv={handlePrevTv}
+                  onCloseTv={() => { setTvChannel(null); setTvStreamUrl(null); }}
+                  userName={currentProfile?.name || effUser?.display_name || effUser?.username || t('app.guest')}
+                  getEpgForChannel={getEpgForChannel}
+                />
+              );
+            })()
           ) : activeTab === 'sports' ? (
             <SportsScreen channels={channels} onSelectChannel={handleSelectChannel} />
           ) : activeTab === 'epg' ? (

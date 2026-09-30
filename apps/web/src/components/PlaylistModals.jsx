@@ -71,9 +71,9 @@ export function SharePlaylistModal({ list, onClose }) {
 
   const share = async () => {
     if (!made) return;
-    const text = `🎬 CHRTV — Playlist "${made.name}" (${made.items.length} phim)\nMã: ${made.code}\nVào tab Phim → Nhập mã 🎟️ để mở.`;
+    const text = `🎬 playZ — Playlist "${made.name}" (${made.items.length} phim)\nMã: ${made.code}\nVào tab Phim → Nhập mã 🎟️ để mở.`;
     try {
-      if (navigator.share) { await navigator.share({ title: 'Playlist CHRTV', text }); return; }
+      if (navigator.share) { await navigator.share({ title: 'Playlist playZ', text }); return; }
       await copyText(text);
       addToast('Đã chép lời mời — gửi cho bạn bè nhé!', 'success');
     } catch { addToast('Lỗi chia sẻ', 'error'); }

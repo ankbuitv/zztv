@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react';
 // nên cần proxy sang Cloudflare Worker. Mặc định trỏ về production; muốn test Worker
 // chạy local (`npx wrangler dev --port 8787`) thì:
 //   VITE_DEV_API_TARGET=http://127.0.0.1:8787 npm run dev
-const API_TARGET = process.env.VITE_DEV_API_TARGET || 'https://play.ankb.qzz.io';
+const API_TARGET = process.env.VITE_DEV_API_TARGET || 'https://thelac.dpdns.org';
 const API_PREFIXES = ['/api', '/auth', '/user', '/admin', '/ws'];
 // When the API target is a local host we are in fixture mode, so artwork is
 // proxied too (see tools/dev-api.mjs). Production never hits this.
@@ -22,7 +22,7 @@ const proxy = Object.fromEntries(
     },
   ])
 );
-// Bảo vệ luồng: key AES-128 (cùng origin khi dev, production dùng license.ankb.qzz.io)
+// Stream protection: AES-128 key (same origin in dev, license.thelac.dpdns.org in production)
 proxy['/lic'] = {
   target: API_TARGET,
   changeOrigin: true,

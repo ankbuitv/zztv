@@ -15,7 +15,7 @@ import { movieDeepId } from './ShareMovieModal';
 import { fmtTstamp } from './Pack48Ui';
 
 /**
- * CHRTV - Trình phát phim (nhiều nguồn, chọn server được)
+ * playZ - Trình phát phim (nhiều nguồn, chọn server được)
  * Danh sách nguồn từ API /api/movie/sources: nguồn admin tự thêm (Admin Panel
  * → Nguồn phim) đứng trước, sau đó là nguồn free mặc định (VidSrc, 2Embed,
  * VidLink, MoviesAPI, EmbedSU, VidCore) — xem src/services/embeds.js.
@@ -187,7 +187,7 @@ export default function MoviePlayerModal({ movie, onClose }) {
   useEffect(() => {
     const originalOpen = window.open;
     window.open = function blockedOpen() {
-      console.warn('[CHRTV] Đã chặn window.open trong lúc xem phim (chống pop-up quảng cáo).');
+      console.warn('[playZ] Đã chặn window.open trong lúc xem phim (chống pop-up quảng cáo).');
       return null;
     };
     return () => { window.open = originalOpen; };

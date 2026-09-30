@@ -52,7 +52,7 @@ export default function PayModal({ plan, onClose, onPaid }) {
   };
 
   const qr = cfg?.bank_id && cfg?.account_no && order ? (
-    `https://img.vietqr.io/image/${encodeURIComponent(cfg.bank_id)}-${encodeURIComponent(cfg.account_no)}-${encodeURIComponent(cfg.template || 'compact2')}.png?amount=${order.amount}&addInfo=${encodeURIComponent(order.order_code)}&accountName=${encodeURIComponent(cfg.account_name || 'CHRTV')}`
+    `https://img.vietqr.io/image/${encodeURIComponent(cfg.bank_id)}-${encodeURIComponent(cfg.account_no)}-${encodeURIComponent(cfg.template || 'compact2')}.png?amount=${order.amount}&addInfo=${encodeURIComponent(order.order_code)}&accountName=${encodeURIComponent(cfg.account_name || 'playZ')}`
   ) : '';
 
   return (

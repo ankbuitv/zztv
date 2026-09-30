@@ -3,7 +3,7 @@
  * ============================================================================
  * The single source of truth for colour, spacing, radius, shadow, motion and
  * layering. Components must read from here rather than hardcoding values, so a
- * brand change stays a one-file change (which is how the CHRTV → playZ colour
+ * brand change stays a one-file change (which is how the playZ → playZ colour
  * migration was possible at all).
  *
  * These mirror the CSS custom properties in `src/index.css`. JS is used where a
@@ -40,7 +40,7 @@ export const color = {
   imdb: '#F5C518',
   hd: '#8A8A99',
 
-  // Legacy aliases — the migrated CHRTV components reference these names.
+  // Legacy aliases — the migrated playZ components reference these names.
   brand: '#2F6BFF',
   brandSoft: '#6E9BFF',
 };

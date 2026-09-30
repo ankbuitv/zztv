@@ -22,7 +22,7 @@ export default function Footer({ onGoTab }) {
         <div>
           <Logo size="sm" showSubtext={false} />
           <p className="text-[13px] font-black text-white mt-3 tracking-wide">
-            CHRTV PL<span className="text-[#2F6BFF]">▷</span>Y <span className="text-stone-500 font-semibold">- A Product of ANKB CO.</span>
+            play<span className="text-[#2F6BFF]">Z</span>
           </p>
           <p className="text-[11px] text-stone-500 mt-2 leading-relaxed max-w-sm">{t('footer.desc')}</p>
           <p className="text-[11px] text-stone-600 mt-3 font-semibold">© 2026 ANKB CO. · {t('footer.rights')}</p>

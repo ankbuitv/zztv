@@ -1,5 +1,5 @@
 /**
- * CHRTV OTT Backend - Cloudflare Workers
+ * playZ OTT Backend - Cloudflare Workers
  * Auth, Admin, Analytics, Notifications, WebSocket
  *
  * ============ SECURITY (2026-09-05 — patch lỗ hổng theo báo cáo kiểm thử) ============
@@ -76,7 +76,7 @@ function legacyPasswordSecrets(env) {
 }
 
 const CHRTV_CLIENT_UA = "CHRTV-OTT/0.0.1"; // CHỈ dùng làm phiên bản client (log), KHÔNG phải cơ chế xác thực.
-const SUPPORT_EMAIL = "support@ankb.qzz.io";
+const SUPPORT_EMAIL = "support@thelac.dpdns.org";
 
 // ---- Playback token: HMAC-SHA256, TTL 60s, tự xoay theo từng request phát ----
 // XOAY TOKEN: đúng 5 phút / lần. TTL = 300s (chu kỳ xoay) + 30s dự phòng để client
@@ -98,7 +98,7 @@ const GUEST_TTL = 2 * 3600;       // JWT guest: 2 giờ
 // ---- CORS: chỉ echo Origin nằm trong allowlist (không dùng `*` nữa) ----
 // App native Capacitor gửi Origin "https://localhost" (androidScheme=https) hoặc
 // "capacitor://localhost" (iOS) — không có 2 origin này thì APK bị CORS chặn sạch.
-const DEFAULT_CORS_ORIGINS = ["https://play.ankb.qzz.io", "https://localhost", "capacitor://localhost", "http://localhost"];
+const DEFAULT_CORS_ORIGINS = ["https://thelac.dpdns.org", "https://admin.thelac.dpdns.org", "https://localhost", "capacitor://localhost", "http://localhost"];
 function corsAllowedOrigins(env) {
   const raw = (env && env.CORS_ALLOWED_ORIGINS) || "";
   const list = raw.split(",").map((s) => s.trim()).filter(Boolean);
@@ -301,7 +301,7 @@ export default {
       // Admin API
       if (p.startsWith("/admin/")) return await guardApiRes(request, await handleAdmin(p, request, env, ctx));
       // BẢO VỆ LUỒNG: cấp key AES-128 ngay tại origin này (dự phòng / test local —
-      // production mặc định trỏ sang https://license.ankb.qzz.io qua LICENSE_BASE)
+      // production defaults to https://license.thelac.dpdns.org via LICENSE_BASE)
       if (p.startsWith("/lic/k/")) return await handleLicenseKey(request, env, decodeURIComponent(p.slice("/lic/k/".length).split("?")[0] || ""));
       // WebSocket upgrade
       if (p === "/ws" && request.headers.get("Upgrade") === "websocket") {
@@ -347,12 +347,12 @@ async function guardApiRes(request, res) {
   } catch {}
   return res;
 }
-// Trang 404 thương hiệu CHRTV PLAY
+// Trang 404 thương hiệu playZ
 function html404(request, status = 404) {
   const path = (() => { try { return new URL(request.url).pathname; } catch { return ""; } })();
   const esc = String(path || "").replace(/[<>&"]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;" }[c]));
   const body = `<!DOCTYPE html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>404 — CHRTV PLAY</title><style>
+<title>404 — playZ</title><style>
 *{box-sizing:border-box;margin:0;padding:0}body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0b0c10;color:#e7e5e4;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;padding:24px}
 .card{max-width:520px;width:100%;text-align:center;background:#14151c;border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:44px 32px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
 .logo{display:inline-flex;align-items:center;gap:8px;font-weight:900;letter-spacing:.2em;font-size:12px;color:#ff9a3d;margin-bottom:20px}
@@ -363,13 +363,13 @@ a.btn{display:inline-block;padding:11px 22px;border-radius:14px;font-weight:800;
 a.primary{background:linear-gradient(135deg,#f36f21,#c2570f);color:#fff}a.ghost{background:rgba(255,255,255,.07);color:#e7e5e4;border:1px solid rgba(255,255,255,.1)}
 small{display:block;margin-top:18px;font-size:11px;color:#57534e}
 </style></head><body><div class="card">
-<div class="logo">▶ CHRTV PLAY</div>
+<div class="logo">▶ playZ</div>
 <div class="code">404</div>
 <h1>Không tìm thấy trang này</h1>
 ${esc ? `<div class="path">${esc}</div>` : ""}
-<p>Khu vực API chỉ dành cho ứng dụng CHRTV PLAY có xác thực.<br>Nếu bạn là người xem, hãy về trang chủ để tiếp tục giải trí nhé 🍿</p>
+<p>Khu vực API chỉ dành cho ứng dụng playZ có xác thực.<br>Nếu bạn là người xem, hãy về trang chủ để tiếp tục giải trí nhé 🍿</p>
 <div class="btns"><a class="btn primary" href="/">Về trang chủ</a><a class="btn ghost" href="/?tab=plans">Xem gói cước</a></div>
-<small>support@ankb.qzz.io</small>
+<small>support@thelac.dpdns.org</small>
 </div></body></html>`;
   return new Response(body, { status, headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store", ...SECURITY_HEADERS } });
 }
@@ -623,7 +623,7 @@ async function vapidJWT(privateJwk, audience, subject) {
 async function sendWebPush(sub, privateJwk) {
   try {
     const origin = new URL(sub.endpoint).origin;
-    const jwt = await vapidJWT(privateJwk, origin, "mailto:admin@chrtv.app");
+    const jwt = await vapidJWT(privateJwk, origin, "mailto:admin@thelac.dpdns.org");
     const res = await fetch(sub.endpoint, {
       method: "POST",
       headers: { TTL: "3600", Urgency: "normal", Authorization: `vapid t=${jwt}, k=${sub._vapidPublic || ""}` },
@@ -838,11 +838,11 @@ async function handlePush(path, request, env) {
 // Gửi email qua Brevo API. Cấu hình biến môi trường:
 //   BREVO_API_KEY       — API key lấy từ https://app.brevo.com/settings/keys/api
 //   BREVO_SENDER_EMAIL  — email đã verify trong Brevo (vd: noreply@yourdomain.com)
-//   BREVO_SENDER_NAME   — tên người gửi (mặc định "NO REPLY - CHRTV PL▷Y")
+//   BREVO_SENDER_NAME   — tên người gửi (mặc định "playZ")
 async function sendBrevoEmail(env, { to, subject, html, text }) {
   const apiKey = env.BREVO_API_KEY;
-  const senderEmail = env.BREVO_SENDER_EMAIL || "noreply@chrtv.app";
-  const senderName = env.BREVO_SENDER_NAME || "NO REPLY - CHRTV PL▷Y";
+  const senderEmail = env.BREVO_SENDER_EMAIL || "noreply@thelac.dpdns.org";
+  const senderName = env.BREVO_SENDER_NAME || "playZ";
   if (!apiKey) {
     console.warn("[Brevo] BREVO_API_KEY chưa cấu hình — bỏ qua gửi email");
     return { ok: false, reason: "no-api-key" };
@@ -874,11 +874,11 @@ async function sendBrevoEmail(env, { to, subject, html, text }) {
 
 function emailTemplateVerify(code) {
   return {
-    subject: "CHRTV — Mã xác minh tài khoản",
+    subject: "playZ — Mã xác minh tài khoản",
     html: `<!doctype html><html><body style="margin:0;padding:0;background:#0b0c10;font-family:-apple-system,Segoe UI,Roboto,sans-serif;color:#e7e5e4;">
 <div style="max-width:560px;margin:24px auto;background:#17181d;border-radius:16px;border:1px solid #26272e;overflow:hidden;">
   <div style="background:linear-gradient(135deg,#e11d48 0%,#9f1239 100%);padding:28px 32px;text-align:center;">
-    <h1 style="color:#fff;margin:0;font-size:28px;letter-spacing:-.02em;">🎬 CHRTV</h1>
+    <h1 style="color:#fff;margin:0;font-size:28px;letter-spacing:-.02em;">🎬 playZ</h1>
     <p style="color:#fecdd3;margin:6px 0 0;font-size:13px;">Xác minh tài khoản của bạn</p>
   </div>
   <div style="padding:28px 32px;">
@@ -888,10 +888,10 @@ function emailTemplateVerify(code) {
       <span style="font-size:36px;font-weight:800;letter-spacing:.25em;color:#e11d48;font-family:monospace;">${code}</span>
     </div>
     <p style="margin:0 0 8px;font-size:13px;line-height:1.6;color:#78716c;">Nếu bạn không yêu cầu đăng ký, vui lòng bỏ qua email này.</p>
-    <p style="margin:0;font-size:13px;color:#78716c;">— Đội ngũ CHRTV</p>
+    <p style="margin:0;font-size:13px;color:#78716c;">— Đội ngũ playZ</p>
   </div>
   <div style="padding:18px 32px;background:#0f1014;border-top:1px solid #26272e;text-align:center;font-size:11px;color:#57534e;">
-    © CHRTV · Truyền hình &amp; phim trực tuyến
+    © playZ · Truyền hình &amp; phim trực tuyến
   </div>
 </div>
 </body></html>`,
@@ -900,18 +900,18 @@ function emailTemplateVerify(code) {
 
 function emailTemplateReset(token) {
   return {
-    subject: "CHRTV — Đặt lại mật khẩu",
+    subject: "playZ — Đặt lại mật khẩu",
     html: `<!doctype html><html><body style="margin:0;padding:0;background:#0b0c10;font-family:-apple-system,Segoe UI,Roboto,sans-serif;color:#e7e5e4;">
 <div style="max-width:560px;margin:24px auto;background:#17181d;border-radius:16px;border:1px solid #26272e;overflow:hidden;">
   <div style="background:linear-gradient(135deg,#e11d48 0%,#9f1239 100%);padding:28px 32px;text-align:center;">
-    <h1 style="color:#fff;margin:0;font-size:28px;letter-spacing:-.02em;">🔐 CHRTV</h1>
+    <h1 style="color:#fff;margin:0;font-size:28px;letter-spacing:-.02em;">🔐 playZ</h1>
     <p style="color:#fecdd3;margin:6px 0 0;font-size:13px;">Yêu cầu đặt lại mật khẩu</p>
   </div>
   <div style="padding:28px 32px;">
     <p style="margin:0 0 16px;font-size:14px;line-height:1.6;color:#a8a29e;">Chào bạn,</p>
     <p style="margin:0 0 24px;font-size:14px;line-height:1.6;color:#d6d3d1;">Ai đó (hy vọng là bạn) vừa yêu cầu đặt lại mật khẩu cho tài khoản CHRTV. Nhấn nút bên dưới trong vòng <b>30 phút</b> để đặt mật khẩu mới.</p>
     <div style="text-align:center;margin:28px 0;">
-      <a href="https://play.ankb.qzz.io/?reset=${token}" style="display:inline-block;background:#e11d48;color:#fff;padding:14px 36px;border-radius:12px;text-decoration:none;font-weight:800;font-size:14px;letter-spacing:.02em;">Đặt lại mật khẩu</a>
+      <a href="https://thelac.dpdns.org/?reset=${token}" style="display:inline-block;background:#e11d48;color:#fff;padding:14px 36px;border-radius:12px;text-decoration:none;font-weight:800;font-size:14px;letter-spacing:.02em;">Đặt lại mật khẩu</a>
     </div>
     <p style="margin:24px 0 8px;font-size:12px;line-height:1.6;color:#78716c;">Hoặc copy mã này vào app:</p>
     <div style="background:#0f1014;border:1px solid #26272e;border-radius:10px;padding:12px;text-align:center;">
@@ -920,7 +920,7 @@ function emailTemplateReset(token) {
     <p style="margin:24px 0 0;font-size:13px;line-height:1.6;color:#78716c;">Nếu bạn không yêu cầu điều này, vui lòng bỏ qua email — mật khẩu của bạn vẫn an toàn.</p>
   </div>
   <div style="padding:18px 32px;background:#0f1014;border-top:1px solid #26272e;text-align:center;font-size:11px;color:#57534e;">
-    © CHRTV · Truyền hình &amp; phim trực tuyến
+    © playZ · Truyền hình &amp; phim trực tuyến
   </div>
 </div>
 </body></html>`,
@@ -1502,7 +1502,7 @@ function streamProxyEnabled(env) {
 //   • host nằm trong PROTECT_SKIP_HOSTS
 //   • playlist không mã hoá được: master playlist, đã có #EXT-X-KEY, fMP4/CMAF,
 //     dùng #EXT-X-BYTERANGE
-// Key do license server cấp (mặc định https://license.ankb.qzz.io/k/<token>),
+// Key issued by the license server (default https://license.thelac.dpdns.org/k/<token>),
 // stateless: key = HMAC(LICENSE_SECRET, token)[0..16] — không ghi KV/D1 trong
 // đường phát. Chi tiết: BAO_VE_LUONG.md
 function protectEnabled(env) {
@@ -1511,7 +1511,7 @@ function protectEnabled(env) {
 }
 function licenseSecret(env) { return String((env && env.LICENSE_SECRET) || "").trim(); }
 function licenseBase(env) {
-  const b = String((env && env.LICENSE_BASE) || "https://license.ankb.qzz.io").trim().replace(/\/+$/, "");
+  const b = String((env && env.LICENSE_BASE) || "https://license.thelac.dpdns.org").trim().replace(/\/+$/, "");
   return b || "/lic"; // rỗng → dùng chính worker này (cùng origin, khỏi CORS)
 }
 function licenseRotate(env) {
@@ -1812,7 +1812,7 @@ const DEFAULT_CHANNELS = [
   { channel_id: "THVL1.vn", name: "THVL1 HD", logo: "https://vtv.sub.id/images/thvl1.png", group_title: "THVL", stream_url: "https://vtv.sub.id/thvl1/index.m3u8", catchup_type: "append", catchup_days: 7 },
   { channel_id: "ON_SPORTS.vn", name: "ON Sports+", logo: "https://vtv.sub.id/images/onsports.png", group_title: "Thể Thao", stream_url: "https://vtv.sub.id/onsports/index.m3u8", catchup_type: "append", catchup_days: 7 },
   { channel_id: "VTC1.vn", name: "VTC1 HD", logo: "https://vtv.sub.id/images/vtc1.png", group_title: "VTC", stream_url: "https://vtv.sub.id/vtc1/index.m3u8", catchup_type: "append", catchup_days: 7 },
-  { channel_id: "CHRTV_FALLBACK", name: "CHRTV Test Stream", logo: "https://i.ibb.co/VcLxwgM2/logo.png", group_title: "Dự Phòng", stream_url: "http://bore.pub:30113/hls/index.m3u8", catchup_type: "default", catchup_days: 7 },
+  { channel_id: "CHRTV_FALLBACK", name: "playZ — Kênh dự phòng", logo: "/brand/playz-symbol-dark.svg", group_title: "Dự Phòng", stream_url: "http://bore.pub:30113/hls/index.m3u8", catchup_type: "default", catchup_days: 7 },
 ];
 
 // ========== EPG ==========
@@ -2099,7 +2099,7 @@ async function handleProxy(request, env) {
   if (/\.(m3u8|ts|mpd)(\?|$)/i.test(targetUrl)) {
     const blocked = streamToolBlocked(request);
     if (blocked) return json({ error: "Client bị chặn", reason: blocked }, 403, request, env);
-    if (!streamIdentityOk(request)) return json({ error: "Chỉ chấp nhận client CHRTV-OTT" }, 403, request, env);
+    if (!streamIdentityOk(request)) return json({ error: "Chỉ chấp nhận client playZ" }, 403, request, env);
     const deny = await streamAccessDenied(request, env, targetUrl);
     if (deny) return json(deny, 403, request, env);
   }
@@ -4605,7 +4605,7 @@ async function handleAdmin(path, request, env, ctx) {
       const abc = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
       const rnd = new Uint8Array(12);
       crypto.getRandomValues(rnd);
-      code = "CHRTV-" + [...rnd].map((x) => abc[x % abc.length]).join("").slice(0, 8);
+      code = "PLAYZ-" + [...rnd].map((x) => abc[x % abc.length]).join("").slice(0, 8);
     }
     try {
       await env.DB.prepare("INSERT INTO gift_codes (code, plan, days, max_uses, note) VALUES (?, ?, ?, ?, ?)").bind(code, ["signature", "elite", "ultimate", "recreational", "standard"].includes(b.plan) ? b.plan : "signature", Math.max(1, Math.min(3650, parseInt(b.days) || 30)), Math.max(1, Math.min(100000, parseInt(b.max_uses) || 1)), String(b.note || "").slice(0, 200)).run();
@@ -5907,7 +5907,7 @@ function statusHtml(s) {
   const when = s.checked_at ? new Date(s.checked_at * 1000).toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh" }) : "chưa kiểm tra";
   const esc = (x) => String(x).replace(/[<>&]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" }[c]));
   return `<!DOCTYPE html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Trạng thái hệ thống — CHRTV PLAY</title><meta http-equiv="refresh" content="60"><style>
+<title>Trạng thái hệ thống — playZ</title><meta http-equiv="refresh" content="60"><style>
 *{box-sizing:border-box;margin:0;padding:0}body{min-height:100vh;background:#0b0c10;color:#e7e5e4;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;padding:24px;display:flex;justify-content:center}
 .wrap{max-width:720px;width:100%}.logo{display:inline-flex;gap:8px;font-weight:900;letter-spacing:.2em;font-size:12px;color:#ff9a3d;margin-bottom:18px}
 .card{background:#14151c;border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:26px;margin-bottom:14px}
@@ -5919,7 +5919,7 @@ h1{font-size:22px;margin-bottom:6px}.sub{font-size:12px;color:#a8a29e}
 ul{list-style:none;margin-top:10px}li{font-size:13px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);color:#fca5a5}
 a{color:#ff9a3d;text-decoration:none;font-weight:700;font-size:13px}small{color:#57534e;font-size:11px}
 </style></head><body><div class="wrap">
-<div class="logo">▶ CHRTV PLAY</div>
+<div class="logo">▶ playZ</div>
 <div class="card"><h1>Trạng thái hệ thống</h1><p class="sub">Tự cập nhật mỗi 60 giây · lần kiểm tra kênh gần nhất: ${esc(when)}</p>
 <div class="big">${pct}%</div><p class="sub">kênh đang phát bình thường</p>
 <div class="grid">
@@ -5930,7 +5930,7 @@ a{color:#ff9a3d;text-decoration:none;font-weight:700;font-size:13px}small{color:
 <div class="kpi"><b>${s.api === "ok" ? "OK" : esc(s.api)}</b><span>API</span></div>
 </div></div>
 ${s.down_list.length ? `<div class="card"><h1 style="font-size:16px">Kênh đang lỗi</h1><ul>${s.down_list.map((n) => `<li>● ${esc(n)}</li>`).join("")}</ul></div>` : ""}
-<div class="card"><a href="/">← Về CHRTV PLAY</a> &nbsp;·&nbsp; <small>Thấy kênh lỗi mà chưa có trong danh sách? Bấm nút “Báo kênh lỗi” ngay trong app nhé.</small></div>
+<div class="card"><a href="/">← Về playZ</a> &nbsp;·&nbsp; <small>Thấy kênh lỗi mà chưa có trong danh sách? Bấm nút “Báo kênh lỗi” ngay trong app nhé.</small></div>
 </div></body></html>`;
 }
 
@@ -6258,7 +6258,9 @@ async function activatePlan(env, userId, plan, days) {
 }
 
 // ========== GIFT CODE ==========
-// Sinh mã quà ngẫu nhiên dễ đọc (bỏ I/O/0/1 chống đọc nhầm): CHRTV-XXXX-XXXX-XXXX
+// Sinh mã quà ngẫu nhiên dễ đọc (bỏ I/O/0/1 chống đọc nhầm): PLAYZ-XXXX-XXXX-XXXX
+// LƯU Ý: mã CŨ mang tiền tố CHRTV- vẫn nhập được — handleGiftRedeem tra khớp chuỗi
+// chính xác (WHERE code = ?), KHÔNG kiểm tra tiền tố.
 function randomGiftCode() {
   const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   const pick = (n) => {
@@ -6266,7 +6268,7 @@ function randomGiftCode() {
     crypto.getRandomValues(a);
     return Array.from(a, (x) => alphabet[x % alphabet.length]).join("");
   };
-  return `CHRTV-${pick(4)}-${pick(4)}-${pick(4)}`;
+  return `PLAYZ-${pick(4)}-${pick(4)}-${pick(4)}`;
 }
 
 // TẶNG GÓI QUÀ KÊNH CHO BẠN BÈ: user tự tạo mã quà gói cước rồi gửi mã/link
@@ -7275,7 +7277,7 @@ async function maybeNewDeviceAlert(env, userId, request) {
       subject: "🔐 CHRTV — Đăng nhập từ thiết bị lạ",
       html: `<div style="font-family:system-ui;background:#0b0c10;padding:24px;color:#e7e5e4"><div style="max-width:520px;margin:auto;background:#17181d;border-radius:16px;padding:24px;border:1px solid #26272e"><h2 style="margin:0 0 8px">Đăng nhập từ thiết bị lạ</h2><p style="color:#a8a29e;font-size:14px">Tài khoản <b>${escHtmlP48(usr.name || usr.email)}</b> vừa đăng nhập CHRTV trên một thiết bị bạn chưa từng dùng:</p><div style="background:#0f1014;border-radius:10px;padding:14px;margin:14px 0;font-size:13px"><div>🌐 IP: ${escHtmlP48(ip)}</div><div>📱 Trình duyệt: ${escHtmlP48(ua)}</div></div><p style="font-size:13px;color:#a8a29e">Không phải bạn? Vào <b>Cài đặt → Thiết bị của bạn</b> để đá thiết bị lạ ngay, và đổi mật khẩu.</p></div></div>`,
     };
-    const sender = { name: env.BREVO_SENDER_NAME || "NO REPLY - CHRTV PL▷Y", email: env.BREVO_SENDER_EMAIL || "noreply@chrtv.app" };
+    const sender = { name: env.BREVO_SENDER_NAME || "playZ", email: env.BREVO_SENDER_EMAIL || "noreply@thelac.dpdns.org" };
     const apiKey = env.BREVO_API_KEY;
     if (!apiKey) return;
     await fetch("https://api.brevo.com/v3/smtp/email", {
